@@ -9,11 +9,12 @@ echo "apply plugin : 'maven'         ">> build.gradle
 echo "apply plugin : 'application'   ">> build.gradle
 echo "                               ">> build.gradle
 echo "repositories {                 ">> build.gradle
-echo "    'mavenCentral()'           ">> build.gradle
+echo "    mavenCentral()             ">> build.gradle
 echo "}                              ">> build.gradle
 echo "                               ">> build.gradle
 echo "dependencies {                 ">> build.gradle
 echo "    compile (                  ">> build.gradle
+echo "    'log4j:log4j:1.2.17'       ">> build.gradle
 echo "    )                          ">> build.gradle
 echo "    testCompile (              ">> build.gradle
 echo "    'junit:junit:4.+'          ">> build.gradle
