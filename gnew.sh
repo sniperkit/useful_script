@@ -13,6 +13,9 @@ fi
 project=$1;
 package=`echo $project | tr '[:upper:]' '[:lower:]'`
 
+mkdir $1
+cd $1
+
 # Create Project class
 mkdir -p src/main/java/$package
 touch src/main/java/$package/$1.java
