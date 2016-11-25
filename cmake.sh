@@ -14,7 +14,7 @@ cd $1
 # Create Project class
 mkdir -p src
 mkdir -p build
-# mkdir -p lib
+mkdir -p lib
 mkdir -p app
 mkdir -p test
 
@@ -23,9 +23,13 @@ echo "CMAKE_MINIMUM_REQUIRED(VERSION 2.8)"                                      
 echo "PROJECT($1)"                                                              >> CMakeLists.txt
 echo "ADD_SUBDIRECTORY(src)"                                                    >> CMakeLists.txt
 echo "ADD_SUBDIRECTORY(app)"                                                    >> CMakeLists.txt
-# echo "ADD_SUBDIRECTORY(lib)"                                                    >> CMakeLists.txt
+echo "ADD_SUBDIRECTORY(lib)"                                                    >> CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> CMakeLists.txt
 echo "ADD_SUBDIRECTORY(test)"                                                   >> CMakeLists.txt
+
+touch lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(unity)"                                                   > lib/CMakeLists.txt
+echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
 touch src/$1.c
 echo "#include <stdio.h>"                                                        > src/$1.c
@@ -83,10 +87,10 @@ echo "}"                                                                        
 
 touch test/CMakeLists.txt
 echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/unity)"                           > test/CMakeLists.txt
-echo "SET(APP_SRC $1Test.c \${PROJECT_SOURCE_DIR}/lib/unity/unity.c)"           >> test/CMakeLists.txt
+echo "SET(APP_SRC $1Test.c)"           >> test/CMakeLists.txt
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> test/CMakeLists.txt
 echo "ADD_EXECUTABLE($1Test \${APP_SRC})"                                       >> test/CMakeLists.txt
-echo "TARGET_LINK_LIBRARIES($1Test lib$1)"                                      >> test/CMakeLists.txt
+echo "TARGET_LINK_LIBRARIES($1Test lib$1 libunity)"                                      >> test/CMakeLists.txt
 
 mkdir -p lib/
 git clone https://github.com/lamproae/unity.git  lib/unity
