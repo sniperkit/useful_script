@@ -29,6 +29,10 @@ echo "ADD_SUBDIRECTORY(test)"                                                   
 
 touch lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(unity)"                                                   > lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(mysql)"                                                  >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(libds)"                                                  >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(collection)"                                             >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(onion)"                                                  >> lib/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
 touch src/$1.c
@@ -80,7 +84,7 @@ echo "}"                                                                        
 echo ""                                                                         >> test/$1Test.c
 echo "int main(int argc, char** argv)"                                          >> test/$1Test.c
 echo "{"                                                                        >> test/$1Test.c
-echo "      UnityBegin(\"test/$1Test.c\");"                                    >> test/$1Test.c
+echo "      UnityBegin(\"test/$1Test.c\");"                                     >> test/$1Test.c
 echo "      $1();"                                                              >> test/$1Test.c
 echo "      RUN_TEST(test_dummy_func);"                                         >> test/$1Test.c
 echo "}"                                                                        >> test/$1Test.c
@@ -90,7 +94,12 @@ echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/
 echo "SET(APP_SRC $1Test.c)"           >> test/CMakeLists.txt
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> test/CMakeLists.txt
 echo "ADD_EXECUTABLE($1Test \${APP_SRC})"                                       >> test/CMakeLists.txt
-echo "TARGET_LINK_LIBRARIES($1Test lib$1 libunity)"                                      >> test/CMakeLists.txt
+echo "TARGET_LINK_LIBRARIES($1Test lib$1 libunity)"                             >> test/CMakeLists.txt
 
 mkdir -p lib/
 git clone https://github.com/lamproae/unity.git  lib/unity
+git clone https://github.com/lamproae/libmysql.git  lib/mysql
+git clone https://github.com/lamproae/c-algorithms.git  lib/libds
+git clone https://github.com/lamproae/Collections-C.git lib/collection
+git clone https://github.com/lamproae/onion.git lib/onion
+git clone https://github.com/lamproae/libnet.git lib/net
