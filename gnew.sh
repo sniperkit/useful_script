@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function show_usuage() 
+show_usuage() 
 {
     echo "Usuage: gnew.sh ProjectName"
 }
