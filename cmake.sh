@@ -33,6 +33,7 @@ echo "ADD_SUBDIRECTORY(mysql)"                                                  
 echo "ADD_SUBDIRECTORY(libds)"                                                  >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(collection)"                                             >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(onion)"                                                  >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(llog)"                                                  >> lib/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
 touch src/$1.c
@@ -103,3 +104,4 @@ git clone https://github.com/lamproae/c-algorithms.git  lib/libds
 git clone https://github.com/lamproae/Collections-C.git lib/collection
 git clone https://github.com/lamproae/onion.git lib/onion
 git clone https://github.com/lamproae/libnet.git lib/net
+git clone https://github.com/lamproae/llog.git lib/llog
