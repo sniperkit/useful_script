@@ -80,7 +80,8 @@ echo "TARGET_LINK_LIBRARIES($1 kkkmmu)"                                         
 
 touch test/$1Test.c
 echo "#include \"$1.h\""                                                        > test/$1Test.c
-echo "#include \"unity.h\""                                                     >> test/$1Test.c
+echo "#include <llog.h>"                                                        >> test/$1Test.c
+echo "#include <unity.h>"                                                       >> test/$1Test.c
 echo "#include \"unity_internals.h\""                                           >> test/$1Test.c
 echo ""                                                                         >> test/$1Test.c
 echo "void test_dummy_func(void)  "                                             >> test/$1Test.c
@@ -92,9 +93,11 @@ echo "}"                                                                        
 echo ""                                                                         >> test/$1Test.c
 echo "int main(int argc, char** argv)"                                          >> test/$1Test.c
 echo "{"                                                                        >> test/$1Test.c
+echo "      llog(INFO, \"%s\", \"Start the test for Project $1!\");"            >> test/$1Test.c
 echo "      UnityBegin(\"test/$1Test.c\");"                                     >> test/$1Test.c
 echo "      $1();"                                                              >> test/$1Test.c
 echo "      RUN_TEST(test_dummy_func);"                                         >> test/$1Test.c
+echo "      llog(INFO, \"%s\", \"Test For Project $1 is Finished!\");"          >> test/$1Test.c
 echo "}"                                                                        >> test/$1Test.c
 
 touch test/CMakeLists.txt
@@ -102,8 +105,8 @@ echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"               
 echo "ADD_EXECUTABLE($1Test \${APP_SRC})"                                       >> test/CMakeLists.txt
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> test/CMakeLists.txt
 echo "LINK_DIRECTORIES (\${PROJECT_BINARY_DIR}/lib)"                            >> test/CMakeLists.txt
-echo "TARGET_LINK_LIBRARIES($1Test kkkmmu unity)"                               >> test/CMakeLists.txt
-echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/unity)"                >> test/CMakeLists.txt
+echo "TARGET_LINK_LIBRARIES($1Test kkkmmu unity llog)"                          >> test/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/unity \${PROJECT_SOURCE_DIR}/lib/llog/src)"        >> test/CMakeLists.txt
 
 mkdir -p lib/
 git clone https://github.com/lamproae/unity.git                                 lib/unity
