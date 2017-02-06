@@ -136,5 +136,7 @@ git clone https://github.com/lamproae/llog.git                                  
 # git clone https://github.com/lamproae/liblw.git                                 lib/liblw
 
 # git clone https://github.com/lamproae/gperftools.git                            lib/gperftools
+# git clone https://github.com/lamproae/libev.git                                 lib/libev
+# git clone https://github.com/lamproae/Libevent.git                              lib/Libevent
 
 
