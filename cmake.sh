@@ -84,21 +84,33 @@ echo "#include <llog.h>"                                                        
 echo "#include <unity.h>"                                                       >> test/$1Test.c
 echo "#include \"unity_internals.h\""                                           >> test/$1Test.c
 echo ""                                                                         >> test/$1Test.c
-echo "void test_dummy_func(void)  "                                             >> test/$1Test.c
+echo "void test_failure_func(void)"                                             >> test/$1Test.c
 echo "{"                                                                        >> test/$1Test.c
-echo "      $1();"                                                              >> test/$1Test.c
+echo "      TEST_ASSERT_EQUAL_STRING(\"ello\", \"Hello\");"                     >> test/$1Test.c
+echo "}"                                                                        >> test/$1Test.c
+echo ""                                                                         >> test/$1Test.c
+echo "void test_success_func(void)"                                             >> test/$1Test.c
+echo "{"                                                                        >> test/$1Test.c
 echo "      TEST_ASSERT_EQUAL_STRING(\"Hello\", \"Hello\");"                    >> test/$1Test.c
-echo "      TEST_ASSERT_EQUAL(16, 8);"                                          >> test/$1Test.c
+echo "}"                                                                        >> test/$1Test.c
+echo ""                                                                         >> test/$1Test.c
+echo "void test_ignore_func(void)"                                              >> test/$1Test.c
+echo "{"                                                                        >> test/$1Test.c
+echo "      TEST_IGNORE_MESSAGE(\"This is a ignored test!\");"                  >> test/$1Test.c
 echo "}"                                                                        >> test/$1Test.c
 echo ""                                                                         >> test/$1Test.c
 echo "int main(int argc, char** argv)"                                          >> test/$1Test.c
 echo "{"                                                                        >> test/$1Test.c
-echo "      llog(INFO, \"%s\", \"Start the test for Project $1!\");"            >> test/$1Test.c
-echo "      UnityBegin(\"test/$1Test.c\");"                                     >> test/$1Test.c
-echo "      $1();"                                                              >> test/$1Test.c
-echo "      RUN_TEST(test_dummy_func);"                                         >> test/$1Test.c
-echo "      llog(INFO, \"%s\", \"Test For Project $1 is Finished!\");"          >> test/$1Test.c
-echo "}"                                                                        >> test/$1Test.c
+echo "      llog(INFO, \"%s\", \"Start the test for Project tt!\");"            >> test/$1Test.c
+echo "      UNITY_BEGIN();"                                                     >> test/$1Test.c
+echo ""                                                                         >> test/$1Test.c
+echo "      RUN_TEST(test_failure_func);"                                       >> test/$1Test.c
+echo "      RUN_TEST(test_success_func);"                                       >> test/$1Test.c
+echo "      RUN_TEST(test_ignore_func);"                                        >> test/$1Test.c
+echo ""                                                                         >> test/$1Test.c
+echo "      UNITY_END();"                                                       >> test/$1Test.c
+echo "      llog(INFO, \"%s\", \"Test For Project tt is Finished!\");"          >> test/$1Test.c
+echo " }"                                                                       >> test/$1Test.c
 
 touch test/CMakeLists.txt
 echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"               > test/CMakeLists.txt
