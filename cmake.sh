@@ -140,3 +140,7 @@ git clone https://github.com/lamproae/llog.git                                  
 # git clone https://github.com/lamproae/Libevent.git                              lib/Libevent
 # git clone https://github.com/lamproae/unpv13e.git                               lib/unpv13e
 # git clone https://github.com/lamproae/apue.3e.git                               lib/apue
+
+# Unix network programming and Advanced programming in unix environment
+# git clone https://github.com/lamproae/libunp.git                                lib/libunp
+# git clone https://github.com/lamproae/libapue.git                               lib/libapue
