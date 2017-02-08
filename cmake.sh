@@ -145,3 +145,4 @@ git clone https://github.com/lamproae/llog.git                                  
 # git clone https://github.com/lamproae/libunp.git                                lib/libunp
 # git clone https://github.com/lamproae/libapue.git                               lib/libapue
 # git clone https://github.com/lamproae/jemalloc.git                              lib/jemalloc
+# git clone https://github.com/lamproae/jemalloc-cmake.git                        lib/jemalloc-cmake
