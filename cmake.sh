@@ -16,6 +16,7 @@ mkdir -p src
 mkdir -p build
 mkdir -p lib
 mkdir -p app
+mkdir -p tools
 mkdir -p test
 
 touch CMakeLists.txt
@@ -24,16 +25,17 @@ echo "PROJECT($1)"                                                              
 echo "ADD_SUBDIRECTORY(src .src)"                                               >> CMakeLists.txt
 echo "ADD_SUBDIRECTORY(app .app)"                                               >> CMakeLists.txt
 echo "ADD_SUBDIRECTORY(lib .lib)"                                               >> CMakeLists.txt
+echo "ADD_SUBDIRECTORY(tools .tools)"                                           >> CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> CMakeLists.txt
 echo "ADD_SUBDIRECTORY(test .test)"                                             >> CMakeLists.txt
 echo "SET(CFLAGS \"-Wall -Werror\")"                                            >> CMakeLists.txt
 
 touch lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(unity)"                                                  > lib/CMakeLists.txt
-# echo "ADD_SUBDIRECTORY(mysql)"                                                  >> lib/CMakeLists.txt
+# echo "ADD_SUBDIRECTORY(mysql)"                                                >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(libds)"                                                  >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(collection)"                                             >> lib/CMakeLists.txt
-# echo "ADD_SUBDIRECTORY(onion)"                                                  >> lib/CMakeLists.txt
+# echo "ADD_SUBDIRECTORY(onion)"                                                >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(llog)"                                                   >> lib/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
@@ -53,6 +55,7 @@ touch src/CMakeLists.txt
 echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} LIB_SRC)"               > src/CMakeLists.txt
 echo "ADD_LIBRARY(kkkmmu SHARED \${LIB_SRC})"                                   >> src/CMakeLists.txt
 echo "ADD_LIBRARY(kkkmmu_static STATIC \${LIB_SRC})"                            >> src/CMakeLists.txt
+echo "SET(CMAKE_C_FLAGS \"-Wall -Werror -g -pg\")"                                      >> src/CMakeLists.txt
 echo "SET(LIBRARY_OUTPUT_PATH \${PROJECT_BINARY_DIR}/lib)"                      >> src/CMakeLists.txt
 echo "SET_TARGET_PROPERTIES (kkkmmu_static PROPERTIES OUTPUT_NAME kkkmmu)"      >> src/CMakeLists.txt
 echo "SET_TARGET_PROPERTIES (kkkmmu PROPERTIES CLEAN_DIRECT_OUTPUT 1)"          >> src/CMakeLists.txt
@@ -73,10 +76,11 @@ echo "}"                                                                        
 touch app/CMakeLists.txt
 echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"               > app/CMakeLists.txt
 echo "ADD_EXECUTABLE($1 \${APP_SRC})"                                           >> app/CMakeLists.txt
-echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${CMAKE_CURRENT_SOURCE_DIR})"                          >> app/CMakeLists.txt
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> app/CMakeLists.txt
 echo "LINK_DIRECTORIES (\${PROJECT_BINARY_DIR}/lib)"                            >> app/CMakeLists.txt
 echo "TARGET_LINK_LIBRARIES($1 kkkmmu)"                                         >> app/CMakeLists.txt
+echo "SET(CMAKE_C_FLAGS \"-Wall -g -finstrument-functions -pg -ftest-coverage -fprofile-arcs\")"             >> app/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${CMAKE_CURRENT_SOURCE_DIR})"                          >> app/CMakeLists.txt
 
 touch test/$1Test.c
 echo "#include \"$1.h\""                                                        > test/$1Test.c
@@ -118,7 +122,13 @@ echo "ADD_EXECUTABLE($1Test \${APP_SRC})"                                       
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> test/CMakeLists.txt
 echo "LINK_DIRECTORIES (\${PROJECT_BINARY_DIR}/lib)"                            >> test/CMakeLists.txt
 echo "TARGET_LINK_LIBRARIES($1Test kkkmmu unity llog)"                          >> test/CMakeLists.txt
+echo "SET(CMAKE_C_FLAGS \"-Wall -g -finstrument-functions -pg -ftest-coverage -fprofile-arcs\")" >> test/CMakeLists.txt
 echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/unity \${PROJECT_SOURCE_DIR}/lib/llog/src)"        >> test/CMakeLists.txt
+
+echo "CMAKE_MINIMUM_REQUIRED(VERSION 2.8)"                                      >> tools/CMakeLists.txt
+echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> tools/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(run)"                                                    >> tools/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(pvtrace)"                                                >> tools/CMakeLists.txt
 
 mkdir -p lib/
 git clone https://github.com/lamproae/unity.git                                 lib/unity
@@ -146,3 +156,64 @@ git clone https://github.com/lamproae/llog.git                                  
 # git clone https://github.com/lamproae/libapue.git                               lib/libapue
 # git clone https://github.com/lamproae/jemalloc.git                              lib/jemalloc
 # git clone https://github.com/lamproae/jemalloc-cmake.git                        lib/jemalloc-cmake
+
+# Tools for Generate Call Graph
+echo "CMAKE_MINIMUM_REQUIRED(VERSION 2.8)"                                        > tools/CMakeLists.txt
+echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                             >> tools/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(run)"                                                      >> tools/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(pvtrace)"                                                  >> tools/CMakeLists.txt
+
+# git clone https://github.com/lamproae/pvtrace.git                               tools/pvtrace
+# git clone https://github.com/lamproae/gprof2dot.git                             tools/gprof2dot
+# git clone https://github.com/lamproae/xdot.py.git                               tools/xdot
+# git clone https://github.com/lamproae/codeviz.git                               tools/codeviz
+# git clone https://github.com/lamproae/graphviz.git                              tools/graphviz
+# instrument.c should not be build in pvtrace daemon
+git clone https://github.com/lamproae/pvtrace.git                                 tools/pvtrace 
+cp -a tools/pvtrace/instrument.c test/ && cp -a tools/pvtrace/instrument.c app/ && rm -rf tools/pvtrace/instrument.c && rm -rf tools/pvtrace/Makefile
+
+echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"                 > tools/pvtrace/CMakeLists.txt
+echo "ADD_EXECUTABLE(pvtrace \${APP_SRC})"                                        >> tools/pvtrace/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${CMAKE_CURRENT_SOURCE_DIR})"                          >> tools/pvtrace/CMakeLists.txt
+echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                     >> tools/pvtrace/CMakeLists.txt
+echo "SET(CMAKE_C_FLAGS "-Wall")"                                                 >> tools/pvtrace/CMakeLists.txt
+
+mkdir -p tools/run
+echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"                 > tools/run/CMakeLists.txt
+echo "ADD_EXECUTABLE(run \${APP_SRC})"                                            >> tools/run/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${CMAKE_CURRENT_SOURCE_DIR})"                          >> tools/run/CMakeLists.txt
+echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                     >> tools/run/CMakeLists.txt
+echo "SET(CMAKE_C_FLAGS "-Wall")"                                                 >> tools/run/CMakeLists.txt
+
+echo "#include <stdlib.h>"                                                        > tools/run/run.c
+echo ""                                                                           >> tools/run/run.c
+echo "void show_usuage(void)"                                                     >> tools/run/run.c
+echo "{"                                                                          >> tools/run/run.c
+echo "    printf(\"Usuage: run APP\\\n\");"                                       >> tools/run/run.c
+echo "}"                                                                          >> tools/run/run.c
+echo ""                                                                           >> tools/run/run.c
+echo "int main(int argc, char** argv) "                                           >> tools/run/run.c
+echo "{"                                                                          >> tools/run/run.c
+echo "    char command[256] = {0};"                                               >> tools/run/run.c
+echo ""                                                                           >> tools/run/run.c
+echo "    if (argc != 2) {"                                                       >> tools/run/run.c
+echo "        show_usuage();"                                                     >> tools/run/run.c
+echo "        exit(0);"                                                           >> tools/run/run.c
+echo "    }"                                                                      >> tools/run/run.c
+echo ""                                                                           >> tools/run/run.c
+echo "    sprintf(command, \"./%s\", argv[1]);"                                   >> tools/run/run.c
+echo "    system(command);"                                                       >> tools/run/run.c
+echo "    sprintf(command, \"./pvtrace %s\", argv[1]);"                           >> tools/run/run.c
+echo "    system(command);"                                                       >> tools/run/run.c
+echo "    sprintf(command, \"dot -Tpng graph.dot -o graph.png\");"                >> tools/run/run.c
+echo "    system(command);"                                                       >> tools/run/run.c
+echo "    sprintf(command, \"valgrind --tool=memcheck --leak-check=full --log-file=memcheck.log ./%s\", argv[1]);">> tools/run/run.c
+echo "    system(command);"                                                       >> tools/run/run.c
+echo "    sprintf(command, \"valgrind --tool=callgrind ./%s > callgrind.log 2>&1\", argv[1]);">> tools/run/run.c
+echo "    system(command);"                                                       >> tools/run/run.c
+echo "    sprintf(command, \"gprof ./%s > gprof.log 2>&1\", argv[1]);"            >> tools/run/run.c
+echo "    system(command);"                                                       >> tools/run/run.c
+echo ""                                                                           >> tools/run/run.c
+echo "    /*  Need to Add gcov support for code coverage test in future */"       >> tools/run/run.c
+echo "}"                                                                          >> tools/run/run.c
+echo ""                                                                           >> tools/run/run.c
