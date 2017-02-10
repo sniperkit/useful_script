@@ -214,6 +214,7 @@ git clone https://github.com/lamproae/Collections-C.git                         
 # git clone https://github.com/lamproae/libnet.git                                lib/net
 git clone https://github.com/lamproae/llog.git                                  lib/llog
 git clone https://github.com/lamproae/libfault.git                              lib/libfault
+git clone https://github.com/lamproae/etrace.git                                lib/etrace
 
 #Common library for practise
 # git clone https://github.com/lamproae/liblw.git                                 lib/liblw
