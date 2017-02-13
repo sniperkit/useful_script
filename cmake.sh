@@ -38,6 +38,7 @@ echo "ADD_SUBDIRECTORY(collection)"                                             
 # echo "ADD_SUBDIRECTORY(onion)"                                                >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(llog)"                                                   >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(libfault)"                                               >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(memwatch)"                                               >> lib/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
 touch src/$1.c
@@ -214,6 +215,7 @@ git clone https://github.com/lamproae/Collections-C.git                         
 # git clone https://github.com/lamproae/libnet.git                                lib/net
 git clone https://github.com/lamproae/llog.git                                  lib/llog
 git clone https://github.com/lamproae/libfault.git                              lib/libfault
+git clone https://github.com/lamproae/memwatch.git                              lib/memwatch
 git clone https://github.com/lamproae/etrace.git                                lib/etrace
 
 #Common library for practise
