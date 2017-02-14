@@ -38,6 +38,7 @@ echo "ADD_SUBDIRECTORY(collection)"                                             
 # echo "ADD_SUBDIRECTORY(onion)"                                                >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(llog)"                                                   >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(libfault)"                                               >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(libmill)"                                                >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(memwatch)"                                               >> lib/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
@@ -252,7 +253,7 @@ git clone https://github.com/lamproae/etrace.git                                
 # git clone https://github.com/lamproae/libui.git                                 lib/libui
 
 # Go-style concurrency in C
-# git clone https://github.com/lamproae/libmill.git                               lib/libmill
+git clone https://github.com/lamproae/libmill.git                                 lib/libmill
 
 # Structured concurrency in C
 # git clone https://github.com/lamproae/libdill.git                               lib/libdill
