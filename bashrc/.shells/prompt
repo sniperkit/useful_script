@@ -41,7 +41,7 @@ function pre_prompt {
 PROMPT_COMMAND=pre_prompt
 
 case "$TERM" in
-xterm)
+xterm|liniux)
     PS1="$green($yellow\u@\h \$(date \"+%a, %d %b %y\")$green)($yellow\${PWD}$green)$green($yellow\$(parse_git_branch)\$$green)─>$white "
     ;;
 screen)
