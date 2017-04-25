@@ -2,18 +2,19 @@ SOURCE=$(APPS_DIR)/sysvinit
 
 all: build install 
 
+CFLAGS+=-D _PATH_UTMP='"/var/run/utmp"' -D _PATH_WTMP='"/var/run/wtmp"'
+LDFLAGS+= -lcrypt
 build: config
-	@cd $(SOURCE) && make
+	@cd $(SOURCE)/src && make
 
 config:
 	@if [ ! -f $(SOURCE)/Makefile ]; then \
-	    cd $(SOURCE) && ./configure --host=$(ARCH) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"; \
+	    cd $(SOURCE)/src && ./configure --host=$(ARCH) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"; \
 	fi
 
 install:
-	$(INSTALL) $(SOURCE)/bash $(ROOT_DIR)/bin/bash
-	$(STRIP) $(ROOT_DIR)/bin/bash
-	@cd $(ROOT_DIR)/bin && ln -sf bash sh
+	find $(SOURCE)/src/ -perm 775 -a ! -name ".deps" -a ! -type d | xargs -i $(INSTALL) {} $(ROOT_DIR)/sbin/
+	@cd $(ROOT_DIR)/sbin && ln -sf init ../init
 
 clean:
 	@cd $(SOURCE) && make clean

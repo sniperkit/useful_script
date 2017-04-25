@@ -3,7 +3,9 @@
 include $(MAKE_DIR)/.rule
 include $(SCRIPT_DIR)/function.mk
 
-INSTALL		= install --owner=root --group=root -D --verbose
+# @liwei: This need to check in future
+# INSTALL		= install --owner=root --group=root -D --verbose
+INSTALL		= install -D --verbose
 
 CP		= cp
 CHOWN		= chown

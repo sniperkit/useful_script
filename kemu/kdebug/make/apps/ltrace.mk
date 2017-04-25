@@ -7,7 +7,7 @@ build: config
 
 config:
 	@if [ ! -f $(SOURCE)/Makefile ]; then \
-	    cd $(SOURCE) && ./configure --host=$(ARCH)-unknown-linux-gnu CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" --disable-werror; \
+	    cd $(SOURCE) && ./autogen.sh && ./configure --host=$(ARCH)-unknown-linux-gnu CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" --disable-werror; \
 	fi
 
 

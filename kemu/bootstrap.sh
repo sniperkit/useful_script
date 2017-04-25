@@ -60,9 +60,9 @@ function locallize_package()
 {
     cd $top/tar
     echo " Locallizing Package $pname !"
-    if [ $1 != $2 ];then
+    #if [ $1 != $2 ];then
         execute mv $1 $top/kdebug/apps/$2
-    fi
+    #fi
     echo " Package $pname Locallizing finished!"
     cd $top
 }

@@ -1,4 +1,4 @@
-SOURCE=$(APPS_DIR)/tcpdump/tcpdump
+SOURCE=$(APPS_DIR)/tcpdump
 LIBPCAP=$(APPS_DIR)/tcpdump/libpcap
 
 all: libpcap tcpdump

@@ -11,3 +11,8 @@ ncurses    5.4     wget   tgz  ncurses     http://ftp.gnu.org/gnu/ncurses/ncurse
 procps     3.2.8   git    non  procps      https://github.com/lamproae/procps-3.2.8.git
 iproute2   -       git    non  iproute2    https://github.com/lamproae/iproute2.git
 iptables   1.4.20  wget   zip2 iptables    http://www.netfilter.org/projects/iptables/files/iptables-1.4.20.tar.bz2
+sysvinit   -       git    non  sysvinit    https://github.com/lamproae/sysvinit.git
+ltrace     -       git    non  ltrace      https://github.com/lamproae/ltrace
+openssh    4.5p1   wget   tgz  openssh     https://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-4.5p1.tar.gz 
+openssl    1.0.0   wget   tgz  openssl     https://www.openssl.org/source/openssl-1.0.0.tar.gz
+zlib       1.2.11  wget   tgz  zlib        http://www.zlib.net/zlib-1.2.11.tar.gz

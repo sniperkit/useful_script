@@ -11,8 +11,9 @@ config:
 	fi
 
 install:
-	$(INSTALL) $(SOURCE)/bash $(ROOT_DIR)/bin/bash
-	$(STRIP) $(ROOT_DIR)/bin/bash
+	find $(SOURCE)/src/ -perm 775 -a ! -name ".deps" -a ! -type d | xargs -i $(INSTALL) {} $(ROOT_DIR)/bin/
+	#$(INSTALL) $(SOURCE)/bash $(ROOT_DIR)/bin/bash
+	#$(STRIP) $(ROOT_DIR)/bin/bash
 	@cd $(ROOT_DIR)/bin && ln -sf bash sh
 
 clean:
