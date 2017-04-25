@@ -7,7 +7,7 @@ MODULES_DIR	=	$(PROJECT_DIR)/modules
 KERNEL_DIR	=	$(PROJECT_DIR)/kernel
 SCRIPT_DIR	=	$(PROJECT_DIR)/script
 
-BUILD_DIR	=	$(PROJECT_DIR)/build
+BUILD_DIR	=	$(PROJECT_DIR)/result/build
 ROOT_DIR	=	$(PROJECT_DIR)/rootfs
 MODULES_DIR	=	$(PROJECT_DIR)/modules
 
@@ -16,9 +16,6 @@ ifeq ($(ARCH),)
 endif
 
 all: prepare config build 
-
-boot:
-	sh $(SCRIPT_DIR)/boot.sh
 
 prepare: 
 	@case $(ARCH) in  \
@@ -42,6 +39,17 @@ config:
 
 lib:
 	$(MAKE) -C $(PROJECT_DIR)/make $@
+
+reset:
+	$(MAKE) -C $(PROJECT_DIR)/make $@
+
+boot: host1
+
+mboot: host1 host2 router
+
+host1 host2 router: 
+	$(MAKE) -C $(PROJECT_DIR)/make $@
+	sh $(SCRIPT_DIR)/boot.sh $@
 
 clean:
 	$(MAKE) -C $(PROJECT_DIR)/make $@

@@ -3,8 +3,7 @@
 include $(MAKE_DIR)/.rule
 include $(SCRIPT_DIR)/function.mk
 
-# @liwei: This need to check in future
-# INSTALL		= install --owner=root --group=root -D --verbose
+#INSTALL		= install --owner=root --group=root -D --verbose
 INSTALL		= install -D --verbose
 
 CP		= cp
@@ -59,6 +58,13 @@ config:
 
 lib:
 	$(MAKE) -f $@.mk 
+
+reset:
+	sh $(SCRIPT_DIR)/host-brct.sh reset
+
+host1 host2 router:
+	sh $(SCRIPT_DIR)/host-brct.sh set
+	sh $(SCRIPT_DIR)/build-sample-os.sh $@
 
 clean:
 	$(MAKE) -f lib.mk $@
