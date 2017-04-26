@@ -4,6 +4,7 @@ if [ $# != 1 ]; then
     exit 
 fi
 
+. $PROJECT/script/mkdev.sh
 if [ $1 = "host1" ]; then
     rm -rf ../result/build/usr/initramfs_data.cpio.gz
     #cp -a ../samples/topology/start-host1 ../rootfs/etc/init.d/rcS

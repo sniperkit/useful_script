@@ -217,6 +217,12 @@ function prepare_misc()
         mv $top/kdebug/apps/libpcap $top/kdebug/apps/tcpdump/libpcap
     fi
 
+    if [ -d $top/kdebug/apps/linux ]; then
+        mv $top/kdebug/apps/linux $top/kdebug/kernel/
+    fi
+
+    export PROJECT=$(top)/kdebug/
+
     echo 1 >> .misc.p
 }
 

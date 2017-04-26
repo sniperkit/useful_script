@@ -60,9 +60,9 @@ function locallize_package()
 {
     cd $top/tar
     echo " Locallizing Package $pname !"
-    if [ $1 != $2 ];then
+    #if [ $1 != $2 ];then
         execute mv $1 $top/kdebug/apps/$2
-    fi
+    #fi
     echo " Package $pname Locallizing finished!"
     cd $top
 }
@@ -217,6 +217,11 @@ function prepare_misc()
         mv $top/kdebug/apps/libpcap $top/kdebug/apps/tcpdump/libpcap
     fi
 
+    if [ -d $top/kdebug/apps/linux ]; then
+        mv $top/kdebug/apps/linux $top/kdebug/kernel/
+    fi
+
+    export PROJECT=$(top)/kdebug/
     echo 1 >> .misc.p
 }
 
