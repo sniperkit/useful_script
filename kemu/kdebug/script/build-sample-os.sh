@@ -6,7 +6,9 @@ fi
 
 if [ $1 = "host1" ]; then
     rm -rf ../result/build/usr/initramfs_data.cpio.gz
-    cp -a ../samples/topology/start-host1 ../rootfs/etc/init.d/rcS
+    #cp -a ../samples/topology/start-host1 ../rootfs/etc/init.d/rcS
+    cp -a ../../examples/rcS ../rootfs/etc/init.d/rcS
+    cp -a ../../examples/busybox.inittab ../rootfs/etc/inittab
     cd .. &&  make kernel
 elif [ $1 = "host2" ]; then
     rm -rf ../result/build/usr/initramfs_data.cpio.gz

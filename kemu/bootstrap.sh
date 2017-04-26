@@ -164,7 +164,7 @@ done
 
 function prepare_env() 
 {
-    sudo dnf -y install vim make qemu bc cmake texinfo help2man patch libtool bison flex autoconf gperf
+    sudo dnf -y install vim make qemu bc cmake texinfo help2man patch libtool bison flex autoconf gperf tunctl
     # sudo apt-get -y install vim make qemu bc
 
     mkdir -p $top/tools
