@@ -47,6 +47,8 @@ echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           
 
 touch src/$1.c
 echo "#include <stdio.h>"                                                       > src/$1.c
+echo "#include <random.h>"                                                      > src/$1.c
+echo "#include <llog.h>"                                                        > src/$1.c
 echo "void $1(void)"                                                            >> src/$1.c
 echo "{"                                                                        >> src/$1.c
 echo "      printf(\"Hello world!\\\n\");"                                      >> src/$1.c
