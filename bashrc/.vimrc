@@ -6,6 +6,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 let g:spf13_keep_trailing_whitespace = 1
+let g:cscope_silent=1
 
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -19,11 +20,17 @@ Bundle 'vim-scripts/grep.vim'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'lamproae/tComment.vim'
+"Bundle 'lamproae/tComment.vim'
 Bundle 'Blackrush/vim-gocode'
 Bundle 'lamproae/vim-go'
 Bundle 'tpope/vim-markdown'
+"Bundle 'vim-airline/vim-airline'
+"Bundle 'vim-airline/vim-airline-themes'
 "Bundle 'Valloric/YouCompleteMe'
+Bundle 'NLKNguyen/papercolor-theme'
+Bundle 'vim-scripts/mru.vim'
+Bundle 'vim-scripts/desert256.vim'
+Bundle 'vim-syntastic/syntastic'
 call vundle#end()
 filetype plugin indent on
 
@@ -65,13 +72,15 @@ set noexpandtab
 set tabstop=8
 set linespace=8
 set shiftwidth=4
-set statusline=%F\ %m%h%r%<%=\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
-"set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
+"set statusline=%F\ %m%h%r%<%=\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
+set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
 set ruler
 syntax on
 set hlsearch
 set cindent
 set nu
+set laststatus=2
+set background=dark
 
 let Grep_Default_Filelist='*.[chS]'
 let Grep_Default_Options='-i --color=auto'
@@ -83,6 +92,10 @@ let g:indentLine_color_term=239
 let g:indentLine_color_dark=1
 let g:indentLine_enabled=1
 let Tlist_Use_Right_Window=1
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let MRU_Max_Menu_Entries = 20
 
 "colorscheme koehler
 "colorscheme evening
@@ -92,8 +105,11 @@ let Tlist_Use_Right_Window=1
 "colorscheme shine
 "colorscheme torte
 "colorscheme zeliner
-colorscheme desert
-"colorscheme desert256
+"colorscheme hybrid
+"colorscheme jellybeans
+"colorscheme PaperColor
+"colorscheme desert
+colorscheme desert256
 
 "autocmd vimenter * NERDTree
 "autocmd vimenter *  TlistOpen
