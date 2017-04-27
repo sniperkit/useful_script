@@ -40,6 +40,9 @@ echo "ADD_SUBDIRECTORY(llog)"                                                   
 echo "ADD_SUBDIRECTORY(libfault)"                                               >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(libmill)"                                                >> lib/CMakeLists.txt
 echo "ADD_SUBDIRECTORY(memwatch)"                                               >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(libapue)"                                                >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(libunp)"                                                 >> lib/CMakeLists.txt
+echo "ADD_SUBDIRECTORY(libran)"                                                 >> lib/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> lib/CMakeLists.txt
 
 touch src/$1.c
@@ -58,12 +61,13 @@ touch src/CMakeLists.txt
 echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} LIB_SRC)"               > src/CMakeLists.txt
 echo "ADD_LIBRARY(kkkmmu SHARED \${LIB_SRC})"                                   >> src/CMakeLists.txt
 echo "ADD_LIBRARY(kkkmmu_static STATIC \${LIB_SRC})"                            >> src/CMakeLists.txt
-echo "SET(CMAKE_C_FLAGS \"-Wall -Werror -g -pg -finstrument-functions -ftest-coverage -fprofile-arcs -funwind-tables -rdynamic\")"                                      >> src/CMakeLists.txt
+echo "SET(CMAKE_C_FLAGS \"-Wall -Werror -g -pg -finstrument-functions -ftest-coverage -fprofile-arcs -funwind-tables -rdynamic\")"                                                                                >> src/CMakeLists.txt
 echo "SET(LIBRARY_OUTPUT_PATH \${PROJECT_BINARY_DIR}/lib)"                      >> src/CMakeLists.txt
 echo "SET_TARGET_PROPERTIES (kkkmmu_static PROPERTIES OUTPUT_NAME kkkmmu)"      >> src/CMakeLists.txt
 echo "SET_TARGET_PROPERTIES (kkkmmu PROPERTIES CLEAN_DIRECT_OUTPUT 1)"          >> src/CMakeLists.txt
 echo "SET_TARGET_PROPERTIES (kkkmmu PROPERTIES CLEAN_DIRECT_OUTPUT 1)"          >> src/CMakeLists.txt
 echo "SET_TARGET_PROPERTIES (kkkmmu PROPERTIES VERSION 1.1 SOVERSION 1)"        >> src/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/llog/src \${PROJECT_SOURCE_DIR}/lib/libfault \${PROJECT_SOURCE_DIR}/lib/libran/src)"                                              >> src/CMakeLists.txt
 echo "# install (TARGETS $1 $1_static "                                         >> src/CMakeLists.txt
 echo "#     LIBRARY DESTINATION \${PROJECT_BINARY_DIR}/lib"                     >> src/CMakeLists.txt
 echo "#     ARCHIVE DESTINATION \${PROJECT_BINARY_DIR}/lib)"                    >> src/CMakeLists.txt
@@ -88,13 +92,14 @@ echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"               
 echo "ADD_EXECUTABLE($1 \${APP_SRC})"                                           >> app/CMakeLists.txt
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> app/CMakeLists.txt
 echo "LINK_DIRECTORIES (\${PROJECT_BINARY_DIR}/lib)"                            >> app/CMakeLists.txt
-echo "TARGET_LINK_LIBRARIES($1 kkkmmu fault llog)"                              >> app/CMakeLists.txt
+echo "TARGET_LINK_LIBRARIES($1 kkkmmu fault llog libran)"                       >> app/CMakeLists.txt
 echo "SET(CMAKE_C_FLAGS \"-Wall -Werror -g -pg -finstrument-functions -ftest-coverage -fprofile-arcs -funwind-tables -rdynamic\")"                                      >> app/CMakeLists.txt
-echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${CMAKE_CURRENT_SOURCE_DIR} \${PROJECT_SOURCE_DIR}/lib/libfault)"                          >> app/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${CMAKE_CURRENT_SOURCE_DIR} \${PROJECT_SOURCE_DIR}/lib/libfault \${PROJECT_SOURCE_DIR}/lib/llog/src \${PROJECT_SOURCE_DIR}/lib/libran/src)"                >> app/CMakeLists.txt
 
 touch test/$1Test.c
 echo "#include \"$1.h\""                                                        > test/$1Test.c
 echo "#include <llog.h>"                                                        >> test/$1Test.c
+echo "#include <random.h>"                                                      >> test/$1Test.c
 echo "#include <unity.h>"                                                       >> test/$1Test.c
 echo "#include \"fault.h\""                                                     >> test/$1Test.c
 echo "#include \"unity_internals.h\""                                           >> test/$1Test.c
@@ -138,9 +143,9 @@ echo "AUX_SOURCE_DIRECTORY(\${CMAKE_CURRENT_SOURCE_DIR} APP_SRC)"               
 echo "ADD_EXECUTABLE($1Test \${APP_SRC})"                                       >> test/CMakeLists.txt
 echo "SET(EXECUTABLE_OUTPUT_PATH \${PROJECT_BINARY_DIR}/bin)"                   >> test/CMakeLists.txt
 echo "LINK_DIRECTORIES (\${PROJECT_BINARY_DIR}/lib)"                            >> test/CMakeLists.txt
-echo "TARGET_LINK_LIBRARIES($1Test kkkmmu unity llog fault)"                    >> test/CMakeLists.txt
+echo "TARGET_LINK_LIBRARIES($1Test kkkmmu unity llog fault libran)"             >> test/CMakeLists.txt
 echo "SET(CMAKE_C_FLAGS \"-Wall -Werror -g -pg -finstrument-functions -ftest-coverage -fprofile-arcs -funwind-tables -rdynamic\")"                                      >> test/CMakeLists.txt
-echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/unity \${PROJECT_SOURCE_DIR}/lib/llog/src \${PROJECT_SOURCE_DIR}/lib/libfault)"        >> test/CMakeLists.txt
+echo "INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/src \${PROJECT_SOURCE_DIR}/lib/unity \${PROJECT_SOURCE_DIR}/lib/llog/src \${PROJECT_SOURCE_DIR}/lib/libfault \${PROJECT_SOURCE_DIR}/lib/libran/src)"             >> test/CMakeLists.txt
 
 echo "CMAKE_MINIMUM_REQUIRED(VERSION 2.8)"                                      >> tools/CMakeLists.txt
 echo "SET(CMAKE_VERBOSE_MAKEFILE on)"                                           >> tools/CMakeLists.txt
@@ -233,9 +238,11 @@ git clone https://github.com/lamproae/etrace.git                                
 # git clone https://github.com/lamproae/unpv13e.git                               lib/unpv13e
 # git clone https://github.com/lamproae/apue.3e.git                               lib/apue
 
+# A random number generte lib from ovs
+git clone https://github.com/lamproae/libran.git                                lib/libran
 # Unix network programming and Advanced programming in unix environment
-# git clone https://github.com/lamproae/libunp.git                                lib/libunp
-# git clone https://github.com/lamproae/libapue.git                               lib/libapue
+git clone https://github.com/lamproae/libunp.git                                lib/libunp
+git clone https://github.com/lamproae/libapue.git                               lib/libapue
 # git clone https://github.com/lamproae/jemalloc.git                              lib/jemalloc
 # git clone https://github.com/lamproae/jemalloc-cmake.git                        lib/jemalloc-cmake
 
@@ -302,3 +309,9 @@ git clone https://github.com/lamproae/libmill.git                               
 
 # A c unit test framewor
 # git clone https://github.com/libcheck/check.git                                 lib/check
+
+# A simple http-parser
+# git clone https://github.com/nodejs/http-parser.git                             lib/http-parser
+
+# A command line tool and library to transfer data in URL format
+# git clone https://github.com/lamproae/curl.git                                  lib/curl
