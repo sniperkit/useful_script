@@ -221,7 +221,7 @@ function prepare_misc()
         mv $top/kdebug/apps/linux $top/kdebug/kernel/
     fi
 
-    export PROJECT=$(top)/kdebug/
+    export PROJECT=$top/kdebug
 
     echo 1 >> .misc.p
 }
