@@ -11,24 +11,21 @@
 
 # User Info
 
-export USERNAME="Kirtika Ruchandani"
-export NICKNAME="rkirti"
+export USERNAME="liwei"
+export NICKNAME="kkkmmu"
 
 # Distribute bashrc into smaller, more specific files
 
-source .shells/defaults
-source .shells/functions
-source .shells/exports
-source .shells/alias
-source .shells/prompt   # Fancy prompt with time and current working dir
-source .shells/git      # Conveniences - Display current branch etc
+source $HOME/.shells/defaults
+source $HOME/.shells/functions
+source $HOME/.shells/exports
+source $HOME/.shells/alias
+source $HOME/.shells/prompt   # Fancy prompt with time and current working dir
+source $HOME/.shells/git      # Conveniences - Display current branch etc
 
 # Welcome message
 echo -ne "Good Morning, $NICKNAME! It's "; date '+%A, %B %-d %Y'
-echo -e "And now your moment of Zen:"; fortune
 echo
 echo "Hardware Information:"
-sensors  # Needs: 'sudo apt-get install lm-sensors'
-uptime   # Needs: 'sudo apt-get install lsscsi'
-lsscsi
 free -m
+eval $(dircolors -b $HOME/.dircolors)
