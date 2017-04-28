@@ -8,6 +8,24 @@ let g:go_highlight_build_constraints = 1
 let g:spf13_keep_trailing_whitespace = 1
 let g:cscope_silent=1
 
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 1
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -35,6 +53,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'edkolev/tmuxline.vim'
 Bundle 'edkolev/promptline.vim'
 Bundle 'vim-ctrlspace/vim-ctrlspace'
+Bundle 'kien/ctrlp.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -88,6 +107,21 @@ set cindent
 set nu
 set laststatus=2
 set background=dark
+
+nnoremap <Leader>b :bp<CR>
+nnoremap <Leader>f :bn<CR>
+
+nnoremap <Leader>l :ls<CR>
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
 
 hi link CtrlSpaceNormal   PMenu
 hi link CtrlSpaceSelected PMenuSel
@@ -187,7 +221,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 set updatetime=250
 set hidden
-"set t_Co=256
+set t_Co=256
 let g:CtrlSpaceSearchTiming = 500
 
 ab epd extern void printd(const char * fmt, , .);
