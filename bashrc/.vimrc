@@ -24,13 +24,17 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'Blackrush/vim-gocode'
 Bundle 'lamproae/vim-go'
 Bundle 'tpope/vim-markdown'
-"Bundle 'vim-airline/vim-airline'
-"Bundle 'vim-airline/vim-airline-themes'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/desert256.vim'
 Bundle 'vim-syntastic/syntastic'
+Bundle 'majutsushi/tagbar'
+Bundle 'edkolev/tmuxline.vim'
+Bundle 'edkolev/promptline.vim'
+Bundle 'vim-ctrlspace/vim-ctrlspace'
 call vundle#end()
 filetype plugin indent on
 
@@ -56,9 +60,12 @@ nnoremap <leader>l :call ToggleLocationList()<CR>
 
 nnoremap <leader>tt :TlistOpen<CR>
 nnoremap <leader>nt :NERDTree<CR>
+nnoremap <leader>m :MRU<CR>
 
+nmap <leader>tb :TagbarToggle<CR>
 nmap <C-n> :cnext<CR>
 nmap <C-p> :cprev<CR>
+map <C-q> :NERDTreeToggle<CR>
 
 nnoremap <leader>rg :Rgrep<CR>
 nnoremap <leader>q :q<CR>
@@ -73,7 +80,7 @@ set tabstop=8
 set linespace=8
 set shiftwidth=4
 "set statusline=%F\ %m%h%r%<%=\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
-set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
+"set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
 set ruler
 syntax on
 set hlsearch
@@ -82,20 +89,78 @@ set nu
 set laststatus=2
 set background=dark
 
+hi link CtrlSpaceNormal   PMenu
+hi link CtrlSpaceSelected PMenuSel
+hi link CtrlSpaceSearch   Search
+hi link CtrlSpaceStatus   StatusLine
+
 let Grep_Default_Filelist='*.[chS]'
 let Grep_Default_Options='-i --color=auto'
 let Grep_Skip_Dirs='.svn'
 
 let g:indentLine_char='|'
 let g:indentLine_color_term=239
-"let g:indentLine_color_gui="#A4E57E"
+let g:indentLine_color_gui="#A4E57E"
 let g:indentLine_color_dark=1
 let g:indentLine_enabled=1
 let Tlist_Use_Right_Window=1
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
+let g:airline_symbols = {}
+"let g:airline_theme="badcat" 
+let g:airline_theme="luna" 
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '❮'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_symbols.readonly = '⎇'
+let g:airline_symbols.space = ' ' 
+
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
 let MRU_Max_Menu_Entries = 20
+let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_powerline_separators = 0
+
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W', '#F'],
+      \'x'    : '#(date)',
+      \'y'    : ['%R', '%a', '%Y'],
+      \'z'    : '#H'}
+
+let g:tmuxline_separators = {
+    \ 'left' : '▶',
+    \ 'left_alt': '▶',
+    \ 'right' : '◀',
+    \ 'right_alt' : '◀',
+    \ 'space' : ' '}
+
+let g:tmuxline_theme = {
+    \   'a'    : [ 236, 103 ],
+    \   'b'    : [ 253, 239 ],
+    \   'c'    : [ 244, 236 ],
+    \   'x'    : [ 244, 236 ],
+    \   'y'    : [ 253, 239 ],
+    \   'z'    : [ 236, 103 ],
+    \   'win'  : [ 103, 236 ],
+    \   'cwin' : [ 236, 103 ],
+    \   'bg'   : [ 244, 236 ],
+    \ }
 
 "colorscheme koehler
 "colorscheme evening
@@ -109,7 +174,8 @@ let MRU_Max_Menu_Entries = 20
 "colorscheme jellybeans
 "colorscheme PaperColor
 "colorscheme desert
-colorscheme desert256
+"colorscheme desert256
+"colorscheme airline
 
 "autocmd vimenter * NERDTree
 "autocmd vimenter *  TlistOpen
@@ -118,9 +184,11 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-q> :NERDTreeToggle<CR>
 
 set updatetime=250
+set hidden
+"set t_Co=256
+let g:CtrlSpaceSearchTiming = 500
 
 ab epd extern void printd(const char * fmt, , .);
 ab pd printd("[%s][%d]-------------------\n", __func__, __LINE__);
