@@ -1,3 +1,7 @@
+# Resouses for learning go
+github.com/mmcgrana/gobyexample
+github.com/tmrts/go-patterns.git 
+
 # yaml parsing/encoding
 gopkg.in/yaml.v2
 
@@ -96,3 +100,9 @@ github.com/skip2/go-qrcode
 
 #WebKit
 github.com/sourcegraph/go-webkit2 
+
+# Go memory cache
+github.com/bradfitz/gomemcache/memcache
+
+# Elasticsearch client for go
+https://github.com/olivere/elastic.git
