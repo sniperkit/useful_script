@@ -106,3 +106,8 @@ github.com/bradfitz/gomemcache/memcache
 
 # Elasticsearch client for go
 https://github.com/olivere/elastic.git
+
+# CSS selector package in go
+https://github.com/andybalholm/cascadia.git
+# CSS selector cheatseet
+http://butlerccwebdev.net/support/css-selectors-cheatsheet.html
