@@ -1,5 +1,32 @@
 www.xiezhen.men
 www.taotouba.net
+www.chaomobang.com
+www.lesmao.com
+www.yqmn.com
+www.xiliti.com
+www.24meinv.me
+www.18dx.net
+www.uumeitu.com
+www.iimm.cc
+www.zhuamei.net
+www.meimeizi.com
+www.tuigoad.com
+www.meipics.com
+www.qugirl.com
+www.mmonly.cc
+www.7kk.com
+www.meitumi.com
+www.tesetu.com
+www.99bz.net
+www.ligui.org
+www.duoduotuku.com
+www.meitug.com
+www.tuimo.com
+www.qindouke.com
+www.777zp.cn
+www.itokoo.com
+www.xxxiao.com
+www.ttttba.com
 www.umei.cc
 www.aitaotu.com
 www.mzitu.com
@@ -11,10 +38,9 @@ www.keke12345.net
 www.721g.com
 www.fuli927.com
 www.itu8.com
-www.ttttba.com
-www.ligui.org
 www.169ee.com
 www.renti1000.com
+www.imodelclub.com
 www.mmjpeg.com
 www.meitulu.com
 www.nenmb.com
@@ -31,7 +57,13 @@ www.meituri.com
 www.5kmm.com
 www.7kk.com/meinv
 www.ycgkja.com
+www.weimeixi.com
+www.xibixibi.com
+www.jdlingyu.moe
 
+#gif
+
+www.ddqsw.com
 
 #
 
@@ -64,3 +96,4 @@ gif-porn.net
 http://www.gifporntube.com/
 www.porngif.org
 http://xxgifs.com/
+
