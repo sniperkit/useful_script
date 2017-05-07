@@ -3,6 +3,16 @@ www.taotouba.net
 www.chaomobang.com
 www.lesmao.com
 www.yqmn.com
+www.5imn.cn
+www.mxgjd.com
+www.xxxiao.com
+www.ttttba.com
+pic.101711.com
+www.sotutu.com
+www.90meiimei.com
+www.yesse.cc
+www.mzsock.com
+www.pcxpcx.com
 www.xiliti.com
 www.24meinv.me
 www.18dx.net
@@ -25,8 +35,6 @@ www.tuimo.com
 www.qindouke.com
 www.777zp.cn
 www.itokoo.com
-www.xxxiao.com
-www.ttttba.com
 www.umei.cc
 www.aitaotu.com
 www.mzitu.com
