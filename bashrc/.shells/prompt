@@ -41,14 +41,14 @@ function pre_prompt {
 PROMPT_COMMAND=pre_prompt
 
 case "$TERM" in
-xterm|liniux)
-    PS1="$green($yellow\u@\h \$(date \"+%a, %d %b %y\")$green)($yellow\${PWD}$green)$green($yellow\$(parse_git_branch)\$$green)─>$white "
+xterm|linux)
+    PS1="$cyan($orange\u@\h$cyan in $yellow\w$cyan)($magenta\$(parse_git_branch)\$$cyan) ➤ $white "
     ;;
 screen)
-    PS1="$green($yellow\u@\h \$(date \"+%a, %d %b %y\")$green)($yellow\${PWD}$green)$green─>$white "
+    PS1="$cyan($orange\u@\h$cyan in $yellow\w$cyan)($red\$(parse_git_branch)\$$cyan) ➤ $white "
     ;;    
     *)
-    PS1="(\u@\h \$(date \"+%a, %d %b %y\"))(\${PWD})(\$(parse_git_branch)\$)─> "
+    PS1="$cyan($orange\u@\h$cyan in $yellow\w$cyan)($red\$(parse_git_branch)\$$cyan) ➤ $white "
     ;;
 esac
 
