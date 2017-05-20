@@ -8,6 +8,8 @@ let g:go_highlight_build_constraints = 1
 let g:spf13_keep_trailing_whitespace = 1
 let g:cscope_silent=1
 
+let g:vimshell_prompt="gogogo$$"
+
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
@@ -16,6 +18,7 @@ let g:cscope_silent=1
 "let g:syntastic_auto_loc_list = 1
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 1
+set encoding=utf-8
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
 
@@ -33,7 +36,7 @@ let mapleader="."
 
 call vundle#begin()
 Bundle 'brookhong/cscope.vim'
-Bundle 'Yggdroot/indentLine'
+"Bundle 'Yggdroot/indentLine'
 Bundle 'vim-scripts/grep.vim'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'scrooloose/nerdtree'
@@ -44,7 +47,7 @@ Bundle 'lamproae/vim-go'
 Bundle 'tpope/vim-markdown'
 Bundle 'vim-airline/vim-airline'
 Bundle 'vim-airline/vim-airline-themes'
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/desert256.vim'
@@ -54,6 +57,16 @@ Bundle 'edkolev/tmuxline.vim'
 Bundle 'edkolev/promptline.vim'
 Bundle 'vim-ctrlspace/vim-ctrlspace'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimshell.vim'
+Bundle 'Shougo/vimproc'
+Bundle 'rdnetto/YCM-Generator'
+Bundle 'tpope/vim-surround'
+Bundle 'nrc/rustfmt'
+Bundle 'rust-lang/rust.vim'
+Bundle 'mattn/webapi-vim'
+Bundle 'udalov/kotlin-vim'
+Bundle 'dart-lang/dart-vim-plugin'
 call vundle#end()
 filetype plugin indent on
 
@@ -91,12 +104,17 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>wq :wq<CR>
 nnoremap <leader>g :<C-]><CR>
+nnoremap <leader>vs :VimShell<CR>
+nnoremap <leader>vc :VimShellClose<CR>
+nnoremap <leader>vp :VimShellPop<CR>
+
+inoremap jk <esc>
 
 "set lines=60
 set nolist
 set noexpandtab
-set tabstop=8
-set linespace=8
+set tabstop=4
+set linespace=4
 set shiftwidth=4
 "set statusline=%F\ %m%h%r%<%=\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
 "set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
@@ -106,7 +124,7 @@ set hlsearch
 set cindent
 set nu
 set laststatus=2
-set background=dark
+"set background=dark
 
 nnoremap <Leader>b :bp<CR>
 nnoremap <Leader>f :bn<CR>
@@ -123,14 +141,19 @@ nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
 nnoremap <Leader>0 :10b<CR>
 
+nnoremap <Leader>o :copen<CR>
+nnoremap <Leader>c :cclose<CR>
+nnoremap <Leader>w :cw<CR>
+
 hi link CtrlSpaceNormal   PMenu
 hi link CtrlSpaceSelected PMenuSel
 hi link CtrlSpaceSearch   Search
 hi link CtrlSpaceStatus   StatusLine
 
-let Grep_Default_Filelist='*.[chS]'
+let Grep_Default_Filelist='*.[cshS] *.go *.py *.cpp *.hpp *.cc *.js'
+let Grep_Skip_Files = '*.bak *~ *.so *.i *.a *.o'
 let Grep_Default_Options='-i --color=auto'
-let Grep_Skip_Dirs='.svn'
+let Grep_Skip_Dirs='.svn .git'
 
 let g:indentLine_char='|'
 let g:indentLine_color_term=239
@@ -207,7 +230,7 @@ let g:tmuxline_theme = {
 "colorscheme hybrid
 "colorscheme jellybeans
 "colorscheme PaperColor
-"colorscheme desert
+colorscheme desert
 "colorscheme desert256
 "colorscheme airline
 
@@ -218,14 +241,14 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd VimEnter * Tmuxline
+autocmd vimenter * Tmuxline 
 
 set updatetime=250
 set hidden
 set t_Co=256
-let g:CtrlSpaceSearchTiming = 500
+"let g:CtrlSpaceSearchTiming = 500
 
-ab epd extern void printd(const char * fmt, , .);
-ab pd printd("[%s][%d]-------------------\n", __func__, __LINE__);
-ab pk printk(KERN_EMERG "[%s][%d]-------------------\n", __func__, __LINE__);
-ab .. , 
+"mdir ~/.vim/bundle
+"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"BundleInstall
+"BundleUpdate
