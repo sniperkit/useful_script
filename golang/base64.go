@@ -1,75 +1,58 @@
 package main
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
 	"encoding/base64"
-	"fmt"
-	"io"
+	"log"
+	"os"
 )
 
 func main() {
-	originalText := "encrypt this golang encrypt value to base64 ryptoText := encrypt(key, originalText)fmt.Println(cryptoText) encrypt base64 crypto to original value text := decrypt(key, cryptoText) fmt.Printf(text)"
-	fmt.Println(originalText)
-
-	key := []byte("example key 1234")
-
-	// encrypt value to base64
-	cryptoText := encrypt(key, originalText)
-	fmt.Println(cryptoText)
-
-	// encrypt base64 crypto to original value
-	text := decrypt(key, cryptoText)
-	fmt.Printf(text)
+	encoder()
+	encodeToString()
+	encoding()
 }
 
-// encrypt string to base64 crypto using AES
-func encrypt(key []byte, text string) string {
-	// key := []byte(keyText)
-	plaintext := []byte(text)
-
-	block, err := aes.NewCipher(key)
-	if err != nil {
-		panic(err)
-	}
-
-	// The IV needs to be unique, but not secure. Therefore it's common to
-	// include it at the beginning of the ciphertext.
-	ciphertext := make([]byte, aes.BlockSize+len(plaintext))
-	iv := ciphertext[:aes.BlockSize]
-	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
-		panic(err)
-	}
-
-	stream := cipher.NewCFBEncrypter(block, iv)
-	stream.XORKeyStream(ciphertext[aes.BlockSize:], plaintext)
-
-	// convert to base64
-	return base64.URLEncoding.EncodeToString(ciphertext)
+func encoder() {
+	input := []byte("你好，我是ETO")
+	encoder := base64.NewEncoder(base64.StdEncoding, os.Stdout)
+	encoder.Write(input)
+	// Must close the encoder when finished to flush any partial blocks.
+	// If you comment out the following line, the last partial block "r"
+	// won't be encoded.
+	encoder.Close()
+	// Output:
+	// Zm9vAGJhcg==
 }
 
-// decrypt from base64 to decrypted string
-func decrypt(key []byte, cryptoText string) string {
-	ciphertext, _ := base64.URLEncoding.DecodeString(cryptoText)
-
-	block, err := aes.NewCipher(key)
+func encodeToString() {
+	msg := "Hello, 世界"
+	encoded := base64.StdEncoding.EncodeToString([]byte(msg))
+	log.Println(encoded)
+	decoded, err := base64.StdEncoding.DecodeString(encoded)
 	if err != nil {
-		panic(err)
+		log.Println("decode error:", err)
+		return
 	}
+	log.Println(string(decoded))
+}
 
-	// The IV needs to be unique, but not secure. Therefore it's common to
-	// include it at the beginning of the ciphertext.
-	if len(ciphertext) < aes.BlockSize {
-		panic("ciphertext too short")
+func encoding() {
+	//This code will effect the generated result
+	const encodeStd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	const encodeURL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+	log.Println(len(encodeStd))
+	log.Println(len([]byte(encodeStd)))
+	var funnyEncoding = base64.NewEncoding(encodeStd).WithPadding(rune('@'))
+
+	encoded := funnyEncoding.EncodeToString([]byte("Hello world!"))
+	log.Println(encoded)
+	decoded, err := funnyEncoding.DecodeString(encoded)
+	if err != nil {
+		log.Println(err)
 	}
-	iv := ciphertext[:aes.BlockSize]
-	ciphertext = ciphertext[aes.BlockSize:]
+	log.Println(string(decoded))
+}
 
-	stream := cipher.NewCFBDecrypter(block, iv)
-
-	// XORKeyStream can work in-place if the two arguments are the same.
-	stream.XORKeyStream(ciphertext, ciphertext)
-
-	return fmt.Sprintf("%s", ciphertext)
+func init() {
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
 }

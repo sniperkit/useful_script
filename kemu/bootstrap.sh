@@ -192,8 +192,8 @@ function prepare_env()
 
 function prepare_toolchain() 
 {
-    if [ ! -d crosstool-ng ]; then
-        git clone https://github.com/crosstool-ng/crosstool-ng.git 
+    if [ ! -d $top/tools/crosstool-ng ]; then
+        git clone https://github.com/crosstool-ng/crosstool-ng.git $top/tools/crosstool-ng
     fi
 
     cd $top/tools/crosstool-ng \
@@ -207,6 +207,7 @@ function prepare_toolchain()
         && ct-ng CT_PREFIX=$top build
 
     sudo cp -a $top/x86_64-unknown-linux-gnu $top/kdebug/tools/toolchain/
+	cd $top
     echo 1 >> .crosstool-ng.p
 }
 
