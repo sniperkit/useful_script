@@ -67,7 +67,18 @@ Bundle 'rust-lang/rust.vim'
 Bundle 'mattn/webapi-vim'
 Bundle 'udalov/kotlin-vim'
 Bundle 'dart-lang/dart-vim-plugin'
+Bundle 'vim-scripts/DrawIt'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'tpope/vim-fugitive'
+Bundle 'easymotion/vim-easymotion'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'tomasr/molokai'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'mhinz/vim-startify'
+Bundle 'w0rp/ale'
 call vundle#end()
+
+let &runtimepath.=',~/.vim/bundle/ale'
 filetype plugin indent on
 
 " s: Find this C symbol
@@ -219,6 +230,9 @@ let g:tmuxline_theme = {
     \   'bg'   : [ 244, 236 ],
     \ }
 
+let g:ale_sign_column_always = 1
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 "colorscheme koehler
 "colorscheme evening
 "colorscheme morning
@@ -233,6 +247,7 @@ let g:tmuxline_theme = {
 colorscheme desert
 "colorscheme desert256
 "colorscheme airline
+colorscheme molokai
 
 "autocmd vimenter * NERDTree
 "autocmd vimenter *  TlistOpen
@@ -252,3 +267,30 @@ set t_Co=256
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "BundleInstall
 "BundleUpdate
+"Useful command:
+"dw, -----> delete word
+"yt, -----> copy until ',' ---- we can do yt anything.
+"yw, -----> copy word.
+"dt, -----> delete until ',' ---- we can do dt anything.
+"ge, -----> end.
+"gE, -----> Delimit end.
+"Tx, -----> Till x
+"tx, -----> till x
+"b, -----> word
+"B, -----> word
+"Fx, -----> Find x ',' ---> previous x ';' ----> next x
+"fx, -----> find x ',' ---> previous x ';' ----> next x
+"L, -----> Screen
+"H, -----> Screen
+"#, -----> find word under cousor
+"*, -----> find word under cousor
+"'', -----> last location
+"'., -----> last edit
+"<leader>di ----------> start DrawIt
+"<leader>ds ----------> stop DrawIt
+onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap il( :<c-u>normal! F)vi(<cr>
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
