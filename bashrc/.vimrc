@@ -22,7 +22,6 @@ set encoding=utf-8
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
@@ -41,7 +40,6 @@ Bundle 'vim-scripts/grep.vim'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'airblade/vim-gitgutter'
-"Bundle 'lamproae/tComment.vim'
 Bundle 'Blackrush/vim-gocode'
 Bundle 'lamproae/vim-go'
 Bundle 'tpope/vim-markdown'
@@ -51,7 +49,7 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/desert256.vim'
-Bundle 'vim-syntastic/syntastic'
+"Bundle 'vim-syntastic/syntastic'
 Bundle 'majutsushi/tagbar'
 Bundle 'edkolev/tmuxline.vim'
 Bundle 'edkolev/promptline.vim'
@@ -76,6 +74,8 @@ Bundle 'tomasr/molokai'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'mhinz/vim-startify'
 Bundle 'w0rp/ale'
+Bundle 'wellle/targets.vim'
+"Bundle 'wincent/command-t' 
 call vundle#end()
 
 let &runtimepath.=',~/.vim/bundle/ale'
@@ -286,10 +286,14 @@ set t_Co=256
 "*, -----> find word under cousor
 "'', -----> last location
 "'., -----> last edit
+"dib -----> delete all content in ()
+"yap -----> copy current paragrap
+"dap -----> Delete all current paragraph
 "<leader>di ----------> start DrawIt
 "<leader>ds ----------> stop DrawIt
 onoremap in( :<c-u>normal! f(vi(<cr>
 onoremap il( :<c-u>normal! F)vi(<cr>
+onoremap af :<C-u>normal! ggVG<CR>
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 nnoremap <expr> n  'Nn'[v:searchforward]
