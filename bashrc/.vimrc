@@ -1,14 +1,13 @@
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_functions = 1 
+let g:go_highlight_methods = 1 
+let g:go_highlight_structs = 1 
 let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
+let g:go_highlight_operators = 1 
 let g:go_highlight_build_constraints = 1
 
-let g:spf13_keep_trailing_whitespace = 1
-let g:cscope_silent=1
-
-let g:vimshell_prompt="gogogo$$"
+let g:spf13_keep_trailing_whitespace = 1 
+let g:cscope_silent = 1
+"gogogo$$"
 
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
@@ -21,12 +20,11 @@ let g:vimshell_prompt="gogogo$$"
 set encoding=utf-8
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
-
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
+			\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+			\ 'file': '\v\.(exe|so|dll)$',
+			\ 'link': 'some_bad_symbolic_links',
+			\ }
 
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -75,7 +73,9 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'mhinz/vim-startify'
 Bundle 'w0rp/ale'
 Bundle 'wellle/targets.vim'
-"Bundle 'wincent/command-t' 
+Bundle 'crosbymichael/vim-cfmt'
+"Bundle 'Chiel92/vim-autoformat'
+Bundle "rhysd/vim-clang-format"
 call vundle#end()
 
 let &runtimepath.=',~/.vim/bundle/ale'
@@ -118,6 +118,7 @@ nnoremap <leader>g :<C-]><CR>
 nnoremap <leader>vs :VimShell<CR>
 nnoremap <leader>vc :VimShellClose<CR>
 nnoremap <leader>vp :VimShellPop<CR>
+nnoremap <leader>d :GoDoc<CR>
 
 inoremap jk <esc>
 
@@ -173,8 +174,8 @@ let g:indentLine_color_dark=1
 let g:indentLine_enabled=1
 let Tlist_Use_Right_Window=1
 let g:airline_symbols = {}
-"let g:airline_theme="badcat" 
-let g:airline_theme="luna" 
+"let g:airline_theme="badcat"
+let g:airline_theme="luna"
 let g:airline_left_sep = '▶'
 let g:airline_left_alt_sep = '❯'
 let g:airline_right_sep = '◀'
@@ -190,7 +191,7 @@ let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.readonly = '⎇'
-let g:airline_symbols.space = ' ' 
+let g:airline_symbols.space = ' '
 
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#enabled = 1
@@ -203,32 +204,32 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_powerline_separators = 0
 
 let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
-      \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W', '#F'],
-      \'x'    : '#(date)',
-      \'y'    : ['%R', '%a', '%Y'],
-      \'z'    : '#H'}
+			\'a'    : '#S',
+			\'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
+			\'win'  : ['#I', '#W'],
+			\'cwin' : ['#I', '#W', '#F'],
+			\'x'    : '#(date)',
+			\'y'    : ['%R', '%a', '%Y'],
+			\'z'    : '#H'}
 
 let g:tmuxline_separators = {
-    \ 'left' : '▶',
-    \ 'left_alt': '▶',
-    \ 'right' : '◀',
-    \ 'right_alt' : '◀',
-    \ 'space' : ' '}
+			\ 'left' : '▶',
+			\ 'left_alt': '▶',
+			\ 'right' : '◀',
+			\ 'right_alt' : '◀',
+			\ 'space' : ' '}
 
 let g:tmuxline_theme = {
-    \   'a'    : [ 236, 103 ],
-    \   'b'    : [ 253, 239 ],
-    \   'c'    : [ 244, 236 ],
-    \   'x'    : [ 244, 236 ],
-    \   'y'    : [ 253, 239 ],
-    \   'z'    : [ 236, 103 ],
-    \   'win'  : [ 103, 236 ],
-    \   'cwin' : [ 236, 103 ],
-    \   'bg'   : [ 244, 236 ],
-    \ }
+			\   'a'    : [ 236, 103 ],
+			\   'b'    : [ 253, 239 ],
+			\   'c'    : [ 244, 236 ],
+			\   'x'    : [ 244, 236 ],
+			\   'y'    : [ 253, 239 ],
+			\   'z'    : [ 236, 103 ],
+			\   'win'  : [ 103, 236 ],
+			\   'cwin' : [ 236, 103 ],
+			\   'bg'   : [ 244, 236 ],
+			\ }
 
 let g:ale_sign_column_always = 1
 highlight clear ALEErrorSign
@@ -256,7 +257,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd vimenter * Tmuxline 
+autocmd vimenter * Tmuxline
 
 set updatetime=250
 set hidden
@@ -298,3 +299,16 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
+
+"au BufWrite * :Autoformat
+"au BufWrite * :RemoveTrailingSpaces
+"au BufWrite * :ClangFormat
+
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11",
+            \ "BreakBeforeBraces" : "Stroustrup"}
+
+autocmd FileType c,cpp ClangFormatAutoEnable
