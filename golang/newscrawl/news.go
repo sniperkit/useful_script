@@ -8,87 +8,70 @@ import (
 	"log"
 	//"github.com/guotie/gogb2312"
 	"crypto/tls"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
-func main() {
+//<a target="_blank" href="http://news.sina.com.cn/c/nd/2017-06-11/doc-ifyfzfyz3230662.shtml">东航悉尼飞上海航班发动机损伤 已返航人机安全</a>
+//var newre = regexp.MustCompile(`\<a[[:word:][:space:]_\"\'=]*href=\"+(?P<link>[[:word:]:\.\/-_\?$%^&]+)\"`)
+//var newre = regexp.MustCompile(`\<a[[:word:][:space:]_\"\'=]*href=\"+(?P<link>[[:word:]:\.\/-_\?$%^&]+)\"[[:space:]]*\>(?P<head>[\p{Han}[:space:][:word:]#%&@]+)\<`)
+
+var newre = regexp.MustCompile(`\<a[[:word:][:space:]_\"\'=]*href=\"+(?P<link>[[:word:]:\.\/-_\?$%^&]+)\"[[:space:]]*\>(?P<head>.*)<`)
+
+type News struct {
+	Link string
+	Head string
+}
+
+var Site = map[string]string{
+	"http://www.163.com":                         "div.yaowen_news>div>ul>li",
+	"http://sports.163.com/yc":                   "div.topnews>h2&&&div.topnews>ul>li",
+	"http://www.sina.com.cn":                     "ul.news_top>li&&&div.top_newslist>ul>li",
+	"http://sports.sina.com.cn/g/premierleague/": "ul.match_news_list>li",
+	"https://soccer.hupu.com/england/":           "ul.england-bignews>li>h2&&&ul.england-bignews>li>h4",
+}
+
+func GetNewsFromSite(site, rule string) []*News {
 	sp := NewSpider("News")
-	news, err := sp.SpideHTML("http://www.163.com", "div.yaowen_news>div>ul>li")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, s := range news {
-		log.Println(s)
-	}
 
-	ycnews, err := sp.SpideHTML("http://sports.163.com/yc", "div.topnews>h2")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, s := range ycnews {
-		log.Println(s)
-	}
+	result := make([]*News, 0, 1)
+	rules := strings.Split(rule, "&&&")
 
-	ycnews, err = sp.SpideHTML("http://sports.163.com/yc", "div.topnews>ul>li")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, s := range ycnews {
-		log.Println(s)
-	}
-
-	sinanews, err := sp.SpideHTML("http://www.sina.com.cn", "ul.news_top>li")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, s := range sinanews {
-		log.Println(s)
-	}
-
-	sinanews, err = sp.SpideHTML("http://www.sina.com.cn", "div.top_newslist>ul>li")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, s := range sinanews {
-		log.Println(s)
-	}
-
-	sinanews, err = sp.SpideHTML("http://sports.sina.com.cn/g/premierleague/", "ul.match_news_list>li")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, s := range sinanews {
-		log.Println(s)
-	}
-
-	hupunews, err := sp.SpideHTML("https://soccer.hupu.com/england/", "ul.england-bignews>li>h2")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, h := range hupunews {
-		log.Println(h)
-	}
-
-	hupunews, err = sp.SpideHTML("https://soccer.hupu.com/england/", "ul.england-bignews>li>h4")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	for _, h := range hupunews {
-		log.Println(h)
-	}
-
-	/*
-		toutiaonews, err = sp.SpideHTML("http://www.toutiao.com/search/?keyword=英超", "ul.england-bignews>li>h4")
+	var raw []string
+	for _, r := range rules {
+		log.Println(site, r)
+		news, err := sp.SpideHTML(site, r)
 		if err != nil {
 			log.Panic(err.Error())
 		}
-		for _, h := range hupunews {
-			log.Println(h)
-		}
-	*/
+		raw = append(raw, news...)
+	}
 
+	for _, s := range raw {
+		s := strings.Replace(s, " target=\"_blank\"", "", -1)
+		log.Println(s)
+		match := newre.FindStringSubmatch(s)
+		if len(match) == 0 {
+			continue
+		}
+		result = append(result, &News{Link: string(match[1]), Head: string(match[2])})
+	}
+
+	return result
+}
+
+func main() {
+	news := make([]*News, 0, 1)
+	for s, r := range Site {
+		news = append(news, GetNewsFromSite(s, r)...)
+	}
+
+	for _, n := range news {
+		fmt.Println(n.Head, n.Link)
+	}
 }
 
 type Spider struct {

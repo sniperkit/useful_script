@@ -73,9 +73,9 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'mhinz/vim-startify'
 Bundle 'w0rp/ale'
 Bundle 'wellle/targets.vim'
-Bundle 'crosbymichael/vim-cfmt'
-"Bundle 'Chiel92/vim-autoformat'
 Bundle "rhysd/vim-clang-format"
+Bundle "mattn/emmet-vim"
+Bundle "pangloss/vim-javascript"
 call vundle#end()
 
 let &runtimepath.=',~/.vim/bundle/ale'
