@@ -1,7 +1,7 @@
 package rut
 
 import (
-	"assert"
+	"assertion"
 	"cline"
 	"command"
 	"configuration"
@@ -43,49 +43,15 @@ func NewRUT(conf *configuration.Configuration) (*RUT, error) {
 }
 
 func (d *RUT) RunTask(t *task.Task) error {
-	if err := t.CheckPreCondition(); err != nil {
-		log.Println("PreCondition check failed for task: ", t.Name, " with: ", err.Error())
-		return errors.New("PreCondition check failed!: " + err.Error())
-	}
-
-	for _, r := range t.Routines {
-		err := d.RunRoutine(r)
-		if r != nil {
-			log.Println(err)
-		}
-		return errors.New("Cannot run task: " + t.Name + " with: " + err.Error())
-	}
-
-	if err := t.CheckPostCondition(); err != nil {
-		log.Println("PostCondition check failed for task: ", t.Name, " with: ", err.Error())
-		return errors.New("PostCondition check failed!: " + err.Error())
-	}
-
 	return nil
 }
 
 func (d *RUT) RunRoutine(r *routine.Routine) error {
-	log.Println("Running Routine: ", r.Name)
-	for _, c := range r.CMD {
-		_, err := d.RunCommand(c)
-		if err != nil {
-			log.Println("Error happend when run routine: ", r.Name, " with: ", err.Error())
-			return errors.New("Cannot run routine: " + r.Name + " with: " + err.Error())
-		}
-	}
-
-	for _, a := range r.Assert {
-		success := d.Assert(a)
-		if !success {
-			return errors.New("Assertion failed for routine: " + r.Name + " Message: " + a.String())
-		}
-	}
-
 	return nil
 }
 
-func (d *RUT) Assert(a *assert.Assert) bool {
-	result, err := d.RunCommand(a.CMD)
+func (d *RUT) Assert(a *assertion.Assertion) bool {
+	result, err := d.RunCommand(&a.Command)
 	if err != nil {
 		log.Println(err.Error())
 		return false

@@ -1,10 +1,10 @@
-package routine
+package condition
 
 import (
 	"assertion"
 )
 
-type Routine struct {
+type Condition struct {
 	Name        string
 	Assertions  []*assertion.Assertion
 	Description string
