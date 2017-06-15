@@ -1,0 +1,81 @@
+{{template "header"}} 
+<div class="container-fluid display-table">
+	<div class="row-fluid display-table-row">
+		<div class="col-sm-3">
+			{{template "casenavigator" .DB}}
+		</div>
+		<form class="form-horizontal" role="form" action="newcase" method="post">
+			<fieldset>
+				<legend>Case Parameters</legend>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="case_group">Group</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="case_group" name="case_group" type="text" placeholder="L2"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="case_group">Sub Group</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="case_sub_group" name="case_sub_group" type="text" placeholder="Bridge"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="case_feature">Feature</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="case_feature" name="case_feature" type="text" placeholder="VLAN"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="case_name">Name</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="case_name" name="case_name" type="text" placeholder="VLAN CREATE"/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="case_name">DUT List</label>
+					<div class="col-sm-4">
+						<table class="table table-bordered table-hover" id="dut_tab">
+							<thead>
+								<tr>
+									<th class="text-center">#</th>
+									<th class="text-center">Device</th>
+									<th class="text-center">User</th>
+									<th class="text-center">Password</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id='row0'>
+									<td>1</td>
+									<td><input type="text" name='device~0' placeholder='V8500_SFU' class="form-control"/></td>
+									<td><input type="text" name='username~0' placeholder='username' class="form-control"/></td>
+									<td><input type="text" name='password~0' placeholder='password' class="form-control"/></td>
+								</tr>
+								<tr id='row1'></tr>
+							</tbody>
+						</table>
+						<div>
+							<a id="add_dut" class="pull-left">Add DUT</a><a id='del_dut' class="pull-right">Del DUT</a>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="case_topology">Topology</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="case_topology" name="case_topology" type="file" placeholder="Topology.jpg"/>
+					</div>
+				</div>
+			</fieldset>     
+			<fieldset>
+				<legend></legend>
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
+					<button type="submit" name="submit" class="btn btn-block">Submit</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+<script type="text/javascript" src="static/js/newcase.js"></script>
+<link rel="stylesheet" href="static/css/newcase.css">
+{{template "footer"}}

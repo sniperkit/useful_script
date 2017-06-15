@@ -1,0 +1,44 @@
+|||template "vueheader" .|||
+<div class="container">
+	<form class="form-horizontal" id="productform" role="form" action="product" method="post">
+		<fieldset>
+			<legend>Connect to a product</legend>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="device">Name</label>
+				<div class="col-sm-4">
+					<input class="form-control required" id="device" name="device" value="V8500" type="text" placeholder="V8500"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="ip">IP</label>
+				<div class="col-sm-4">
+					<input class="form-control required" id="ip" name="ip" type="text" value="10.71.20.115" placeholder="10.71.20.115"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="group">UserName</label>
+				<div class="col-sm-4">
+					<input class="form-control required" id="username" name="username" type="text" value="admin" placeholder="admin"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="password">password</label>
+				<div class="col-sm-4">
+					<input class="form-control" id="password" name="password" type="text" placeholder="Dasan123456"/>
+				</div>
+			</div>
+		</fieldset>     
+		<fieldset>
+			<legend></legend>
+			<div class="col-sm-2"></div>
+			<div class="col-sm-4">
+				<button type="submit" name="submit" class="btn btn-block">Submit</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<script type="text/javascript" src="static/js/product.js"></script>
+<link rel="stylesheet" href="static/css/product.css">
+|||template "vuefooter"|||

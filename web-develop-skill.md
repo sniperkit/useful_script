@@ -18,3 +18,5 @@
 
 	// html模板定界符
 	Vue.config.unsafeDelimiters = ["{{{", "}}}"]
+
+12. 要将前端的表单数据转换成json(JSON.stringify())以后再传到后端，这样就会使后端的表单解析得到极大的简化。
