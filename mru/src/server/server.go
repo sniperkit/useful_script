@@ -150,6 +150,121 @@ func Product(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func VUETree(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("vuetree.html").Delims("|||", "|||").ParseFiles("asset/web/template/vuetree.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		values := r.Form
+		for k, v := range values {
+			log.Println(k, v[0])
+			io.WriteString(w, k+":"+v[0])
+		}
+	}
+}
+
+func JSTree(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("jstree.html").Delims("|||", "|||").ParseFiles("asset/web/template/jstree.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		values := r.Form
+		for k, v := range values {
+			log.Println(k, v[0])
+			io.WriteString(w, k+":"+v[0])
+		}
+	}
+}
+
+func JSONTree(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("jsontree.html").Delims("|||", "|||").ParseFiles("asset/web/template/jsontree.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		values := r.Form
+		for k, v := range values {
+			log.Println(k, v[0])
+			io.WriteString(w, k+":"+v[0])
+		}
+	}
+}
+
+func ZTreeMenu(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("ztreemenu.html").Delims("|||", "|||").ParseFiles("asset/web/template/ztreemenu.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		values := r.Form
+		for k, v := range values {
+			log.Println(k, v[0])
+			io.WriteString(w, k+":"+v[0])
+		}
+	}
+}
+
+func LaunchTree(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("launchtree.html").Delims("|||", "|||").ParseFiles("asset/web/template/launchtree.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		values := r.Form
+		for k, v := range values {
+			log.Println(k, v[0])
+			io.WriteString(w, k+":"+v[0])
+		}
+	}
+}
+
 func Script(w http.ResponseWriter, r *http.Request) {
 	_, err := r.Cookie("Device")
 	if err != nil {
@@ -271,6 +386,11 @@ func WS(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) Start() {
 	//@liwei: This need more analysis.
+	http.HandleFunc("/ztreemenu", ZTreeMenu)
+	http.HandleFunc("/vuetree", VUETree)
+	http.HandleFunc("/jstree", JSTree)
+	http.HandleFunc("/jsontree", JSONTree)
+	http.HandleFunc("/launchtree", LaunchTree)
 	http.HandleFunc("/runscript", NewRunScript)
 	http.HandleFunc("/script", Script)
 	http.HandleFunc("/product", Product)
@@ -278,5 +398,5 @@ func (s *Server) Start() {
 	http.HandleFunc("/", Product)
 
 	http.Handle("/asset/web/", http.FileServer(http.Dir(".")))
-	http.ListenAndServe(":8080", nil)
+	log.Panic(http.ListenAndServe(":8080", nil))
 }
