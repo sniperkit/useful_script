@@ -9,10 +9,10 @@ import (
 
 func main() {
 	c, err := cline.NewCli(&configuration.Configuration{
-		DeviceName:     "V8500",
+		Device:         "V8500",
 		IP:             "10.71.20.198",
 		Port:           "23",
-		UserName:       "admin",
+		Username:       "admin",
 		Password:       "",
 		EnablePrompt:   ">",
 		LoginPrompt:    "login",
@@ -43,8 +43,8 @@ func main() {
 	}
 
 	data, err := c.RunCommand(&command.Command{
-		RequiredMode: "normal",
-		CMD:          "configure terminal",
+		Mode: "normal",
+		CMD:  "configure terminal",
 	})
 
 	if err != nil {
@@ -54,8 +54,8 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "config",
-		CMD:          "show running-config",
+		Mode: "config",
+		CMD:  "show running-config",
 	})
 
 	if err != nil {

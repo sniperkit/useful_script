@@ -1,7 +1,7 @@
 package configuration
 
 type Configuration struct {
-	DeviceName     string
+	Device         string
 	IP             string
 	Port           string
 	Username       string

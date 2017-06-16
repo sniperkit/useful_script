@@ -14,13 +14,31 @@ import (
 type RUT struct {
 	Name     string
 	cli      *cline.Cli
-	L3       bool //We need to have a feature list. For run each case
-	L2       bool
 	Device   string
 	Username string
 	Password string
 	IP       string
 	Port     string
+}
+
+var DefaultConfigurations = configuration.Configuration{
+	EnablePrompt:   ">",
+	LoginPrompt:    "login",
+	PasswordPrompt: "Password",
+	Prompt:         "#",
+	ModeDB: map[string]string{
+		"login":    "login",
+		"password": "Passowrd:",
+		"enable":   "SWITCH>",
+		//	"normal":        "#",
+		"config":        "(config)",
+		"config-vlan":   "(config-vlan)",
+		"config-if":     "(config-if[",
+		"config-dhcp":   "(config-dhcp[",
+		"config-router": "(config-router)",
+		"shell":         "*SWITCH",
+		"bcmshell":      "BCM.0>",
+	},
 }
 
 type DB struct {
@@ -34,11 +52,26 @@ func (db *DB) GetRUTByName(name string) *RUT {
 	return nil
 }
 
-func NewRUT(conf *configuration.Configuration) (*RUT, error) {
-	if conf == nil {
-		return nil, errors.New("Invalid config")
-	}
+func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
+	var conf configuration.Configuration
+	conf.Name = r.Name
+	conf.Username = r.Username
+	conf.Password = r.Password
+	conf.Device = r.Device
+	conf.IP = r.IP
+	conf.Port = r.Port
 
+	conf.EnablePrompt = DefaultConfigurations.EnablePrompt
+	conf.LoginPrompt = DefaultConfigurations.LoginPrompt
+	conf.PasswordPrompt = DefaultConfigurations.PasswordPrompt
+	conf.Prompt = DefaultConfigurations.Prompt
+	conf.ModeDB = DefaultConfigurations.ModeDB
+
+	return &conf
+}
+
+func New(r *RUT) (*RUT, error) {
+	conf := buildDefaultConfiguration(r)
 	c, err := cline.NewCli(conf)
 	if err != nil {
 		return nil, errors.New("Cannot create new RUT with: " + err.Error())
@@ -49,15 +82,16 @@ func NewRUT(conf *configuration.Configuration) (*RUT, error) {
 		return nil, errors.New("Cannot create new RUT with: " + err.Error())
 	}
 
-	return &RUT{
-		Name:     conf.Name,
-		Username: conf.Username,
-		Password: conf.Password,
-		Device:   conf.DeviceName,
-		IP:       conf.IP,
-		Port:     conf.Port,
-		cli:      c,
-	}, nil
+	r.cli = c
+	return r, nil
+}
+
+func (d *RUT) IsAlive() bool {
+	return true
+}
+
+func (d *RUT) SetModeDB(db map[string]string) {
+	d.cli.SetModeDB(db)
 }
 
 func (d *RUT) RunCommand(cmd *command.Command) (string, error) {

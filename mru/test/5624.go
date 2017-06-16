@@ -9,10 +9,10 @@ import (
 
 func main() {
 	c, err := cline.NewCli(&configuration.Configuration{
-		DeviceName:     "V5624G",
+		Device:         "V5624G",
 		IP:             "10.71.20.167",
 		Port:           "23",
-		UserName:       "admin",
+		Username:       "admin",
 		Password:       "",
 		EnablePrompt:   ">",
 		LoginPrompt:    "login",

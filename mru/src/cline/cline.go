@@ -75,6 +75,21 @@ func (c *Cli) CurrentMode() string {
 	return c.currentMode
 }
 
+func (c *Cli) SetModeDB(db map[string]string) {
+	c.ClearModeDB()
+	for mode, prompt := range db {
+		err := c.AddMode(mode, prompt)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+}
+
+func (c *Cli) ClearModeDB() {
+	c.promptToMode = make(map[string]string, 1)
+	c.modeToPrompt = make(map[string]string, 1)
+}
+
 func (c *Cli) Init() error {
 	for mode, prompt := range c.conf.ModeDB {
 		err := c.AddMode(mode, prompt)

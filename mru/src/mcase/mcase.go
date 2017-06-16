@@ -22,10 +22,18 @@ type Case struct {
 }
 
 func (c *Case) String() string {
-	return fmt.Sprintf("%s>%s>%s>%s", c.Group, c.SubGroup, c.Feature, c.Name)
+	var duts string
+
+	for k, v := range c.RUTs.DB {
+		duts += fmt.Sprintf("[%s->%s]", k, v.Device)
+	}
+	return fmt.Sprintf("%s>%s>%s>%s {%s}", c.Group, c.SubGroup, c.Feature, c.Name, duts)
 }
 
 func (c *Case) AddRUT(r *rut.RUT) {
+	if len(c.RUTs.DB) == 0 {
+		c.RUTs.DB = make(map[string]*rut.RUT, 1)
+	}
 	c.RUTs.DB[r.Name] = r
 }
 

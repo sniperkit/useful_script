@@ -9,17 +9,13 @@ import (
 	"taskresult"
 )
 
-/*
-map[preconditionassertdut~0:[DUT1] clear_command_mode~0:[enable] postconditionassertexpected~0:[this must not be empty] clear_command_expected~0:[this can be empty] task_description:[] routine_command_ut~0:[DUT1] postcondition_description:[] feature:[VLAN] group:[L2] routine_command_expected~0:[this can be empty] precondition_description:[] postconditionassertcli~0:[show running-config] routine_command_cli~0:[show running-config] postconditionassertdut~0:[DUT1] clear_command_ut~0:[DUT1] sgroup:[Bridge] postconditionassertmode~0:[enable] continue:[] preconditionassertmode~0:[enable] routine_description:[] routine_command_mode~0:[enable] name:[vLAN DESTROY] preconditionassertexpected~0:[this must not be empty] clear_command_cli~0:[show running-config] preconditionassertcli~0:[show running-config]]
-*/
-
 type Task struct {
-	Name          string
-	PreCondition  *condition.Condition
-	Routine       *routine.Routine
-	PostCondition *condition.Condition
-	Clear         *routine.Routine
-	Description   string
+	Name          string               `json:"name"`
+	PreCondition  *condition.Condition `json:"precondition"`
+	Routine       *routine.Routine     `json:"routine"`
+	PostCondition *condition.Condition `json:"postcondition"`
+	Clear         *routine.Routine     `json:"clear"`
+	Description   string               `json:"description"`
 }
 
 func (t *Task) Run(db *rut.DB) *taskresult.Result {
