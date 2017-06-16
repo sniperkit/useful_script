@@ -51,7 +51,7 @@ func (c *Case) DelRUT(r *rut.RUT) {
 
 func (c *Case) Run() (string, bool) {
 	if len(c.Tasks) == 0 {
-		log.Printf("This is no task in case: %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name)
+		log.Printf("There is no task in case: %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name)
 		return "", true
 	}
 

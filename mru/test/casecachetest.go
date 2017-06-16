@@ -4,10 +4,12 @@ import (
 	"assertion"
 	"cache"
 	"command"
+	"condition"
 	"fmt"
 	"mcase"
+	"routine"
 	"rut"
-	//"task"
+	"task"
 )
 
 func main() {
@@ -233,7 +235,7 @@ func main() {
 		Command: command.Command{
 			Mode: "normal",
 			CMD:  "show system",
-			End:  "#",
+			End:  "SWITCH[A]#",
 		},
 		Expected: "00:d1:cb:00:69:a2",
 	}
@@ -245,10 +247,287 @@ func main() {
 		Command: command.Command{
 			Mode: "normal",
 			CMD:  "show system",
-			End:  "#",
+			End:  "SWITCH[A]#",
 		},
 		Expected: "00:d0:cb:00:69:cc",
 	}
 
 	a.Assert(&c.RUTs)
+
+	pre := condition.Condition{
+		Name: "Check VLAN Existance",
+		Assertions: []*assertion.Assertion{
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show vlan brief",
+					End:  "#",
+				},
+				UnExpected: "1500",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show ip interface brief",
+					End:  "#",
+				},
+				UnExpected: "1500",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show interface vlan 1500",
+					End:  "#",
+				},
+				Expected: "Can't",
+			},
+		},
+	}
+
+	main := routine.Routine{
+		Name: "Create VLAN Interface",
+		Assertions: []*assertion.Assertion{
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "configure terminal",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "vlan database",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-vlan",
+					CMD:  "vlan 1500",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-vlan",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "interface vlan 1500",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "ip address 123.123.123.123/24",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "no shutdown",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+		},
+	}
+
+	post := condition.Condition{
+		Name: "Check VLAN Existance",
+		Assertions: []*assertion.Assertion{
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show system",
+					End:  "SWITCH[A]#",
+				},
+				Expected: "00:d0:cb:00:69:cc",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show vlan brief",
+					End:  "#",
+				},
+				Expected: "1500",
+			},
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show ip interface brief",
+					End:  "#",
+				},
+				Expected: "1500",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "show interface vlan 1500",
+					End:  "#",
+				},
+				Expected: "br1500",
+			},
+		},
+	}
+
+	clear := routine.Routine{
+		Name: "Create VLAN Interface",
+		Assertions: []*assertion.Assertion{
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "normal",
+					CMD:  "configure terminal",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "interface vlan 1500",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "shutdown",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "no interface vlan 1500",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "vlan database",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-vlan",
+					CMD:  "no vlan 1500",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-vlan",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+		},
+	}
+
+	t := task.Task{Name: "Test VLAN interface"}
+	t.SetPreCondition(&pre)
+	t.SetPostCondition(&post)
+	t.SetMainRoutine(&main)
+	t.SetClearRoutine(&clear)
+	c.AddTask(&t)
+	db.Save()
+	msg, ok := c.Run()
+	fmt.Println(msg, ok)
 }

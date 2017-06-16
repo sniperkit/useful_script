@@ -39,15 +39,15 @@ func (a *Assertion) Verify() (string, bool) {
 	if a.Expected != "" {
 		re = regexp.MustCompile(a.Expected)
 		match := re.FindStringSubmatch(a.Raw)
-		if len(match) == 0 {
+		if match == nil {
 			return fmt.Sprintf("Expected: %s, Get: %s", a.Expected, a.Raw), false
 		} else {
 			return fmt.Sprintf("{{{ Assertion Success }}}: on DUT: %s with command: %s. Expected: %s", a.DUT, a.Command.CMD, a.Expected), true
 		}
 	} else if a.UnExpected != "" {
-		re = regexp.MustCompile(a.Expected)
+		re = regexp.MustCompile(a.UnExpected)
 		match := re.FindStringSubmatch(a.Raw)
-		if len(match) == 0 {
+		if match == nil {
 			return fmt.Sprintf("{{{ Assertion Success }}}: on DUT: %s with command: %s. UnExpected: %s", a.DUT, a.Command.CMD, a.UnExpected), true
 		} else {
 			return fmt.Sprintf("UnExpected: %s, Get: %s", a.UnExpected, a.Raw), false

@@ -27,10 +27,10 @@ var DefaultConfigurations = configuration.Configuration{
 	PasswordPrompt: "Password",
 	Prompt:         "#",
 	ModeDB: map[string]string{
-		"login":    "login",
-		"password": "Passowrd:",
-		"enable":   "SWITCH>",
-		//	"normal":        "#",
+		"login":         "login",
+		"password":      "Passowrd:",
+		"enable":        "SWITCH>",
+		"normal":        "SWITCH[A]#",
 		"config":        "(config)",
 		"config-vlan":   "(config-vlan)",
 		"config-if":     "(config-if[",
@@ -88,6 +88,10 @@ func (d *RUT) Init() error {
 
 	d.cli = c
 	return nil
+}
+
+func (d *RUT) GoInitMode() {
+	d.cli.GoNormalMode()
 }
 
 func (d *RUT) IsAlive() bool {

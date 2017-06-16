@@ -56,6 +56,20 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	return data, nil
 }
 
+func (c *Cli) GoNormalMode() {
+	if c.currentMode == "config" ||
+		c.currentMode == "config-vlan" ||
+		c.currentMode == "config-if" ||
+		c.currentMode == "config-dhcp" ||
+		c.currentMode == "config-router" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+	} else if c.currentMode == "shell" ||
+		c.currentMode == "bcmshell" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		c.GoNormalMode()
+	}
+}
+
 func NewCli(conf *configuration.Configuration) (c *Cli, err error) {
 	tc, err := telnetclient.NewClient(conf.IP + ":" + conf.Port)
 	if err != nil {

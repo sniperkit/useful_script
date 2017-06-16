@@ -31,14 +31,16 @@ func (t *Task) Run(db *rut.DB) *taskresult.Result {
 		return res
 	}
 
-	if res := t.RunClearRoutine(db); !res.Success {
-		return res
-	}
+	defer t.RunClearRoutine(db)
 
 	return &taskresult.Result{Name: t.Name, Description: t.Description, Success: true}
 }
 
 func (t *Task) CheckPreCondition(db *rut.DB) *taskresult.Result {
+	for _, r := range db.DB {
+		r.GoInitMode()
+	}
+
 	if err := t.PreCondition.Check(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -56,6 +58,10 @@ func (t *Task) CheckPreCondition(db *rut.DB) *taskresult.Result {
 }
 
 func (t *Task) CheckPostCondition(db *rut.DB) *taskresult.Result {
+	for _, r := range db.DB {
+		r.GoInitMode()
+	}
+
 	if err := t.PostCondition.Check(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -74,6 +80,10 @@ func (t *Task) CheckPostCondition(db *rut.DB) *taskresult.Result {
 }
 
 func (t *Task) RunMainRoutine(db *rut.DB) *taskresult.Result {
+	for _, r := range db.DB {
+		r.GoInitMode()
+	}
+
 	if err := t.Routine.Run(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -92,6 +102,9 @@ func (t *Task) RunMainRoutine(db *rut.DB) *taskresult.Result {
 }
 
 func (t *Task) RunClearRoutine(db *rut.DB) *taskresult.Result {
+	for _, r := range db.DB {
+		r.GoInitMode()
+	}
 	if err := t.Clear.Run(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
