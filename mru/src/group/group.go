@@ -2,22 +2,25 @@ package group
 
 import (
 	"errors"
+	"feature"
+	"mcase"
 	"sort"
+	"subgroup"
 )
 
 type Group struct {
 	Name      string
 	SGCount   int
 	CCount    int
-	SubGroups map[string]*SubGroup
+	SubGroups map[string]*subgroup.SubGroup
 }
 
-func (g *Group) Add(c *Case) error {
+func (g *Group) Add(c *mcase.Case) error {
 	sg, ok := g.SubGroups[c.SubGroup]
 	if !ok {
-		g.SubGroups[c.SubGroup] = &SubGroup{
+		g.SubGroups[c.SubGroup] = &subgroup.SubGroup{
 			Name:     c.SubGroup,
-			Features: make(map[string]*Feature, 1),
+			Features: make(map[string]*feature.Feature, 1),
 		}
 		g.SGCount++
 		sg, _ = g.SubGroups[c.SubGroup]
@@ -33,7 +36,7 @@ func (g *Group) Add(c *Case) error {
 	return nil
 }
 
-func (g *Group) Del(c *Case) error {
+func (g *Group) Del(c *mcase.Case) error {
 	sg, ok := g.SubGroups[c.SubGroup]
 	if !ok {
 		return errors.New("Cannot find Feature: " + c.Feature + " in Group: " + c.Group + " for delete case: " + c.Name)
@@ -53,7 +56,7 @@ func (g *Group) Del(c *Case) error {
 	return nil
 }
 
-func (g *Group) Get(c *Case) (*Case, error) {
+func (g *Group) Get(c *mcase.Case) (*mcase.Case, error) {
 	sg, ok := g.SubGroups[c.SubGroup]
 	if !ok {
 		return nil, errors.New("Cannot find Feature: " + c.Feature + " in Group: " + c.Group + " for Get case: " + c.Name)
@@ -62,9 +65,9 @@ func (g *Group) Get(c *Case) (*Case, error) {
 	return sg.Get(c)
 }
 
-func (g *Group) Dump() []*Case {
-	result := make([]*Case, 0, 10)
-	sgs := make([]*SubGroup, 0, len(g.SubGroups))
+func (g *Group) Dump() []*mcase.Case {
+	result := make([]*mcase.Case, 0, 10)
+	sgs := make([]*subgroup.SubGroup, 0, len(g.SubGroups))
 
 	for _, sg := range g.SubGroups {
 		sgs = append(sgs, sg)
@@ -79,7 +82,7 @@ func (g *Group) Dump() []*Case {
 	return result
 }
 
-func (g *Group) DumpSubGroup(sgroup string) ([]*Case, error) {
+func (g *Group) DumpSubGroup(sgroup string) ([]*mcase.Case, error) {
 	sg, ok := g.SubGroups[sgroup]
 	if !ok {
 		return nil, errors.New("Cannot find SubGroup: " + sgroup + " for dump")
@@ -88,7 +91,7 @@ func (g *Group) DumpSubGroup(sgroup string) ([]*Case, error) {
 	return sg.Dump(), nil
 }
 
-func (g *Group) DumpFeature(sgroup, feature string) ([]*Case, error) {
+func (g *Group) DumpFeature(sgroup, feature string) ([]*mcase.Case, error) {
 	sg, ok := g.SubGroups[sgroup]
 	if !ok {
 		return nil, errors.New("Cannot find SubGroup: " + sgroup + " for dump")
@@ -97,7 +100,7 @@ func (g *Group) DumpFeature(sgroup, feature string) ([]*Case, error) {
 	return sg.DumpFeature(feature)
 }
 
-type SubGroupSlice []*SubGroup
+type SubGroupSlice []*subgroup.SubGroup
 
 func (s SubGroupSlice) Len() int           { return len(s) }
 func (s SubGroupSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }

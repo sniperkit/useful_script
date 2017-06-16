@@ -3,6 +3,7 @@ package condition
 import (
 	"assertion"
 	"errors"
+	"fmt"
 	"rut"
 )
 

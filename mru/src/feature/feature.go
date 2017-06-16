@@ -2,16 +2,17 @@ package feature
 
 import (
 	"errors"
+	"mcase"
 	"sort"
 )
 
 type Feature struct {
 	Name   string
 	CCount int
-	Cases  map[string]*Case
+	Cases  map[string]*mcase.Case
 }
 
-func (f *Feature) Add(c *Case) error {
+func (f *Feature) Add(c *mcase.Case) error {
 	_, ok := f.Cases[c.Name]
 	if ok {
 		return errors.New("Case: " + c.Name + "Alread exist for Group: " + c.Group + " Feature: " + c.Feature)
@@ -23,7 +24,7 @@ func (f *Feature) Add(c *Case) error {
 	return nil
 }
 
-func (f *Feature) Del(c *Case) error {
+func (f *Feature) Del(c *mcase.Case) error {
 	_, ok := f.Cases[c.Name]
 	if !ok {
 		return errors.New("Cannot find  Case: " + c.Name + "for delete under Group: " + c.Group + " Feature: " + c.Feature)
@@ -34,7 +35,7 @@ func (f *Feature) Del(c *Case) error {
 	return nil
 }
 
-func (f *Feature) Get(c *Case) (*Case, error) {
+func (f *Feature) Get(c *mcase.Case) (*mcase.Case, error) {
 	old, ok := f.Cases[c.Name]
 	if !ok {
 		return nil, errors.New("Cannot find  Case: " + c.Name + "for Get under Group: " + c.Group + " Feature: " + c.Feature)
@@ -43,8 +44,8 @@ func (f *Feature) Get(c *Case) (*Case, error) {
 	return old, nil
 }
 
-func (f *Feature) Dump() []*Case {
-	cs := make([]*Case, 0, len(f.Cases))
+func (f *Feature) Dump() []*mcase.Case {
+	cs := make([]*mcase.Case, 0, len(f.Cases))
 
 	for _, c := range f.Cases {
 		cs = append(cs, c)
@@ -56,7 +57,7 @@ func (f *Feature) Dump() []*Case {
 	return cs
 }
 
-type CaseSlice []*Case
+type CaseSlice []*mcase.Case
 
 func (s CaseSlice) Len() int           { return len(s) }
 func (s CaseSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }

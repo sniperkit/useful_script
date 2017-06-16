@@ -9,7 +9,6 @@ import (
 	"rut"
 	"strings"
 	"task"
-	"taskresult"
 )
 
 type Case struct {
@@ -17,13 +16,23 @@ type Case struct {
 	SubGroup string
 	Feature  string
 	Name     string
-	Tasks    []*Task
+	Tasks    []*task.Task
 	RUTs     rut.DB
 	TCount   int
 }
 
 func (c *Case) String() string {
 	return fmt.Sprintf("%s>%s>%s>%s", c.Group, c.SubGroup, c.Feature, c.Name)
+}
+
+func (c *Case) AddRUT(r *rut.RUT) {
+	c.RUTs.DB[r.Name] = r
+}
+
+func (c *Case) DelRUT(r *rut.RUT) {
+	if r, ok := c.RUTs.DB[r.Name]; ok {
+		delete(c.RUTs.DB, r.Name)
+	}
 }
 
 func (c *Case) Run() (string, bool) {
@@ -33,17 +42,17 @@ func (c *Case) Run() (string, bool) {
 	}
 
 	for _, t := range c.Tasks {
-		result := t.Run(c.RUTs)
+		result := t.Run(&c.RUTs)
 		if !result.Success {
-			return errors.New("Run Case: %s>%s>%s>%s's Task: %s failed with: %s", c.Group, c.SubGroup, c.Feature, c.Name, t.Name, err.Error()), false
+			return fmt.Sprintf("Run Case: %s>%s>%s>%s's Task: %s failed with: %s", c.Group, c.SubGroup, c.Feature, c.Name, t.Name, result.Message), false
 		}
 	}
 
 	return "", true
 }
 
-func (c Case) RunTask(t *task.Task) (string, bool) {
-	result := t.Run(c.RUTs)
+func (c *Case) RunTask(t *task.Task) (string, bool) {
+	result := t.Run(&c.RUTs)
 	return result.Message, result.Success
 }
 
@@ -84,76 +93,9 @@ func IsValidCaseParas(in url.Values) bool {
 	return false
 }
 
-func createNewCase(in url.Values) *Case {
-	group, _ := in["case_group"]
-	sgroup, _ := in["case_sub_group"]
-	feature, _ := in["case_feature"]
-	name, _ := in["case_name"]
-
-	duts, _ := GetAllDutFromRequest(in)
-
-	return &Case{
-		Group:    group[0],
-		SubGroup: sgroup[0],
-		Feature:  feature[0],
-		Name:     name[0],
-		DUTs:     duts,
-	}
-}
-
-func CreateNewCase(in url.Values) (*Case, error) {
-	for k, v := range in {
-		log.Println(k, v)
-	}
-
-	if !IsValidCaseParas(in) {
-		return nil, errors.New("Invalid parameter for Create a new Case")
-	}
-
-	return createNewCase(in), nil
-}
-
-func GetAllDutFromRequest(in url.Values) ([]*DUT, error) {
-	dutmap := make(map[string]*DUT, 1)
-	duts := make([]*DUT, 0, 1)
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "device" {
-				if _, ok := dutmap[fields[1]]; ok {
-					log.Println("Save DUT alread exist: ", k)
-					continue
-				}
-				dutmap[fields[1]] = &DUT{Name: "DUT" + fields[1], Device: v[0]}
-			}
-		}
-	}
-
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "username" {
-				dutmap[fields[1]].UserName = v[0]
-
-			} else if fields[0] == "password" {
-				dutmap[fields[1]].Password = v[0]
-			}
-		}
-	}
-
-	if len(dutmap) == 0 {
-		return nil, errors.New("Get no DUT from input request")
-	}
-
-	for _, d := range dutmap {
-		log.Printf("Find New DuT: %q in requst", d)
-		duts = append(duts, d)
-	}
-
-	return duts, nil
-}
-
-func (c *Case) AddTask(t *Task) error {
+func (c *Case) AddTask(t *task.Task) error {
 	if c.Tasks == nil {
-		c.Tasks = make([]*Task, 0, 1)
+		c.Tasks = make([]*task.Task, 0, 1)
 	}
 
 	if c.IsTaskExist(t) {
@@ -166,7 +108,7 @@ func (c *Case) AddTask(t *Task) error {
 	return nil
 }
 
-func (c *Case) DelTask(t *Task) error {
+func (c *Case) DelTask(t *task.Task) error {
 	if !c.IsTaskExist(t) {
 		return errors.New("Cannot find task :" + t.Name + " in case: " + c.Name)
 	}
@@ -181,7 +123,7 @@ func (c *Case) DelTask(t *Task) error {
 	return nil
 }
 
-func (c *Case) GetTask(name string) *Task {
+func (c *Case) GetTask(name string) *task.Task {
 	for _, v := range c.Tasks {
 		if v.Name == name {
 			return v
@@ -191,7 +133,7 @@ func (c *Case) GetTask(name string) *Task {
 	return nil
 }
 
-func (c *Case) IsTaskExist(t *Task) bool {
+func (c *Case) IsTaskExist(t *task.Task) bool {
 	for _, v := range c.Tasks {
 		if v.Name == t.Name {
 			return true

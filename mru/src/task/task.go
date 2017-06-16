@@ -1,16 +1,11 @@
 package task
 
 import (
-	"assertion"
 	"condition"
-	"errors"
-	"fmt"
 	"log"
 	"net/url"
 	"routine"
 	"rut"
-	"sort"
-	"strings"
 	"taskresult"
 )
 
@@ -28,26 +23,26 @@ type Task struct {
 }
 
 func (t *Task) Run(db *rut.DB) *taskresult.Result {
-	if result, err := t.CheckPreCondition(db); err != nil {
-		return result
+	if res := t.CheckPreCondition(db); !res.Success {
+		return res
 	}
 
-	if result, err := t.RunMainRoutine(db); err != nil {
-		return result
+	if res := t.RunMainRoutine(db); !res.Success {
+		return res
 	}
 
-	if result, err := t.CheckPostCondition(db); err != nil {
-		return result
+	if res := t.CheckPostCondition(db); !res.Success {
+		return res
 	}
 
-	if result, err := t.RunClearRoutine(db); err != nil {
-		return result
+	if res := t.RunClearRoutine(db); !res.Success {
+		return res
 	}
 
 	return &taskresult.Result{Name: t.Name, Description: t.Description, Success: true}
 }
 
-func (t *Task) CheckPreCondition(db *rut.DB) (*taskresult.Result, error) {
+func (t *Task) CheckPreCondition(db *rut.DB) *taskresult.Result {
 	if err := t.PreCondition.Check(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -64,7 +59,7 @@ func (t *Task) CheckPreCondition(db *rut.DB) (*taskresult.Result, error) {
 	}
 }
 
-func (t *Task) CheckPostCondition(db *rut.DB) (*taskresult.Result, error) {
+func (t *Task) CheckPostCondition(db *rut.DB) *taskresult.Result {
 	if err := t.PostCondition.Check(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -82,7 +77,7 @@ func (t *Task) CheckPostCondition(db *rut.DB) (*taskresult.Result, error) {
 
 }
 
-func (t *Task) RunMainRoutine(db *rut.DB) (*taskresult.Result, error) {
+func (t *Task) RunMainRoutine(db *rut.DB) *taskresult.Result {
 	if err := t.Routine.Run(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -100,7 +95,7 @@ func (t *Task) RunMainRoutine(db *rut.DB) (*taskresult.Result, error) {
 
 }
 
-func (t *Task) RunClearRoutine(db *rut.DB) (*taskresult.Result, error) {
+func (t *Task) RunClearRoutine(db *rut.DB) *taskresult.Result {
 	if err := t.Clear.Run(db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
@@ -127,240 +122,3 @@ func IsTaskParamsValid(in url.Values) bool {
 	}
 	return true
 }
-
-func CreateNewTask(in url.Values) (*Task, error) {
-	if !IsTaskParamsValid(in) {
-		return nil, errors.New("Cannot create new Task due to Invalid input")
-	}
-
-	taskname, _ := in["task_name"]
-	taskdesc, _ := in["task_description"]
-	prec, err := GetPreCondtion(in)
-	if err != nil {
-		return nil, errors.New("Cannot create new Task: " + err.Error())
-	}
-
-	log.Println(prec)
-
-	postc, err := GetPostCondition(in)
-	if err != nil {
-		return nil, errors.New("Cannot create new Task: " + err.Error())
-	}
-
-	log.Println(postc)
-	routine, err := GetRoutines(in)
-	if err != nil {
-		return nil, errors.New("Cannot create new Task: " + err.Error())
-	}
-
-	log.Println(routine)
-	clear, err := GetClearRoutines(in)
-	if err != nil {
-		return nil, errors.New("Cannot create new Task: " + err.Error())
-	}
-	log.Println(clear)
-
-	return &Task{
-		PreCondition:  prec,
-		PostCondition: postc,
-		Routine:       routine,
-		Clear:         clear,
-		Name:          taskname[0],
-		Description:   taskdesc[0],
-	}, nil
-}
-
-func GetPreCondtion(in url.Values) (*condition.Condition, error) {
-	assertmap := make(map[string]*assertion.Assertion, 1)
-	assertions := make([]*assertion.Assertion, 0, 1)
-	description, _ := in["precondition_description"]
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "preconditionassertdut" {
-				if _, ok := assertmap[fields[1]]; ok {
-					log.Println("Same assertion alread exist: ", k)
-					continue
-				}
-				assertmap[fields[1]] = &assertion.Assertion{DUT: v[0], Seq: fields[1]}
-			}
-		}
-	}
-
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "preconditionassertmode" {
-				assertmap[fields[1]].Mode = v[0]
-			} else if fields[0] == "preconditionassertcli" {
-				assertmap[fields[1]].Cli = v[0]
-			} else if fields[0] == "preconditionassertexpected" {
-				assertmap[fields[1]].Expected = v[0]
-			}
-		}
-	}
-
-	if len(assertmap) == 0 {
-		return nil, errors.New("Get no preassertion from input request")
-	}
-
-	for _, a := range assertmap {
-		log.Printf("Find New Assertion: %q in requst", a)
-		assertions = append(assertions, a)
-	}
-
-	sort.Stable(AssertionSlice(assertions))
-
-	return &condition.Condition{
-		Name:        "precondition",
-		Description: description[0],
-		Assertions:  assertions,
-	}, nil
-}
-
-func GetPostCondition(in url.Values) (*condition.Condition, error) {
-	assertmap := make(map[string]*assertion.Assertion, 1)
-	assertions := make([]*assertion.Assertion, 0, 1)
-	description, _ := in["postcondition_description"]
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "postconditionassertdut" {
-				if _, ok := assertmap[fields[1]]; ok {
-					log.Println("Same assertion alread exist: ", k)
-					continue
-				}
-				assertmap[fields[1]] = &assertion.Assertion{DUT: v[0], Seq: fields[1]}
-			}
-		}
-	}
-
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "postconditionassertmode" {
-				assertmap[fields[1]].Mode = v[0]
-			} else if fields[0] == "postconditionassertcli" {
-				assertmap[fields[1]].Cli = v[0]
-			} else if fields[0] == "postconditionassertexpected" {
-				assertmap[fields[1]].Expected = v[0]
-			}
-		}
-	}
-
-	if len(assertmap) == 0 {
-		return nil, errors.New("Get no postassertion from input request")
-	}
-
-	for _, a := range assertmap {
-		log.Printf("Find New Assertion: %q in requst", a)
-		assertions = append(assertions, a)
-	}
-
-	sort.Stable(AssertionSlice(assertions))
-
-	return &condition.Condition{
-		Name:        "postcondition",
-		Description: description[0],
-		Assertions:  assertions,
-	}, nil
-}
-
-func GetRoutines(in url.Values) (*routine.Routine, error) {
-	assertmap := make(map[string]*assertion.Assertion, 1)
-	assertions := make([]*assertion.Assertion, 0, 1)
-	description, _ := in["routine_description"]
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "routine_command_dut" {
-				if _, ok := assertmap[fields[1]]; ok {
-					log.Println("Same assertion alread exist: ", k)
-					continue
-				}
-				assertmap[fields[1]] = &assertion.Assertion{DUT: v[0], Seq: fields[1]}
-				log.Println("Find New Routines:")
-			}
-		}
-	}
-
-	for k, v := range assertmap {
-		log.Println(k, v)
-	}
-
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			log.Println(k, "+++", v)
-			if fields[0] == "routine_command_mode" {
-				assertmap[fields[1]].Mode = v[0]
-			} else if fields[0] == "routine_command_cli" {
-				assertmap[fields[1]].Cli = v[0]
-			} else if fields[0] == "routine_command_expected" {
-				assertmap[fields[1]].Expected = v[0]
-			}
-		}
-	}
-
-	log.Println("GetRoutines")
-	if len(assertmap) == 0 {
-		return nil, errors.New("Get no routine assertion from input request")
-	}
-
-	for _, a := range assertmap {
-		log.Printf("Find New Assertion: %q in requst", a)
-		assertions = append(assertions, a)
-	}
-
-	sort.Stable(AssertionSlice(assertions))
-
-	return &routine.Routine{
-		Name:        "routine",
-		Description: description[0],
-		Assertions:  assertions,
-	}, nil
-}
-
-func GetClearRoutines(in url.Values) (*routine.Routine, error) {
-	assertmap := make(map[string]*assertion.Assertion, 1)
-	assertions := make([]*assertion.Assertion, 0, 1)
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "routine_command_dut" {
-				if _, ok := assertmap[fields[1]]; ok {
-					log.Println("Same assertion alread exist: ", k)
-					continue
-				}
-				assertmap[fields[1]] = &assertion.Assertion{DUT: v[0], Seq: fields[1]}
-			}
-		}
-	}
-
-	for k, v := range in {
-		if fields := strings.Split(k, "~"); len(fields) == 2 {
-			if fields[0] == "clear_command_mode" {
-				assertmap[fields[1]].Mode = v[0]
-			} else if fields[0] == "clear_command_cli" {
-				assertmap[fields[1]].Cli = v[0]
-			} else if fields[0] == "clear_command_expected" {
-				assertmap[fields[1]].Expected = v[0]
-			}
-		}
-	}
-
-	if len(assertmap) == 0 {
-		return nil, errors.New("Get no clear assertion from input request")
-	}
-
-	for _, a := range assertmap {
-		log.Printf("Find New Assertion: %q in requst", a)
-		assertions = append(assertions, a)
-	}
-
-	sort.Stable(AssertionSlice(assertions))
-
-	return &routine.Routine{
-		Name:       "clear",
-		Assertions: assertions,
-	}, nil
-}
-
-type AssertionSlice []*assertion.Assertion
-
-func (s AssertionSlice) Len() int           { return len(s) }
-func (s AssertionSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s AssertionSlice) Less(i, j int) bool { return s[i].Seq < s[j].Seq }

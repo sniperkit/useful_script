@@ -5,10 +5,10 @@ import (
 )
 
 const (
-	PreConditionCheckFailed         = 0
-	PostConditionCheckFaield        = 1
-	MainRoutineFailed               = 2
-	ClearRoutineFailed       Failed = 3
+	PreConditionCheckFailed  = 0
+	PostConditionCheckFaield = 1
+	MainRoutineFailed        = 2
+	ClearRoutineFailed       = 3
 )
 
 type Result struct {
@@ -20,8 +20,8 @@ type Result struct {
 }
 
 func (r *Result) String() string {
-	if Result.Success {
-		return fmt.Printf("Task %s has been run successfully!", r.Name)
+	if r.Success {
+		return fmt.Sprintf("Task %s has been run successfully!", r.Name)
 	}
 
 	res := fmt.Sprintf("Task %s has been failed: \n", r.Name)
@@ -37,7 +37,7 @@ func (r *Result) String() string {
 	default:
 		res += fmt.Sprintf("		UnknownReason!\n")
 	}
-	res += fmt.Sprintf("         %s\n", r.message)
+	res += fmt.Sprintf("         %s\n", r.Message)
 
 	return res
 }

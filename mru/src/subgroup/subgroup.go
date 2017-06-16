@@ -1,7 +1,9 @@
-package subGroup
+package subgroup
 
 import (
 	"errors"
+	"feature"
+	"mcase"
 	"sort"
 )
 
@@ -9,15 +11,15 @@ type SubGroup struct {
 	Name     string
 	FCount   int
 	CCount   int
-	Features map[string]*Feature
+	Features map[string]*feature.Feature
 }
 
-func (sg *SubGroup) Add(c *Case) error {
+func (sg *SubGroup) Add(c *mcase.Case) error {
 	f, ok := sg.Features[c.Feature]
 	if !ok {
-		sg.Features[c.Feature] = &Feature{
+		sg.Features[c.Feature] = &feature.Feature{
 			Name:  c.Feature,
-			Cases: make(map[string]*Case, 1),
+			Cases: make(map[string]*mcase.Case, 1),
 		}
 		sg.FCount++
 		f, _ = sg.Features[c.Feature]
@@ -33,7 +35,7 @@ func (sg *SubGroup) Add(c *Case) error {
 	return nil
 }
 
-func (sg *SubGroup) Del(c *Case) error {
+func (sg *SubGroup) Del(c *mcase.Case) error {
 	f, ok := sg.Features[c.Feature]
 	if !ok {
 		return errors.New("Cannot find Feature: " + c.Feature + " in SubGroup: " + c.SubGroup + " for delete case: " + c.Name)
@@ -54,7 +56,7 @@ func (sg *SubGroup) Del(c *Case) error {
 	return nil
 }
 
-func (sg *SubGroup) Get(c *Case) (*Case, error) {
+func (sg *SubGroup) Get(c *mcase.Case) (*mcase.Case, error) {
 	f, ok := sg.Features[c.Feature]
 	if !ok {
 		return nil, errors.New("Cannot find Feature: " + c.Feature + " in SubGroup: " + c.SubGroup + " for Get case: " + c.Name)
@@ -63,9 +65,9 @@ func (sg *SubGroup) Get(c *Case) (*Case, error) {
 	return f.Get(c)
 }
 
-func (sg *SubGroup) Dump() []*Case {
-	result := make([]*Case, 0, 10)
-	fs := make([]*Feature, 0, len(sg.Features))
+func (sg *SubGroup) Dump() []*mcase.Case {
+	result := make([]*mcase.Case, 0, 10)
+	fs := make([]*feature.Feature, 0, len(sg.Features))
 
 	for _, f := range sg.Features {
 		fs = append(fs, f)
@@ -80,7 +82,7 @@ func (sg *SubGroup) Dump() []*Case {
 	return result
 }
 
-func (sg *SubGroup) DumpFeature(feature string) ([]*Case, error) {
+func (sg *SubGroup) DumpFeature(feature string) ([]*mcase.Case, error) {
 	f, ok := sg.Features[feature]
 	if !ok {
 		return nil, errors.New("Cannot find Group: " + feature + " for dump")
@@ -89,7 +91,7 @@ func (sg *SubGroup) DumpFeature(feature string) ([]*Case, error) {
 	return f.Dump(), nil
 }
 
-type FeatureSlice []*Feature
+type FeatureSlice []*feature.Feature
 
 func (s FeatureSlice) Len() int           { return len(s) }
 func (s FeatureSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
