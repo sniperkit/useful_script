@@ -12,10 +12,15 @@ import (
 
 //RUT should be and interface
 type RUT struct {
-	name string
-	cli  *cline.Cli
-	L3   bool //We need to have a feature list. For run each case
-	L2   bool
+	Name     string
+	cli      *cline.Cli
+	L3       bool //We need to have a feature list. For run each case
+	L2       bool
+	Device   string
+	Username string
+	Password string
+	IP       string
+	Port     string
 }
 
 type DB struct {
@@ -45,8 +50,13 @@ func NewRUT(conf *configuration.Configuration) (*RUT, error) {
 	}
 
 	return &RUT{
-		name: conf.DeviceName,
-		cli:  c,
+		Name:     conf.Name,
+		Username: conf.Username,
+		Password: conf.Password,
+		Device:   conf.DeviceName,
+		IP:       conf.IP,
+		Port:     conf.Port,
+		cli:      c,
 	}, nil
 }
 

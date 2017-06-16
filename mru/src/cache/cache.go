@@ -16,6 +16,10 @@ type Cache struct {
 	Groups map[string]*Group
 }
 
+func New(Device string) *Cache {
+	return &Cache{Device: Device}
+}
+
 func (ca *Cache) String() string {
 	var buffer bytes.Buffer
 	js, err := json.Marshal(ca)

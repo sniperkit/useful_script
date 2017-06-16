@@ -18,6 +18,7 @@ func main() {
 		LoginPrompt:    "login",
 		PasswordPrompt: "Password",
 		Prompt:         "#",
+		Name:           "DUT1",
 		ModeDB: map[string]string{
 			"login":    "login",
 			"password": "Passowrd:",
@@ -45,8 +46,8 @@ func main() {
 	}
 
 	data, err := c.RunCommand(&command.Command{
-		RequiredMode: "normal",
-		CMD:          "configure terminal",
+		Mode: "normal",
+		CMD:  "configure terminal",
 	})
 
 	if err != nil {
@@ -56,8 +57,8 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "config",
-		CMD:          "show running-config",
+		Mode: "config",
+		CMD:  "show running-config",
 	})
 
 	if err != nil {
@@ -68,8 +69,8 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "config",
-		CMD:          "do q sh -l",
+		Mode: "config",
+		CMD:  "do q sh -l",
 	})
 
 	if err != nil {
@@ -79,9 +80,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "shell",
-		CMD:          "scontrol -f /proc/switch/ASIC/ctrl dump table 0 trunk_group 0 2",
-		End:          "#",
+		Mode: "shell",
+		CMD:  "scontrol -f /proc/switch/ASIC/ctrl dump table 0 trunk_group 0 2",
+		End:  "#",
 	})
 
 	if err != nil {
@@ -91,9 +92,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "shell",
-		CMD:          "bcm.user.proxy\n\n",
-		End:          "BCM.0>",
+		Mode: "shell",
+		CMD:  "bcm.user.proxy\n\n",
+		End:  "BCM.0>",
 	})
 
 	if err != nil {
@@ -103,9 +104,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "bcmshell",
-		CMD:          "mod trunk_group 0 1 rtag=7",
-		End:          "BCM.0>",
+		Mode: "bcmshell",
+		CMD:  "mod trunk_group 0 1 rtag=7",
+		End:  "BCM.0>",
 	})
 
 	if err != nil {
@@ -115,9 +116,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "bcmshell",
-		CMD:          "g RTAG7_HASH_CONTROL_3",
-		End:          "BCM.0>",
+		Mode: "bcmshell",
+		CMD:  "g RTAG7_HASH_CONTROL_3",
+		End:  "BCM.0>",
 	})
 
 	if err != nil {
@@ -127,9 +128,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "bcmshell",
-		CMD:          "g RTAG7_IPV4_TCP_UDP_HASH_FIELD_BMAP_1",
-		End:          "BCM.0>",
+		Mode: "bcmshell",
+		CMD:  "g RTAG7_IPV4_TCP_UDP_HASH_FIELD_BMAP_1",
+		End:  "BCM.0>",
 	})
 
 	if err != nil {
@@ -139,9 +140,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "bcmshell",
-		CMD:          "g RTAG7_IPV4_TCP_UDP_HASH_FIELD_BMAP_2",
-		End:          "BCM.0>",
+		Mode: "bcmshell",
+		CMD:  "g RTAG7_IPV4_TCP_UDP_HASH_FIELD_BMAP_2",
+		End:  "BCM.0>",
 	})
 
 	if err != nil {
@@ -151,9 +152,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "bcmshell",
-		CMD:          "g RTAG7_HASH_FIELD_BMAP_1",
-		End:          "BCM.0>",
+		Mode: "bcmshell",
+		CMD:  "g RTAG7_HASH_FIELD_BMAP_1",
+		End:  "BCM.0>",
 	})
 
 	if err != nil {
@@ -163,9 +164,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "bcmshell",
-		CMD:          "exit",
-		End:          "#",
+		Mode: "bcmshell",
+		CMD:  "exit",
+		End:  "#",
 	})
 
 	if err != nil {
@@ -175,9 +176,9 @@ func main() {
 	fmt.Println(string(data))
 
 	data, err = c.RunCommand(&command.Command{
-		RequiredMode: "shell",
-		CMD:          "scontrol -f /proc/switch/ASIC/ctrl dump table 0 trunk_group 0 2",
-		End:          "#",
+		Mode: "shell",
+		CMD:  "scontrol -f /proc/switch/ASIC/ctrl dump table 0 trunk_group 0 2",
+		End:  "#",
 	})
 
 	if err != nil {

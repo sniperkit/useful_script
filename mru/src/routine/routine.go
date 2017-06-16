@@ -3,6 +3,7 @@ package routine
 import (
 	"assertion"
 	"errors"
+	"fmt"
 	"rut"
 )
 
@@ -16,7 +17,7 @@ func (r *Routine) Run(db *rut.DB) error {
 	for _, a := range r.Assertions {
 		err := a.Do(db)
 		if err != nil {
-			return errors.New(fmt.Sprintf("Routine: %s failed with: %s", cd.Name, err.Error()))
+			return errors.New(fmt.Sprintf("Routine: %s failed with: %s", r.Name, err.Error()))
 		}
 	}
 

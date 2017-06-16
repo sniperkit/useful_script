@@ -4,7 +4,7 @@ type Configuration struct {
 	DeviceName     string
 	IP             string
 	Port           string
-	UserName       string
+	Username       string
 	Password       string
 	EnablePrompt   string
 	LoginPrompt    string
@@ -12,4 +12,5 @@ type Configuration struct {
 	BasePrompt     string
 	Prompt         string
 	ModeDB         map[string]string
+	Name           string
 }

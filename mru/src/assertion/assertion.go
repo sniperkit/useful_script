@@ -17,14 +17,14 @@ type Assertion struct {
 }
 
 func (a *Assertion) Do(db *rut.DB) error {
-	data, err := db[a.DUT].RunCommand(a.Command)
+	data, err := db.DB[a.DUT].RunCommand(&a.Command)
 	if err != nil {
-		return fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error())
+		return errors.New(fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error()))
 	}
 
 	a.Raw = string(data)
 	defer func() { a.Raw = "" }()
-	if a.Expected || a.UnExpected {
+	if a.Expected != "" || a.UnExpected != "" {
 		msg, ok := a.Verify()
 		if !ok {
 			return errors.New(fmt.Sprintf("Assertion Faild: with command: %s. %s", a.Command.CMD, msg))

@@ -118,7 +118,7 @@ func (c *Cli) login() error {
 		return err
 	}
 	fmt.Println(string(data))
-	c.client.WriteLine(c.conf.UserName)
+	c.client.WriteLine(c.conf.Username)
 	data, err = c.client.ReadUntil(c.conf.PasswordPrompt)
 	if err != nil {
 		fmt.Println("Error happend when get login prompt: ", err.Error())
