@@ -335,6 +335,36 @@ func main() {
 				DUT: "DUT2",
 				Command: command.Command{
 					Mode: "config",
+					CMD:  "interface gigabitethernet 2/8",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "switchport access vlan 1500",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config-if",
+					CMD:  "exit",
+					End:  "#",
+				},
+				Expected: "#",
+			},
+
+			&assertion.Assertion{
+				DUT: "DUT2",
+				Command: command.Command{
+					Mode: "config",
 					CMD:  "interface vlan 1500",
 					End:  "#",
 				},
@@ -528,6 +558,8 @@ func main() {
 	t.SetClearRoutine(&clear)
 	c.AddTask(&t)
 	db.Save()
-	msg, ok := c.Run()
-	fmt.Println(msg, ok)
+	for {
+		msg, ok := c.Run()
+		fmt.Println(msg, ok)
+	}
 }
