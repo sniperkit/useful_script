@@ -2,7 +2,6 @@ package server
 
 import (
 	//	"command"
-	"configuration"
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"html/template"
@@ -105,30 +104,14 @@ func Product(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, password)
 		http.SetCookie(w, ip)
 
-		base := "SWITCH[A]"
-		dev, err := rut.NewRUT(&configuration.Configuration{
-			DeviceName:     r.FormValue("device"),
-			IP:             r.FormValue("ip"),
-			Port:           "23",
-			UserName:       r.FormValue("username"),
-			Password:       r.FormValue("passowrd"),
-			EnablePrompt:   ">",
-			LoginPrompt:    "login",
-			PasswordPrompt: "Password",
-			BasePrompt:     "SWITCH[A]",
-			Prompt:         "#",
-			ModeDB: map[string]string{
-				"login":         "login",
-				"password":      "Passowrd:",
-				"enable":        base + ">",
-				"normal":        base + "#",
-				"config":        base + "(config)",
-				"config-vlan":   base + "(config-vlan)",
-				"config-if":     base + "(config-if[",
-				"config-dhcp":   base + "(config-dhcp[",
-				"config-router": base + "(config-router)",
-			},
+		dev, err := rut.New(&rut.RUT{
+			Device:   r.FormValue("device"),
+			IP:       r.FormValue("ip"),
+			Port:     "23",
+			Username: r.FormValue("username"),
+			Password: r.FormValue("passowrd"),
 		})
+		dev.Init()
 		if err != nil {
 			io.WriteString(w, err.Error())
 		} else {
@@ -294,6 +277,22 @@ func Script(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func JSNotify(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("jsnotify.html").Delims("|||", "|||").ParseFiles("asset/web/template/jsnotify.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+}
+
 func NewRunScript(w http.ResponseWriter, r *http.Request) {
 	_, err := r.Cookie("Device")
 	if err != nil {
@@ -394,6 +393,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/runscript", NewRunScript)
 	http.HandleFunc("/script", Script)
 	http.HandleFunc("/product", Product)
+	http.HandleFunc("/jsnotify", JSNotify)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 

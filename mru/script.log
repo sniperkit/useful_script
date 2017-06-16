@@ -1,0 +1,14 @@
+ show ip interface brief
+Interface        Status                 Protocol  Primary IP       Secondary IP
+-------------------------------------------------------------------------------
+lo               up                     up        3.3.3.3          unassigned
+mgmt             up                     up        10.71.20.115     unassigned
+br10             up                     down      10.200.1.1       unassigned
+br70             up                     up        70.0.0.2         unassigned
+br80             up                     up        80.0.0.2         unassigned
+br90             up                     up        90.0.0.1         unassigned
+br1000           up                     down      unassigned       unassigned
+br1500           administratively down  down      123.123.123.123  unassigned
+br2000           up                     down      unassigned       unassigned
+br3000           up                     down      unassigned       unassigned
+SWITCH[A]#

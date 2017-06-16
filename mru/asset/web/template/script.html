@@ -59,7 +59,26 @@
 		</div>
 	</div>
 </div>
+
+	<link href="asset/web/static/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+	<script src="asset/web/static/notifyjs/dist/notify.js"></script>
+	<script src="asset/web/static/notifyjs/dist/styles/metro/notify-metro.js"></script>
+
 <script>
+    function notify(style, data) {
+        $.notify({
+            title: 'Email Notification',
+            text: data,
+            image: "<img src='asset/web/static/notifyjs/examples/images/Mail.png'/>"
+        }, {
+            style: 'metro',
+            className: style,
+            autoHide: false,
+            clickToHide: true
+        });
+    }
+
+
 	var vm = new Vue({
 		el: '#app',
 		data: {
@@ -100,7 +119,8 @@
 							data.textContent = 'Connection closed';
 						}
 						conn.onmessage = function(evt) {
-							res.push({res: evt.data})
+							res.push({res: evt.data});
+							notify("success", evt.data.replace(/\n/g, "<br/>"));
 						}
 					}
 				});
