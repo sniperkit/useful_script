@@ -109,6 +109,30 @@ func (t *Task) RunClearRoutine(db *rut.DB) *taskresult.Result {
 
 }
 
+func (t *Task) SetPreCondition(con *condition.Condition) {
+	t.PreCondition = con
+}
+
+func (t *Task) SetPostCondition(con *condition.Condition) {
+	t.PostCondition = con
+}
+
+func (t *Task) SetMainRoutine(r *routine.Routine) {
+	t.Routine = r
+}
+
+func (t *Task) SetClearRoutine(r *routine.Routine) {
+	t.Clear = r
+}
+
+func (t *Task) SetName(name string) {
+	t.Name = name
+}
+
+func (t *Task) SetDescription(desc string) {
+	t.Description = desc
+}
+
 func IsTaskParamsValid(in url.Values) bool {
 	for k, v := range in {
 		log.Println(k, "----------->", v, len(v))

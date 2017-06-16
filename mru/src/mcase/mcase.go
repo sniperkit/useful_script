@@ -30,6 +30,12 @@ func (c *Case) String() string {
 	return fmt.Sprintf("%s>%s>%s>%s {%s}", c.Group, c.SubGroup, c.Feature, c.Name, duts)
 }
 
+func (c *Case) Init() {
+	for _, r := range c.RUTs.DB {
+		r.Init()
+	}
+}
+
 func (c *Case) AddRUT(r *rut.RUT) {
 	if len(c.RUTs.DB) == 0 {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)

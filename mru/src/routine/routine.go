@@ -15,9 +15,9 @@ type Routine struct {
 
 func (r *Routine) Run(db *rut.DB) error {
 	for _, a := range r.Assertions {
-		err := a.Do(db)
-		if err != nil {
-			return errors.New(fmt.Sprintf("Routine: %s failed with: %s", r.Name, err.Error()))
+		msg, ok := a.Do(db)
+		if !ok {
+			return errors.New(fmt.Sprintf("Routine: %s failed with: %s", r.Name, msg))
 		}
 	}
 

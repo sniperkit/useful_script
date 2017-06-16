@@ -2,7 +2,6 @@ package assertion
 
 import (
 	"command"
-	"errors"
 	"fmt"
 	"regexp"
 	"rut"
@@ -16,10 +15,10 @@ type Assertion struct {
 	Raw        string
 }
 
-func (a *Assertion) Do(db *rut.DB) error {
+func (a *Assertion) Do(db *rut.DB) (string, bool) {
 	data, err := db.DB[a.DUT].RunCommand(&a.Command)
 	if err != nil {
-		return errors.New(fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error()))
+		return fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error()), false
 	}
 
 	a.Raw = string(data)
@@ -27,12 +26,12 @@ func (a *Assertion) Do(db *rut.DB) error {
 	if a.Expected != "" || a.UnExpected != "" {
 		msg, ok := a.Verify()
 		if !ok {
-			return errors.New(fmt.Sprintf("Assertion Faild: with command: %s. %s", a.Command.CMD, msg))
+			return fmt.Sprintf("{{{ Assertion  Faild  }}}: on DUT: %s with command: %s. %s", a.DUT, a.Command.CMD, msg), false
 		}
-		return nil
+		return msg, true
 	}
 
-	return errors.New(fmt.Sprintf("Invlaid assertion, Both expcted and unexpected are empty!"))
+	return fmt.Sprintf("Invlaid assertion, Both expcted and unexpected are empty!"), false
 }
 
 func (a *Assertion) Verify() (string, bool) {
@@ -43,17 +42,22 @@ func (a *Assertion) Verify() (string, bool) {
 		if len(match) == 0 {
 			return fmt.Sprintf("Expected: %s, Get: %s", a.Expected, a.Raw), false
 		} else {
-			return "", true
+			return fmt.Sprintf("{{{ Assertion Success }}}: on DUT: %s with command: %s. Expected: %s", a.DUT, a.Command.CMD, a.Expected), true
 		}
 	} else if a.UnExpected != "" {
 		re = regexp.MustCompile(a.Expected)
 		match := re.FindStringSubmatch(a.Raw)
 		if len(match) == 0 {
-			return "", true
+			return fmt.Sprintf("{{{ Assertion Success }}}: on DUT: %s with command: %s. UnExpected: %s", a.DUT, a.Command.CMD, a.UnExpected), true
 		} else {
 			return fmt.Sprintf("UnExpected: %s, Get: %s", a.UnExpected, a.Raw), false
 		}
 	}
 
 	return fmt.Sprintf("Invlaid assertion, Both expcted and unexpected are empty!"), false
+}
+
+func (a *Assertion) Assert(db *rut.DB) {
+	msg, _ := a.Do(db)
+	fmt.Println(msg)
 }

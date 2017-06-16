@@ -71,19 +71,23 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 }
 
 func New(r *RUT) (*RUT, error) {
-	conf := buildDefaultConfiguration(r)
+	return r, nil
+}
+
+func (d *RUT) Init() error {
+	conf := buildDefaultConfiguration(d)
 	c, err := cline.NewCli(conf)
 	if err != nil {
-		return nil, errors.New("Cannot create new RUT with: " + err.Error())
+		return errors.New("Cannot create CLI instance: " + err.Error())
 	}
 
 	err = c.Init()
 	if err != nil {
-		return nil, errors.New("Cannot create new RUT with: " + err.Error())
+		return errors.New("Cannot init RUT with: " + err.Error())
 	}
 
-	r.cli = c
-	return r, nil
+	d.cli = c
+	return nil
 }
 
 func (d *RUT) IsAlive() bool {

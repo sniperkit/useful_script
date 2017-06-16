@@ -1,10 +1,13 @@
 package main
 
 import (
+	"assertion"
 	"cache"
+	"command"
 	"fmt"
 	"mcase"
 	"rut"
+	//"task"
 )
 
 func main() {
@@ -137,7 +140,7 @@ func main() {
 		panic(err)
 	}
 
-	c.AddRUT(&rut.RUT{
+	r, _ := rut.New(&rut.RUT{
 		Device:   "V8500",
 		Name:     "DUT1",
 		IP:       "10.71.20.198",
@@ -145,8 +148,9 @@ func main() {
 		Username: "admin",
 		Password: "",
 	})
+	c.AddRUT(r)
 
-	c.AddRUT(&rut.RUT{
+	r, _ = rut.New(&rut.RUT{
 		Device:   "V8500",
 		Name:     "DUT2",
 		IP:       "10.71.20.115",
@@ -154,8 +158,9 @@ func main() {
 		Username: "admin",
 		Password: "",
 	})
+	c.AddRUT(r)
 
-	c.AddRUT(&rut.RUT{
+	r, _ = rut.New(&rut.RUT{
 		Device:   "V5624G",
 		Name:     "DUT3",
 		IP:       "10.71.20.167",
@@ -163,8 +168,9 @@ func main() {
 		Username: "admin",
 		Password: "",
 	})
+	c.AddRUT(r)
 
-	c.AddRUT(&rut.RUT{
+	r, _ = rut.New(&rut.RUT{
 		Device:   "V5624G",
 		Name:     "DUT3",
 		IP:       "10.71.20.121",
@@ -172,9 +178,77 @@ func main() {
 		Username: "admin",
 		Password: "",
 	})
+	c.AddRUT(r)
 
 	cases = db.Dump()
 	for _, c = range cases {
 		fmt.Printf("%v\n", c)
 	}
+	type Command struct {
+		Delay  int
+		Mode   string
+		CMD    string `json:"Command"`
+		End    string
+		Result string
+	}
+
+	c, err = db.Get(&mcase.Case{
+		Group:    "L2",
+		SubGroup: "Bridge",
+		Feature:  "VLAN",
+		Name:     "VLAN create",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	c.Init()
+	a := assertion.Assertion{
+		DUT: "DUT1",
+		Command: command.Command{
+			Mode: "normal",
+			CMD:  "show running-config",
+			End:  "#",
+		},
+		Expected: "122122",
+	}
+
+	a.Assert(&c.RUTs)
+
+	a = assertion.Assertion{
+		DUT: "DUT2",
+		Command: command.Command{
+			Mode: "normal",
+			CMD:  "show running-config",
+			End:  "#",
+		},
+		Expected: "100",
+	}
+
+	a.Assert(&c.RUTs)
+
+	a = assertion.Assertion{
+		DUT: "DUT1",
+		Command: command.Command{
+			Mode: "normal",
+			CMD:  "show system",
+			End:  "#",
+		},
+		Expected: "00:d1:cb:00:69:a2",
+	}
+
+	a.Assert(&c.RUTs)
+
+	a = assertion.Assertion{
+		DUT: "DUT2",
+		Command: command.Command{
+			Mode: "normal",
+			CMD:  "show system",
+			End:  "#",
+		},
+		Expected: "00:d0:cb:00:69:cc",
+	}
+
+	a.Assert(&c.RUTs)
 }
