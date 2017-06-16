@@ -20,3 +20,4 @@
 	Vue.config.unsafeDelimiters = ["{{{", "}}}"]
 
 12. 要将前端的表单数据转换成json(JSON.stringify())以后再传到后端，这样就会使后端的表单解析得到极大的简化。
+13.要想将页脚固定到页面最底部需要先设置页面高度，然后再设置footer高度，参考mra.css 和footer.css

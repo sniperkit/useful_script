@@ -1,7 +1,7 @@
 .tree {
-	min-height:20px;
+	min-height:100%;
 	padding:19px;
-	margin-bottom:20px;
+	/*margin-bottom:20px;*/
 	background-color:#0e1a35;
 	color: #ffffff;
 	border:1px solid #999;
@@ -11,12 +11,12 @@
 	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
 	-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
 	box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
-	height: 100%;
+	/*height: 100%; */
 }
 	.tree li {
 		list-style-type:none;
 		margin:0;
-		padding:10px 5px 0 5px;
+		padding:15px 5px 0 5px;
 		position:relative
 	}
 	.tree li::before, .tree li::after {
@@ -91,8 +91,8 @@
 	vertical-align: top;
 }
 
-body {
-	 font-size: 18px;   
+.tree {
+	 font-size: 15px;   
  }
 
  .orange-circle-button {

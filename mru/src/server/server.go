@@ -2,6 +2,7 @@ package server
 
 import (
 	//	"command"
+	"cache"
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"html/template"
@@ -40,6 +41,7 @@ var (
 type Server struct {
 	RUT    *rut.RUT
 	Result <-chan result.Result
+	CaseDB cache.Cache
 }
 
 var DefaultServer Server
@@ -211,7 +213,7 @@ func ZTreeMenu(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = t.Execute(w, nil)
+		err = t.Execute(w, DefaultServer.CaseDB)
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -287,6 +289,22 @@ func JSNotify(w http.ResponseWriter, r *http.Request) {
 		}
 
 		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+}
+
+func ResponsiveNav(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("responsive.html").Delims("|||", "|||").ParseFiles("asset/web/template/responsive.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, DefaultServer.CaseDB)
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -394,9 +412,19 @@ func (s *Server) Start() {
 	http.HandleFunc("/script", Script)
 	http.HandleFunc("/product", Product)
 	http.HandleFunc("/jsnotify", JSNotify)
+	http.HandleFunc("/responsive", ResponsiveNav)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 
 	http.Handle("/asset/web/", http.FileServer(http.Dir(".")))
 	log.Panic(http.ListenAndServe(":8080", nil))
+}
+
+func init() {
+	value, err := ioutil.ReadFile("testcases.json")
+	if err != nil {
+		panic(err)
+	}
+
+	json.Unmarshal(value, &DefaultServer.CaseDB)
 }
