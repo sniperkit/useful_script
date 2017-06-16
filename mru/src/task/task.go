@@ -4,11 +4,14 @@ import (
 	"assertion"
 	"condition"
 	"errors"
+	"fmt"
 	"log"
 	"net/url"
 	"routine"
+	"rut"
 	"sort"
 	"strings"
+	"taskresult"
 )
 
 /*
@@ -22,7 +25,97 @@ type Task struct {
 	PostCondition *condition.Condition
 	Clear         *routine.Routine
 	Description   string
-	Seq           int
+}
+
+func (t *Task) Run(db *rut.DB) *taskresult.Result {
+	if result, err := t.CheckPreCondition(db); err != nil {
+		return result
+	}
+
+	if result, err := t.RunMainRoutine(db); err != nil {
+		return result
+	}
+
+	if result, err := t.CheckPostCondition(db); err != nil {
+		return result
+	}
+
+	if result, err := t.RunClearRoutine(db); err != nil {
+		return result
+	}
+
+	return &taskresult.Result{Name: t.Name, Description: t.Description, Success: true}
+}
+
+func (t *Task) CheckPreCondition(db *rut.DB) (*taskresult.Result, error) {
+	if err := t.PreCondition.Check(db); err != nil {
+		return &taskresult.Result{
+			Name:        t.Name,
+			Description: t.Description,
+			Success:     false,
+			Message:     err.Error(),
+		}
+	}
+
+	return &taskresult.Result{
+		Name:        t.Name,
+		Description: t.Description,
+		Success:     true,
+	}
+}
+
+func (t *Task) CheckPostCondition(db *rut.DB) (*taskresult.Result, error) {
+	if err := t.PostCondition.Check(db); err != nil {
+		return &taskresult.Result{
+			Name:        t.Name,
+			Description: t.Description,
+			Success:     false,
+			Message:     err.Error(),
+		}
+	}
+
+	return &taskresult.Result{
+		Name:        t.Name,
+		Description: t.Description,
+		Success:     true,
+	}
+
+}
+
+func (t *Task) RunMainRoutine(db *rut.DB) (*taskresult.Result, error) {
+	if err := t.Routine.Run(db); err != nil {
+		return &taskresult.Result{
+			Name:        t.Name,
+			Description: t.Description,
+			Success:     false,
+			Message:     err.Error(),
+		}
+	}
+
+	return &taskresult.Result{
+		Name:        t.Name,
+		Description: t.Description,
+		Success:     true,
+	}
+
+}
+
+func (t *Task) RunClearRoutine(db *rut.DB) (*taskresult.Result, error) {
+	if err := t.Clear.Run(db); err != nil {
+		return &taskresult.Result{
+			Name:        t.Name,
+			Description: t.Description,
+			Success:     false,
+			Message:     err.Error(),
+		}
+	}
+
+	return &taskresult.Result{
+		Name:        t.Name,
+		Description: t.Description,
+		Success:     true,
+	}
+
 }
 
 func IsTaskParamsValid(in url.Values) bool {

@@ -5,7 +5,11 @@ import (
 	"log"
 	"net/url"
 	//"strconv"
+	"fmt"
+	"rut"
 	"strings"
+	"task"
+	"taskresult"
 )
 
 type Case struct {
@@ -14,8 +18,33 @@ type Case struct {
 	Feature  string
 	Name     string
 	Tasks    []*Task
-	DUTs     []*DUT
+	RUTs     rut.DB
 	TCount   int
+}
+
+func (c *Case) String() string {
+	return fmt.Sprintf("%s>%s>%s>%s", c.Group, c.SubGroup, c.Feature, c.Name)
+}
+
+func (c *Case) Run() (string, bool) {
+	if len(c.Tasks) == 0 {
+		log.Printf("This is no task in case: %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name)
+		return "", true
+	}
+
+	for _, t := range c.Tasks {
+		result := t.Run(c.RUTs)
+		if !result.Success {
+			return errors.New("Run Case: %s>%s>%s>%s's Task: %s failed with: %s", c.Group, c.SubGroup, c.Feature, c.Name, t.Name, err.Error()), false
+		}
+	}
+
+	return "", true
+}
+
+func (c Case) RunTask(t *task.Task) (string, bool) {
+	result := t.Run(c.RUTs)
+	return result.Message, result.Success
 }
 
 func IsValidCaseParas(in url.Values) bool {

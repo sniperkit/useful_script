@@ -1,4 +1,4 @@
-package memcasedb
+package cache
 
 import (
 	"bytes"
@@ -9,16 +9,16 @@ import (
 	"util"
 )
 
-type CaseDB struct {
+type Cache struct {
 	Device string
 	GCount int
 	CCount int
 	Groups map[string]*Group
 }
 
-func (cdbim *CaseDB) String() string {
+func (ca *Cache) String() string {
 	var buffer bytes.Buffer
-	js, err := json.Marshal(cdbim)
+	js, err := json.Marshal(ca)
 	if err != nil {
 		log.Println("Cannot format db for debug")
 		return ""
@@ -30,8 +30,8 @@ func (cdbim *CaseDB) String() string {
 	return buffer.String()
 }
 
-func (cdbim *CaseDB) Save() {
-	js, err := json.Marshal(cdbim)
+func (ca *Cache) Save() {
+	js, err := json.Marshal(ca)
 	if err != nil {
 		log.Println("Cannot format db for debug")
 		return
@@ -39,15 +39,15 @@ func (cdbim *CaseDB) Save() {
 	util.SaveToFile("testcases.json", js)
 }
 
-func (cdbim *CaseDB) Add(c *Case) error {
-	g, ok := cdbim.Groups[c.Group]
+func (ca *Cache) Add(c *Case) error {
+	g, ok := ca.Groups[c.Group]
 	if !ok {
-		cdbim.Groups[c.Group] = &Group{
+		ca.Groups[c.Group] = &Group{
 			Name:      c.Group,
 			SubGroups: make(map[string]*SubGroup, 1),
 		}
-		cdbim.GCount++
-		g, _ = cdbim.Groups[c.Group]
+		ca.GCount++
+		g, _ = ca.Groups[c.Group]
 	}
 
 	err := g.Add(c)
@@ -55,14 +55,14 @@ func (cdbim *CaseDB) Add(c *Case) error {
 		return err
 	}
 
-	cdbim.CCount++
+	ca.CCount++
 
-	cdbim.Save()
+	ca.Save()
 	return nil
 }
 
-func (cdbim *CaseDB) Del(c *Case) error {
-	g, ok := cdbim.Groups[c.Group]
+func (ca *Cache) Del(c *Case) error {
+	g, ok := ca.Groups[c.Group]
 	if !ok {
 		return errors.New("Cannot find Group: " + c.Group + " for delete case: " + c.Name)
 	}
@@ -73,22 +73,22 @@ func (cdbim *CaseDB) Del(c *Case) error {
 	}
 
 	if len(g.SubGroups) == 0 {
-		delete(cdbim.Groups, c.Group)
-		cdbim.GCount--
+		delete(ca.Groups, c.Group)
+		ca.GCount--
 	}
 
-	cdbim.CCount--
+	ca.CCount--
 
-	cdbim.Save()
+	ca.Save()
 	return nil
 }
 
-func (cdbim *CaseDB) Get(c *Case) (*Case, error) {
-	for k, v := range cdbim.Groups {
+func (ca *Cache) Get(c *Case) (*Case, error) {
+	for k, v := range ca.Groups {
 		log.Println(len(k), k, v, c.Name, c.Group, len(c.Group))
 	}
 
-	g, ok := cdbim.Groups[c.Group]
+	g, ok := ca.Groups[c.Group]
 	if !ok {
 		return nil, errors.New("Cannot find Group: " + c.Group + " for Get case: " + c.Name)
 	}
@@ -96,11 +96,11 @@ func (cdbim *CaseDB) Get(c *Case) (*Case, error) {
 	return g.Get(c)
 }
 
-func (cdbim *CaseDB) Dump() []*Case {
+func (ca *Cache) Dump() []*Case {
 	result := make([]*Case, 0, 10)
-	gs := make([]*Group, 0, len(cdbim.Groups))
+	gs := make([]*Group, 0, len(ca.Groups))
 
-	for _, g := range cdbim.Groups {
+	for _, g := range ca.Groups {
 		gs = append(gs, g)
 	}
 
@@ -113,8 +113,8 @@ func (cdbim *CaseDB) Dump() []*Case {
 	return result
 }
 
-func (cdbim *CaseDB) DumpGroup(group string) ([]*Case, error) {
-	g, ok := cdbim.Groups[group]
+func (ca *Cache) DumpGroup(group string) ([]*Case, error) {
+	g, ok := ca.Groups[group]
 	if !ok {
 		return nil, errors.New("Cannot find Group: " + group + " for dump")
 	}
@@ -122,8 +122,8 @@ func (cdbim *CaseDB) DumpGroup(group string) ([]*Case, error) {
 	return g.Dump(), nil
 }
 
-func (cdbim *CaseDB) DumpSubGroup(group, sgroup string) ([]*Case, error) {
-	g, ok := cdbim.Groups[group]
+func (ca *Cache) DumpSubGroup(group, sgroup string) ([]*Case, error) {
+	g, ok := ca.Groups[group]
 	if !ok {
 		return nil, errors.New("Cannot find Group: " + group + " for dump")
 	}
@@ -131,8 +131,8 @@ func (cdbim *CaseDB) DumpSubGroup(group, sgroup string) ([]*Case, error) {
 	return g.DumpSubGroup(sgroup)
 }
 
-func (cdbim *CaseDB) DumpFeature(group, sgroup, feature string) ([]*Case, error) {
-	g, ok := cdbim.Groups[group]
+func (ca *Cache) DumpFeature(group, sgroup, feature string) ([]*Case, error) {
+	g, ok := ca.Groups[group]
 	if !ok {
 		return nil, errors.New("Cannot find Group: " + group + " for dump feature")
 	}

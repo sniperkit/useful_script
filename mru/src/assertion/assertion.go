@@ -2,69 +2,58 @@ package assertion
 
 import (
 	"command"
-	"log"
+	"errors"
+	"fmt"
 	"regexp"
+	"rut"
 )
 
 type Assertion struct {
 	DUT        string
-	Mode       string
-	Cli        string
 	Command    command.Command
-	Seq        string
 	Expected   string
 	UnExpected string
-	Done       bool
 	Raw        string
 }
 
-func (a *Assertion) Do() bool {
-	a.Done = true
-
-	var re *regexp.Regexp
-	if a.Expected != "" {
-		re = regexp.MustCompile(a.Expected)
-		match := re.FindStringSubmatch(a.Raw)
-		if len(match) == 0 {
-			return false
-		} else {
-			return true
-		}
-	} else if a.UnExpected != "" {
-		re = regexp.MustCompile(a.Expected)
-		match := re.FindStringSubmatch(a.Raw)
-		if len(match) == 0 {
-			return true
-		} else {
-			return false
-		}
+func (a *Assertion) Do(db *rut.DB) error {
+	data, err := db[a.DUT].RunCommand(a.Command)
+	if err != nil {
+		return fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error())
 	}
-	log.Println("Invlaid assertion, Both expcted and unexpected are empty!")
-	return false
+
+	a.Raw = string(data)
+	defer func() { a.Raw = "" }()
+	if a.Expected || a.UnExpected {
+		msg, ok := a.Verify()
+		if !ok {
+			return errors.New(fmt.Sprintf("Assertion Faild: with command: %s. %s", a.Command.CMD, msg))
+		}
+		return nil
+	}
+
+	return errors.New(fmt.Sprintf("Invlaid assertion, Both expcted and unexpected are empty!"))
 }
 
-func (a *Assertion) String() string {
+func (a *Assertion) Verify() (string, bool) {
 	var re *regexp.Regexp
 	if a.Expected != "" {
 		re = regexp.MustCompile(a.Expected)
 		match := re.FindStringSubmatch(a.Raw)
-		log.Println("LEN: +++++++++++++++++++++++: ", len(match))
-		if len(match) != 2 {
-			return "FAILED: Command: " + a.Command.CMD + " EXPECTED: " + a.Expected + "GET: " + a.Raw
+		if len(match) == 0 {
+			return fmt.Sprintf("Expected: %s, Get: %s", a.Expected, a.Raw), false
 		} else {
-			return "SUCCESS: Command: " + a.Command.CMD + " EXPECTED: " + a.Expected
+			return "", true
 		}
 	} else if a.UnExpected != "" {
 		re = regexp.MustCompile(a.Expected)
 		match := re.FindStringSubmatch(a.Raw)
-		log.Println("LEN: +++++++++++++++++++++++: ", len(match))
-		if len(match) != 2 {
-			return "SUCCESS: Command: " + a.Command.CMD + " UnEXPECTED: " + a.UnExpected
+		if len(match) == 0 {
+			return "", true
 		} else {
-			return "FAILED: Command: " + a.Command.CMD + " UnEXPECTED: " + a.UnExpected + "GET: " + a.Raw
+			return fmt.Sprintf("UnExpected: %s, Get: %s", a.UnExpected, a.Raw), false
 		}
 	}
-	log.Println("Invlaid assertion, Both expcted and unexpected are empty!")
-	return "FAILED: Command: " + a.Command.CMD + " EXPECTED: " + a.Expected + "GET: " + a.Raw
 
+	return fmt.Sprintf("Invlaid assertion, Both expcted and unexpected are empty!"), false
 }

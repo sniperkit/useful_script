@@ -1,16 +1,13 @@
 package rut
 
 import (
-	"assertion"
 	"cline"
 	"command"
 	"configuration"
 	"errors"
 	"log"
 	"result"
-	"routine"
 	"script"
-	"task"
 )
 
 //RUT should be and interface
@@ -19,6 +16,17 @@ type RUT struct {
 	cli  *cline.Cli
 	L3   bool //We need to have a feature list. For run each case
 	L2   bool
+}
+
+type DB struct {
+	DB map[string]*RUT
+}
+
+func (db *DB) GetRUTByName(name string) *RUT {
+	if r, ok := db.DB[name]; ok {
+		return r
+	}
+	return nil
 }
 
 func NewRUT(conf *configuration.Configuration) (*RUT, error) {
@@ -40,26 +48,6 @@ func NewRUT(conf *configuration.Configuration) (*RUT, error) {
 		name: conf.DeviceName,
 		cli:  c,
 	}, nil
-}
-
-func (d *RUT) RunTask(t *task.Task) error {
-	return nil
-}
-
-func (d *RUT) RunRoutine(r *routine.Routine) error {
-	return nil
-}
-
-func (d *RUT) Assert(a *assertion.Assertion) bool {
-	result, err := d.RunCommand(&a.Command)
-	if err != nil {
-		log.Println(err.Error())
-		return false
-	}
-
-	a.Raw = result
-
-	return a.Do()
 }
 
 func (d *RUT) RunCommand(cmd *command.Command) (string, error) {
