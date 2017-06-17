@@ -311,6 +311,24 @@ func ResponsiveNav(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func TreeView(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("treeview.html").Delims("|||", "|||").ParseFiles("asset/web/template/treeview.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView())
+		err = t.Execute(w, string(js))
+		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+}
+
 func NewRunScript(w http.ResponseWriter, r *http.Request) {
 	_, err := r.Cookie("Device")
 	if err != nil {
@@ -413,6 +431,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/product", Product)
 	http.HandleFunc("/jsnotify", JSNotify)
 	http.HandleFunc("/responsive", ResponsiveNav)
+	http.HandleFunc("/treeview", TreeView)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 
@@ -427,4 +446,5 @@ func init() {
 	}
 
 	json.Unmarshal(value, &DefaultServer.CaseDB)
+	DefaultServer.CaseDB.TreeView()
 }

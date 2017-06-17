@@ -10,6 +10,7 @@ import (
 	"mcase"
 	"sort"
 	"subgroup"
+	"treeview"
 	"util"
 )
 
@@ -166,6 +167,21 @@ func (ca *Cache) DumpFeature(group, sgroup, feature string) ([]*mcase.Case, erro
 	}
 
 	return g.DumpFeature(sgroup, feature)
+}
+
+func (ca *Cache) TreeView() *treeview.Node {
+	root := treeview.New(ca.Device)
+	cases := ca.Dump()
+	for _, c := range cases {
+		root.AddChild(c.MakeTreeViewKey())
+	}
+
+	fmt.Printf("%#v", root)
+
+	//data, _ := json.Marshal(root)
+	//fmt.Printf("%#v", string(data))
+
+	return root
 }
 
 type GroupSlice []*group.Group

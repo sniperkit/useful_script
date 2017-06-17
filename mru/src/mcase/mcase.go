@@ -36,6 +36,10 @@ func (c *Case) Init() {
 	}
 }
 
+func (c *Case) MakeTreeViewKey() string {
+	return fmt.Sprintf("%s:::%s:::%s:::%s", c.Group, c.SubGroup, c.Feature, c.Name)
+}
+
 func (c *Case) AddRUT(r *rut.RUT) {
 	if len(c.RUTs.DB) == 0 {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)
