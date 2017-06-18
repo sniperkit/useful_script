@@ -31,7 +31,7 @@
 							<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewPreCondition"></button></td>
 						</tr>
 					</thead>
-					<tbody v-for="(assertion, index) in ntask.preCondition.assertions">
+					<tbody v-for="(assertion, index) in ntask.precondition.assertions">
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
 							<td class="text-center">{{assertion.mode}}</td>
@@ -63,7 +63,7 @@
 						</tr>
 
 					</thead>
-					<tbody v-for="(assertion, index) in ntask.mainRoutine.assertions">
+					<tbody v-for="(assertion, index) in ntask.routine.assertions">
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
 							<td class="text-center">{{assertion.mode}}</td>
@@ -95,7 +95,7 @@
 						</tr>
 
 					</thead>
-					<tbody v-for="(assertion, index) in ntask.postCondition.assertions">
+					<tbody v-for="(assertion, index) in ntask.postcondition.assertions">
 
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
@@ -128,7 +128,7 @@
 						</tr>
 
 					</thead>
-					<tbody v-for="(assertion, index) in ntask.clearRoutine.assertions">
+					<tbody v-for="(assertion, index) in ntask.clear.assertions">
 						<tr>
 
 							<td class="text-center">{{assertion.dut}}</td>
@@ -207,16 +207,16 @@
 			},
 			ntask: {
 				name: "",
-				preCondition: {
+				precondition: {
 					assertions:[]
 				},
-				mainRoutine: {
+				routine: {
 					assertions:[]
 				},
-				postCondition: {
+				postcondition: {
 					assertions:[]
 				},
-				clearRoutine: {
+				clear: {
 					assertions:[]
 				}
 			},
@@ -225,7 +225,7 @@
 		},
 		methods: {
 			addNewPreCondition: function(){
-				this.ntask.preCondition.assertions.push({
+				this.ntask.precondition.assertions.push({
 					dut: this.prcinputs.dut,
 					mode: this.prcinputs.mode,
 					cli: this.prcinputs.cli,
@@ -234,11 +234,11 @@
 				this.inputs = {};
 			},
 			delPreCondition: function(index){
-				this.ntask.preCondition.assertions.splice(index, 1);
+				this.ntask.precondition.assertions.splice(index, 1);
 			},
 
 			addNewPostCondition: function(){
-				this.ntask.postCondition.assertions.push({
+				this.ntask.postcondition.assertions.push({
 					dut: this.pocinputs.dut,
 					mode: this.pocinputs.mode,
 					cli: this.pocinputs.cli,
@@ -248,11 +248,11 @@
 			},
 
 			delPostCondition: function(index){
-				this.ntask.postCondition.assertions.splice(index, 1);
+				this.ntask.postcondition.assertions.splice(index, 1);
 			},
 
 			addNewMainRoutine: function(){
-				this.ntask.mainRoutine.assertions.push({
+				this.ntask.routine.assertions.push({
 					dut: this.mrinputs.dut,
 					mode: this.mrinputs.mode,
 					cli: this.mrinputs.cli,
@@ -262,11 +262,11 @@
 			},
 
 			delMainRoutine: function(index){
-				this.ntask.mainRoutine.assertions.splice(index, 1);
+				this.ntask.routine.assertions.splice(index, 1);
 			},
 
 			addNewClearRoutine: function(){
-				this.ntask.clearRoutine.assertions.push({
+				this.ntask.clear.assertions.push({
 					dut: this.crinputs.dut,
 					mode: this.crinputs.mode,
 					cli: this.crinputs.cli,
@@ -276,7 +276,7 @@
 			},
 
 			delClearRoutine: function(index){
-				this.ntask.clearRoutine.assertions.splice(index, 1);
+				this.ntask.clear.assertions.splice(index, 1);
 			},
 
 			submitForm: function(e) {
@@ -284,7 +284,7 @@
 					type:"post",
 					url:"newtask",
 					async:false,
-					data: {newtask: this.ntask},
+					data: {newtask: JSON.stringify(this.ntask)},
 					success:function(data) {
 						alert(data);
 					}

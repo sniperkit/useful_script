@@ -8,9 +8,9 @@ import (
 )
 
 type Assertion struct {
-	DUT        string
-	Command    command.Command
-	Expected   string
+	DUT        string          `json:"dut"`
+	Command    command.Command `json:"command"`
+	Expected   string          `json:"expected"`
 	UnExpected string
 	Raw        string
 }

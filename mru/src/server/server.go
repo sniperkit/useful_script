@@ -14,6 +14,7 @@ import (
 	"result"
 	"rut"
 	"script"
+	"task"
 	"time"
 	"util"
 )
@@ -384,6 +385,14 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 		for k, v := range r.Form {
 			log.Println(k, v)
 		}
+
+		var newtask task.Task
+		json.Unmarshal([]byte(r.FormValue("newtask")), &newtask)
+		log.Printf("%#q", newtask)
+		log.Printf("%#v", newtask)
+		log.Printf("%#q", newtask.PreCondition)
+		log.Printf("%#q", newtask.PostCondition)
+		log.Printf("%#q", newtask.Routine)
 	}
 }
 
