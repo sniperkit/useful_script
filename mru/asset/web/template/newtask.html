@@ -25,8 +25,8 @@
 
 						<tr>
 							<td class="text-center"><input type="text" v-model="prcinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
-							<td class="text-center"><input type="text" v-model="prcinputs.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
-							<td class="text-center"><input type="text" v-model="prcinputs.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
+							<td class="text-center"><input type="text" v-model="prcinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+							<td class="text-center"><input type="text" v-model="prcinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
 							<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewPreCondition"></button></td>
 						</tr>
@@ -34,8 +34,8 @@
 					<tbody v-for="(assertion, index) in ntask.precondition.assertions">
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
-							<td class="text-center">{{assertion.mode}}</td>
-							<td class="text-center">{{assertion.cli}}</td>
+							<td class="text-center">{{assertion.command.mode}}</td>
+							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
 							<td class="text-center"><button class="btn btn-danger glyphicon glyphicon-minus" @click.prevent="delPreCondition(index)"></button></td>
 						</tr>
@@ -56,8 +56,8 @@
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
 						<td class="text-center"><input type="text" v-model="mrinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="mrinputs.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="mrinputs.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
+						<td class="text-center"><input type="text" v-model="mrinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="mrinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewMainRoutine"></button></td>
 						</tr>
@@ -66,8 +66,8 @@
 					<tbody v-for="(assertion, index) in ntask.routine.assertions">
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
-							<td class="text-center">{{assertion.mode}}</td>
-							<td class="text-center">{{assertion.cli}}</td>
+							<td class="text-center">{{assertion.command.mode}}</td>
+							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
 							<td class="text-center"><button class="btn btn-danger glyphicon glyphicon-minus" @click.prevent="delMainRoutine(index)"></button></td>
 						</tr>
@@ -88,8 +88,8 @@
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
 						<td class="text-center"><input type="text" v-model="pocinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="pocinputs.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="pocinputs.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
+						<td class="text-center"><input type="text" v-model="pocinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="pocinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewPostCondition"></button></td>
 						</tr>
@@ -99,8 +99,8 @@
 
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
-							<td class="text-center">{{assertion.mode}}</td>
-							<td class="text-center">{{assertion.cli}}</td>
+							<td class="text-center">{{assertion.command.mode}}</td>
+							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
 							<td class="text-center"><button class="btn btn-danger glyphicon glyphicon-minus" @click.prevent="delPostCondition(index)"></button></td>
 						</tr>
@@ -121,8 +121,8 @@
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
 						<td class="text-center"><input type="text" v-model="crinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="crinputs.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="crinputs.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
+						<td class="text-center"><input type="text" v-model="crinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="crinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewClearRoutine"></button></td>
 						</tr>
@@ -132,8 +132,8 @@
 						<tr>
 
 							<td class="text-center">{{assertion.dut}}</td>
-							<td class="text-center">{{assertion.mode}}</td>
-							<td class="text-center">{{assertion.cli}}</td>
+							<td class="text-center">{{assertion.command.mode}}</td>
+							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
 							<td class="text-center"><button class="btn btn-danger glyphicon glyphicon-minus" @click.prevent="delClearRoutine(index)"></button></td>
 						</tr>
@@ -183,26 +183,34 @@
 		data: {
 			prcinputs: {
 				dut:"",
+				command: {
 				mode: "",
-				cli: "",
+				cli: ""
+				},
 				expected: ""
 			},
 			pocinputs: {
 				dut:"",
+				command: {
 				mode: "",
-				cli: "",
+				cli: ""
+				},
 				expected: ""
 			},
 			mrinputs: {
 				dut:"",
+				command: {
 				mode: "",
-				cli: "",
+				cli: ""
+				},
 				expected: ""
 			},
 			crinputs: {
 				dut:"",
-				mode: "",
-				cli: "",
+				command:{
+					cli: "",
+					mode: ""
+				},
 				expected: ""
 			},
 			ntask: {
@@ -227,8 +235,10 @@
 			addNewPreCondition: function(){
 				this.ntask.precondition.assertions.push({
 					dut: this.prcinputs.dut,
-					mode: this.prcinputs.mode,
-					cli: this.prcinputs.cli,
+					command: {
+					mode: this.prcinputs.command.mode,
+					cli: this.prcinputs.command.cli
+					},
 					expected: this.prcinputs.expected
 				});
 				this.inputs = {};
@@ -240,8 +250,10 @@
 			addNewPostCondition: function(){
 				this.ntask.postcondition.assertions.push({
 					dut: this.pocinputs.dut,
-					mode: this.pocinputs.mode,
-					cli: this.pocinputs.cli,
+					command: {
+					mode: this.pocinputs.command.mode,
+					cli: this.pocinputs.command.cli
+					},
 					expected: this.pocinputs.expected
 				});
 				this.inputs = {};
@@ -254,8 +266,10 @@
 			addNewMainRoutine: function(){
 				this.ntask.routine.assertions.push({
 					dut: this.mrinputs.dut,
-					mode: this.mrinputs.mode,
-					cli: this.mrinputs.cli,
+					command: {
+					mode: this.mrinputs.command.mode,
+					cli: this.mrinputs.command.cli
+					},
 					expected: this.mrinputs.expected
 				});
 				this.inputs = {};
@@ -268,8 +282,10 @@
 			addNewClearRoutine: function(){
 				this.ntask.clear.assertions.push({
 					dut: this.crinputs.dut,
-					mode: this.crinputs.mode,
-					cli: this.crinputs.cli,
+					command: {
+					mode: this.crinputs.command.mode,
+					cli: this.crinputs.command.cli
+					},
 					expected: this.crinputs.expected
 				});
 				this.inputs = {};
