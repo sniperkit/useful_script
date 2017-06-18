@@ -344,6 +344,13 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Println(err.Error())
 		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		log.Println("POST:+++++++++++++++")
+		log.Println(r.Form)
+		for k, v := range r.Form {
+			log.Println(k, v)
+		}
 	}
 }
 

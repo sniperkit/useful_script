@@ -1,65 +1,43 @@
 |||template "vueheader" |||
-<div class="row col-sm-12">
 |||template "treenav" .|||
-		<form class="form-horizontal col-sm-9" role="form" id="caseform" action="newcase" method="post">
+<div id="form-newcase">
+		<div class="form-horizontal col-sm-9">
 			<fieldset>
 				<legend>Case Parameters</legend>
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_group">Group</label>
 					<div class="col-sm-4">
-						<input class="form-control required" id="case_group" name="case_group" type="text" placeholder="L2"/>
+						<input type="text" v-model="ncase.Group" class="form-control required" placeholder="L2">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label" for="case_group">Sub Group</label>
+					<label class="col-sm-2 control-label" for="case_subgroup">Sub Group</label>
 					<div class="col-sm-4">
-						<input class="form-control required" id="case_sub_group" name="case_sub_group" type="text" placeholder="Bridge"/>
+						<input type="text" v-model="ncase.SubGroup" class="form-control required" placeholder="Bridge">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_feature">Feature</label>
 					<div class="col-sm-4">
-						<input class="form-control required" id="case_feature" name="case_feature" type="text" placeholder="VLAN"/>
+						<input type="text" v-model="ncase.Feature" class="form-control required" placeholder="VLAN">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_name">Name</label>
 					<div class="col-sm-4">
-						<input class="form-control required" id="case_name" name="case_name" type="text" placeholder="VLAN CREATE"/>
+						<input type="text" v-model="ncase.Name" class="form-control required" placeholder="VLAN Create">
 					</div>
 				</div>
-
 				<div class="form-group">
-					<label class="col-sm-2 control-label" for="case_name">DUT List</label>
+					<label class="col-sm-2 control-label" for="dut_count">DUT Count</label>
 					<div class="col-sm-4">
-						<table class="table table-bordered table-hover" id="dut_tab">
-							<thead>
-								<tr>
-									<th class="text-center">#</th>
-									<th class="text-center">Device</th>
-									<th class="text-center">User</th>
-									<th class="text-center">Password</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr id='row0'>
-									<td>1</td>
-									<td><input type="text" name='device~0' placeholder='V8500_SFU' class="form-control required"/></td>
-									<td><input type="text" name='username~0' placeholder='username' class="form-control required"/></td>
-									<td><input type="text" name='password~0' placeholder='password' class="form-control"/></td>
-								</tr>
-								<tr id='row1'></tr>
-							</tbody>
-						</table>
-						<div>
-							<a id="add_dut" class="pull-left">Add DUT</a><a id='del_dut' class="pull-right">Del DUT</a>
-						</div>
+						<input type="text" v-model="ncase.DUTCount" class="form-control required" placeholder="2">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_topology">Topology</label>
 					<div class="col-sm-4">
-						<input class="form-control required" id="case_topology" name="case_topology" type="file" placeholder="Topology.jpg"/>
+						<input type="file" v-model="ncase.Topology" class="form-control required" placeholder="Topology.jpg">
 					</div>
 				</div>
 			</fieldset>     
@@ -67,10 +45,39 @@
 				<legend></legend>
 				<div class="col-sm-2"></div>
 				<div class="col-sm-4">
-					<button type="submit" name="submit" class="btn btn-block">Submit</button>
+					<button class="btn btn-success btn-block" @click.prevent="submitForm">Submit</button>
 				</div>
 			</fieldset>
-		</form>
-<script type="text/javascript" src="asset/web/static/js/newcase.js"></script>
-<link rel="stylesheet" href="asset/web/static/css/newcase.css">
+		</div>
+</div>
+<script>
+	var newCase = new Vue({
+		el: '#form-newcase',
+		data: {
+			ncase: {
+				Group: "",
+				SubGroup: "",
+				Feature: "",
+				Name: "",
+				DUTCount: "",
+				Topology:""
+			},
+			submitted:false
+		},
+		methods: {
+			submitForm: function(e) {
+				$.ajax({
+					type:"post",
+					url:"newcase",
+					async:false,
+					data: this.ncase,
+					success:function(data) {
+						alert(data);
+					}
+				});
+				this.submitted = true;
+			}
+		}
+	});
+</script>
 |||template "vuefooter"|||
