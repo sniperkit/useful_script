@@ -346,7 +346,30 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if r.Method == "POST" {
 		r.ParseForm()
-		log.Println("POST:+++++++++++++++")
+		log.Println(r.Form)
+		for k, v := range r.Form {
+			log.Println(k, v)
+		}
+	}
+}
+
+func NewTask(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("newtask.html").Delims("|||", "|||").ParseFiles("asset/web/template/newtask.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView().Children)
+		err = t.Execute(w, string(js))
+		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
 		log.Println(r.Form)
 		for k, v := range r.Form {
 			log.Println(k, v)
@@ -458,6 +481,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/responsive", ResponsiveNav)
 	http.HandleFunc("/treeview", TreeView)
 	http.HandleFunc("/newcase", NewCase)
+	http.HandleFunc("/newtask", NewTask)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 
