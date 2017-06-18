@@ -9,6 +9,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"mcase"
 	"net/http"
 	"result"
 	"rut"
@@ -339,10 +340,17 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if r.Method == "POST" {
 		r.ParseForm()
-		log.Println(r.Form)
+		log.Printf("%#q\n", r.Form)
+		var newcase mcase.Case
 		for k, v := range r.Form {
-			log.Println(k, v)
+			log.Println(k, ":", v)
 		}
+		log.Println(r.FormValue("newcase"))
+		log.Println(r.FormValue("newcase"))
+		log.Println(r.FormValue("newcase"))
+		log.Println(r.FormValue("newcase"))
+		json.Unmarshal([]byte(r.FormValue("newcase")), &newcase)
+		log.Println(newcase)
 	}
 }
 

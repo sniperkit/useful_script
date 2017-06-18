@@ -284,7 +284,7 @@
 					type:"post",
 					url:"newtask",
 					async:false,
-					data: this.ntask,
+					data: {newtask: this.ntask},
 					success:function(data) {
 						alert(data);
 					}
