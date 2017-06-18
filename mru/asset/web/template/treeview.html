@@ -1,154 +1,90 @@
 |||template "vueheader"|||
-<link rel="stylesheet" href="asset/web/static/css/tree.vue.css">
-<div id="demo">
-    <h1>{{title}}</h1>
-    <vue-tree :option="option"></vue-tree>
+<link href="asset/web/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="./css/bootstrap-treeview.css" rel="stylesheet"> -->
+<script src="asset/web/static/jquery/jquery.min.js"></script>
+<script src="asset/web/static/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+<style>
+#mru-case-nav{
+	padding-left:10px;
+}
+</style>
+<div role="navigation" id="mru-case-nav">
+	<div class="row">
+		<div class="col-sm-2">
+			<h2>V8500</h2>
+			<!-- <form> -->
+			<div class="form-group">
+				<button type="button" class="btn btn-info glyphicon glyphicon-search" id="btn-search"></button>
+				<button type="button" class="btn btn-error glyphicon glyphicon-tint" id="btn-clear-search"></button>
+				<button type="button" class="btn btn-success glyphicon glyphicon-eye-open" id="btn-expand-all"></button>
+				<button type="button" class="btn btn-danger glyphicon glyphicon-eye-close" id="btn-collapse-all"></button>
+
+				<label for="input-search" class="sr-only">Search Tree:</label>
+				<input type="input" class="form-control" id="input-search" placeholder="Type to search..." value="">
+				<div id="treeview-searchable" class=""></div>
+			</div>
+		</div>
+	</div>
+	<!---
+	 <div id="expandible-output"></div>
+	 <hr>
+	-->
 </div>
 
-<script src="asset/web/static/js/tree.vue.js"></script>
-<script>
-(function () {
-    'use strict';
-    var addNode = function (node) {
-        node.isOpen = true;
-        node.children.push({
-            name: 'child node ' + node.children.length,
-            parent: node,
-            isParent: true,
-            children: [],
-            buttons: [
-                {
-                    title: 'Add',
-                    icon: 'glyphicon glyphicon-plus',
-                    click: addNode
-                }, {
-                    title: 'Delete',
-                    icon: 'glyphicon glyphicon-stop',
-                    click: function (node) {
-                        node.parent.children.splice(node.parent.children.indexOf(node), 1);
-                    }
-                }
-            ]
-        });
-    };
-    new Vue({
-        el: '#demo',
-        data: {
-            title: 'Vue Tree Demo',
-            option: {
-                root: {
-                    name: 'Root Node',
-                    isParent: true,
-                    isOpen: true,
-                    openedIcon: 'fa fa-folder-open-o',
-                    closedIcon: 'fa fa-folder-o',
-                    children: [
-                        {
-                            name: 'Level1'
-                        },
-                        {
-                            name: 'Level1 with icon',
-                            icon: 'fa fa-cube',
-                            title: '192.168.89.0'
-                        },
-                        {
-                            name: 'Edit node',
-                            buttons: [
-                                {
-                                    title: 'Edit',
-                                    icon: 'fa fa-edit',
-                                    click: function (node) {
-                                        node.name = prompt('Editing node name, require string', node.name) || node.name;
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            name: 'Level1 has children',
-                            icon: 'fa fa-folder',
-                            openedIcon: 'fa fa-folder-open',
-                            isOpen: false,
-                            isParent: true,
-                            children: [
-                                {
-                                    name: 'level2 - 1',
-                                    icon: 'fa fa-file'
-                                },
-                                {
-                                    name: 'level2 - 2',
-                                    icon: 'fa fa-file'
-                                },
-                                {
-                                    name: 'level2 - 3',
-                                    icon: 'fa fa-file'
-                                }
-                            ]
-                        },
-                        {
-                            name: 'Level1 add node',
-                            isParent: true,
-                            children: [],
-                            buttons: [
-                                {
-                                    title: 'Add',
-                                    icon: 'fa fa-plus',
-                                    click: function (node) {
-                                        node.isOpen = true;
-                                        node.children.push({
-                                            name: 'Level2 node ' + node.children.length,
-                                            parent: node,
-                                            buttons: [
-                                                {
-                                                    title: 'Delete',
-                                                    icon: 'fa fa-trash',
-                                                    click: function (node) {
-                                                        node.parent.children.splice(node.parent.children.indexOf(node), 1);
-                                                    }
-                                                }
-                                            ]
-                                        });
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            name: 'Level1-addNode',
-                            isParent: true,
-                            children: [],
-                            buttons: [
-                                {
-                                    title: 'Add',
-                                    icon: 'fa fa-plus',
-                                    click: addNode
-                                }
-                            ]
-                        },
-                        {
-                            name: 'Level1 Ajax',
-                            isParent: true,
-                            children: [],
-                            showLoading: true, // if (node.showLoading && node._loading) then show loading icon
-                            onOpened: function (node) {
-                                if (!node._loading) {
-                                    Vue.set(node, 'children', []); // Clean old data
-                                    node._loading = true; // Start Ajax
-                                    setTimeout(function () { //
-                                        node._loading = false; //Finish Ajax
-                                        for (var i = 1; i < 6; i++) {
-                                            node.children.push({name: 'Ajax Node ' + i});
-                                        }
-                                    }, 2000);
-                                }
-                            },
-                            onClosed: function () {
-                                // NOOP
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    });
-})();
+</div>
+<script type="text/javascript">
+	$(function() {
+		var $searchableTree = $('#treeview-searchable').treeview({
+			data: |||.|||,
+			/*
+					onNodeCollapsed: function(event, node) {
+						$('#expandible-output').prepend('<p>' + node.text + ' was collapsed</p>');
+					},
+					onNodeExpanded: function (event, node) {
+						$('#expandible-output').prepend('<p>' + node.text + ' was expanded</p>');
+					}
+			 */
+		});
+
+		var search = function(e) {
+			var pattern = $('#input-search').val();
+			var options = {
+				ignoreCase: true,
+				exactMatch: false,
+				revealResults: true
+			};
+			var results = $searchableTree.treeview('search', [ pattern, options ]);
+
+			var output = '<p>' + results.length + ' matches found</p>';
+			$.each(results, function (index, result) {
+				output += '<p>- ' + result.text + '</p>';
+			});
+			$('#search-output').html(output);
+		}
+
+		$('#btn-search').on('click', search);
+		$('#input-search').on('keyup', search);
+
+		$('#btn-clear-search').on('click', function (e) {
+			$searchableTree.treeview('clearSearch');
+			$('#input-search').val('');
+			$('#search-output').html('');
+		});
+
+		var findExpandibleNodess = function() {
+			return $searchableTree.treeview('search', [ $('#input-expand-node').val(), { ignoreCase: false, exactMatch: false } ]);
+		};
+		var expandibleNodes = findExpandibleNodess();
+
+		// Expand/collapse all
+		$('#btn-expand-all').on('click', function (e) {
+			var levels = 100;
+			$searchableTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+		});
+
+		$('#btn-collapse-all').on('click', function (e) {
+			$searchableTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
+		});
+	});
 </script>
-||| template "vuefooter"|||
+|||template "vuefooter"|||

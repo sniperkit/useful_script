@@ -320,7 +320,25 @@ func TreeView(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView())
+		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView().Children)
+		err = t.Execute(w, string(js))
+		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+}
+
+func NewCase(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("newcase.html").Delims("|||", "|||").ParseFiles("asset/web/template/newcase.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView().Children)
 		err = t.Execute(w, string(js))
 		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
 		if err != nil {
@@ -432,6 +450,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/jsnotify", JSNotify)
 	http.HandleFunc("/responsive", ResponsiveNav)
 	http.HandleFunc("/treeview", TreeView)
+	http.HandleFunc("/newcase", NewCase)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 
