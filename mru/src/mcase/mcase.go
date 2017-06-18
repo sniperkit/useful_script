@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/url"
 	//"strconv"
+	"crypto/sha1"
+	"encoding/hex"
 	"fmt"
 	"rut"
 	"strings"
@@ -18,7 +20,18 @@ type Case struct {
 	Name     string
 	Tasks    []*task.Task
 	RUTs     rut.DB
+	ID       string
+	DCount   int
 	TCount   int
+}
+
+func (c *Case) hash() string {
+	hash := sha1.New()
+	return hex.EncodeToString(hash.Sum([]byte(c.Group + c.SubGroup + c.Feature + c.Name)))
+}
+
+func (c *Case) Hash() {
+	c.ID = c.hash()
 }
 
 func (c *Case) String() string {
@@ -37,7 +50,7 @@ func (c *Case) Init() {
 }
 
 func (c *Case) MakeTreeViewKey() string {
-	return fmt.Sprintf("%s:::%s:::%s:::%s", c.Group, c.SubGroup, c.Feature, c.Name)
+	return fmt.Sprintf("%s:::%s:::%s:::%s(!@#$^&)", c.Group, c.SubGroup, c.Feature, c.Name) //Give case name an identifier
 }
 
 func (c *Case) AddRUT(r *rut.RUT) {
@@ -45,12 +58,14 @@ func (c *Case) AddRUT(r *rut.RUT) {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)
 	}
 	c.RUTs.DB[r.Name] = r
+	c.DCount++
 }
 
 func (c *Case) DelRUT(r *rut.RUT) {
 	if r, ok := c.RUTs.DB[r.Name]; ok {
 		delete(c.RUTs.DB, r.Name)
 	}
+	c.DCount--
 }
 
 func (c *Case) Run() (string, bool) {

@@ -313,16 +313,9 @@ func ResponsiveNav(w http.ResponseWriter, r *http.Request) {
 
 func TreeView(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		t, err := template.New("treeview.html").Delims("|||", "|||").ParseFiles("asset/web/template/treeview.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
-		if err != nil {
-			log.Println(err)
-			io.WriteString(w, err.Error())
-			return
-		}
-
-		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView().Children)
-		err = t.Execute(w, string(js))
-		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
+		log.Println("Dump tree")
+		encoder := json.NewEncoder(w)
+		err := encoder.Encode(DefaultServer.CaseDB.TreeView().Children)
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -355,7 +348,12 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 
 func NewTask(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		t, err := template.New("newtask.html").Delims("|||", "|||").ParseFiles("asset/web/template/newtask.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
+
+		t, err := template.New("newtask.html").Delims("|||", "|||").ParseFiles("asset/web/template/newtask.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/caseheader.html")
 		if err != nil {
 			log.Println(err)
 			io.WriteString(w, err.Error())
@@ -369,11 +367,64 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			log.Println(err.Error())
 		}
 	} else if r.Method == "POST" {
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
 		r.ParseForm()
 		log.Println(r.Form)
 		for k, v := range r.Form {
 			log.Println(k, v)
 		}
+	}
+}
+
+func DumpCase(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		log.Printf("%v", DefaultServer.CaseDB.DBBYID)
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
+		encoder := json.NewEncoder(w)
+		c, err := DefaultServer.CaseDB.GetCaseByID(r.FormValue("id"))
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+		err = encoder.Encode(c)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func CaseInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		t, err := template.New("caseinfo.html").Delims("|||", "|||").ParseFiles("asset/web/template/caseinfo.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/caseheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		cookie := &http.Cookie{
+			Name:  "CASEID",
+			Value: r.FormValue("id"),
+		}
+
+		http.SetCookie(w, cookie)
+		err = t.Execute(w, nil)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
 
@@ -482,6 +533,8 @@ func (s *Server) Start() {
 	http.HandleFunc("/treeview", TreeView)
 	http.HandleFunc("/newcase", NewCase)
 	http.HandleFunc("/newtask", NewTask)
+	http.HandleFunc("/dumpcase", DumpCase)
+	http.HandleFunc("/caseinfo", CaseInfo)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 
@@ -495,6 +548,8 @@ func init() {
 		panic(err)
 	}
 
-	json.Unmarshal(value, &DefaultServer.CaseDB)
-	DefaultServer.CaseDB.TreeView()
+	err = json.Unmarshal(value, &DefaultServer.CaseDB)
+	if err != nil {
+		panic(err)
+	}
 }

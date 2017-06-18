@@ -19,6 +19,7 @@ type Cache struct {
 	GCount int
 	CCount int
 	Groups map[string]*group.Group
+	DBBYID map[string]*mcase.Case
 }
 
 func New(Device string) *Cache {
@@ -48,6 +49,14 @@ func (ca *Cache) Save() {
 	util.SaveToFile("testcases.json", js)
 }
 
+func (ca *Cache) GetCaseByID(id string) (*mcase.Case, error) {
+	if c, ok := ca.DBBYID[id]; ok {
+		return c, nil
+	}
+
+	return nil, errors.New(fmt.Sprintf("Cannot find case: %s, in case db!", id))
+}
+
 func (ca *Cache) AddGroup(name string) error {
 	if _, ok := ca.Groups[name]; ok {
 		return errors.New(fmt.Sprintf("Group: %s already exist", name))
@@ -66,8 +75,11 @@ func (ca *Cache) DelGroup(name string) error {
 }
 
 func (ca *Cache) Add(c *mcase.Case) error {
+	c.Hash() //Generate a ID for each Case.
+
 	if len(ca.Groups) == 0 {
 		ca.Groups = make(map[string]*group.Group, 1)
+		ca.DBBYID = make(map[string]*mcase.Case, 1)
 	}
 	g, ok := ca.Groups[c.Group]
 	if !ok {
@@ -85,6 +97,7 @@ func (ca *Cache) Add(c *mcase.Case) error {
 	}
 
 	ca.CCount++
+	ca.DBBYID[c.ID] = c
 
 	ca.Save()
 	return nil
@@ -106,6 +119,7 @@ func (ca *Cache) Del(c *mcase.Case) error {
 		ca.GCount--
 	}
 
+	delete(ca.DBBYID, c.ID)
 	ca.CCount--
 
 	ca.Save()
@@ -138,6 +152,16 @@ func (ca *Cache) Dump() []*mcase.Case {
 	for _, g := range gs {
 		result = append(result, g.Dump()...)
 	}
+
+	//This is stupid, I just want to confirm that each case has a unique ID.
+	/*
+			for _, c := range result {
+				c.Hash()
+				c.DCount = len(c.RUTs.DB)
+				c.TCount = len(c.Tasks)
+			}
+		ca.Save()
+	*/
 
 	return result
 }
@@ -173,7 +197,7 @@ func (ca *Cache) TreeView() *treeview.Node {
 	root := treeview.New(ca.Device)
 	cases := ca.Dump()
 	for _, c := range cases {
-		root.AddChild(c.MakeTreeViewKey())
+		root.AddChild(c.ID, "caseinfo?id=", c.MakeTreeViewKey())
 	}
 
 	fmt.Printf("%#v", root)
