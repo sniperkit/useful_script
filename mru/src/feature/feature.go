@@ -1,15 +1,25 @@
 package feature
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"errors"
 	"mcase"
 	"sort"
 )
 
 type Feature struct {
-	Name   string
-	CCount int
-	Cases  map[string]*mcase.Case
+	Group    string
+	SubGroup string
+	Name     string
+	CCount   int
+	ID       string
+	Cases    map[string]*mcase.Case
+}
+
+func Hash(name []byte) []byte {
+	hash := sha1.New()
+	return []byte(hex.EncodeToString(hash.Sum([]byte("featureFEATURE" + string(name)))))
 }
 
 func (f *Feature) Add(c *mcase.Case) error {

@@ -6,6 +6,7 @@ import (
 	"net/url"
 	//"strconv"
 	"crypto/sha1"
+	"defaults"
 	"encoding/hex"
 	"fmt"
 	"rut"
@@ -25,17 +26,17 @@ type Case struct {
 	TCount   int
 }
 
-func (c *Case) hash(name string) string {
+func Hash(name []byte) []byte {
 	hash := sha1.New()
-	return hex.EncodeToString(hash.Sum([]byte(c.Group + c.SubGroup + c.Feature + c.Name + name)))
+	return []byte(hex.EncodeToString(hash.Sum([]byte(name))))
 }
 
-func (c *Case) Hash() {
-	c.ID = c.hash("")
+func (c *Case) Hash(name []byte) []byte {
+	return Hash(name)
 }
 
 func (c *Case) GenerateTaskID(t *task.Task) string {
-	return c.hash(t.Name)
+	return string(c.Hash([]byte(c.ID + t.Name)))
 }
 
 func (c *Case) String() string {
@@ -54,7 +55,7 @@ func (c *Case) Init() {
 }
 
 func (c *Case) MakeTreeViewKey() string {
-	return fmt.Sprintf("%s:::%s:::%s:::%s(!@#$^&)", c.Group, c.SubGroup, c.Feature, c.Name) //Give case name an identifier
+	return fmt.Sprintf("%s%s:::%s%s:::%s%s:::%s%s", c.Group, defaults.GroupMark, c.SubGroup, defaults.SubGroupMark, c.Feature, defaults.FeatureMark, c.Name, defaults.CaseMark) //Give case name an identifier
 }
 
 func (c *Case) AddRUT(r *rut.RUT) {
@@ -63,6 +64,35 @@ func (c *Case) AddRUT(r *rut.RUT) {
 	}
 	c.RUTs.DB[r.Name] = r
 	c.DCount++
+}
+
+func MakeCaseFromTreeViewKey(key string) (*Case, error) {
+	slices := strings.Split(key, ":::")
+	if len(slices) == 0 {
+		return nil, errors.New("Invalid tree view Key")
+	}
+
+	var c Case
+	for _, s := range slices {
+		if strings.HasSuffix(s, defaults.GroupMark) {
+			c.Group = s[:len(s)-len(defaults.GroupMark)]
+			continue
+		}
+		if strings.HasSuffix(s, defaults.SubGroupMark) {
+			c.SubGroup = s[:len(s)-len(defaults.SubGroupMark)]
+			continue
+		}
+		if strings.HasSuffix(s, defaults.FeatureMark) {
+			c.Feature = s[:len(s)-len(defaults.FeatureMark)]
+			continue
+		}
+		if strings.HasSuffix(s, defaults.CaseMark) {
+			c.Feature = s[:len(s)-len(defaults.CaseMark)]
+			continue
+		}
+	}
+
+	return &c, nil
 }
 
 func (c *Case) DelRUT(r *rut.RUT) {

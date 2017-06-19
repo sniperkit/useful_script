@@ -1,6 +1,8 @@
 package group
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"errors"
 	"feature"
 	"mcase"
@@ -12,14 +14,22 @@ type Group struct {
 	Name      string
 	SGCount   int
 	CCount    int
+	ID        string
 	SubGroups map[string]*subgroup.SubGroup
+}
+
+func Hash(name []byte) []byte {
+	hash := sha1.New()
+	return []byte(hex.EncodeToString(hash.Sum([]byte("groupGROUP" + string(name)))))
 }
 
 func (g *Group) Add(c *mcase.Case) error {
 	sg, ok := g.SubGroups[c.SubGroup]
 	if !ok {
 		g.SubGroups[c.SubGroup] = &subgroup.SubGroup{
+			Group:    g.Name,
 			Name:     c.SubGroup,
+			ID:       string(subgroup.Hash([]byte(c.SubGroup))),
 			Features: make(map[string]*feature.Feature, 1),
 		}
 		g.SGCount++

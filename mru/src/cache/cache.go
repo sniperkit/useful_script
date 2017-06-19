@@ -88,6 +88,7 @@ func (ca *Cache) Add(c *mcase.Case) error {
 	if !ok {
 		ca.Groups[c.Group] = &group.Group{
 			Name:      c.Group,
+			ID:        group.Hash(c.Group),
 			SubGroups: make(map[string]*subgroup.SubGroup, 1),
 		}
 		ca.GCount++

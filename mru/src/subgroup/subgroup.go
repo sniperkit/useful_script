@@ -1,6 +1,8 @@
 package subgroup
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"errors"
 	"feature"
 	"mcase"
@@ -8,18 +10,28 @@ import (
 )
 
 type SubGroup struct {
+	Group    string
 	Name     string
 	FCount   int
 	CCount   int
+	ID       string
 	Features map[string]*feature.Feature
+}
+
+func Hash(name []byte) []byte {
+	hash := sha1.New()
+	return []byte(hex.EncodeToString(hash.Sum([]byte("subgroupSUBGROUP" + string(name)))))
 }
 
 func (sg *SubGroup) Add(c *mcase.Case) error {
 	f, ok := sg.Features[c.Feature]
 	if !ok {
 		sg.Features[c.Feature] = &feature.Feature{
-			Name:  c.Feature,
-			Cases: make(map[string]*mcase.Case, 1),
+			Group:    sg.Group,
+			SubGroup: sg.Name,
+			Name:     c.Feature,
+			ID:       string(feature.Hash([]byte(c.Feature))),
+			Cases:    make(map[string]*mcase.Case, 1),
 		}
 		sg.FCount++
 		f, _ = sg.Features[c.Feature]

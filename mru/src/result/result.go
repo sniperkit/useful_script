@@ -5,9 +5,15 @@ import (
 )
 
 type Result struct {
-	Command string
-	Result  string
-	Err     error
+	Command  string
+	Result   string
+	Err      error
+	Group    string
+	SubGroup string
+	Feature  string
+	Case     string
+	Message  string
+	Pass     bool
 }
 
 func (r Result) String() string {
