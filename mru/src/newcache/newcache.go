@@ -1,6 +1,7 @@
 package newcache
 
 import (
+	"encoding/json"
 	"errors"
 	"feature"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"result"
 	"subgroup"
 	"task"
+	"util"
 )
 
 type NewCache struct {
@@ -24,7 +26,7 @@ type Node struct {
 	ID       string
 	Type     string
 	Link     string  `json:"href"`
-	Children []*Node `json:"children"`
+	Children []*Node `json:"nodes"`
 	data     interface{}
 }
 
@@ -41,7 +43,17 @@ func New(name string) *NewCache {
 	}
 }
 
+func (tr *NewCache) Save() {
+	js, err := json.Marshal(tr)
+	if err != nil {
+		log.Println("Cannot format db for debug")
+		return
+	}
+	util.SaveToFile("newcachetestcases.json", js)
+}
+
 func (tr *NewCache) AddCase(c *mcase.Case) error {
+	defer tr.Save()
 	if tr.isNodeExist(mcase.Hash(tr.CaseKey(c))) {
 		return errors.New("Same case alread exist")
 	}
@@ -188,6 +200,22 @@ func (tr *NewCache) GetCase(c *mcase.Case) (*mcase.Case, error) {
 		}
 	}
 	return nil, fmt.Errorf("Invalid Node: %s", string(tr.CaseKey(c)))
+}
+
+func (tr *NewCache) GetCaseByID(id string) (*mcase.Case, error) {
+	if !tr.isNodeExist([]byte(id)) {
+		return nil, fmt.Errorf("Case %s is not exist", id)
+	}
+
+	i, _ := tr.Lookup([]byte(id))
+	if n, ok := i.(*Node); ok {
+		if res, ok := n.data.(*mcase.Case); ok {
+			return res, nil
+		} else {
+			return nil, fmt.Errorf("Node: %s is not a Case!", id)
+		}
+	}
+	return nil, fmt.Errorf("Invalid Node: %s", id)
 }
 
 func (tr *NewCache) AddGroup(g *group.Group) error {
@@ -626,4 +654,34 @@ func (tr *NewCache) RunAllCaseOfSubGroup(sg *subgroup.SubGroup) <-chan *result.R
 	}(cases)
 
 	return res
+}
+
+func (tr *NewCache) AddTask(caseid string, t *task.Task) error {
+	c, err := tr.GetCaseByID(caseid)
+	if err != nil {
+		return err
+	}
+
+	err = c.AddTask(t)
+	if err != nil {
+		return err
+	}
+
+	tr.Save()
+	return nil
+}
+
+func (tr *NewCache) DelTask(caseid string, t *task.Task) error {
+	c, err := tr.GetCaseByID(caseid)
+	if err != nil {
+		return err
+	}
+
+	err = c.DelTask(t)
+	if err != nil {
+		return err
+	}
+
+	tr.Save()
+	return nil
 }

@@ -11,6 +11,7 @@ import (
 	"log"
 	"mcase"
 	"net/http"
+	"newcache"
 	"result"
 	"rut"
 	"script"
@@ -41,9 +42,10 @@ var (
 )
 
 type Server struct {
-	RUT    *rut.RUT
-	Result <-chan result.Result
-	CaseDB cache.Cache
+	RUT      *rut.RUT
+	Result   <-chan result.Result
+	CaseDB   cache.Cache
+	NewCache *newcache.NewCache
 }
 
 var DefaultServer Server
@@ -349,6 +351,7 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		json.Unmarshal([]byte(r.FormValue("newcase")), &newcase)
 		log.Println(newcase)
 		DefaultServer.CaseDB.Add(&newcase)
+		DefaultServer.NewCache.AddCase(&newcase)
 	}
 }
 
@@ -391,6 +394,11 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 		}
 
 		err = DefaultServer.CaseDB.AddTask(caseid.Value, &newtask)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+
+		err = DefaultServer.NewCache.AddTask(caseid.Value, &newtask)
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -627,6 +635,8 @@ func (s *Server) Start() {
 }
 
 func init() {
+
+	DefaultServer.NewCache = newcache.New("V8300")
 	value, err := ioutil.ReadFile("testcases.json")
 	if err != nil {
 		panic(err)
