@@ -52,6 +52,10 @@ func (tr *NewCache) Save() {
 	util.SaveToFile("newcachetestcases.json", js)
 }
 
+func (tr *NewCache) TreeView() *Node {
+	return tr.Node
+}
+
 func (tr *NewCache) AddCase(c *mcase.Case) error {
 	defer tr.Save()
 	if tr.isNodeExist(mcase.Hash(tr.CaseKey(c))) {
@@ -662,6 +666,7 @@ func (tr *NewCache) AddTask(caseid string, t *task.Task) error {
 		return err
 	}
 
+	t.ID = string(task.Hash([]byte(caseid + t.Name)))
 	err = c.AddTask(t)
 	if err != nil {
 		return err
@@ -684,4 +689,13 @@ func (tr *NewCache) DelTask(caseid string, t *task.Task) error {
 
 	tr.Save()
 	return nil
+}
+
+func (tr *NewCache) GetTaskByID(caseid, taskid string) (*task.Task, error) {
+	c, err := tr.GetCaseByID(caseid)
+	if err != nil {
+		return nil, fmt.Errorf("Case: %d does not exist!", caseid)
+	}
+
+	return c.GetTaskByID(taskid)
 }

@@ -319,7 +319,7 @@ func TreeView(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		log.Println("Dump tree")
 		encoder := json.NewEncoder(w)
-		err := encoder.Encode(DefaultServer.CaseDB.TreeView().Children)
+		err := encoder.Encode(DefaultServer.NewCache.TreeView().Children)
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -335,9 +335,9 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView().Children)
+		js, _ := json.Marshal(DefaultServer.NewCache.TreeView().Children)
+		log.Println(string(js))
 		err = t.Execute(w, string(js))
-		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -350,7 +350,6 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		}
 		json.Unmarshal([]byte(r.FormValue("newcase")), &newcase)
 		log.Println(newcase)
-		DefaultServer.CaseDB.Add(&newcase)
 		DefaultServer.NewCache.AddCase(&newcase)
 	}
 }
@@ -369,9 +368,8 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		js, _ := json.Marshal(DefaultServer.CaseDB.TreeView().Children)
+		js, _ := json.Marshal(DefaultServer.NewCache.TreeView().Children)
 		err = t.Execute(w, string(js))
-		//err = t.Execute(w, DefaultServer.CaseDB.TreeView())
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -393,11 +391,6 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = DefaultServer.CaseDB.AddTask(caseid.Value, &newtask)
-		if err != nil {
-			io.WriteString(w, err.Error())
-		}
-
 		err = DefaultServer.NewCache.AddTask(caseid.Value, &newtask)
 		if err != nil {
 			io.WriteString(w, err.Error())
@@ -413,7 +406,7 @@ func DumpCase(w http.ResponseWriter, r *http.Request) {
 			log.Println(cookie)
 		}
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.CaseDB.GetCaseByID(r.FormValue("id"))
+		c, err := DefaultServer.NewCache.GetCaseByID(r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -434,7 +427,8 @@ func DumpTask(w http.ResponseWriter, r *http.Request) {
 			log.Println(cookie)
 		}
 
-		if _, err := r.Cookie("CASEID"); err != nil {
+		caseid, err := r.Cookie("CASEID")
+		if err != nil {
 			io.WriteString(w, err.Error())
 			return
 		}
@@ -443,7 +437,7 @@ func DumpTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.CaseDB.GetTaskByID(r.FormValue("id"))
+		c, err := DefaultServer.NewCache.GetTaskByID(caseid.Value, r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -504,7 +498,7 @@ func CaseInfo(w http.ResponseWriter, r *http.Request) {
 		}
 
 		cookie := &http.Cookie{
-			Name:  "TASKID",
+			Name:  "CASEID",
 			Value: r.FormValue("id"),
 		}
 

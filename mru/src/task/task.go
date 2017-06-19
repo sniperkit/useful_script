@@ -2,6 +2,8 @@ package task
 
 import (
 	"condition"
+	"crypto/sha1"
+	"encoding/hex"
 	"log"
 	"net/url"
 	"routine"
@@ -17,6 +19,11 @@ type Task struct {
 	Clear         *routine.Routine     `json:"clear"`
 	Description   string               `json:"description"`
 	ID            string               `json:"id"`
+}
+
+func Hash(name []byte) []byte {
+	hash := sha1.New()
+	return []byte(hex.EncodeToString(hash.Sum([]byte("taskTASK" + string(name)))))
 }
 
 func (t *Task) Run(db *rut.DB) *taskresult.Result {

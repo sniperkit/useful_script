@@ -201,6 +201,16 @@ func (c *Case) GetTask(name string) *task.Task {
 	return nil
 }
 
+func (c *Case) GetTaskByID(id string) (*task.Task, error) {
+	for _, v := range c.Tasks {
+		if v.ID == id {
+			return v, nil
+		}
+	}
+
+	return nil, fmt.Errorf("Task: %s does not exist!", id)
+}
+
 func (c *Case) IsTaskExist(t *task.Task) bool {
 	for _, v := range c.Tasks {
 		if v.Name == t.Name {
