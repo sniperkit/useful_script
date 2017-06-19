@@ -16,6 +16,7 @@ type Task struct {
 	PostCondition *condition.Condition `json:"postcondition"`
 	Clear         *routine.Routine     `json:"clear"`
 	Description   string               `json:"description"`
+	ID            string               `json:"id"`
 }
 
 func (t *Task) Run(db *rut.DB) *taskresult.Result {

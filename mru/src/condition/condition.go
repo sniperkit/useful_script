@@ -8,9 +8,9 @@ import (
 )
 
 type Condition struct {
-	Name        string
-	Assertions  []*assertion.Assertion
-	Description string
+	Name        string                 `json:"name"`
+	Assertions  []*assertion.Assertion `json:"assertions"`
+	Description string                 `json:"description"`
 }
 
 func (cd *Condition) Check(db *rut.DB) error {

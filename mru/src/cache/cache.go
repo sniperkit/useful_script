@@ -10,16 +10,19 @@ import (
 	"mcase"
 	"sort"
 	"subgroup"
+	"task"
 	"treeview"
 	"util"
 )
 
 type Cache struct {
-	Device string
-	GCount int
-	CCount int
-	Groups map[string]*group.Group
-	DBBYID map[string]*mcase.Case
+	Device   string
+	GCount   int
+	CCount   int
+	TCount   int
+	Groups   map[string]*group.Group
+	DBBYID   map[string]*mcase.Case
+	TASKBYID map[string]*task.Task
 }
 
 func New(Device string) *Cache {
@@ -213,3 +216,51 @@ type GroupSlice []*group.Group
 func (s GroupSlice) Len() int           { return len(s) }
 func (s GroupSlice) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
 func (s GroupSlice) Less(i, j int) bool { return s[i].Name < s[j].Name }
+
+func (ca *Cache) AddTask(caseid string, t *task.Task) error {
+	c, err := ca.GetCaseByID(caseid)
+	if err != nil {
+		return err
+	}
+
+	if len(ca.TASKBYID) == 0 {
+		ca.TASKBYID = make(map[string]*task.Task, 1)
+	}
+
+	err = c.AddTask(t)
+	if err != nil {
+		return err
+	}
+
+	ca.TCount++
+	ca.TASKBYID[t.ID] = t
+
+	ca.Save()
+	return nil
+}
+
+func (ca *Cache) DelTask(caseid string, t *task.Task) error {
+	c, err := ca.GetCaseByID(caseid)
+	if err != nil {
+		return err
+	}
+
+	err = c.DelTask(t)
+	if err != nil {
+		return err
+	}
+
+	delete(ca.TASKBYID, t.ID)
+	ca.TCount--
+
+	ca.Save()
+	return nil
+}
+
+func (ca *Cache) GetTaskByID(id string) (*task.Task, error) {
+	if t, ok := ca.TASKBYID[id]; ok {
+		return t, nil
+	}
+
+	return nil, errors.New(fmt.Sprintf("Cannot find task: %s, in task db!", id))
+}

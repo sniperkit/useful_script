@@ -346,12 +346,9 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		for k, v := range r.Form {
 			log.Println(k, ":", v)
 		}
-		log.Println(r.FormValue("newcase"))
-		log.Println(r.FormValue("newcase"))
-		log.Println(r.FormValue("newcase"))
-		log.Println(r.FormValue("newcase"))
 		json.Unmarshal([]byte(r.FormValue("newcase")), &newcase)
 		log.Println(newcase)
+		DefaultServer.CaseDB.Add(&newcase)
 	}
 }
 
@@ -376,31 +373,33 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			log.Println(err.Error())
 		}
 	} else if r.Method == "POST" {
-		cookies := r.Cookies()
-		for _, cookie := range cookies {
-			log.Println(cookie)
+		caseid, err := r.Cookie("CASEID")
+		if err != nil {
+			io.WriteString(w, err.Error())
+			return
 		}
 		r.ParseForm()
 		log.Println(r.Form)
 		for k, v := range r.Form {
 			log.Println(k, v)
 		}
-
 		var newtask task.Task
-		json.Unmarshal([]byte(r.FormValue("newtask")), &newtask)
-		log.Printf("%#q", newtask)
-		log.Printf("%#v", newtask)
-		log.Printf("%#q", newtask.PreCondition)
-		log.Printf("%#q", newtask.PostCondition)
-		log.Printf("%#q", newtask.Routine)
+		err = json.Unmarshal([]byte(r.FormValue("newtask")), &newtask)
+		if err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = DefaultServer.CaseDB.AddTask(caseid.Value, &newtask)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
 	}
 }
 
 func DumpCase(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		r.ParseForm()
-		log.Println(r.FormValue("id"))
-		log.Printf("%v", DefaultServer.CaseDB.DBBYID)
 		cookies := r.Cookies()
 		for _, cookie := range cookies {
 			log.Println(cookie)
@@ -411,6 +410,67 @@ func DumpCase(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 		err = encoder.Encode(c)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func DumpTask(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
+
+		if _, err := r.Cookie("CASEID"); err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "Task ID must be set")
+			return
+		}
+		encoder := json.NewEncoder(w)
+		c, err := DefaultServer.CaseDB.GetTaskByID(r.FormValue("id"))
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+		err = encoder.Encode(c)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func TaskInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		t, err := template.New("taskinfo.html").Delims("|||", "|||").ParseFiles("asset/web/template/taskinfo.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/caseheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "Case ID is not set!")
+			return
+		}
+
+		cookie := &http.Cookie{
+			Name:  "TASKID",
+			Value: r.FormValue("id"),
+		}
+
+		http.SetCookie(w, cookie)
+		err = t.Execute(w, nil)
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -430,8 +490,13 @@ func CaseInfo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "Case ID is not set!")
+			return
+		}
+
 		cookie := &http.Cookie{
-			Name:  "CASEID",
+			Name:  "TASKID",
 			Value: r.FormValue("id"),
 		}
 
@@ -551,7 +616,9 @@ func (s *Server) Start() {
 	http.HandleFunc("/newcase", NewCase)
 	http.HandleFunc("/newtask", NewTask)
 	http.HandleFunc("/dumpcase", DumpCase)
+	http.HandleFunc("/dumptask", DumpTask)
 	http.HandleFunc("/caseinfo", CaseInfo)
+	http.HandleFunc("/taskinfo", TaskInfo)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/", Product)
 

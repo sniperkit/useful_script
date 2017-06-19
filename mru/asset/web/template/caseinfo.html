@@ -20,7 +20,7 @@
 					<div v-for="task in current.Tasks">
 						<div class="update-nag">
 							<div class="update-split update-info"><i class="glyphicon glyphicon-leaf"></i></div>
-							<div class="update-text"><a href="">{{task.name}}</a></div>
+							<div class="update-text"><a :href="'taskinfo?id='+task.id">{{task.name}}</a></div>
 						</div>
 					</div>
 				</div>

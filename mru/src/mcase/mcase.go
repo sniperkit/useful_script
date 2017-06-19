@@ -25,13 +25,17 @@ type Case struct {
 	TCount   int
 }
 
-func (c *Case) hash() string {
+func (c *Case) hash(name string) string {
 	hash := sha1.New()
-	return hex.EncodeToString(hash.Sum([]byte(c.Group + c.SubGroup + c.Feature + c.Name)))
+	return hex.EncodeToString(hash.Sum([]byte(c.Group + c.SubGroup + c.Feature + c.Name + name)))
 }
 
 func (c *Case) Hash() {
-	c.ID = c.hash()
+	c.ID = c.hash("")
+}
+
+func (c *Case) GenerateTaskID(t *task.Task) string {
+	return c.hash(t.Name)
 }
 
 func (c *Case) String() string {
@@ -135,6 +139,7 @@ func (c *Case) AddTask(t *task.Task) error {
 		return errors.New("Same task :" + t.Name + " already exist in case: " + c.Name)
 	}
 
+	t.ID = c.GenerateTaskID(t) //Necessary
 	c.Tasks = append(c.Tasks, t)
 	c.TCount++
 
