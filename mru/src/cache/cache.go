@@ -78,7 +78,7 @@ func (ca *Cache) DelGroup(name string) error {
 }
 
 func (ca *Cache) Add(c *mcase.Case) error {
-	c.Hash() //Generate a ID for each Case.
+	c.ID = string(c.Hash([]byte(c.Group + c.SubGroup + c.Feature + c.Name))) //Generate a ID for each Case.
 
 	if len(ca.Groups) == 0 {
 		ca.Groups = make(map[string]*group.Group, 1)
@@ -88,7 +88,7 @@ func (ca *Cache) Add(c *mcase.Case) error {
 	if !ok {
 		ca.Groups[c.Group] = &group.Group{
 			Name:      c.Group,
-			ID:        group.Hash(c.Group),
+			ID:        string(group.Hash([]byte(c.Group))),
 			SubGroups: make(map[string]*subgroup.SubGroup, 1),
 		}
 		ca.GCount++
