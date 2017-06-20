@@ -181,6 +181,11 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 		}
 
 		n.Children = append(n.Children, newnode)
+	} else { //I want to run all the case of a feature at the same time. So the DUT count must be the largest count of all the cases
+		f, _ := tr.GetFeatureByID(string(feature.Hash(tr.GetFeatureKeyByCase(c))))
+		if f.DUTCount < c.DUTCount {
+			f.DUTCount = c.DUTCount
+		}
 	}
 
 	//Case Node no need children.

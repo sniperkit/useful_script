@@ -22,7 +22,7 @@ type Case struct {
 	Tasks    []*task.Task
 	RUTs     rut.DB
 	ID       string
-	DCount   int
+	DUTCount int
 	TCount   int
 }
 
@@ -63,7 +63,7 @@ func (c *Case) AddRUT(r *rut.RUT) {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)
 	}
 	c.RUTs.DB[r.Name] = r
-	c.DCount++
+	c.DUTCount++
 }
 
 func MakeCaseFromTreeViewKey(key string) (*Case, error) {
@@ -99,7 +99,7 @@ func (c *Case) DelRUT(r *rut.RUT) {
 	if r, ok := c.RUTs.DB[r.Name]; ok {
 		delete(c.RUTs.DB, r.Name)
 	}
-	c.DCount--
+	c.DUTCount--
 }
 
 func (c *Case) Run() (string, bool) {

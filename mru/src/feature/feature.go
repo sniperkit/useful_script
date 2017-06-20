@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"mcase"
+	"rut"
 	"sort"
 )
 
@@ -14,6 +15,8 @@ type Feature struct {
 	Name     string
 	CCount   int
 	ID       string
+	RUTDB    map[string]*rut.RUT
+	DUTCount int
 	Cases    map[string]*mcase.Case
 }
 
