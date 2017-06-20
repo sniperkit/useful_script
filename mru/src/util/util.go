@@ -32,7 +32,7 @@ func AppendToFile(name string, data []byte) {
 	file.Write(data)
 }
 
-func GenerateDeviceID() string {
+func GenerateSessionID() string {
 	var id = "0x"
 
 	rand.Seed(time.Now().Unix())

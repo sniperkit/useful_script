@@ -2,8 +2,8 @@
 |||template "treenav"|||
 |||template "groupheader"|||
 <div id="groupinfo" class="container-fluid display-table v-align">
+	<div id="testapp">
 	<form class="form-horizontal">
-	</form>
 	<div class="col-md-3">
 		<div class="md-lid">
 			<div class="tab-featured-image">
@@ -26,22 +26,31 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
+		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete">Delete</button>
+		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseByGroup">RUN</button>
+	</div>
+
+	<div class="col-md-6 pull-left">
+	 <div v-for="res in results">
+		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green">Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+		 <h4 class="text-center text-danger" v-else><strong color="green">Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+	 </div>
+	</div>
+	</form>
 	</div>
 </div>
 <script>
-	function dumpCase(id) {
-		var caseinfo;
+	function dumpGroup(id) {
+		var groupinfo;
 		$.ajax({
 			type:"get",
 			url:"dumpgroup?id="+id,
 			async:false,
 			success:function(data) {
-				caseinfo = data;
-				alert(caseinfo);
+				groupinfo = data;
 			}
 		});
-		return JSON.parse(caseinfo);
+		return JSON.parse(groupinfo);
 	}
 
 	function　getCookie(name){
@@ -65,23 +74,73 @@
 		document.cookie= name+ "=" +escape(value)+
 			((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 	}
+
+    function notify(style, data) {
+        $.notify({
+            title: 'Email Notification',
+            text: data,
+            image: "<img src='asset/web/static/notifyjs/examples/images/Mail.png'/>"
+        }, {
+            style: 'metro',
+            className: style,
+            autoHide: false,
+            clickToHide: true
+        });
+    }
 </script>
+	<link href="asset/web/static/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+	<script src="asset/web/static/notifyjs/dist/notify.js"></script>
+	<script src="asset/web/static/notifyjs/dist/styles/metro/notify-metro.js"></script>
+
 <script>
 	var caseInfo = new Vue({
 		el: '#groupinfo',
 		data: {
-			current: dumpCase(getCookie("GROUPID")),
+			current: dumpGroup(getCookie("GROUPID")),
 			id: getCookie("GROUPID"),
-			submitted:false
+			submitted:false,
+			results:[{
+				Message: "hello"
+			}, {
+				Message: "world"
+			}
+			]
 		},
 		methods: {
-			newTask: function(e) {
+			runCaseByGroup: function(e) {
+				var res = this.results
 				$.ajax({
-					type:"get",
-					url:"newtask",
+					type:"post",
+					url:"runcases",
 					async:false,
+					data: {
+						type: "GROUP",
+						id: this.id
+					},
 					success:function(data) {
-						$("body").html(data);
+						var conn = new WebSocket("ws://"+data+"/runcaseresultws");
+						conn.onclose = function(evt) {
+							data.textContent = 'Connection closed';
+						}
+						conn.onmessage = function(evt) {
+							res.push(JSON.parse(evt.data));
+						}
+					}
+
+				});
+				this.submitted = true;
+			},
+			runDelete: function(e) {
+				$.ajax({
+					type:"post",
+					url:"delete",
+					async:false,
+					data: {
+						type: "GROUP",
+						id: this.id
+					},
+					success:function(data) {
+						notify("success", "Delete group success!");
 					}
 				});
 				this.submitted = true;

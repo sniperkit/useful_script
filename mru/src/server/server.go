@@ -15,6 +15,7 @@ import (
 	"result"
 	"rut"
 	"script"
+	"sync"
 	"task"
 	"time"
 	"util"
@@ -42,10 +43,11 @@ var (
 )
 
 type Server struct {
-	RUT      *rut.RUT
-	Result   <-chan result.Result
-	CaseDB   cache.Cache
-	NewCache *newcache.NewCache
+	RUT        *rut.RUT
+	Result     <-chan result.Result
+	CaseResult map[string]chan *result.Result
+	CaseDB     cache.Cache
+	NewCache   *newcache.NewCache
 }
 
 var DefaultServer Server
@@ -335,6 +337,12 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		cookie := &http.Cookie{
+			Name:  "SESSIONID",
+			Value: util.GenerateSessionID(),
+		}
+
+		http.SetCookie(w, cookie)
 		js, _ := json.Marshal(DefaultServer.NewCache.TreeView().Children)
 		log.Println(string(js))
 		err = t.Execute(w, string(js))
@@ -597,7 +605,6 @@ func GroupInfo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		log.Printf("++++++++++++++++%s-------------\n", r.FormValue("id"))
 		cookie := &http.Cookie{
 			Name:  "GROUPID",
 			Value: r.FormValue("id"),
@@ -675,6 +682,142 @@ func FeatureInfo(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == "POST" {
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
+}
+
+func DeleteNode(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		r.ParseForm()
+
+		sessionid, err := r.Cookie("SESSIONID")
+		if err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		log.Println("SESSIONiD: ", sessionid.Value)
+		if _, ok := DefaultServer.CaseResult[sessionid.Value]; ok {
+			io.WriteString(w, "You are runing another cases")
+			return
+		}
+
+		if r.FormValue("type") == "GROUP" {
+			DefaultServer.NewCache.DelGroupByID(r.FormValue("id"))
+		} else if r.FormValue("type") == "SUBGROUP" {
+			DefaultServer.NewCache.DelSubGroupByID(r.FormValue("id"))
+		} else if r.FormValue("type") == "FEATURE" {
+			DefaultServer.NewCache.DelFeatureByID(r.FormValue("id"))
+		} else if r.FormValue("type") == "CASE" {
+			DefaultServer.NewCache.DelCaseByID(r.FormValue("id"))
+		} else if r.FormValue("type") == "TASK" {
+			caseid, err := r.Cookie("CASEID")
+			if err != nil {
+				io.WriteString(w, "Case ID is not set when delete task")
+				return
+			}
+			DefaultServer.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
+		} else {
+			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+		}
+	}
+}
+
+func RunCases(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		r.ParseForm()
+
+		sessionid, err := r.Cookie("SESSIONID")
+		if err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		log.Println("SESSIONiD: ", sessionid.Value)
+		if _, ok := DefaultServer.CaseResult[sessionid.Value]; ok {
+			io.WriteString(w, "You are runing another cases")
+			return
+		}
+
+		DefaultServer.CaseResult[sessionid.Value] = make(chan *result.Result, 10)
+
+		log.Println(DefaultServer.CaseResult[sessionid.Value])
+		if r.FormValue("type") == "GROUP" {
+			go func() {
+				wg := sync.WaitGroup{}
+				for res := range DefaultServer.NewCache.RunCasesByGroupID(r.FormValue("id")) {
+					wg.Add(1)
+					log.Printf("%#v", res)
+					go func(r *result.Result) {
+						DefaultServer.CaseResult[sessionid.Value] <- res
+						wg.Done()
+					}(res)
+				}
+				wg.Wait()
+				close(DefaultServer.CaseResult[sessionid.Value])
+
+			}()
+		} else if r.FormValue("type") == "SUBGROUP" {
+			go func() {
+				wg := sync.WaitGroup{}
+				for res := range DefaultServer.NewCache.RunCasesBySubGroupID(r.FormValue("id")) {
+					wg.Add(1)
+					go func(r *result.Result) {
+						DefaultServer.CaseResult[sessionid.Value] <- r
+						wg.Done()
+					}(res)
+				}
+				wg.Wait()
+				close(DefaultServer.CaseResult[sessionid.Value])
+			}()
+		} else if r.FormValue("type") == "FEATURE" {
+			go func() {
+				wg := sync.WaitGroup{}
+				for res := range DefaultServer.NewCache.RunCasesByFeatureID(r.FormValue("id")) {
+					wg.Add(1)
+					go func(r *result.Result) {
+						DefaultServer.CaseResult[sessionid.Value] <- r
+						wg.Done()
+					}(res)
+				}
+				wg.Wait()
+				close(DefaultServer.CaseResult[sessionid.Value])
+
+			}()
+		} else if r.FormValue("type") == "CASE" {
+			go func() {
+				wg := sync.WaitGroup{}
+				for res := range DefaultServer.NewCache.RunCaseByID(r.FormValue("id")) {
+					wg.Add(1)
+					go func(r *result.Result) {
+						DefaultServer.CaseResult[sessionid.Value] <- r
+						wg.Done()
+					}(res)
+				}
+				wg.Wait()
+				close(DefaultServer.CaseResult[sessionid.Value])
+			}()
+		} else if r.FormValue("type") == "TASK" {
+			caseid, err := r.Cookie("CASEID")
+			if err != nil {
+				io.WriteString(w, err.Error())
+				return
+			}
+			go func() {
+				wg := sync.WaitGroup{}
+				for res := range DefaultServer.NewCache.RunTaskByID(caseid.Value, r.FormValue("id")) {
+					wg.Add(1)
+					go func(r *result.Result) {
+						DefaultServer.CaseResult[sessionid.Value] <- r
+						wg.Done()
+					}(res)
+				}
+				wg.Wait()
+				close(DefaultServer.CaseResult[sessionid.Value])
+			}()
+		} else {
+			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+		}
+	}
+	io.WriteString(w, r.Host)
 }
 
 func NewRunScript(w http.ResponseWriter, r *http.Request) {
@@ -767,6 +910,77 @@ func WS(w http.ResponseWriter, r *http.Request) {
 	reader(ws)
 }
 
+func RunCaseResultWS(w http.ResponseWriter, r *http.Request) {
+	log.Println("Websocket Openend")
+	sessionid, err := r.Cookie("SESSIONID")
+	if err != nil {
+		io.WriteString(w, "Unknown session: "+err.Error())
+		return
+	}
+
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		if _, ok := err.(websocket.HandshakeError); !ok {
+			log.Println(err)
+		}
+		return
+	}
+	go TestCaseResultWriter(ws, sessionid.Value)
+	TestCaseResultWSKeepAlive(ws)
+}
+
+func TestCaseResultWSKeepAlive(ws *websocket.Conn) {
+	ws.SetReadLimit(512)
+	ws.SetReadDeadline(time.Now().Add(pongWait))
+	ws.SetPongHandler(func(string) error { ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+	go func() {
+		for {
+			_, _, err := ws.ReadMessage()
+			if err != nil {
+				break
+			}
+		}
+	}()
+
+	go func() {
+		pingTicker := time.NewTicker(pingPeriod)
+		defer func() {
+			pingTicker.Stop()
+		}()
+
+		for _ = range pingTicker.C {
+			ws.SetWriteDeadline(time.Now().Add(writeWait))
+			if err := ws.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+				return
+			}
+		}
+	}()
+
+}
+func TestCaseResultWriter(ws *websocket.Conn, sessionid string) {
+	defer func() {
+		ws.Close()
+	}()
+	_, ok := DefaultServer.CaseResult[sessionid]
+	if !ok {
+		panic("Result channel has beend remove")
+	}
+
+	for res := range DefaultServer.CaseResult[sessionid] {
+		log.Printf("GetResult: %v", res)
+		ws.SetWriteDeadline(time.Now().Add(writeWait))
+		js, err := json.Marshal(res)
+		if err != nil {
+			log.Println("error happend when encoding result")
+			continue
+		}
+		if err := ws.WriteMessage(websocket.TextMessage, js); err != nil {
+			log.Println(err.Error())
+		}
+	}
+	delete(DefaultServer.CaseResult, sessionid)
+}
+
 func (s *Server) Start() {
 	//@liwei: This need more analysis.
 	http.HandleFunc("/ztreemenu", ZTreeMenu)
@@ -792,17 +1006,17 @@ func (s *Server) Start() {
 	http.HandleFunc("/groupinfo", GroupInfo)
 	http.HandleFunc("/subgroupinfo", SubGroupInfo)
 	http.HandleFunc("/featureinfo", FeatureInfo)
+	http.HandleFunc("/runcases", RunCases)
+	http.HandleFunc("/delete", DeleteNode)
 	http.HandleFunc("/ws", WS)
+	http.HandleFunc("/runcaseresultws", RunCaseResultWS)
 	http.HandleFunc("/", NewCase)
-
 	http.Handle("/asset/web/", http.FileServer(http.Dir(".")))
 	log.Panic(http.ListenAndServe(":8080", nil))
 }
 
 func init() {
-
 	DefaultServer.NewCache = newcache.New("V8300")
-
 	DefaultServer.NewCache.Restore()
-
+	DefaultServer.CaseResult = make(map[string]chan *result.Result)
 }

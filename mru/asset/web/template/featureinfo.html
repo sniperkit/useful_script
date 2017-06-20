@@ -26,8 +26,15 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
+		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseByFeature">RUN</button>
 	</div>
+	<div class="col-md-6 pull-left">
+	 <div v-for="res in results">
+		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green">Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+		 <h4 class="text-center text-danger" v-else><strong color="green">Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+	 </div>
+	</div>
+
 </div>
 <script>
 	function dumpCase(id) {
@@ -66,25 +73,43 @@
 	}
 </script>
 <script>
-	var caseInfo = new Vue({
+	var featureInfo = new Vue({
 		el: '#featureinfo',
 		data: {
 			current: dumpCase(getCookie("FEATUREID")),
 			id: getCookie("FEATUREID"),
-			submitted:false
+			submitted:false,
+			results:[{
+				Message: "hello"
+			}, {
+				Message: "world"
+			}
+			]
 		},
 		methods: {
-			newTask: function(e) {
+			runCaseByFeature: function(e) {
+				var res = this.results
 				$.ajax({
-					type:"get",
-					url:"newtask",
+					type:"post",
+					url:"runcases",
 					async:false,
+					data: {
+						type: "FEATURE",
+						id: this.id
+					},
 					success:function(data) {
-						$("body").html(data);
+						var conn = new WebSocket("ws://"+data+"/runcaseresultws");
+						conn.onclose = function(evt) {
+							data.textContent = 'Connection closed';
+						}
+						conn.onmessage = function(evt) {
+							res.push(JSON.parse(evt.data));
+						}
 					}
 				});
 				this.submitted = true;
 			},
+
 		}
 	});
 </script>

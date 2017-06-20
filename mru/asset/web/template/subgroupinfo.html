@@ -26,22 +26,27 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
+		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseBySubGroup">Run</button>
+	</div>
+	<div class="col-md-6 pull-left">
+	 <div v-for="res in results">
+		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green">Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+		 <h4 class="text-center text-danger" v-else><strong color="green">Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+	 </div>
 	</div>
 </div>
 <script>
-	function dumpCase(id) {
-		var caseinfo;
+	function dumpSubGroup(id) {
+		var subgroupinfo;
 		$.ajax({
 			type:"get",
 			url:"dumpsubgroup?id="+id,
 			async:false,
 			success:function(data) {
-				caseinfo = data;
-				alert(caseinfo);
+				subgroupinfo = data;
 			}
 		});
-		return JSON.parse(caseinfo);
+		return JSON.parse(subgroupinfo);
 	}
 
 	function　getCookie(name){
@@ -70,19 +75,37 @@
 	var caseInfo = new Vue({
 		el: '#subgroupinfo',
 		data: {
-			current: dumpCase(getCookie("SGID")),
+			current: dumpSubGroup(getCookie("SGID")),
 			id: getCookie("SGID"),
-			submitted:false
+			submitted:false,
+			results:[{
+				Message: "hello"
+			}, {
+				Message: "world"
+			}
+			]
 		},
 		methods: {
-			newTask: function(e) {
+			runCaseBySubGroup: function(e) {
+				var res = this.results
 				$.ajax({
-					type:"get",
-					url:"newtask",
+					type:"post",
+					url:"runcases",
 					async:false,
+					data: {
+						type: "SUBGROUP",
+						id: this.id
+					},
 					success:function(data) {
-						$("body").html(data);
+						var conn = new WebSocket("ws://"+data+"/runcaseresultws");
+						conn.onclose = function(evt) {
+							data.textContent = 'Connection closed';
+						}
+						conn.onmessage = function(evt) {
+							res.push(JSON.parse(evt.data));
+						}
 					}
+
 				});
 				this.submitted = true;
 			},

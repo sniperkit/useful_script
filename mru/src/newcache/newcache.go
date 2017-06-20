@@ -12,6 +12,7 @@ import (
 	"mcase"
 	"result"
 	"subgroup"
+	"sync"
 	"task"
 	"util"
 )
@@ -77,12 +78,26 @@ func (tr *NewCache) TreeView() *Node {
 	return tr.Node
 }
 
+func (tr *NewCache) IsCaseValid(c *mcase.Case) bool {
+	if c.Group == "" ||
+		c.SubGroup == "" ||
+		c.Feature == "" ||
+		c.Name == "" {
+		return false
+	}
+	return true
+}
+
 func (tr *NewCache) AddCase(c *mcase.Case) error {
-	defer tr.Save()
+	if !tr.IsCaseValid(c) {
+		return fmt.Errorf("Case: is invalid")
+	}
+
 	if tr.isNodeExist(mcase.Hash(tr.CaseKey(c))) {
 		return errors.New("Same case alread exist")
 	}
 
+	defer tr.Save()
 	if !tr.isNodeExist(group.Hash(tr.GetGroupKeyByCase(c))) {
 		newgroup := &group.Group{
 			Name:      c.Group,
@@ -207,8 +222,18 @@ func (tr *NewCache) DelCase(c *mcase.Case) error {
 		return fmt.Errorf("Case %s does not exist!", c.Name)
 	}
 
+	defer tr.Save()
 	tr.Remove(mcase.Hash(tr.CaseKey(c)))
 	return nil
+}
+
+func (tr *NewCache) DelCaseByID(id string) error {
+	c, err := tr.GetCaseByID(id)
+	if err != nil {
+		return fmt.Errorf("Case %s does not exist!", id)
+	}
+
+	return tr.DelCase(c)
 }
 
 func (tr *NewCache) GetCase(c *mcase.Case) (*mcase.Case, error) {
@@ -268,12 +293,22 @@ func (tr *NewCache) DelGroup(g *group.Group) error {
 		}
 	}
 
+	defer tr.Save()
 	if del != -1 {
 		tr.Node.Children = append(tr.Node.Children[0:del], tr.Node.Children[del+1:]...)
 		delete(tr.Groups, g.Name)
 	}
 
 	return nil
+}
+
+func (tr *NewCache) DelGroupByID(id string) error {
+	g, err := tr.GetGroupByID(id)
+	if err != nil {
+		return fmt.Errorf("Group %s is not exist", id)
+	}
+
+	return tr.DelGroup(g)
 }
 
 func (tr *NewCache) GetGroup(g *group.Group) (*group.Group, error) {
@@ -349,6 +384,7 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 		}
 	}
 
+	defer tr.Save()
 	if del != -1 {
 		if Data, ok := n.Data.(*group.Group); ok {
 			Data.SGCount--
@@ -359,6 +395,15 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 	}
 
 	return nil
+}
+
+func (tr *NewCache) DelSubGroupByID(id string) error {
+	sg, err := tr.GetSubGroupByID(id)
+	if err != nil {
+		return fmt.Errorf("SubGroup %s is not exist", id)
+	}
+
+	return tr.DelSubGroup(sg)
 }
 
 func (tr *NewCache) GetSubGroup(sg *subgroup.SubGroup) (*subgroup.SubGroup, error) {
@@ -431,6 +476,7 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 		}
 	}
 
+	defer tr.Save()
 	if del != -1 {
 		if Data, ok := n.Data.(*subgroup.SubGroup); ok {
 			Data.FCount--
@@ -440,6 +486,15 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 	}
 
 	return nil
+}
+
+func (tr *NewCache) DelFeatureByID(id string) error {
+	f, err := tr.GetFeatureByID(id)
+	if err != nil {
+		return fmt.Errorf("Feature %s is not exist", id)
+	}
+
+	return tr.DelFeature(f)
 }
 
 func (tr *NewCache) GetFeature(f *feature.Feature) (*feature.Feature, error) {
@@ -585,6 +640,46 @@ func (tr *NewCache) GetCaseByFeature(f *feature.Feature) ([]*mcase.Case, error) 
 	return res, nil
 }
 
+func (tr *NewCache) GetCaseBySubGroup(sg *subgroup.SubGroup) ([]*mcase.Case, error) {
+	nsg, err := tr.GetSubGroup(sg)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make([]*mcase.Case, 0, 1)
+
+	for _, f := range nsg.Features {
+		cs, err := tr.GetCaseByFeature(f)
+		if err != nil {
+			log.Println(err.Error())
+			continue
+		}
+		res = append(res, cs...)
+
+	}
+	return res, nil
+}
+
+func (tr *NewCache) GetCaseByGroup(g *group.Group) ([]*mcase.Case, error) {
+	ng, err := tr.GetGroup(g)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make([]*mcase.Case, 0, 1)
+
+	for _, sg := range ng.SubGroups {
+		cs, err := tr.GetCaseBySubGroup(sg)
+		if err != nil {
+			log.Println(err.Error())
+			continue
+		}
+		res = append(res, cs...)
+
+	}
+	return res, nil
+}
+
 func (tr *NewCache) RunCase(c *mcase.Case) <-chan *result.Result {
 	res := make(chan *result.Result)
 	go func(chan<- *result.Result) {
@@ -601,6 +696,102 @@ func (tr *NewCache) RunCase(c *mcase.Case) <-chan *result.Result {
 	}(res)
 
 	return res
+}
+
+func (tr *NewCache) RunCaseByID(id string) <-chan *result.Result {
+	res := make(chan *result.Result)
+	c, err := tr.GetCaseByID(id)
+	if err != nil {
+		go func(chan<- *result.Result) {
+			defer close(res)
+			res <- &result.Result{
+				Group:    "Unknown",
+				SubGroup: "Unknown",
+				Feature:  "Unknown",
+				Case:     "Unknown",
+				Pass:     false,
+				Message:  err.Error(),
+			}
+		}(res)
+		return res
+	}
+	go func(chan<- *result.Result) {
+		message, ok := c.Run()
+		defer close(res)
+		res <- &result.Result{
+			Group:    c.Group,
+			SubGroup: c.SubGroup,
+			Feature:  c.Feature,
+			Case:     c.Name,
+			Pass:     ok,
+			Message:  message,
+		}
+	}(res)
+
+	return res
+}
+
+func (tr *NewCache) RunCasesByGroupID(id string) <-chan *result.Result {
+	res := make(chan *result.Result)
+	g, err := tr.GetGroupByID(id)
+	if err != nil {
+		go func(chan<- *result.Result) {
+			defer close(res)
+			res <- &result.Result{
+				Group:    "Unknown",
+				SubGroup: "Unknown",
+				Feature:  "Unknown",
+				Case:     "Unknown",
+				Pass:     false,
+				Message:  err.Error(),
+			}
+		}(res)
+		return res
+	}
+
+	return tr.RunAllCaseOfGroup(g)
+}
+
+func (tr *NewCache) RunCasesBySubGroupID(id string) <-chan *result.Result {
+	res := make(chan *result.Result)
+	sg, err := tr.GetSubGroupByID(id)
+	if err != nil {
+		go func(chan<- *result.Result) {
+			defer close(res)
+			res <- &result.Result{
+				Group:    "Unknown",
+				SubGroup: "Unknown",
+				Feature:  "Unknown",
+				Case:     "Unknown",
+				Pass:     false,
+				Message:  err.Error(),
+			}
+		}(res)
+		return res
+	}
+
+	return tr.RunAllCaseOfSubGroup(sg)
+}
+
+func (tr *NewCache) RunCasesByFeatureID(id string) <-chan *result.Result {
+	res := make(chan *result.Result)
+	f, err := tr.GetFeatureByID(id)
+	if err != nil {
+		go func(chan<- *result.Result) {
+			defer close(res)
+			res <- &result.Result{
+				Group:    "Unknown",
+				SubGroup: "Unknown",
+				Feature:  "Unknown",
+				Case:     "Unknown",
+				Pass:     false,
+				Message:  err.Error(),
+			}
+		}(res)
+		return res
+	}
+
+	return tr.RunAllCaseOfFeature(f)
 }
 
 func (tr *NewCache) RunAllCaseOfFeature(f *feature.Feature) <-chan *result.Result {
@@ -621,13 +812,17 @@ func (tr *NewCache) RunAllCaseOfFeature(f *feature.Feature) <-chan *result.Resul
 	}
 
 	go func(cs []*mcase.Case) {
+		wg := sync.WaitGroup{}
 		for _, c := range cases {
 			for r := range tr.RunCase(c) {
+				wg.Add(1)
 				go func(r *result.Result, rch chan<- *result.Result) {
 					rch <- r
+					wg.Done()
 				}(r, res)
 			}
 		}
+		wg.Wait()
 		close(res)
 	}(cases)
 
@@ -654,14 +849,58 @@ func (tr *NewCache) RunAllCaseOfSubGroup(sg *subgroup.SubGroup) <-chan *result.R
 	}
 
 	go func(cs []*mcase.Case) {
+		wg := sync.WaitGroup{}
 		for _, c := range cases {
 			for r := range tr.RunCase(c) {
+				wg.Add(1)
 				go func(r *result.Result, rch chan<- *result.Result) {
 					rch <- r
+					wg.Done()
 				}(r, res)
 			}
 		}
+		wg.Wait()
 		close(res)
+	}(cases)
+
+	return res
+}
+
+func (tr *NewCache) RunAllCaseOfGroup(g *group.Group) <-chan *result.Result {
+	res := make(chan *result.Result)
+	cases := make([]*mcase.Case, 0, 1)
+	for _, sg := range g.SubGroups {
+		for _, f := range sg.Features {
+			cs, err := tr.GetCaseByFeature(f)
+			if err != nil {
+				go func(err error) {
+					res <- &result.Result{
+						Group:    f.Group,
+						SubGroup: f.SubGroup,
+						Feature:  f.Name,
+						Pass:     false,
+						Message:  fmt.Sprintf("Cannot Find Feature: %s\n", f.Name),
+					}
+				}(err)
+			}
+			cases = append(cases, cs...)
+		}
+	}
+
+	go func(cs []*mcase.Case) {
+		wg := sync.WaitGroup{}
+		for _, c := range cases {
+			for r := range tr.RunCase(c) {
+				wg.Add(1)
+				go func(r *result.Result) {
+					log.Printf("%#v\n", r)
+					res <- r
+					wg.Done()
+				}(r)
+			}
+		}
+		wg.Wait()
+		defer close(res)
 	}(cases)
 
 	return res
@@ -689,6 +928,7 @@ func (tr *NewCache) DelTask(caseid string, t *task.Task) error {
 		return err
 	}
 
+	defer tr.Save()
 	err = c.DelTask(t)
 	if err != nil {
 		return err
@@ -696,6 +936,15 @@ func (tr *NewCache) DelTask(caseid string, t *task.Task) error {
 
 	tr.Save()
 	return nil
+}
+
+func (tr *NewCache) DelTaskByID(caseid, taskid string) error {
+	t, err := tr.GetTaskByID(caseid, taskid)
+	if err != nil {
+		return fmt.Errorf("Task %s of case: %s is not exit!", taskid, caseid)
+	}
+
+	return tr.DelTask(caseid, t)
 }
 
 func (tr *NewCache) GetTaskByID(caseid, taskid string) (*task.Task, error) {
@@ -770,4 +1019,51 @@ func (tr *NewCache) GetFeatureByID(id string) (*feature.Feature, error) {
 		}
 	}
 	return nil, fmt.Errorf("Invalid Node: %s", id)
+}
+
+func (tr *NewCache) RunTaskByID(caseid, taskid string) <-chan *result.Result {
+	res := make(chan *result.Result)
+	c, err := tr.GetCaseByID(caseid)
+	if err != nil {
+		go func(chan<- *result.Result) {
+			defer close(res)
+			res <- &result.Result{
+				Pass:    false,
+				Message: err.Error(),
+			}
+		}(res)
+		return res
+	}
+
+	t, err := tr.GetTaskByID(caseid, taskid)
+	if err != nil {
+		go func(chan<- *result.Result) {
+			defer close(res)
+			res <- &result.Result{
+				Group:    c.Group,
+				SubGroup: c.SubGroup,
+				Feature:  c.Feature,
+				Case:     c.Name,
+				Pass:     false,
+				Message:  err.Error(),
+			}
+		}(res)
+		return res
+	}
+
+	go func(chan<- *result.Result) {
+		message, ok := c.RunTask(t)
+		defer close(res)
+		res <- &result.Result{
+			Group:    c.Group,
+			SubGroup: c.SubGroup,
+			Feature:  c.Feature,
+			Case:     c.Name,
+			Task:     t.Name,
+			Pass:     ok,
+			Message:  message,
+		}
+	}(res)
+
+	return res
 }

@@ -19,7 +19,7 @@
 				<div class="form-group">
 					<div v-for="task in current.Tasks">
 						<div class="update-nag">
-							<div class="update-split update-info"><i class="glyphicon glyphicon-leaf"></i></div>
+							<button class="update-split update-success glyphicon glyphicon-play" @click.prevent="runTask(task.id)"></button>
 							<div class="update-text"><a :href="'taskinfo?id='+task.id">{{task.name}}</a></div>
 						</div>
 					</div>
@@ -27,6 +27,21 @@
 			</div>
 		</div>
 		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
+		<button class="btn icon-btn btn-success pull-right" @click.prevent="runCase">RUN</button>
+	</div>
+
+	<div class="col-md-6 pull-left">
+	 <div v-for="(res, i) in cresults">
+		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green"><{{i}}>Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+		 <h4 class="text-center text-danger" v-else><strong color="green"><{{i}}>Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+	 </div>
+	</div>
+
+	<div class="col-md-6 pull-left">
+	 <div v-for="(res, i) in tresults">
+		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green"><{{i}}>Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+		 <h4 class="text-center text-danger" v-else><strong color="green"><{{i}}>Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
+	 </div>
 	</div>
 </div>
 <script>
@@ -71,7 +86,19 @@
 		data: {
 			current: dumpCase(getCookie("CASEID")),
 			id: getCookie("CASEID"),
-			submitted:false
+			submitted:false,
+			cresults:[{
+				Message: "hello"
+			}, {
+				Message: "world"
+			}
+			],
+			tresults:[{
+				Message: "hello"
+			}, {
+				Message: "world"
+			}
+			]
 		},
 		methods: {
 			newTask: function(e) {
@@ -82,6 +109,54 @@
 					success:function(data) {
 						$("body").html(data);
 					}
+				});
+				this.submitted = true;
+			},
+
+			runCase: function(e) {
+				var res = this.cresults
+				$.ajax({
+					type:"post",
+					url:"runcases",
+					async:false,
+					data: {
+						type: "CASE",
+						id: this.id
+					},
+					success:function(data) {
+						var conn = new WebSocket("ws://"+data+"/runcaseresultws");
+						conn.onclose = function(evt) {
+							data.textContent = 'Connection closed';
+						}
+						conn.onmessage = function(evt) {
+							res.push(JSON.parse(evt.data));
+						}
+					}
+
+				});
+				this.submitted = true;
+			},
+
+			runTask: function(e) {
+				var res = this.tresults
+				$.ajax({
+					type:"post",
+					url:"runcases",
+					async:false,
+					data: {
+						type: "TASK",
+						id: e,
+					},
+					success:function(data) {
+						var conn = new WebSocket("ws://"+data+"/runcaseresultws");
+						conn.onclose = function(evt) {
+							data.textContent = 'Connection closed';
+						}
+						conn.onmessage = function(evt) {
+							res.push(JSON.parse(evt.data));
+						}
+					}
+
 				});
 				this.submitted = true;
 			},
