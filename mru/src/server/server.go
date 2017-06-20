@@ -393,8 +393,75 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 
 		err = DefaultServer.NewCache.AddTask(caseid.Value, &newtask)
 		if err != nil {
+			log.Println(err.Error())
 			io.WriteString(w, err.Error())
 		}
+	}
+}
+
+func DumpSubGroup(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
+		encoder := json.NewEncoder(w)
+		c, err := DefaultServer.NewCache.GetSubGroupByID(r.FormValue("id"))
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+		err = encoder.Encode(c)
+		if err != nil {
+			log.Println(err.Error())
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+func DumpFeature(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
+		encoder := json.NewEncoder(w)
+		c, err := DefaultServer.NewCache.GetFeatureByID(r.FormValue("id"))
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+		err = encoder.Encode(c)
+		if err != nil {
+			log.Println(err.Error())
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func DumpGroup(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		cookies := r.Cookies()
+		for _, cookie := range cookies {
+			log.Println(cookie)
+		}
+
+		log.Println("DumpGroup: ", r.FormValue("id"))
+		encoder := json.NewEncoder(w)
+		c, err := DefaultServer.NewCache.GetGroupByID(r.FormValue("id"))
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+		err = encoder.Encode(c)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
 
@@ -412,6 +479,7 @@ func DumpCase(w http.ResponseWriter, r *http.Request) {
 		}
 		err = encoder.Encode(c)
 		if err != nil {
+			log.Println(err.Error())
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
@@ -500,6 +568,103 @@ func CaseInfo(w http.ResponseWriter, r *http.Request) {
 		cookie := &http.Cookie{
 			Name:  "CASEID",
 			Value: r.FormValue("id"),
+			Path:  "dumpsubgroup",
+		}
+
+		http.SetCookie(w, cookie)
+		err = t.Execute(w, nil)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func GroupInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		t, err := template.New("groupinfo.html").Delims("|||", "|||").ParseFiles("asset/web/template/groupinfo.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/groupheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "GROUP ID is not set!")
+			return
+		}
+
+		log.Printf("++++++++++++++++%s-------------\n", r.FormValue("id"))
+		cookie := &http.Cookie{
+			Name:  "GROUPID",
+			Value: r.FormValue("id"),
+			Path:  "dumpgroup",
+		}
+
+		http.SetCookie(w, cookie)
+		err = t.Execute(w, nil)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func SubGroupInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		t, err := template.New("subgroupinfo.html").Delims("|||", "|||").ParseFiles("asset/web/template/subgroupinfo.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/subgroupheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "SUBGROUP ID is not set!")
+			return
+		}
+
+		cookie := &http.Cookie{
+			Name:  "SGID",
+			Value: r.FormValue("id"),
+		}
+
+		http.SetCookie(w, cookie)
+		err = t.Execute(w, nil)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func FeatureInfo(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		t, err := template.New("featureinfo.html").Delims("|||", "|||").ParseFiles("asset/web/template/featureinfo.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/featureheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "Feature ID is not set!")
+			return
+		}
+
+		cookie := &http.Cookie{
+			Name:  "FEATUREID",
+			Value: r.FormValue("id"),
+			Path:  "featureinfo",
 		}
 
 		http.SetCookie(w, cookie)
@@ -619,10 +784,16 @@ func (s *Server) Start() {
 	http.HandleFunc("/newtask", NewTask)
 	http.HandleFunc("/dumpcase", DumpCase)
 	http.HandleFunc("/dumptask", DumpTask)
+	http.HandleFunc("/dumpgroup", DumpGroup)
+	http.HandleFunc("/dumpsubgroup", DumpSubGroup)
+	http.HandleFunc("/dumpfeature", DumpFeature)
 	http.HandleFunc("/caseinfo", CaseInfo)
 	http.HandleFunc("/taskinfo", TaskInfo)
+	http.HandleFunc("/groupinfo", GroupInfo)
+	http.HandleFunc("/subgroupinfo", SubGroupInfo)
+	http.HandleFunc("/featureinfo", FeatureInfo)
 	http.HandleFunc("/ws", WS)
-	http.HandleFunc("/", Product)
+	http.HandleFunc("/", NewCase)
 
 	http.Handle("/asset/web/", http.FileServer(http.Dir(".")))
 	log.Panic(http.ListenAndServe(":8080", nil))
@@ -631,13 +802,7 @@ func (s *Server) Start() {
 func init() {
 
 	DefaultServer.NewCache = newcache.New("V8300")
-	value, err := ioutil.ReadFile("testcases.json")
-	if err != nil {
-		panic(err)
-	}
 
-	err = json.Unmarshal(value, &DefaultServer.CaseDB)
-	if err != nil {
-		panic(err)
-	}
+	DefaultServer.NewCache.Restore()
+
 }

@@ -1,0 +1,92 @@
+|||template "vueheader"|||
+|||template "treenav"|||
+|||template "subgroupheader"|||
+<div id="subgroupinfo" class="container-fluid display-table v-align">
+	<form class="form-horizontal">
+	</form>
+	<div class="col-md-3">
+		<div class="md-lid">
+			<div class="tab-featured-image">
+				<div class="tab-content">
+					<img src="https://ununsplash.imgix.net/photo-1417024321782-1375735f8987?dpr=2&fit=crop&fm=jpg&h=650&q=75&w=950" alt="tab1" class="img img-responsive">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="tab-featured-image">
+			<div class="tab-content">
+				<div class="form-group">
+					<div v-for="task in current.Tasks">
+						<div class="update-nag">
+							<div class="update-split update-info"><i class="glyphicon glyphicon-leaf"></i></div>
+							<div class="update-text"><a :href="'taskinfo?id='+task.id">{{task.name}}</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
+	</div>
+</div>
+<script>
+	function dumpCase(id) {
+		var caseinfo;
+		$.ajax({
+			type:"get",
+			url:"dumpsubgroup?id="+id,
+			async:false,
+			success:function(data) {
+				caseinfo = data;
+				alert(caseinfo);
+			}
+		});
+		return JSON.parse(caseinfo);
+	}
+
+	function　getCookie(name){
+		if (document.cookie.length>0)
+		{
+			start=document.cookie.indexOf(name + "=");
+			if (start!=-1)
+			{ 
+				start=start + name.length+1;
+				c_end=document.cookie.indexOf(";",start);
+				if (c_end==-1) c_end=document.cookie.length;
+				return unescape(document.cookie.substring(start,c_end));
+			} 
+		}
+		return "";
+	}
+
+	function setCookie(name,value,expiredays){
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate()+expiredays);
+		document.cookie= name+ "=" +escape(value)+
+			((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+	}
+</script>
+<script>
+	var caseInfo = new Vue({
+		el: '#subgroupinfo',
+		data: {
+			current: dumpCase(getCookie("SGID")),
+			id: getCookie("SGID"),
+			submitted:false
+		},
+		methods: {
+			newTask: function(e) {
+				$.ajax({
+					type:"get",
+					url:"newtask",
+					async:false,
+					success:function(data) {
+						$("body").html(data);
+					}
+				});
+				this.submitted = true;
+			},
+		}
+	});
+</script>
+|||template "vuefooter"|||

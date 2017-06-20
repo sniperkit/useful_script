@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/Workiva/go-datastructures/trie/ctrie"
 	"group"
+	"io/ioutil"
 	"log"
 	"mcase"
 	"result"
@@ -27,7 +28,7 @@ type Node struct {
 	Type     string
 	Link     string  `json:"href"`
 	Children []*Node `json:"nodes"`
-	data     interface{}
+	Data     interface{}
 }
 
 func New(name string) *NewCache {
@@ -44,12 +45,32 @@ func New(name string) *NewCache {
 }
 
 func (tr *NewCache) Save() {
-	js, err := json.Marshal(tr)
+	cases := tr.GetAllCase()
+	js, err := json.Marshal(cases)
 	if err != nil {
 		log.Println("Cannot format db for debug")
 		return
 	}
-	util.SaveToFile("newcachetestcases.json", js)
+	util.SaveToFile("allcases.json", js)
+}
+
+func (tr *NewCache) Restore() {
+	data, err := ioutil.ReadFile("allcases.json")
+	if err != nil {
+		log.Println("Cannot read case db")
+		return
+	}
+
+	cases := make([]*mcase.Case, 0, 1)
+	err = json.Unmarshal(data, &cases)
+	if err != nil {
+		log.Println(err.Error())
+		log.Fatal("There is no case from case DB")
+	}
+
+	for _, c := range cases {
+		tr.AddCase(c)
+	}
 }
 
 func (tr *NewCache) TreeView() *Node {
@@ -62,27 +83,27 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 		return errors.New("Same case alread exist")
 	}
 
-	if !tr.isNodeExist(tr.GetGroupKeyByCase(c)) {
+	if !tr.isNodeExist(group.Hash(tr.GetGroupKeyByCase(c))) {
 		newgroup := &group.Group{
 			Name:      c.Group,
 			ID:        string(group.Hash(tr.GetGroupKeyByCase(c))),
 			SubGroups: make(map[string]*subgroup.SubGroup, 1),
 		}
 		newnode := &Node{
-			Key:      string(tr.GetGroupKeyByCase(c)),
+			Key:      c.Group,
 			ID:       string(group.Hash(tr.GetGroupKeyByCase(c))),
 			Type:     "GROUP",
 			Link:     "groupinfo?id=" + string(group.Hash(tr.GetGroupKeyByCase(c))),
 			Children: make([]*Node, 0, 1),
-			data:     newgroup,
+			Data:     newgroup,
 		}
 
-		tr.AddGroup(newgroup)
+		tr.Groups[c.Group] = newgroup
 		tr.Insert(group.Hash(tr.GetGroupKeyByCase(c)), newnode)
 		tr.Node.Children = append(tr.Node.Children, newnode)
 	}
 
-	if !tr.isNodeExist(tr.GetSubGroupKeyByCase(c)) {
+	if !tr.isNodeExist(subgroup.Hash(tr.GetSubGroupKeyByCase(c))) {
 		newsubgroup := &subgroup.SubGroup{
 			Group:    c.Group,
 			Name:     c.SubGroup,
@@ -91,12 +112,12 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 		}
 
 		newnode := &Node{
-			Key:      string(tr.GetSubGroupKeyByCase(c)),
+			Key:      c.SubGroup,
 			ID:       string(subgroup.Hash(tr.GetSubGroupKeyByCase(c))),
 			Type:     "SUBGROUP",
 			Link:     "subgroupinfo?id=" + string(subgroup.Hash(tr.GetSubGroupKeyByCase(c))),
 			Children: make([]*Node, 0, 1),
-			data:     newsubgroup,
+			Data:     newsubgroup,
 		}
 		tr.Insert(subgroup.Hash(tr.GetSubGroupKeyByCase(c)), newnode)
 
@@ -105,7 +126,7 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 			panic(err)
 		}
 
-		if g, ok := n.data.(*group.Group); ok {
+		if g, ok := n.Data.(*group.Group); ok {
 			g.SGCount++
 			g.SubGroups[c.SubGroup] = newsubgroup
 		} else {
@@ -114,7 +135,7 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 		n.Children = append(n.Children, newnode)
 	}
 
-	if !tr.isNodeExist(tr.GetFeatureKeyByCase(c)) {
+	if !tr.isNodeExist(feature.Hash(tr.GetFeatureKeyByCase(c))) {
 		newfeature := &feature.Feature{
 			Group:    c.Group,
 			SubGroup: c.SubGroup,
@@ -124,12 +145,12 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 		}
 
 		newnode := &Node{
-			Key:      string(tr.GetFeatureKeyByCase(c)),
+			Key:      c.Feature,
 			ID:       string(subgroup.Hash(tr.GetFeatureKeyByCase(c))),
 			Type:     "FEATURE",
 			Link:     "featureinfo?id=" + string(feature.Hash(tr.GetFeatureKeyByCase(c))),
 			Children: make([]*Node, 0, 1),
-			data:     newfeature,
+			Data:     newfeature,
 		}
 		tr.Insert(feature.Hash(tr.GetFeatureKeyByCase(c)), newnode)
 
@@ -137,7 +158,7 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 		if err != nil {
 			panic(err)
 		}
-		if sg, ok := n.data.(*subgroup.SubGroup); ok {
+		if sg, ok := n.Data.(*subgroup.SubGroup); ok {
 			sg.FCount++
 			sg.Features[c.Feature] = newfeature
 		} else {
@@ -148,17 +169,17 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 	}
 
 	//Case Node no need children.
-	if !tr.isNodeExist(tr.CaseKey(c)) {
+	if !tr.isNodeExist(mcase.Hash(tr.CaseKey(c))) {
 		if c.Tasks == nil {
 			c.Tasks = make([]*task.Task, 0, 1)
 		}
 		c.ID = string(mcase.Hash(tr.CaseKey(c)))
 		newnode := &Node{
-			Key:  string(tr.CaseKey(c)),
+			Key:  c.Name,
 			ID:   string(mcase.Hash(tr.CaseKey(c))),
 			Type: "CASE",
 			Link: "caseinfo?id=" + string(mcase.Hash(tr.CaseKey(c))),
-			data: c,
+			Data: c,
 		}
 		tr.Insert(mcase.Hash(tr.CaseKey(c)), newnode)
 
@@ -167,7 +188,7 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 			panic(err)
 		}
 
-		if f, ok := n.data.(*feature.Feature); ok {
+		if f, ok := n.Data.(*feature.Feature); ok {
 			f.CCount++
 			f.Cases[c.Name] = c
 		} else {
@@ -197,29 +218,13 @@ func (tr *NewCache) GetCase(c *mcase.Case) (*mcase.Case, error) {
 
 	i, _ := tr.Lookup(mcase.Hash(tr.CaseKey(c)))
 	if n, ok := i.(*Node); ok {
-		if res, ok := n.data.(*mcase.Case); ok {
+		if res, ok := n.Data.(*mcase.Case); ok {
 			return res, nil
 		} else {
 			return nil, fmt.Errorf("Node: %s is not a Case!", string(tr.CaseKey(c)))
 		}
 	}
 	return nil, fmt.Errorf("Invalid Node: %s", string(tr.CaseKey(c)))
-}
-
-func (tr *NewCache) GetCaseByID(id string) (*mcase.Case, error) {
-	if !tr.isNodeExist([]byte(id)) {
-		return nil, fmt.Errorf("Case %s is not exist", id)
-	}
-
-	i, _ := tr.Lookup([]byte(id))
-	if n, ok := i.(*Node); ok {
-		if res, ok := n.data.(*mcase.Case); ok {
-			return res, nil
-		} else {
-			return nil, fmt.Errorf("Node: %s is not a Case!", id)
-		}
-	}
-	return nil, fmt.Errorf("Invalid Node: %s", id)
 }
 
 func (tr *NewCache) AddGroup(g *group.Group) error {
@@ -237,7 +242,7 @@ func (tr *NewCache) AddGroup(g *group.Group) error {
 		Type:     "GROUP",
 		Link:     "groupinfo?id=" + string(group.Hash(tr.GetKeyByGroup(g))),
 		Children: make([]*Node, 0, 1),
-		data:     g,
+		Data:     g,
 	}
 
 	tr.Groups[g.Name] = g
@@ -255,7 +260,7 @@ func (tr *NewCache) DelGroup(g *group.Group) error {
 	tr.Remove(group.Hash(tr.GetKeyByGroup(g)))
 	del := -1
 	for i, c := range tr.Node.Children {
-		if res, ok := c.data.(*group.Group); ok {
+		if res, ok := c.Data.(*group.Group); ok {
 			if res.ID == string(group.Hash(tr.GetKeyByGroup(g))) {
 				del = i
 				break
@@ -278,7 +283,7 @@ func (tr *NewCache) GetGroup(g *group.Group) (*group.Group, error) {
 
 	i, _ := tr.Lookup(group.Hash(tr.GetKeyByGroup(g)))
 	if n, ok := i.(*Node); ok {
-		if res, ok := n.data.(*group.Group); ok {
+		if res, ok := n.Data.(*group.Group); ok {
 			return res, nil
 		} else {
 			return nil, fmt.Errorf("Node: %s is not a Group!", string(tr.GetKeyByGroup(g)))
@@ -302,7 +307,7 @@ func (tr *NewCache) AddSubGroup(sg *subgroup.SubGroup) error {
 		Type:     "SUBGROUP",
 		Link:     "subgroupinfo?id=" + string(subgroup.Hash(tr.GetKeyBySubGroup(sg))),
 		Children: make([]*Node, 0, 1),
-		data:     sg,
+		Data:     sg,
 	}
 
 	tr.Insert(subgroup.Hash(tr.GetKeyBySubGroup(sg)), newnode)
@@ -312,9 +317,9 @@ func (tr *NewCache) AddSubGroup(sg *subgroup.SubGroup) error {
 		panic(err)
 	}
 
-	if data, ok := n.data.(*group.Group); ok {
-		data.SGCount++
-		data.SubGroups[sg.Name] = sg
+	if Data, ok := n.Data.(*group.Group); ok {
+		Data.SGCount++
+		Data.SubGroups[sg.Name] = sg
 	} else {
 		log.Printf("!!!!!!: %s is not a subgroup\n", tr.GetKeyBySubGroup(sg))
 	}
@@ -336,7 +341,7 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 	}
 
 	for i, k := range n.Children {
-		if res, ok := k.data.(*subgroup.SubGroup); ok {
+		if res, ok := k.Data.(*subgroup.SubGroup); ok {
 			if res.ID == string(subgroup.Hash(tr.GetKeyBySubGroup(sg))) {
 				del = i
 				break
@@ -345,9 +350,9 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 	}
 
 	if del != -1 {
-		if data, ok := n.data.(*group.Group); ok {
-			data.SGCount--
-			delete(data.SubGroups, sg.Name)
+		if Data, ok := n.Data.(*group.Group); ok {
+			Data.SGCount--
+			delete(Data.SubGroups, sg.Name)
 		}
 
 		n.Children = append(n.Children[0:del], n.Children[del+1:]...)
@@ -363,7 +368,7 @@ func (tr *NewCache) GetSubGroup(sg *subgroup.SubGroup) (*subgroup.SubGroup, erro
 
 	i, _ := tr.Lookup(subgroup.Hash(tr.GetKeyBySubGroup(sg)))
 	if n, ok := i.(*Node); ok {
-		if res, ok := n.data.(*subgroup.SubGroup); ok {
+		if res, ok := n.Data.(*subgroup.SubGroup); ok {
 			return res, nil
 		} else {
 			return nil, fmt.Errorf("Node: %s is not a SubGroup!", string(tr.GetKeyBySubGroup(sg)))
@@ -387,7 +392,7 @@ func (tr *NewCache) AddFeature(f *feature.Feature) error {
 		Type:     "FEATURE",
 		Link:     "featureinfo?id=" + string(feature.Hash(tr.GetKeyByFeature(f))),
 		Children: make([]*Node, 0, 1),
-		data:     f,
+		Data:     f,
 	}
 
 	tr.Insert(feature.Hash(tr.GetKeyByFeature(f)), newnode)
@@ -396,9 +401,9 @@ func (tr *NewCache) AddFeature(f *feature.Feature) error {
 	if err != nil {
 		panic(err)
 	}
-	if data, ok := n.data.(*subgroup.SubGroup); ok {
-		data.FCount++
-		data.Features[f.Name] = f
+	if Data, ok := n.Data.(*subgroup.SubGroup); ok {
+		Data.FCount++
+		Data.Features[f.Name] = f
 	}
 	n.Children = append(n.Children, newnode)
 
@@ -418,7 +423,7 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 	}
 
 	for i, k := range n.Children {
-		if res, ok := k.data.(*feature.Feature); ok {
+		if res, ok := k.Data.(*feature.Feature); ok {
 			if res.ID == string(feature.Hash(tr.GetKeyByFeature(f))) {
 				del = i
 				break
@@ -427,9 +432,9 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 	}
 
 	if del != -1 {
-		if data, ok := n.data.(*subgroup.SubGroup); ok {
-			data.FCount--
-			delete(data.Features, f.Name)
+		if Data, ok := n.Data.(*subgroup.SubGroup); ok {
+			Data.FCount--
+			delete(Data.Features, f.Name)
 		}
 		n.Children = append(n.Children[0:del], n.Children[del+1:]...)
 	}
@@ -444,7 +449,7 @@ func (tr *NewCache) GetFeature(f *feature.Feature) (*feature.Feature, error) {
 
 	i, _ := tr.Lookup(feature.Hash(tr.GetKeyByFeature(f)))
 	if n, ok := i.(*Node); ok {
-		if res, ok := n.data.(*feature.Feature); ok {
+		if res, ok := n.Data.(*feature.Feature); ok {
 			return res, nil
 		} else {
 			return nil, fmt.Errorf("Node: %s is not a Feature.", string(tr.GetKeyByFeature(f)))
@@ -553,12 +558,14 @@ func (tr *NewCache) GetAllFeature() []*Node {
 	return features
 }
 
-func (tr *NewCache) GetAllCase() []*Node {
-	cases := make([]*Node, 0, 1)
+func (tr *NewCache) GetAllCase() []*mcase.Case {
+	cases := make([]*mcase.Case, 0, 1)
 	for i := range tr.Iterator(nil) {
 		if c, ok := i.Value.(*Node); ok {
 			if c.Type == "CASE" {
-				cases = append(cases, c)
+				if mc, ok := c.Data.(*mcase.Case); ok {
+					cases = append(cases, mc)
+				}
 			}
 		}
 	}
@@ -698,4 +705,69 @@ func (tr *NewCache) GetTaskByID(caseid, taskid string) (*task.Task, error) {
 	}
 
 	return c.GetTaskByID(taskid)
+}
+
+func (tr *NewCache) GetCaseByID(id string) (*mcase.Case, error) {
+	if !tr.isNodeExist([]byte(id)) {
+		return nil, fmt.Errorf("Case %s is not exist", id)
+	}
+
+	i, _ := tr.Lookup([]byte(id))
+	if n, ok := i.(*Node); ok {
+		if res, ok := n.Data.(*mcase.Case); ok {
+			return res, nil
+		} else {
+			return nil, fmt.Errorf("Node: %s is not a Case!", id)
+		}
+	}
+	return nil, fmt.Errorf("Invalid Node: %s", id)
+}
+
+func (tr *NewCache) GetGroupByID(id string) (*group.Group, error) {
+	log.Printf("+++++++++++++++++++++%s+++++++++++++++++++++++\n", id)
+	if !tr.isNodeExist([]byte(id)) {
+		return nil, fmt.Errorf("Group %s is not exist", id)
+	}
+
+	i, _ := tr.Lookup([]byte(id))
+	if n, ok := i.(*Node); ok {
+		if res, ok := n.Data.(*group.Group); ok {
+			return res, nil
+		} else {
+			return nil, fmt.Errorf("Node: %s is not a Group!", id)
+		}
+	}
+	return nil, fmt.Errorf("Invalid Node: %s", id)
+}
+
+func (tr *NewCache) GetSubGroupByID(id string) (*subgroup.SubGroup, error) {
+	if !tr.isNodeExist([]byte(id)) {
+		return nil, fmt.Errorf("SubGroup %s is not exist", id)
+	}
+
+	i, _ := tr.Lookup([]byte(id))
+	if n, ok := i.(*Node); ok {
+		if res, ok := n.Data.(*subgroup.SubGroup); ok {
+			return res, nil
+		} else {
+			return nil, fmt.Errorf("Node: %s is not a SubGroup!", id)
+		}
+	}
+	return nil, fmt.Errorf("Invalid Node: %s", id)
+}
+
+func (tr *NewCache) GetFeatureByID(id string) (*feature.Feature, error) {
+	if !tr.isNodeExist([]byte(id)) {
+		return nil, fmt.Errorf("Feature %s is not exist", id)
+	}
+
+	i, _ := tr.Lookup([]byte(id))
+	if n, ok := i.(*Node); ok {
+		if res, ok := n.Data.(*feature.Feature); ok {
+			return res, nil
+		} else {
+			return nil, fmt.Errorf("Node: %s is not a Feature!", id)
+		}
+	}
+	return nil, fmt.Errorf("Invalid Node: %s", id)
 }
