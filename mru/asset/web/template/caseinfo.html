@@ -79,6 +79,36 @@
 		document.cookie= name+ "=" +escape(value)+
 			((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 	}
+
+	function isReadyForRun(id) {
+		var ready = false
+		$.ajax({
+			type:"get",
+			url:"isinitialized",
+			async:false,
+			data: {
+				id: id
+			},
+			success:function(data) {
+				ready = JSON.parse(data).Ready
+			}
+		});
+		return ready
+	}
+
+	function doInitializeWork(id) {
+		$.ajax({
+			type:"get",
+			url:"setdutsbyid",
+			async:false,
+			data: {
+				id: id
+			},
+			success:function(data) {
+				 $("body").html(data);
+			}
+		});
+	}
 </script>
 <script>
 	var caseInfo = new Vue({
@@ -114,6 +144,10 @@
 			},
 
 			runCase: function(e) {
+				if (!isReadyForRun(this.id)){
+					doInitializeWork(this.id)
+					return
+				}
 				var res = this.cresults
 				$.ajax({
 					type:"post",
@@ -138,6 +172,11 @@
 			},
 
 			runTask: function(e) {
+				if (!isReadyForRun(this.id)){
+					doInitializeWork(this.id)
+					return
+				}
+
 				var res = this.tresults
 				$.ajax({
 					type:"post",

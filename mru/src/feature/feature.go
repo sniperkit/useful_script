@@ -4,6 +4,8 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"errors"
+	"fmt"
+	"log"
 	"mcase"
 	"rut"
 	"sort"
@@ -68,6 +70,48 @@ func (f *Feature) Dump() []*mcase.Case {
 	sort.Stable(CaseSlice(cs))
 
 	return cs
+}
+
+func (f *Feature) AddDUT(r *rut.RUT) error {
+	if f.RUTDB == nil {
+		f.RUTDB = make(map[string]*rut.RUT, 1)
+	}
+	if o, ok := f.RUTDB[r.Name]; ok {
+		return fmt.Errorf("Same rut: %s already exist: %v", r.Name, o)
+	}
+
+	for _, c := range f.Cases {
+		c.AddRUT(r)
+	}
+
+	f.RUTDB[r.Name] = r
+
+	return nil
+}
+
+func (f *Feature) DelDUT(r *rut.RUT) error {
+	if _, ok := f.RUTDB[r.Name]; !ok {
+		return fmt.Errorf("DUT: %s does not exist", r.Name)
+	}
+
+	for _, c := range f.Cases {
+		c.DelRUT(r)
+	}
+	delete(f.RUTDB, r.Name)
+	return nil
+}
+
+func (f *Feature) ClearDUTs() {
+	if f.RUTDB == nil {
+		log.Println("Call clear RUT when there is no rut in feature DB")
+	}
+
+	for _, r := range f.RUTDB {
+		for _, c := range f.Cases {
+			c.DelRUT(r)
+		}
+		delete(f.RUTDB, r.Name)
+	}
 }
 
 type CaseSlice []*mcase.Case

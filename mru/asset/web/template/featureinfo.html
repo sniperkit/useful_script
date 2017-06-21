@@ -71,6 +71,38 @@
 		document.cookie= name+ "=" +escape(value)+
 			((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 	}
+
+	function isReadyForRun(id) {
+		var ready = false
+		$.ajax({
+			type:"get",
+			url:"isinitialized",
+			async:false,
+			data: {
+				id: id
+			},
+			success:function(data) {
+				ready = JSON.parse(data).Ready
+				alert(ready)
+			}
+		});
+		return false
+	}
+
+	function doInitializeWork(id) {
+		$.ajax({
+			type:"get",
+			url:"setdutsbyid",
+			async:false,
+			data: {
+				id: id
+			},
+			success:function(data) {
+				alert(data);
+				 $("body").html(data);
+			}
+		});
+	}
 </script>
 <script>
 	var featureInfo = new Vue({
@@ -88,6 +120,11 @@
 		},
 		methods: {
 			runCaseByFeature: function(e) {
+				if (!isReadyForRun(this.id)){
+					doInitializeWork(this.id)
+					return
+				}
+
 				var res = this.results
 				$.ajax({
 					type:"post",

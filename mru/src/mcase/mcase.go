@@ -63,7 +63,6 @@ func (c *Case) AddRUT(r *rut.RUT) {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)
 	}
 	c.RUTs.DB[r.Name] = r
-	c.DUTCount++
 }
 
 func MakeCaseFromTreeViewKey(key string) (*Case, error) {
@@ -99,7 +98,16 @@ func (c *Case) DelRUT(r *rut.RUT) {
 	if r, ok := c.RUTs.DB[r.Name]; ok {
 		delete(c.RUTs.DB, r.Name)
 	}
-	c.DUTCount--
+}
+
+func (c *Case) ClearDUTs() {
+	if c.RUTs.DB == nil {
+		log.Printf("Clear RUTs called for case: %s when there are ruts in db", c.Name)
+	}
+
+	for name, _ := range c.RUTs.DB {
+		delete(c.RUTs.DB, name)
+	}
 }
 
 func (c *Case) Run() (string, bool) {

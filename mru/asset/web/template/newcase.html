@@ -68,6 +68,7 @@
 		},
 		methods: {
 			submitForm: function(e) {
+				this.ncase.DUTCount = +this.ncase.DUTCount //Convert text value into number for server to decode
 				$.ajax({
 					type:"post",
 					url:"newcase",

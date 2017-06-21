@@ -164,6 +164,29 @@ func VUETree(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func VUEtest(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("vuetest.html").Delims("|||", "|||").ParseFiles("asset/web/template/vuetest.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		values := r.Form
+		for k, v := range values {
+			log.Println(k, v[0])
+			io.WriteString(w, k+":"+v[0])
+		}
+	}
+}
+
 func JSTree(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		t, err := template.New("jstree.html").Delims("|||", "|||").ParseFiles("asset/web/template/jstree.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
@@ -344,7 +367,7 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 
 		http.SetCookie(w, cookie)
 		js, _ := json.Marshal(DefaultServer.NewCache.TreeView().Children)
-		log.Println(string(js))
+		//log.Println(string(js))
 		err = t.Execute(w, string(js))
 		if err != nil {
 			log.Println(err.Error())
@@ -356,8 +379,13 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 		for k, v := range r.Form {
 			log.Println(k, ":", v)
 		}
-		json.Unmarshal([]byte(r.FormValue("newcase")), &newcase)
-		log.Println(newcase)
+
+		err := json.Unmarshal([]byte(r.FormValue("newcase")), &newcase)
+		if err != nil {
+			log.Println(newcase, err)
+			io.WriteString(w, err.Error())
+			return
+		}
 		DefaultServer.NewCache.AddCase(&newcase)
 	}
 }
@@ -425,6 +453,7 @@ func DumpSubGroup(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -446,6 +475,7 @@ func DumpFeature(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -469,6 +499,7 @@ func DumpGroup(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -491,6 +522,7 @@ func DumpCase(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -522,6 +554,7 @@ func DumpTask(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -553,6 +586,7 @@ func TaskInfo(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -573,18 +607,26 @@ func CaseInfo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		cookie := &http.Cookie{
+		featureid := &http.Cookie{
 			Name:  "CASEID",
 			Value: r.FormValue("id"),
-			Path:  "dumpsubgroup",
+			Path:  "/",
 		}
 
-		http.SetCookie(w, cookie)
+		id := &http.Cookie{
+			Name:  "UNIQUE",
+			Value: r.FormValue("id"),
+			Path:  "/",
+		}
+
+		http.SetCookie(w, featureid)
+		http.SetCookie(w, id)
 		err = t.Execute(w, nil)
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -617,6 +659,7 @@ func GroupInfo(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -648,6 +691,7 @@ func SubGroupInfo(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -668,18 +712,26 @@ func FeatureInfo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		cookie := &http.Cookie{
+		featureid := &http.Cookie{
 			Name:  "FEATUREID",
 			Value: r.FormValue("id"),
 			Path:  "featureinfo",
 		}
 
-		http.SetCookie(w, cookie)
+		id := &http.Cookie{
+			Name:  "UNIQUUNIQUEE",
+			Value: r.FormValue("id"),
+			Path:  "featureinfo",
+		}
+
+		http.SetCookie(w, featureid)
+		http.SetCookie(w, id)
 		err = t.Execute(w, nil)
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
@@ -716,8 +768,130 @@ func DeleteNode(w http.ResponseWriter, r *http.Request) {
 			}
 			DefaultServer.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
 		} else {
+			w.WriteHeader(http.StatusBadRequest)
 			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 		}
+	}
+}
+
+func GetDUTCountByID(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "ID is not set!")
+			return
+		}
+
+		count, err := DefaultServer.NewCache.GetDUTCountByID(r.FormValue("id"))
+		if err != nil {
+			log.Println(err.Error(), "+++++++")
+			w.WriteHeader(http.StatusForbidden)
+		}
+
+		encoder := json.NewEncoder(w)
+		err = encoder.Encode(struct{ DUTCount int }{DUTCount: count})
+		if err != nil {
+			io.WriteString(w, "adfasdkfjaskdfjaskdfjaksdjfkasjdffuckyou")
+		}
+	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func CheckIsReadyForRunByID(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+
+		if r.FormValue("id") == "" {
+			io.WriteString(w, "ID is not set!")
+			return
+		}
+
+		type Res struct {
+			IsError bool
+			Ready   bool
+			Message string
+		}
+
+		var res Res
+		ready, err := DefaultServer.NewCache.CheckIsReadyForRunByID(r.FormValue("id"))
+		if err != nil {
+			res.IsError = true
+			res.Message = err.Error()
+		}
+
+		res.Ready = ready
+		encoder := json.NewEncoder(w)
+		err = encoder.Encode(res)
+		if err != nil {
+			io.WriteString(w, "adfasdkfjaskdfjaskdfjaksdjfkasjdffuckyou")
+		}
+	} else if r.Method == "POST" {
+		w.WriteHeader(http.StatusBadRequest)
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+	}
+}
+
+func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+		t, err := template.New("setduts.html").Delims("|||", "|||").ParseFiles("asset/web/template/setduts.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/caseheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+		err = t.Execute(w, nil)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		log.Println(r.FormValue("id"))
+
+		if r.FormValue("id") == "" {
+			log.Println("ID is not set")
+			io.WriteString(w, "ID is not set!")
+			return
+		}
+
+		if r.FormValue("duts") == "" {
+			io.WriteString(w, "Invalid Input")
+			return
+		}
+
+		var con []*rut.Config
+		err := json.Unmarshal([]byte(r.FormValue("duts")), &con)
+		if err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+		log.Printf("%#v", con)
+		log.Printf("%#q", con)
+
+		var duts []*rut.RUT
+		for _, cn := range con {
+			d, err := rut.GetRUTByConfig(cn)
+			if err != nil {
+				io.WriteString(w, err.Error())
+				return
+			}
+			duts = append(duts, d)
+		}
+
+		err = DefaultServer.NewCache.SetDUTsByID(r.FormValue("id"), duts)
+		if err != nil {
+			io.WriteString(w, err.Error())
+		}
+		w.WriteHeader(http.StatusOK)
+	} else {
+		w.WriteHeader(http.StatusBadRequest)
+		io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 	}
 }
 
@@ -814,6 +988,7 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 				close(DefaultServer.CaseResult[sessionid.Value])
 			}()
 		} else {
+			w.WriteHeader(http.StatusBadRequest)
 			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
 		}
 	}
@@ -985,6 +1160,7 @@ func (s *Server) Start() {
 	//@liwei: This need more analysis.
 	http.HandleFunc("/ztreemenu", ZTreeMenu)
 	http.HandleFunc("/vuetree", VUETree)
+	http.HandleFunc("/vuetest", VUEtest)
 	http.HandleFunc("/jstree", JSTree)
 	http.HandleFunc("/jsontree", JSONTree)
 	http.HandleFunc("/launchtree", LaunchTree)
@@ -1008,6 +1184,9 @@ func (s *Server) Start() {
 	http.HandleFunc("/featureinfo", FeatureInfo)
 	http.HandleFunc("/runcases", RunCases)
 	http.HandleFunc("/delete", DeleteNode)
+	http.HandleFunc("/getdutcountbyid", GetDUTCountByID)
+	http.HandleFunc("/setdutsbyid", SetDUTsByID)
+	http.HandleFunc("/isinitialized", CheckIsReadyForRunByID)
 	http.HandleFunc("/ws", WS)
 	http.HandleFunc("/runcaseresultws", RunCaseResultWS)
 	http.HandleFunc("/", NewCase)

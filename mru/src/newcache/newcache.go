@@ -11,6 +11,7 @@ import (
 	"log"
 	"mcase"
 	"result"
+	"rut"
 	"subgroup"
 	"sync"
 	"task"
@@ -82,7 +83,8 @@ func (tr *NewCache) IsCaseValid(c *mcase.Case) bool {
 	if c.Group == "" ||
 		c.SubGroup == "" ||
 		c.Feature == "" ||
-		c.Name == "" {
+		c.Name == "" ||
+		c.DUTCount <= 0 {
 		return false
 	}
 	return true
@@ -155,6 +157,7 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 			Group:    c.Group,
 			SubGroup: c.SubGroup,
 			Name:     c.Feature,
+			DUTCount: c.DUTCount,
 			ID:       string(subgroup.Hash(tr.GetFeatureKeyByCase(c))),
 			Cases:    make(map[string]*mcase.Case, 1),
 		}
@@ -1071,4 +1074,123 @@ func (tr *NewCache) RunTaskByID(caseid, taskid string) <-chan *result.Result {
 	}(res)
 
 	return res
+}
+
+func (tr *NewCache) GetDUTCountByID(id string) (int, error) {
+	n, err := tr.Get([]byte(id))
+	if err != nil {
+		return -1, fmt.Errorf("Cannot find node by ID: %s", id)
+	}
+
+	switch n.Type {
+	case "GROUP":
+		return -1, fmt.Errorf("Currently not support get Group DUTCount")
+	case "SUBGROUP":
+		return -1, fmt.Errorf("Currently not support get SubGroup DUTCount")
+	case "FEATURE":
+		if f, ok := n.Data.(*feature.Feature); ok {
+			return f.DUTCount, nil
+		}
+		return -1, fmt.Errorf("Internal Error: Get an Feature node but data is not feature")
+	case "CASE":
+		if c, ok := n.Data.(*mcase.Case); ok {
+			return c.DUTCount, nil
+		}
+		return -1, fmt.Errorf("Internal Error: Get an Case node but data is not Case")
+	default:
+		return -1, fmt.Errorf("Unkown Node type for id: %s", id)
+	}
+}
+
+func (tr *NewCache) SetDUTsByID(id string, duts []*rut.RUT) error {
+	n, err := tr.Get([]byte(id))
+	if err != nil {
+		return fmt.Errorf("Cannot find node by ID: %s", id)
+	}
+
+	switch n.Type {
+	case "GROUP":
+		return fmt.Errorf("Currently not support set Group DUT")
+	case "SUBGROUP":
+		return fmt.Errorf("Currently not support set SubGroup DUT")
+	case "FEATURE":
+		if f, ok := n.Data.(*feature.Feature); ok {
+			if f.DUTCount != len(duts) {
+				return fmt.Errorf("Not Enough duts for feature:%s, required: %d, current: %d", f.Name, f.DUTCount, len(duts))
+			}
+
+			for _, d := range duts {
+				if err != f.AddDUT(d) {
+					f.ClearDUTs()
+					return err
+				}
+			}
+
+			return nil
+		}
+		return fmt.Errorf("Internal Error: Get an Feature node but data is not feature")
+	case "CASE":
+		if c, ok := n.Data.(*mcase.Case); ok {
+			if c.DUTCount != len(duts) {
+				return fmt.Errorf("Not Enough duts for case:%s, required: %d, current: %d", c.Name, c.DUTCount, len(duts))
+			}
+
+			for _, d := range duts {
+				c.AddRUT(d)
+			}
+
+			return nil
+		}
+		return fmt.Errorf("Internal Error: Get an Case node but data is not Case")
+	default:
+		return fmt.Errorf("Unkown Node type for id: %s", id)
+	}
+}
+
+func (tr *NewCache) CheckIsReadyForRunByID(id string) (bool, error) {
+	n, err := tr.Get([]byte(id))
+	if err != nil {
+		return false, fmt.Errorf("Cannot find node by ID: %s", id)
+	}
+
+	switch n.Type {
+	case "GROUP":
+		return false, fmt.Errorf("Currently not support run by Group")
+	case "SUBGROUP":
+		return false, fmt.Errorf("Currently not support run by SubGroup")
+	case "FEATURE":
+		if f, ok := n.Data.(*feature.Feature); ok {
+			if f.DUTCount != len(f.RUTDB) {
+				f.ClearDUTs()
+				return false, fmt.Errorf("Not Enough duts for feature:%s, required: %d, current: %d", f.Name, f.DUTCount, len(f.RUTDB))
+			}
+
+			if f.DUTCount == 0 {
+				return false, fmt.Errorf("Invalid feature test case, no DUT exist!")
+			}
+
+			log.Println(f.DUTCount, len(f.RUTDB))
+
+			return true, nil
+		}
+		return false, fmt.Errorf("Internal Error: Get an Feature node but data is not feature")
+	case "CASE":
+		if c, ok := n.Data.(*mcase.Case); ok {
+			if c.DUTCount != len(c.RUTs.DB) {
+				c.ClearDUTs()
+				return false, nil
+			}
+
+			if c.DUTCount == 0 {
+				return false, fmt.Errorf("Invalid test case, no DUT exist!")
+			}
+
+			log.Println(c.DUTCount, len(c.RUTs.DB))
+
+			return true, nil
+		}
+		return false, fmt.Errorf("Internal Error: Get an Case node but data is not Case")
+	default:
+		return false, fmt.Errorf("Unkown Node type for id: %s", id)
+	}
 }

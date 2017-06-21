@@ -5,9 +5,11 @@ import (
 	"command"
 	"configuration"
 	"errors"
+	"fmt"
 	"log"
 	"result"
 	"script"
+	"strconv"
 )
 
 //RUT should be and interface
@@ -19,6 +21,15 @@ type RUT struct {
 	Password string
 	IP       string
 	Port     string
+}
+
+type Config struct {
+	Index    int    `json:"index"`
+	Device   string `json:"device"`
+	IP       string `json:"ip"`
+	Port     string `json:"port"`
+	Username string `json:"username"`
+	Password string `json:"passowrd"`
 }
 
 var DefaultConfigurations = configuration.Configuration{
@@ -187,6 +198,40 @@ func (d *RUT) CreateOSPFInstance(id, tag string) error {
 func (d *RUT) DestroyOSPFInstance(id string) error {
 
 	return nil
+}
+
+func isValidRUTConfig(c *Config) bool {
+	if c.Index < 0 ||
+		c.Device == "" ||
+		c.IP == "" ||
+		c.Port == "" ||
+		c.Username == "" {
+		return false
+	}
+
+	return true
+}
+
+func GetRUTByConfig(c *Config) (*RUT, error) {
+	if !isValidRUTConfig(c) {
+		return nil, fmt.Errorf("Invalid config to create RUT: %v", c)
+	}
+	newrut := &RUT{
+		Name:     "DUT" + strconv.Itoa(c.Index),
+		Device:   c.Device,
+		Username: c.Username,
+		Password: c.Password,
+		IP:       c.IP,
+		Port:     c.Port,
+	}
+
+	log.Printf("%q", newrut)
+
+	if err := newrut.Init(); err != nil {
+		return nil, fmt.Errorf("Cannot create new DUT with config :%v. Error Message: %s", c, err.Error())
+	}
+
+	return newrut, nil
 }
 
 func init() {
