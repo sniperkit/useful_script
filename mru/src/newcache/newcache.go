@@ -19,6 +19,7 @@ import (
 )
 
 type NewCache struct {
+	Name   string
 	Node   *Node
 	Groups map[string]*group.Group
 	*ctrie.Ctrie
@@ -35,6 +36,7 @@ type Node struct {
 
 func New(name string) *NewCache {
 	return &NewCache{
+		Name: name,
 		Node: &Node{
 			Key:      name,
 			Type:     "ROOT",
@@ -53,11 +55,16 @@ func (tr *NewCache) Save() {
 		log.Println("Cannot format db for debug")
 		return
 	}
-	util.SaveToFile("allcases.json", js)
+	util.SaveToFile(tr.Name+".json", js)
 }
 
 func (tr *NewCache) Restore() {
-	data, err := ioutil.ReadFile("allcases.json")
+	tr.RestoreCaseFromFile("allcases.json")
+	tr.RestoreCaseFromFile(tr.Name + ".json")
+}
+
+func (tr *NewCache) RestoreCaseFromFile(name string) {
+	data, err := ioutil.ReadFile(name)
 	if err != nil {
 		log.Println("Cannot read case db")
 		return
@@ -66,8 +73,7 @@ func (tr *NewCache) Restore() {
 	cases := make([]*mcase.Case, 0, 1)
 	err = json.Unmarshal(data, &cases)
 	if err != nil {
-		log.Println(err.Error())
-		log.Fatal("There is no case from case DB")
+		panic(err.Error())
 	}
 
 	for _, c := range cases {

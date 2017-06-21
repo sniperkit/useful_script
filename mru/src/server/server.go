@@ -2,7 +2,8 @@ package server
 
 import (
 	//	"command"
-	"cache"
+	"context"
+	"controller"
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"html/template"
@@ -11,7 +12,6 @@ import (
 	"log"
 	"mcase"
 	"net/http"
-	"newcache"
 	"result"
 	"rut"
 	"script"
@@ -42,26 +42,12 @@ var (
 	}
 )
 
-type Server struct {
-	RUT        *rut.RUT
-	Result     <-chan result.Result
-	CaseResult map[string]chan *result.Result
-	CaseDB     cache.Cache
-	NewCache   *newcache.NewCache
-}
-
-var DefaultServer Server
-
-func Start() {
-	DefaultServer.Start()
-}
-
-type Page struct {
-	Link        string
-	Description string
-}
+var Engine *controller.Controller
 
 func Product(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
 	log.Println(r.Method)
 	if r.Method == "GET" {
 		t, err := template.New("product.html").Delims("|||", "|||").ParseFiles("asset/web/template/product.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
@@ -123,7 +109,7 @@ func Product(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			io.WriteString(w, err.Error())
 		} else {
-			DefaultServer.RUT = dev
+			sess.RUT = dev
 			t, err := template.New("script.html").Delims("|||", "|||").ParseFiles("asset/web/template/script.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
 			if err != nil {
 				log.Println(err)
@@ -233,29 +219,6 @@ func JSONTree(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func ZTreeMenu(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
-		t, err := template.New("ztreemenu.html").Delims("|||", "|||").ParseFiles("asset/web/template/ztreemenu.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
-		if err != nil {
-			log.Println(err)
-			io.WriteString(w, err.Error())
-			return
-		}
-
-		err = t.Execute(w, DefaultServer.CaseDB)
-		if err != nil {
-			log.Println(err.Error())
-		}
-	} else if r.Method == "POST" {
-		r.ParseForm()
-		values := r.Form
-		for k, v := range values {
-			log.Println(k, v[0])
-			io.WriteString(w, k+":"+v[0])
-		}
-	}
-}
-
 func LaunchTree(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		t, err := template.New("launchtree.html").Delims("|||", "|||").ParseFiles("asset/web/template/launchtree.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
@@ -324,27 +287,16 @@ func JSNotify(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func ResponsiveNav(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
-		t, err := template.New("responsive.html").Delims("|||", "|||").ParseFiles("asset/web/template/responsive.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
-		if err != nil {
-			log.Println(err)
-			io.WriteString(w, err.Error())
-			return
-		}
-
-		err = t.Execute(w, DefaultServer.CaseDB)
-		if err != nil {
-			log.Println(err.Error())
-		}
-	}
-}
-
 func TreeView(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
+	log.Printf("%q", sess.NewCache)
 	if r.Method == "GET" {
 		log.Println("Dump tree")
 		encoder := json.NewEncoder(w)
-		err := encoder.Encode(DefaultServer.NewCache.TreeView().Children)
+		err := encoder.Encode(sess.NewCache.TreeView().Children)
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -352,6 +304,10 @@ func TreeView(w http.ResponseWriter, r *http.Request) {
 }
 
 func NewCase(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		t, err := template.New("newcase.html").Delims("|||", "|||").ParseFiles("asset/web/template/newcase.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
 		if err != nil {
@@ -360,13 +316,7 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		cookie := &http.Cookie{
-			Name:  "SESSIONID",
-			Value: util.GenerateSessionID(),
-		}
-
-		http.SetCookie(w, cookie)
-		js, _ := json.Marshal(DefaultServer.NewCache.TreeView().Children)
+		js, _ := json.Marshal(sess.NewCache.TreeView().Children)
 		//log.Println(string(js))
 		err = t.Execute(w, string(js))
 		if err != nil {
@@ -386,11 +336,15 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 			return
 		}
-		DefaultServer.NewCache.AddCase(&newcase)
+		sess.NewCache.AddCase(&newcase)
 	}
 }
 
 func NewTask(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		cookies := r.Cookies()
 		for _, cookie := range cookies {
@@ -404,7 +358,7 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		js, _ := json.Marshal(DefaultServer.NewCache.TreeView().Children)
+		js, _ := json.Marshal(sess.NewCache.TreeView().Children)
 		err = t.Execute(w, string(js))
 		if err != nil {
 			log.Println(err.Error())
@@ -427,7 +381,7 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = DefaultServer.NewCache.AddTask(caseid.Value, &newtask)
+		err = sess.NewCache.AddTask(caseid.Value, &newtask)
 		if err != nil {
 			log.Println(err.Error())
 			io.WriteString(w, err.Error())
@@ -436,6 +390,10 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func DumpSubGroup(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		cookies := r.Cookies()
@@ -443,7 +401,7 @@ func DumpSubGroup(w http.ResponseWriter, r *http.Request) {
 			log.Println(cookie)
 		}
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.NewCache.GetSubGroupByID(r.FormValue("id"))
+		c, err := sess.NewCache.GetSubGroupByID(r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -458,6 +416,10 @@ func DumpSubGroup(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func DumpFeature(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		cookies := r.Cookies()
@@ -465,7 +427,7 @@ func DumpFeature(w http.ResponseWriter, r *http.Request) {
 			log.Println(cookie)
 		}
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.NewCache.GetFeatureByID(r.FormValue("id"))
+		c, err := sess.NewCache.GetFeatureByID(r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -481,6 +443,10 @@ func DumpFeature(w http.ResponseWriter, r *http.Request) {
 }
 
 func DumpGroup(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		cookies := r.Cookies()
@@ -490,7 +456,7 @@ func DumpGroup(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("DumpGroup: ", r.FormValue("id"))
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.NewCache.GetGroupByID(r.FormValue("id"))
+		c, err := sess.NewCache.GetGroupByID(r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -505,6 +471,10 @@ func DumpGroup(w http.ResponseWriter, r *http.Request) {
 }
 
 func DumpCase(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		cookies := r.Cookies()
@@ -512,7 +482,7 @@ func DumpCase(w http.ResponseWriter, r *http.Request) {
 			log.Println(cookie)
 		}
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.NewCache.GetCaseByID(r.FormValue("id"))
+		c, err := sess.NewCache.GetCaseByID(r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -528,6 +498,10 @@ func DumpCase(w http.ResponseWriter, r *http.Request) {
 }
 
 func DumpTask(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		cookies := r.Cookies()
@@ -545,7 +519,7 @@ func DumpTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		encoder := json.NewEncoder(w)
-		c, err := DefaultServer.NewCache.GetTaskByID(caseid.Value, r.FormValue("id"))
+		c, err := sess.NewCache.GetTaskByID(caseid.Value, r.FormValue("id"))
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -737,36 +711,33 @@ func FeatureInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteNode(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "POST" {
 		r.ParseForm()
 
-		sessionid, err := r.Cookie("SESSIONID")
-		if err != nil {
-			io.WriteString(w, err.Error())
-			return
-		}
-
-		log.Println("SESSIONiD: ", sessionid.Value)
-		if _, ok := DefaultServer.CaseResult[sessionid.Value]; ok {
+		if _, ok := sess.CaseResult[sessionid]; ok {
 			io.WriteString(w, "You are runing another cases")
 			return
 		}
 
 		if r.FormValue("type") == "GROUP" {
-			DefaultServer.NewCache.DelGroupByID(r.FormValue("id"))
+			sess.NewCache.DelGroupByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "SUBGROUP" {
-			DefaultServer.NewCache.DelSubGroupByID(r.FormValue("id"))
+			sess.NewCache.DelSubGroupByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "FEATURE" {
-			DefaultServer.NewCache.DelFeatureByID(r.FormValue("id"))
+			sess.NewCache.DelFeatureByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "CASE" {
-			DefaultServer.NewCache.DelCaseByID(r.FormValue("id"))
+			sess.NewCache.DelCaseByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "TASK" {
 			caseid, err := r.Cookie("CASEID")
 			if err != nil {
 				io.WriteString(w, "Case ID is not set when delete task")
 				return
 			}
-			DefaultServer.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
+			sess.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
 		} else {
 			w.WriteHeader(http.StatusBadRequest)
 			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
@@ -775,6 +746,10 @@ func DeleteNode(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetDUTCountByID(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		log.Println(r.FormValue("id"))
@@ -784,7 +759,7 @@ func GetDUTCountByID(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		count, err := DefaultServer.NewCache.GetDUTCountByID(r.FormValue("id"))
+		count, err := sess.NewCache.GetDUTCountByID(r.FormValue("id"))
 		if err != nil {
 			log.Println(err.Error(), "+++++++")
 			w.WriteHeader(http.StatusForbidden)
@@ -802,6 +777,10 @@ func GetDUTCountByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func CheckIsReadyForRunByID(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		log.Println(r.FormValue("id"))
@@ -818,7 +797,7 @@ func CheckIsReadyForRunByID(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var res Res
-		ready, err := DefaultServer.NewCache.CheckIsReadyForRunByID(r.FormValue("id"))
+		ready, err := sess.NewCache.CheckIsReadyForRunByID(r.FormValue("id"))
 		if err != nil {
 			res.IsError = true
 			res.Message = err.Error()
@@ -837,6 +816,10 @@ func CheckIsReadyForRunByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "GET" {
 		r.ParseForm()
 		log.Println(r.FormValue("id"))
@@ -884,7 +867,7 @@ func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
 			duts = append(duts, d)
 		}
 
-		err = DefaultServer.NewCache.SetDUTsByID(r.FormValue("id"), duts)
+		err = sess.NewCache.SetDUTsByID(r.FormValue("id"), duts)
 		if err != nil {
 			io.WriteString(w, err.Error())
 		}
@@ -896,78 +879,75 @@ func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func RunCases(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	if r.Method == "POST" {
 		r.ParseForm()
 
-		sessionid, err := r.Cookie("SESSIONID")
-		if err != nil {
-			io.WriteString(w, err.Error())
-			return
-		}
-
-		log.Println("SESSIONiD: ", sessionid.Value)
-		if _, ok := DefaultServer.CaseResult[sessionid.Value]; ok {
+		if _, ok := sess.CaseResult[sessionid]; ok {
 			io.WriteString(w, "You are runing another cases")
 			return
 		}
 
-		DefaultServer.CaseResult[sessionid.Value] = make(chan *result.Result, 10)
+		sess.CaseResult[sessionid] = make(chan *result.Result, 10)
 
-		log.Println(DefaultServer.CaseResult[sessionid.Value])
+		log.Println(sess.CaseResult[sessionid])
 		if r.FormValue("type") == "GROUP" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range DefaultServer.NewCache.RunCasesByGroupID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCasesByGroupID(r.FormValue("id")) {
 					wg.Add(1)
 					log.Printf("%#v", res)
 					go func(r *result.Result) {
-						DefaultServer.CaseResult[sessionid.Value] <- res
+						sess.CaseResult[sessionid] <- res
 						wg.Done()
 					}(res)
 				}
 				wg.Wait()
-				close(DefaultServer.CaseResult[sessionid.Value])
+				close(sess.CaseResult[sessionid])
 
 			}()
 		} else if r.FormValue("type") == "SUBGROUP" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range DefaultServer.NewCache.RunCasesBySubGroupID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCasesBySubGroupID(r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
-						DefaultServer.CaseResult[sessionid.Value] <- r
+						sess.CaseResult[sessionid] <- r
 						wg.Done()
 					}(res)
 				}
 				wg.Wait()
-				close(DefaultServer.CaseResult[sessionid.Value])
+				close(sess.CaseResult[sessionid])
 			}()
 		} else if r.FormValue("type") == "FEATURE" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range DefaultServer.NewCache.RunCasesByFeatureID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCasesByFeatureID(r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
-						DefaultServer.CaseResult[sessionid.Value] <- r
+						sess.CaseResult[sessionid] <- r
 						wg.Done()
 					}(res)
 				}
 				wg.Wait()
-				close(DefaultServer.CaseResult[sessionid.Value])
+				close(sess.CaseResult[sessionid])
 
 			}()
 		} else if r.FormValue("type") == "CASE" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range DefaultServer.NewCache.RunCaseByID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCaseByID(r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
-						DefaultServer.CaseResult[sessionid.Value] <- r
+						sess.CaseResult[sessionid] <- r
 						wg.Done()
 					}(res)
 				}
 				wg.Wait()
-				close(DefaultServer.CaseResult[sessionid.Value])
+				close(sess.CaseResult[sessionid])
 			}()
 		} else if r.FormValue("type") == "TASK" {
 			caseid, err := r.Cookie("CASEID")
@@ -977,15 +957,15 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 			}
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range DefaultServer.NewCache.RunTaskByID(caseid.Value, r.FormValue("id")) {
+				for res := range sess.NewCache.RunTaskByID(caseid.Value, r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
-						DefaultServer.CaseResult[sessionid.Value] <- r
+						sess.CaseResult[sessionid] <- r
 						wg.Done()
 					}(res)
 				}
 				wg.Wait()
-				close(DefaultServer.CaseResult[sessionid.Value])
+				close(sess.CaseResult[sessionid])
 			}()
 		} else {
 			w.WriteHeader(http.StatusBadRequest)
@@ -996,6 +976,10 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 }
 
 func NewRunScript(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	sess, _ := Engine.Sessions[sessionid]
+
 	_, err := r.Cookie("Device")
 	if err != nil {
 		io.WriteString(w, "You must connect to a device first: ")
@@ -1028,7 +1012,7 @@ func NewRunScript(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	DefaultServer.Result = DefaultServer.RUT.RunScript(&sc)
+	sess.Result = sess.RUT.RunScript(&sc)
 	log.Println(sc)
 	io.WriteString(w, r.Host)
 }
@@ -1046,15 +1030,17 @@ func reader(ws *websocket.Conn) {
 	}
 }
 
-func writer(ws *websocket.Conn) {
+func writer(ws *websocket.Conn, sessionid string) {
 	pingTicker := time.NewTicker(pingPeriod)
 	defer func() {
 		pingTicker.Stop()
 		ws.Close()
 	}()
+
+	sess, _ := Engine.Sessions[sessionid]
 	for {
 		select {
-		case res, ok := <-DefaultServer.Result:
+		case res, ok := <-sess.Result:
 			if !ok {
 				break
 			}
@@ -1081,17 +1067,18 @@ func WS(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	go writer(ws)
+
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	go writer(ws, sessionid)
 	reader(ws)
 }
 
 func RunCaseResultWS(w http.ResponseWriter, r *http.Request) {
 	log.Println("Websocket Openend")
-	sessionid, err := r.Cookie("SESSIONID")
-	if err != nil {
-		io.WriteString(w, "Unknown session: "+err.Error())
-		return
-	}
+
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
 
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -1100,7 +1087,7 @@ func RunCaseResultWS(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	go TestCaseResultWriter(ws, sessionid.Value)
+	go TestCaseResultWriter(ws, sessionid)
 	TestCaseResultWSKeepAlive(ws)
 }
 
@@ -1136,12 +1123,14 @@ func TestCaseResultWriter(ws *websocket.Conn, sessionid string) {
 	defer func() {
 		ws.Close()
 	}()
-	_, ok := DefaultServer.CaseResult[sessionid]
+
+	sess, _ := Engine.Sessions[sessionid]
+	_, ok := sess.CaseResult[sessionid]
 	if !ok {
 		panic("Result channel has beend remove")
 	}
 
-	for res := range DefaultServer.CaseResult[sessionid] {
+	for res := range sess.CaseResult[sessionid] {
 		log.Printf("GetResult: %v", res)
 		ws.SetWriteDeadline(time.Now().Add(writeWait))
 		js, err := json.Marshal(res)
@@ -1153,49 +1142,154 @@ func TestCaseResultWriter(ws *websocket.Conn, sessionid string) {
 			log.Println(err.Error())
 		}
 	}
-	delete(DefaultServer.CaseResult, sessionid)
+	delete(sess.CaseResult, sessionid)
 }
 
-func (s *Server) Start() {
+func Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("login.html").Delims("|||", "|||").ParseFiles("asset/web/template/login.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		//log.Println(string(js))
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		log.Printf("%#q\n", r.Form)
+		for k, v := range r.Form {
+			log.Println(k, ":", v)
+		}
+
+		var err error = nil
+		newsess := Engine.GetSessionByUsernameAndPassword(r.FormValue("username"), r.FormValue("password"))
+		if newsess == nil {
+			log.Println("1212")
+			newsess, err = Engine.AddSessionByUsernameAndPassword(r.FormValue("username"), r.FormValue("password"))
+			if err != nil {
+				log.Printf("Cannot add user: %s with: %s\n", r.FormValue("username"), err.Error())
+				//w.WriteHeader(http.StatusNotAcceptable)
+				return
+			}
+		}
+		cookie := &http.Cookie{
+			Name:  "SESSIONID",
+			Value: newsess.ID,
+		}
+
+		log.Println(newsess.ID)
+
+		http.SetCookie(w, cookie)
+		w.WriteHeader(http.StatusOK)
+		//	io.WriteString(w, util.GenerateSessionIDByUserNameAndPassword(r.FormValue("username"), r.FormValue("password")))
+		t, err := template.New("main.html").Delims("|||", "|||").ParseFiles("asset/web/template/main.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		//log.Println(string(js))
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+}
+
+func MainPage(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.Method)
+	log.Println("+++++++++")
+	if r.Method == "GET" {
+		log.Println("+++++++++")
+		t, err := template.New("main.html").Delims("|||", "|||").ParseFiles("asset/web/template/main.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		//log.Println(string(js))
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	expiration := time.Now().AddDate(0, 0, -1)
+	cookie := http.Cookie{Name: "SESSIONID", Value: "alice_cooper@gmail.com", Expires: expiration}
+	http.SetCookie(w, &cookie)
+}
+
+func Start() {
+	mux := http.NewServeMux()
 	//@liwei: This need more analysis.
-	http.HandleFunc("/ztreemenu", ZTreeMenu)
-	http.HandleFunc("/vuetree", VUETree)
-	http.HandleFunc("/vuetest", VUEtest)
-	http.HandleFunc("/jstree", JSTree)
-	http.HandleFunc("/jsontree", JSONTree)
-	http.HandleFunc("/launchtree", LaunchTree)
-	http.HandleFunc("/runscript", NewRunScript)
-	http.HandleFunc("/script", Script)
-	http.HandleFunc("/product", Product)
-	http.HandleFunc("/jsnotify", JSNotify)
-	http.HandleFunc("/responsive", ResponsiveNav)
-	http.HandleFunc("/treeview", TreeView)
-	http.HandleFunc("/newcase", NewCase)
-	http.HandleFunc("/newtask", NewTask)
-	http.HandleFunc("/dumpcase", DumpCase)
-	http.HandleFunc("/dumptask", DumpTask)
-	http.HandleFunc("/dumpgroup", DumpGroup)
-	http.HandleFunc("/dumpsubgroup", DumpSubGroup)
-	http.HandleFunc("/dumpfeature", DumpFeature)
-	http.HandleFunc("/caseinfo", CaseInfo)
-	http.HandleFunc("/taskinfo", TaskInfo)
-	http.HandleFunc("/groupinfo", GroupInfo)
-	http.HandleFunc("/subgroupinfo", SubGroupInfo)
-	http.HandleFunc("/featureinfo", FeatureInfo)
-	http.HandleFunc("/runcases", RunCases)
-	http.HandleFunc("/delete", DeleteNode)
-	http.HandleFunc("/getdutcountbyid", GetDUTCountByID)
-	http.HandleFunc("/setdutsbyid", SetDUTsByID)
-	http.HandleFunc("/isinitialized", CheckIsReadyForRunByID)
-	http.HandleFunc("/ws", WS)
-	http.HandleFunc("/runcaseresultws", RunCaseResultWS)
-	http.HandleFunc("/", NewCase)
-	http.Handle("/asset/web/", http.FileServer(http.Dir(".")))
-	log.Panic(http.ListenAndServe(":8080", nil))
+	mux.HandleFunc("/vuetree", VUETree)
+	mux.HandleFunc("/vuetest", VUEtest)
+	mux.HandleFunc("/jstree", JSTree)
+	mux.HandleFunc("/jsontree", JSONTree)
+	mux.HandleFunc("/launchtree", LaunchTree)
+	mux.HandleFunc("/runscript", NewRunScript)
+	mux.HandleFunc("/script", Script)
+	mux.HandleFunc("/product", Product)
+	mux.HandleFunc("/jsnotify", JSNotify)
+	mux.HandleFunc("/treeview", TreeView)
+	mux.HandleFunc("/newcase", NewCase)
+	mux.HandleFunc("/newtask", NewTask)
+	mux.HandleFunc("/dumpcase", DumpCase)
+	mux.HandleFunc("/dumptask", DumpTask)
+	mux.HandleFunc("/dumpgroup", DumpGroup)
+	mux.HandleFunc("/dumpsubgroup", DumpSubGroup)
+	mux.HandleFunc("/dumpfeature", DumpFeature)
+	mux.HandleFunc("/caseinfo", CaseInfo)
+	mux.HandleFunc("/taskinfo", TaskInfo)
+	mux.HandleFunc("/groupinfo", GroupInfo)
+	mux.HandleFunc("/subgroupinfo", SubGroupInfo)
+	mux.HandleFunc("/featureinfo", FeatureInfo)
+	mux.HandleFunc("/runcases", RunCases)
+	mux.HandleFunc("/delete", DeleteNode)
+	mux.HandleFunc("/getdutcountbyid", GetDUTCountByID)
+	mux.HandleFunc("/setdutsbyid", SetDUTsByID)
+	mux.HandleFunc("/isinitialized", CheckIsReadyForRunByID)
+	mux.HandleFunc("/ws", WS)
+	mux.HandleFunc("/runcaseresultws", RunCaseResultWS)
+	mux.HandleFunc("login", Login)
+	mux.HandleFunc("/mainpage", MainPage)
+	mux.HandleFunc("/", Login)
+	mux.HandleFunc("/test", Test)
+	mux.Handle("/asset/web/", http.FileServer(http.Dir(".")))
+
+	//Add context support
+	contextedMux := AddContextSupport(mux)
+	log.Fatal(http.ListenAndServe(":8080", contextedMux))
+}
+
+func Test(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.Context().Value("SESSIONID"))
+}
+
+func AddContextSupport(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.Method, "-", r.RequestURI)
+		cookie, _ := r.Cookie("SESSIONID")
+		if cookie != nil {
+			ctx := context.WithValue(r.Context(), "SESSIONID", cookie.Value)
+			// WithContext returns a shallow copy of r with its context changed
+			// to ctx. The provided ctx must be non-nil.
+			next.ServeHTTP(w, r.WithContext(ctx))
+		} else {
+			next.ServeHTTP(w, r)
+		}
+	})
 }
 
 func init() {
-	DefaultServer.NewCache = newcache.New("V8300")
-	DefaultServer.NewCache.Restore()
-	DefaultServer.CaseResult = make(map[string]chan *result.Result)
+	Engine = controller.New()
 }

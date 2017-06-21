@@ -1,6 +1,8 @@
 package util
 
 import (
+	"crypto/sha1"
+	"encoding/hex"
 	"errors"
 	"io/ioutil"
 	"log"
@@ -36,12 +38,17 @@ func GenerateSessionID() string {
 	var id = "0x"
 
 	rand.Seed(time.Now().Unix())
-	result := rand.Perm(13)
+	result := rand.Perm(128)
 	for _, i := range result {
 		id = id + strconv.Itoa(i)
 	}
 
 	return id
+}
+
+func GenerateSessionIDByUserNameAndPassword(name, pass string) string {
+	hash := sha1.New()
+	return hex.EncodeToString(hash.Sum([]byte(name + pass)))
 }
 
 func Download(link, name string) error {
