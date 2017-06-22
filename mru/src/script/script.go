@@ -2,13 +2,12 @@ package script
 
 import (
 	"command"
-	"time"
 )
 
 type Script struct {
 	Name     string
 	Count    int
-	Timer    time.Duration
+	Timer    int
 	Commands []*command.Command
 }
 

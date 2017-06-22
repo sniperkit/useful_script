@@ -10,6 +10,7 @@ import (
 	"result"
 	"script"
 	"strconv"
+	"time"
 )
 
 //RUT should be and interface
@@ -114,6 +115,11 @@ func (d *RUT) SetModeDB(db map[string]string) {
 }
 
 func (d *RUT) RunCommand(cmd *command.Command) (string, error) {
+	return d.runCommand(cmd)
+}
+
+func (d RUT) runCommand(cmd *command.Command) (string, error) {
+	<-time.After(time.Second * time.Duration(cmd.Delay))
 	data, err := d.cli.RunCommand(cmd)
 	if err != nil {
 		return "", err
@@ -125,14 +131,18 @@ func (d *RUT) RunCommand(cmd *command.Command) (string, error) {
 func (r *RUT) RunScript(sc *script.Script) <-chan result.Result {
 	res := make(chan result.Result)
 	go func(chan<- result.Result) {
-		for _, c := range sc.Commands {
-			log.Printf("Run command: %v", c)
-			data, err := r.cli.RunCommand(c)
-			res <- result.Result{
-				Command: c.CMD,
-				Result:  string(data),
-				Err:     err,
+		for i := 0; i < sc.Count; i++ {
+			for _, c := range sc.Commands {
+				<-time.After(time.Second * time.Duration(c.Delay))
+				log.Printf("Run command: %v", c)
+				data, err := r.cli.RunCommand(c)
+				res <- result.Result{
+					Command: c.CMD,
+					Result:  string(data),
+					Err:     err,
+				}
 			}
+			<-time.After(time.Second * time.Duration(sc.Timer))
 		}
 		close(res)
 	}(res)

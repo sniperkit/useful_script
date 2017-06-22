@@ -1008,11 +1008,13 @@ func NewRunScript(w http.ResponseWriter, r *http.Request) {
 	var sc script.Script
 	err = json.Unmarshal([]byte(r.FormValue("Script")), &sc)
 	if err != nil {
+		log.Println(err.Error())
 		io.WriteString(w, err.Error())
 		return
 	}
 
 	sess.Result = sess.RUT.RunScript(&sc)
+	log.Printf("+++++++++++++%q++++++++++++++\n", sc)
 	log.Println(sc)
 	io.WriteString(w, r.Host)
 }

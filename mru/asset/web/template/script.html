@@ -3,17 +3,30 @@
 	<div class="row-fluid display-table-row">
 		<div class="col-sm-2"></div>
 		<div class="col-sm-8">
+			<legend>
+				Run a Script
+			</legend>
+			<fieldset>
+				<legend></legend>
+				<table>
+					<tbody>
+						<td class="col-sm-2">Timer <input type="text" v-model="newscript.Timer"/></td>
+						<td class="col-sm-2">Count <input type="text" v-model="newscript.Count"/></td>
+					</tbody>
+				</table>
+			</fieldset>
+				<legend></legend>
+				<legend></legend>
 			<div class="form-group">
 				<fieldset>
 					<legend>
 						Add a Command
 					</legend>
-
 					<table class="table table-bordered table-hover">
 						<tbody>
 							<td class="text-center"><input type="text" v-model="newCommand.Delay"/></td>
 							<td class="text-center"><input type="text" v-model="newCommand.Mode"/></td>
-							<td class="text-center"><input type="text" v-model="newCommand.Command"/></td>
+							<td class="text-center"><input type="text" v-model="newCommand.cli"/></td>
 							<td class="text-center"><input type="text" v-model="newCommand.Expected"/></td>
 							<td class="text-center"><button @click="addNewCommand">Create</button></td>
 						</tbody>
@@ -33,10 +46,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(command, index) in commands">
+									<tr v-for="(command, index) in newscript.Commands">
 										<td class="text-center">{{ command.Delay }}</td>
 										<td class="text-center">{{ command.Mode }}</td>
-										<td class="text-center">{{ command.Command }}</td>
+										<td class="text-center">{{ command.cli }}</td>
 										<td class="text-center">{{ command.Expected }}</td>
 										<td class="text-center"><button @click="deleteCommand(index)">Delete</button></td>
 									</tr>
@@ -86,32 +99,37 @@
 			newCommand: {
 				Delay: 0,
 				Mode: "normal",
-				Command: "show running-config",
+				cli: "show running-config",
 				Expected: "vlan 100"
 			},
-			commands: [],
+			newscript: {
+				Name: "",
+				Timer: "",
+				Count: "",
+				Commands: []
+			},
 			results: [{res: "hello"}, {res:"world"}]
 		},
 		methods:{
 			addNewCommand: function(){
-				this.commands.push(this.newCommand);
-				this.newCommand = {Delay: 0, Mode: "normal", Command: "show ip interface brief", Expected: '#'}
+				this.newCommand.Delay = +this.newCommand.Delay //Convert from string into int
+				this.newscript.Commands.push(this.newCommand);
+				this.newCommand = {Delay: 0, Mode: "normal", cli: "show ip interface brief", Expected: '#'}
 			},
 			deleteCommand: function(index){
 				// 删一个数组元素
-				this.commands.splice(index,1);
+				this.newscript.Commands.splice(index,1);
 			},
 			submitit: function() {
 				var res = this.results;
+				this.newscript.Timer = +this.newscript.Timer;
+				this.newscript.Count = +this.newscript.Count; //Convert from string to int
 				$.ajax({
 					type:"post",
 					url:"runscript",
 					async:false,
 					data: {
-						Script: JSON.stringify({
-							"Name": "Script",
-							"Commands": this.commands,
-						})
+						Script: JSON.stringify(this.newscript)
 					},
 					success:function(data) {
 						var conn = new WebSocket("ws://"+data+"/ws");
@@ -119,7 +137,7 @@
 							data.textContent = 'Connection closed';
 						}
 						conn.onmessage = function(evt) {
-							res.push({res: evt.data});
+							res.push({res: evt.data.replace(/\n/g, "<br/>")});
 							notify("success", evt.data.replace(/\n/g, "<br/>"));
 						}
 					}
