@@ -11,6 +11,7 @@ func main() {
 		IP:       "10.71.20.198",
 		Port:     "23",
 		Username: "admin",
+		Host:     "SWITCH[A]",
 		Password: "",
 	})
 }

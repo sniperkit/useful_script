@@ -15,42 +15,26 @@ import (
 
 //RUT should be and interface
 type RUT struct {
-	Name     string
-	cli      *cline.Cli
-	Device   string
-	Username string
-	Password string
-	IP       string
-	Port     string
+	Name       string //Name in test case
+	cli        *cline.Cli
+	Device     string //Device name
+	Username   string
+	Password   string
+	IP         string
+	Port       string
+	BasePrompt string
+	Hostname   string //hostName
 }
 
 type Config struct {
-	Index    int    `json:"index"`
-	Device   string `json:"device"`
-	IP       string `json:"ip"`
-	Port     string `json:"port"`
-	Username string `json:"username"`
-	Password string `json:"passowrd"`
-}
-
-var DefaultConfigurations = configuration.Configuration{
-	EnablePrompt:   ">",
-	LoginPrompt:    "login",
-	PasswordPrompt: "Password",
-	Prompt:         "#",
-	ModeDB: map[string]string{
-		"login":         "login",
-		"password":      "Passowrd:",
-		"enable":        "SWITCH>",
-		"normal":        "SWITCH[A]#",
-		"config":        "(config)",
-		"config-vlan":   "(config-vlan)",
-		"config-if":     "(config-if[",
-		"config-dhcp":   "(config-dhcp[",
-		"config-router": "(config-router)",
-		"shell":         "*SWITCH",
-		"bcmshell":      "BCM.0>",
-	},
+	Index      int    `json:"index"`
+	Device     string `json:"device"`
+	IP         string `json:"ip"`
+	Port       string `json:"port"`
+	Username   string `json:"username"`
+	Password   string `json:"passowrd"`
+	BasePrompt string `json:"baseprompt"`
+	Hostname   string `json:"hostname"`
 }
 
 type DB struct {
@@ -70,14 +54,16 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.Username = r.Username
 	conf.Password = r.Password
 	conf.Device = r.Device
+	conf.Hostname = r.Hostname
+	conf.BasePrompt = r.BasePrompt
 	conf.IP = r.IP
 	conf.Port = r.Port
 
-	conf.EnablePrompt = DefaultConfigurations.EnablePrompt
-	conf.LoginPrompt = DefaultConfigurations.LoginPrompt
-	conf.PasswordPrompt = DefaultConfigurations.PasswordPrompt
-	conf.Prompt = DefaultConfigurations.Prompt
-	conf.ModeDB = DefaultConfigurations.ModeDB
+	conf.EnablePrompt = configuration.DefaultEnablePrompt
+	conf.LoginPrompt = configuration.DefaultLoginPrompt
+	conf.PasswordPrompt = configuration.DefaultPasswordPrompt
+	conf.Prompt = configuration.PromptEnd
+	conf.ModeDB = configuration.BuildModeDBFromHostNameAndBasePrompt(r.Hostname, r.BasePrompt)
 
 	return &conf
 }
@@ -129,6 +115,7 @@ func (d RUT) runCommand(cmd *command.Command) (string, error) {
 }
 
 func (r *RUT) RunScript(sc *script.Script) <-chan result.Result {
+	log.Printf("Start Runing Script: %v", sc)
 	res := make(chan result.Result)
 	go func(chan<- result.Result) {
 		for i := 0; i < sc.Count; i++ {
@@ -136,6 +123,7 @@ func (r *RUT) RunScript(sc *script.Script) <-chan result.Result {
 				<-time.After(time.Second * time.Duration(c.Delay))
 				log.Printf("Run command: %v", c)
 				data, err := r.cli.RunCommand(c)
+				log.Println(string(data), err)
 				res <- result.Result{
 					Command: c.CMD,
 					Result:  string(data),
@@ -227,12 +215,14 @@ func GetRUTByConfig(c *Config) (*RUT, error) {
 		return nil, fmt.Errorf("Invalid config to create RUT: %v", c)
 	}
 	newrut := &RUT{
-		Name:     "DUT" + strconv.Itoa(c.Index),
-		Device:   c.Device,
-		Username: c.Username,
-		Password: c.Password,
-		IP:       c.IP,
-		Port:     c.Port,
+		Name:       "DUT" + strconv.Itoa(c.Index),
+		Device:     c.Device,
+		Username:   c.Username,
+		Password:   c.Password,
+		IP:         c.IP,
+		Port:       c.Port,
+		Hostname:   c.Hostname,
+		BasePrompt: c.BasePrompt,
 	}
 
 	log.Printf("%q", newrut)

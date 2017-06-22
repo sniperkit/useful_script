@@ -14,6 +14,7 @@ import (
 	"result"
 	"rut"
 	"script"
+	"strings"
 	"sync"
 	"task"
 	"time"
@@ -67,47 +68,25 @@ func Product(w http.ResponseWriter, r *http.Request) {
 		}
 
 		log.Println(r.Form)
-
-		device := &http.Cookie{
-			Name:  "Device",
-			Value: r.FormValue("device"),
-			Path:  "runscript",
+		var con rut.Config
+		err = json.Unmarshal([]byte(r.FormValue("Device")), &con)
+		if err != nil {
+			log.Println(err.Error())
+			return
 		}
+		log.Printf("%#v", con)
+		log.Printf("%#q", con)
 
-		username := &http.Cookie{
-			Name:  "Username",
-			Value: r.FormValue("username"),
-			Path:  "runscript",
-		}
-
-		password := &http.Cookie{
-			Name:  "Password",
-			Value: r.FormValue("password"),
-			Path:  "runscript",
-		}
-
-		ip := &http.Cookie{
-			Name:  "ip",
-			Value: r.FormValue("ip"),
-			Path:  "runscript",
-		}
-
-		http.SetCookie(w, device)
-		http.SetCookie(w, username)
-		http.SetCookie(w, password)
-		http.SetCookie(w, ip)
-
-		dev, err := rut.New(&rut.RUT{
-			Device:   r.FormValue("device"),
-			IP:       r.FormValue("ip"),
-			Port:     "23",
-			Username: r.FormValue("username"),
-			Password: r.FormValue("passowrd"),
-		})
-		dev.Init()
+		dev, err := rut.GetRUTByConfig(&con)
 		if err != nil {
 			io.WriteString(w, err.Error())
+			return
 		} else {
+			cookie := &http.Cookie{
+				Name:  "Device",
+				Value: con.Device,
+			}
+			http.SetCookie(w, cookie)
 			sess.RUT = dev
 			t, err := template.New("script.html").Delims("|||", "|||").ParseFiles("asset/web/template/script.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
 			if err != nil {
@@ -1355,7 +1334,7 @@ func Start() {
 	mux.HandleFunc("/isinitialized", CheckIsReadyForRunByID)
 	mux.HandleFunc("/ws", WS)
 	mux.HandleFunc("/runcaseresultws", RunCaseResultWS)
-	mux.HandleFunc("login", Login)
+	mux.HandleFunc("/login", Login)
 	mux.HandleFunc("/mainpage", MainPage)
 	mux.HandleFunc("/monitor", MonitorPage)
 	mux.HandleFunc("/monitormain", MonitorMainPage)
@@ -1373,21 +1352,25 @@ func Test(w http.ResponseWriter, r *http.Request) {
 }
 func AddContextSupport(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println(r.Method, "-", r.RequestURI)
-		cookie, _ := r.Cookie("SESSIONID")
-		if cookie != nil {
-			if _, ok := Engine.Sessions[cookie.Value]; ok {
-				ctx := context.WithValue(r.Context(), "SESSIONID", cookie.Value)
-				// WithContext returns a shallow copy of r with its context changed
-				// to ctx. The provided ctx must be non-nil.
-				next.ServeHTTP(w, r.WithContext(ctx))
+		if strings.HasPrefix(r.RequestURI, "/asset") {
+			next.ServeHTTP(w, r)
+			return
+		} else {
+			log.Println(r.Method, "-", r.RequestURI)
+			cookie, _ := r.Cookie("SESSIONID")
+			if cookie != nil {
+				if _, ok := Engine.Sessions[cookie.Value]; ok {
+					ctx := context.WithValue(r.Context(), "SESSIONID", cookie.Value)
+					// WithContext returns a shallow copy of r with its context changed
+					// to ctx. The provided ctx must be non-nil.
+					next.ServeHTTP(w, r.WithContext(ctx))
+				} else {
+					Logout(w, r)
+					Login(w, r)
+				}
 			} else {
-				Logout(w, r)
 				Login(w, r)
 			}
-		} else {
-			Logout(w, r)
-			Login(w, r)
 		}
 	})
 }

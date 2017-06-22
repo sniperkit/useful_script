@@ -23,7 +23,12 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, errors.New("Error: Command: " + cmd.CMD + " should be run under: " + cmd.Mode + "! But currently we are under: " + c.currentMode + " mode!")
 	}
 
-	c.client.WriteLine(cmd.CMD)
+	if strings.HasPrefix(cmd.CMD, "bcm.user.proxy") {
+		c.client.WriteLine(cmd.CMD + "\n\n\n") //For the stupid bcmshell
+		cmd.End = ">"
+	} else {
+		c.client.WriteLine(cmd.CMD)
+	}
 	if cmd.End == "" {
 		cmd.End = c.conf.Prompt
 	}
@@ -67,6 +72,57 @@ func (c *Cli) GoNormalMode() {
 		c.currentMode == "bcmshell" {
 		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
 		c.GoNormalMode()
+	}
+}
+
+func (c *Cli) GoShelllMode() {
+	if c.currentMode == "config" ||
+		c.currentMode == "config-vlan" ||
+		c.currentMode == "config-if" ||
+		c.currentMode == "config-dhcp" ||
+		c.currentMode == "bridge" ||
+		c.currentMode == "config-router" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "do q sh -l", End: "#"})
+	} else if c.currentMode == "normal" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "q sh -l", End: "#"})
+	} else if c.currentMode == "bcmshell" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+	}
+}
+
+func (c *Cli) GoBCMShelllMode() {
+	if c.currentMode == "config" ||
+		c.currentMode == "config-vlan" ||
+		c.currentMode == "config-if" ||
+		c.currentMode == "config-dhcp" ||
+		c.currentMode == "bridge" ||
+		c.currentMode == "config-router" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "do q sh -l", End: "#"})
+		c.GoBCMShelllMode()
+	} else if c.currentMode == "normal" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "q sh -l", End: "#"})
+		c.GoBCMShelllMode()
+	} else if c.currentMode == "shell" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "bcm.user.proxy", End: "BCM.0>"})
+	}
+}
+
+func (c *Cli) GoConfigMode() {
+	if c.currentMode == "config-vlan" ||
+		c.currentMode == "config-if" ||
+		c.currentMode == "config-dhcp" ||
+		c.currentMode == "bridge" ||
+		c.currentMode == "config-router" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+	} else if c.currentMode == "shell" ||
+		c.currentMode == "bcmshell" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		c.GoConfigMode()
+	} else if c.currentMode == "normal" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "configure terminal", End: "#"})
+	} else if c.currentMode == "enable" {
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "enable", End: "#"})
+		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "configure terminal", End: "#"})
 	}
 }
 
