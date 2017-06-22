@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/websocket"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"log"
 	"mcase"
 	"net/http"
@@ -998,13 +997,6 @@ func NewRunScript(w http.ResponseWriter, r *http.Request) {
 		log.Println(c)
 	}
 
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		io.WriteString(w, err.Error())
-		return
-	}
-	log.Println(string(body))
-
 	var sc script.Script
 	err = json.Unmarshal([]byte(r.FormValue("Script")), &sc)
 	if err != nil {
@@ -1014,8 +1006,6 @@ func NewRunScript(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sess.Result = sess.RUT.RunScript(&sc)
-	log.Printf("+++++++++++++%q++++++++++++++\n", sc)
-	log.Println(sc)
 	io.WriteString(w, r.Host)
 }
 
@@ -1224,9 +1214,9 @@ func MainPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+func Logout(w http.ResponseWriter, r *http.Request) {
 	expiration := time.Now().AddDate(0, 0, -1)
-	cookie := http.Cookie{Name: "SESSIONID", Value: "alice_cooper@gmail.com", Expires: expiration}
+	cookie := http.Cookie{Name: "SESSIONID", Value: "You need Login at first", Expires: expiration}
 	http.SetCookie(w, &cookie)
 }
 
@@ -1282,10 +1272,15 @@ func AddContextSupport(next http.Handler) http.Handler {
 		log.Println(r.Method, "-", r.RequestURI)
 		cookie, _ := r.Cookie("SESSIONID")
 		if cookie != nil {
-			ctx := context.WithValue(r.Context(), "SESSIONID", cookie.Value)
-			// WithContext returns a shallow copy of r with its context changed
-			// to ctx. The provided ctx must be non-nil.
-			next.ServeHTTP(w, r.WithContext(ctx))
+			if _, ok := Engine.Sessions[cookie.Value]; ok {
+				ctx := context.WithValue(r.Context(), "SESSIONID", cookie.Value)
+				// WithContext returns a shallow copy of r with its context changed
+				// to ctx. The provided ctx must be non-nil.
+				next.ServeHTTP(w, r.WithContext(ctx))
+			} else {
+				Logout(w, r)
+				Login(w, r)
+			}
 		} else {
 			next.ServeHTTP(w, r)
 		}

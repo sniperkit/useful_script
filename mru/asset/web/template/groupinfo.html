@@ -26,6 +26,7 @@
 				</div>
 			</div>
 		</div>
+		<button class="btn icon-btn btn-success pull-right" @click.prevent="runGoToNewCase">NewCase</button>
 		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete">Delete</button>
 		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseByGroup" disabled="disabled">RUN</button>
 	</div>
@@ -141,6 +142,18 @@
 					},
 					success:function(data) {
 						notify("success", "Delete group success!");
+					}
+				});
+				this.submitted = true;
+			},
+
+			runGoToNewCase: function(e) {
+				$.ajax({
+					type:"get",
+					url:"newcase",
+					async:false,
+					success:function(data) {
+						window.location.href="newcase"
 					}
 				});
 				this.submitted = true;

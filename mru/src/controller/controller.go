@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"log"
 	"session"
 )
 
@@ -39,6 +40,9 @@ func (c *Controller) AddSessionByUsernameAndPassword(name, pass string) (*sessio
 	}
 
 	c.Sessions[id] = session.New(name, pass)
+
+	log.Printf("Session DB: %#q", c.Sessions)
+	log.Printf("Session DB: %#v", c.Sessions)
 
 	return c.Sessions[id], nil
 }

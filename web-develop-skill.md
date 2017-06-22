@@ -36,3 +36,17 @@
 	不支持CSS(No CSS support) 意味着当 HTML 和 JavaScript 组件化时，CSS 明显被遗漏
 	没有构建步骤(No build step) 限制只能使用 HTML 和 ES5 JavaScript, 而不能使用预处理器，如 Pug (formerly Jade) 和 Babel
 	文件扩展名为 .vue 的 single-file components(单文件组件) 为以上所有问题提供了解决方法，并且还可以使用 Webpack 或 Browserify 等构建工具。
+16: Jquery ajax 获取response Status Code:
+	$.get("example.url.com", function(data) {
+		console.log(data);
+		}).done(function() {
+			// TO DO ON DONE
+		}).fail(function(data, textStatus, xhr) {
+			//This shows status code eg. 403
+			console.log("error", data.status);
+			//This shows status message eg. Forbidden
+			console.log("STATUS: "+xhr);
+		}).always(function() {
+			//TO-DO after fail/done request.
+			console.log("ended");
+		});

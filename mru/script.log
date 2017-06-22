@@ -1,28 +1,13 @@
- show  vlan brief
-                                   Bridge Group : 0
-
-VLAN ID Name                              State   Member ports                   
-                                                  (u)-Untagged, (t)-Tagged
-======= ================================= ======= ========================
-1       default                           ACTIVE  CG1(u) XEPON1/1(u) XEPON1/2(u) 
-                                                  XEPON1/3(u) XEPON1/4(u) 
-                                                  XEPON1/5(u) XEPON1/6(u) 
-                                                  XEPON1/7(u) XEPON1/8(u) 
-                                                  GE2/2(u) GE2/6(u) XEPON3/1(u) 
-                                                  XEPON3/2(u) XEPON3/3(u) 
-                                                  XEPON3/4(u) XEPON3/5(u) 
-                                                  XEPON3/6(u) XEPON3/7(u) 
-                                                  XEPON3/8(u) 
-10                                        ACTIVE  
-70                                        ACTIVE  GE2/4(u) 
-80                                        ACTIVE  GE2/3(u) 
-90                                        ACTIVE  GE2/5(u) 
-123                                       ACTIVE  
-1000                                      ACTIVE  
-2000                                      ACTIVE  
-2851                                      ACTIVE  
-2859                                      ACTIVE  
-3000                                      ACTIVE  GE2/8(u) 
-4000                                      ACTIVE  
-
+ show ip interface brief
+Interface        Status                 Protocol  Primary IP       Secondary IP
+-------------------------------------------------------------------------------
+lo               up                     up        3.3.3.3          unassigned
+mgmt             up                     up        10.71.20.115     unassigned
+br10             up                     down      10.200.1.1       unassigned
+br70             up                     up        70.0.0.2         unassigned
+br80             up                     up        80.0.0.2         unassigned
+br90             up                     up        90.0.0.1         unassigned
+br1000           up                     down      unassigned       unassigned
+br2000           up                     down      unassigned       unassigned
+br3000           up                     down      unassigned       unassigned
 SWITCH[A]#

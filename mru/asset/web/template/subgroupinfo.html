@@ -26,6 +26,8 @@
 				</div>
 			</div>
 		</div>
+		<button class="btn icon-btn btn-success pull-right" @click.prevent="runGoToNewCase">NewCase</button>
+		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete">Delete</button>
 		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseBySubGroup" disabled="disabled">Run</button>
 	</div>
 	<div class="col-md-6 pull-left">
@@ -106,6 +108,34 @@
 						}
 					}
 
+				});
+				this.submitted = true;
+			},
+
+			runDelete: function(e) {
+				$.ajax({
+					type:"post",
+					url:"delete",
+					async:false,
+					data: {
+						type: "SUBGROUP",
+						id: this.id
+					},
+					success:function(data) {
+						notify("success", "Delete subgroup success!");
+					}
+				});
+				this.submitted = true;
+			},
+
+			runGoToNewCase: function(e) {
+				$.ajax({
+					type:"get",
+					url:"newcase",
+					async:false,
+					success:function(data) {
+						window.location.href="newcase"
+					}
 				});
 				this.submitted = true;
 			},
