@@ -5,8 +5,9 @@
 	<fieldset>
 		<div class="col-sm-4"></div>
 		<div class="col-sm-4">
-			<button class="btn btn-success btn-block" @click.prevent="scriptmain">RunScript</button>
-			<button class="btn btn-success btn-block" @click.prevent="testcasemain">RunTestCase</button>
+			<button class="btn btn-info btn-block" @click.prevent="scriptmain">RunScript</button>
+			<button class="btn btn-primary btn-block" @click.prevent="testcasemain">RunTestCase</button>
+			<button class="btn btn-warning btn-block" @click.prevent="monitormain">Monitor</button>
 		</div>
 	</fieldset>
 </div>
@@ -21,6 +22,10 @@ var newMain = new Vue({
 
 			testcasemain: function() {
 				window.location.href="newcase"
+			},
+
+			monitormain: function() {
+				window.location.href="monitor"
 			}
 	}
 });

@@ -308,11 +308,37 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 	sess, _ := Engine.Sessions[sessionid]
 
 	if r.Method == "GET" {
+		r.ParseForm()
 		t, err := template.New("newcase.html").Delims("|||", "|||").ParseFiles("asset/web/template/newcase.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
 		if err != nil {
 			log.Println(err)
 			io.WriteString(w, err.Error())
 			return
+		}
+		for k, v := range r.Form {
+			log.Println(k, ":", v)
+		}
+		//I want to disable some input field on the newcase page
+		if r.FormValue("id") != "" {
+			unique := &http.Cookie{
+				Name: "UNIQUE",
+				//I want to disable some input field on the newcase page
+				Value: r.FormValue("id"),
+				Path:  "newcase",
+			}
+			http.SetCookie(w, unique)
+		} else {
+			ClearCookie(w, "GROUPID")
+			ClearCookie(w, "SGID")
+			ClearCookie(w, "FEATUREID")
+			ClearCookie(w, "CASEID")
+			unique := &http.Cookie{
+				Name: "UNIQUE",
+				//I want to disable some input field on the newcase page
+				Value: "Nothing is selected",
+				Path:  "newcase",
+			}
+			http.SetCookie(w, unique)
 		}
 
 		js, _ := json.Marshal(sess.NewCache.TreeView().Children)
@@ -620,13 +646,20 @@ func GroupInfo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		cookie := &http.Cookie{
+		groupid := &http.Cookie{
 			Name:  "GROUPID",
 			Value: r.FormValue("id"),
 			Path:  "dumpgroup",
 		}
 
-		http.SetCookie(w, cookie)
+		unique := &http.Cookie{
+			Name:  "UNIQUE",
+			Value: r.FormValue("id"),
+			Path:  "dumpgroup",
+		}
+
+		http.SetCookie(w, groupid)
+		http.SetCookie(w, unique)
 		err = t.Execute(w, nil)
 		if err != nil {
 			io.WriteString(w, err.Error())
@@ -653,12 +686,18 @@ func SubGroupInfo(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		cookie := &http.Cookie{
+		sgid := &http.Cookie{
 			Name:  "SGID",
 			Value: r.FormValue("id"),
 		}
 
-		http.SetCookie(w, cookie)
+		unique := &http.Cookie{
+			Name:  "UNIQUE",
+			Value: r.FormValue("id"),
+		}
+
+		http.SetCookie(w, sgid)
+		http.SetCookie(w, unique)
 		err = t.Execute(w, nil)
 		if err != nil {
 			io.WriteString(w, err.Error())
@@ -692,7 +731,7 @@ func FeatureInfo(w http.ResponseWriter, r *http.Request) {
 		}
 
 		id := &http.Cookie{
-			Name:  "UNIQUUNIQUEE",
+			Name:  "UNIQUE",
 			Value: r.FormValue("id"),
 			Path:  "featureinfo",
 		}
@@ -1214,10 +1253,74 @@ func MainPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func MonitorPage(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("monitor.html").Delims("|||", "|||").ParseFiles("asset/web/template/monitor.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		//log.Println(string(js))
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		log.Println("++adfaksdjfaksdjfaksdfjsk+++++++", r.FormValue("Device"))
+		for k, v := range r.Form {
+			log.Println(k, v)
+		}
+
+		var con rut.Config
+		err := json.Unmarshal([]byte(r.FormValue("Device")), &con)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+		log.Printf("%#v", con)
+		log.Printf("%#q", con)
+
+		//device, err := rut.GetRUTByConfig(cn)
+	}
+}
+
+func MonitorMainPage(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.Method)
+	if r.Method == "GET" {
+		t, err := template.New("monitormain.html").Delims("|||", "|||").ParseFiles("asset/web/template/monitormain.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		//log.Println(string(js))
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		for k, v := range r.Form {
+			log.Println(k, v)
+		}
+	}
+}
+
 func Logout(w http.ResponseWriter, r *http.Request) {
 	expiration := time.Now().AddDate(0, 0, -1)
 	cookie := http.Cookie{Name: "SESSIONID", Value: "You need Login at first", Expires: expiration}
 	http.SetCookie(w, &cookie)
+}
+
+func ClearCookie(w http.ResponseWriter, name string) http.ResponseWriter {
+	expiration := time.Now().AddDate(0, 0, -1)
+	cookie := http.Cookie{Name: name, Value: "You need Login at first", Expires: expiration}
+	http.SetCookie(w, &cookie)
+	return w
 }
 
 func Start() {
@@ -1254,6 +1357,8 @@ func Start() {
 	mux.HandleFunc("/runcaseresultws", RunCaseResultWS)
 	mux.HandleFunc("login", Login)
 	mux.HandleFunc("/mainpage", MainPage)
+	mux.HandleFunc("/monitor", MonitorPage)
+	mux.HandleFunc("/monitormain", MonitorMainPage)
 	mux.HandleFunc("/", Login)
 	mux.HandleFunc("/test", Test)
 	mux.Handle("/asset/web/", http.FileServer(http.Dir(".")))
@@ -1266,7 +1371,6 @@ func Start() {
 func Test(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.Context().Value("SESSIONID"))
 }
-
 func AddContextSupport(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Println(r.Method, "-", r.RequestURI)
@@ -1282,7 +1386,8 @@ func AddContextSupport(next http.Handler) http.Handler {
 				Login(w, r)
 			}
 		} else {
-			next.ServeHTTP(w, r)
+			Logout(w, r)
+			Login(w, r)
 		}
 	})
 }

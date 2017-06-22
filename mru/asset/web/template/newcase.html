@@ -9,19 +9,19 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_group">Group</label>
 					<div class="col-sm-4">
-						<input type="text" v-model="ncase.Group" class="form-control required" placeholder="L2">
+						<input id="group" type="text" v-model="ncase.Group" class="form-control required" placeholder="L2">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_subgroup">Sub Group</label>
 					<div class="col-sm-4">
-						<input type="text" v-model="ncase.SubGroup" class="form-control required" placeholder="Bridge">
+						<input id="subgroup" type="text" v-model="ncase.SubGroup" class="form-control required" placeholder="Bridge">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_feature">Feature</label>
 					<div class="col-sm-4">
-						<input type="text" v-model="ncase.Feature" class="form-control required" placeholder="VLAN">
+						<input id="feature" type="text" v-model="ncase.Feature" class="form-control required" placeholder="VLAN">
 					</div>
 				</div>
 				<div class="form-group">
@@ -53,6 +53,73 @@
 		</div>
 </div>
 <script>
+	function　getCookie(name){
+		if (document.cookie.length>0)
+		{
+			start=document.cookie.indexOf(name + "=");
+			if (start!=-1)
+			{ 
+				start=start + name.length+1;
+				c_end=document.cookie.indexOf(";",start);
+				if (c_end==-1) c_end=document.cookie.length;
+				return unescape(document.cookie.substring(start,c_end));
+			} 
+		}
+		return "";
+	}
+
+	function InitializeInputTable(ncase) {
+		var e
+		if (getCookie("GROUPID") == getCookie("UNIQUE")) {
+			var groupinfo;
+			$.ajax({
+				type:"get",
+				url:"dumpgroup?id="+getCookie("UNIQUE"),
+				async:false,
+				success:function(data) {
+					groupinfo = data;
+				}
+			});
+			e =  JSON.parse(groupinfo);
+			$("#group").attr("disabled", true);
+			ncase.Group=e.Name;
+		} else if (getCookie("SGID") == getCookie("UNIQUE")) {
+			var subgroupinfo
+			$.ajax({
+				type:"get",
+				url:"dumpsubgroup?id="+getCookie("UNIQUE"),
+				async:false,
+				success:function(data) {
+					subgroupinfo = data;
+				}
+			});
+			e =  JSON.parse(subgroupinfo);
+			$("#subgroup").attr("disabled", true);
+			ncase.SubGroup=e.Name;
+			$("#group").attr("disabled", true);
+			ncase.Group=e.Group;
+		} else if (getCookie("FEATUREID") == getCookie("UNIQUE")) {
+			var featureinfo;
+			$.ajax({
+				type:"get",
+				url:"dumpfeature?id="+getCookie("UNIQUE"),
+				async:false,
+				success:function(data) {
+					featureinfo = data;
+				}
+			});
+			e =  JSON.parse(featureinfo);
+			$("#group").attr("disabled", true);
+			ncase.Group=e.Group;
+			$("#subgroup").attr("disabled", true);
+			ncase.SubGroup=e.SubGroup;
+			$("#feature").attr("disabled", true);
+			$("#feature").attr("value", e.Name);
+			ncase.Feature=e.Name;
+		}
+	}
+</script>
+<script>
 	var newCase = new Vue({
 		el: '#form-newcase',
 		data: {
@@ -79,7 +146,11 @@
 					}
 				});
 				this.submitted = true;
-			}
+			},
+		},
+
+		mounted: function() {
+			InitializeInputTable(this.ncase);
 		}
 	});
 </script>

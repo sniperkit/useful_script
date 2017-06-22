@@ -63,6 +63,8 @@ func (c *Case) AddRUT(r *rut.RUT) {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)
 	}
 	c.RUTs.DB[r.Name] = r
+
+	log.Printf("%q", c.RUTs.DB)
 }
 
 func MakeCaseFromTreeViewKey(key string) (*Case, error) {

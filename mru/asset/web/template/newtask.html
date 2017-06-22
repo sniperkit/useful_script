@@ -17,6 +17,7 @@
 					<thead>
 						<tr>
 							<th class="text-center col-sm-1">DUT</th>
+							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-1">Mode</th>
 							<th class="text-center col-sm-3">CLI</th>
 							<th class="text-center col-sm-4">Expected</th>
@@ -25,6 +26,7 @@
 
 						<tr>
 							<td class="text-center"><input type="text" v-model="prcinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+							<td class="text-center"><input type="text" v-model="prcinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
@@ -34,6 +36,7 @@
 					<tbody v-for="(assertion, index) in ntask.precondition.assertions">
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
+							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
 							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
@@ -50,12 +53,14 @@
 					<thead>
 						<tr>
 							<th class="text-center col-sm-1">DUT</th>
+							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-1">Mode</th>
 							<th class="text-center col-sm-3">CLI</th>
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
 						<td class="text-center"><input type="text" v-model="mrinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="mrinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
@@ -66,6 +71,7 @@
 					<tbody v-for="(assertion, index) in ntask.routine.assertions">
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
+							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
 							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
@@ -82,12 +88,14 @@
 					<thead>
 						<tr>
 							<th class="text-center col-sm-1">DUT</th>
+							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-1">Mode</th>
 							<th class="text-center col-sm-3">CLI</th>
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
 						<td class="text-center"><input type="text" v-model="pocinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="pocinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
@@ -99,6 +107,7 @@
 
 						<tr>
 							<td class="text-center">{{assertion.dut}}</td>
+							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
 							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
@@ -115,12 +124,14 @@
 					<thead>
 						<tr>
 							<th class="text-center col-sm-1">DUT</th>
+							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-1">Mode</th>
 							<th class="text-center col-sm-3">CLI</th>
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
 						<td class="text-center"><input type="text" v-model="crinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="crinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
@@ -132,6 +143,7 @@
 						<tr>
 
 							<td class="text-center">{{assertion.dut}}</td>
+							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
 							<td class="text-center">{{assertion.command.cli}}</td>
 							<td class="text-center">{{assertion.expected}}</td>
@@ -184,30 +196,34 @@
 			prcinputs: {
 				dut:"",
 				command: {
-				mode: "",
-				cli: ""
+					delay: 0,
+					mode: "",
+					cli: ""
 				},
 				expected: ""
 			},
 			pocinputs: {
 				dut:"",
 				command: {
-				mode: "",
-				cli: ""
+					delay:0,
+					mode: "",
+					cli: ""
 				},
 				expected: ""
 			},
 			mrinputs: {
 				dut:"",
 				command: {
-				mode: "",
-				cli: ""
+					delay:0,
+					mode: "",
+					cli: ""
 				},
 				expected: ""
 			},
 			crinputs: {
 				dut:"",
 				command:{
+					delay: 0,
 					cli: "",
 					mode: ""
 				},
@@ -236,8 +252,9 @@
 				this.ntask.precondition.assertions.push({
 					dut: this.prcinputs.dut,
 					command: {
-					mode: this.prcinputs.command.mode,
-					cli: this.prcinputs.command.cli
+						delay: +this.prcinputs.command.delay,
+						mode: this.prcinputs.command.mode,
+						cli: this.prcinputs.command.cli
 					},
 					expected: this.prcinputs.expected
 				});
@@ -251,8 +268,9 @@
 				this.ntask.postcondition.assertions.push({
 					dut: this.pocinputs.dut,
 					command: {
-					mode: this.pocinputs.command.mode,
-					cli: this.pocinputs.command.cli
+						delay: +this.pocinputs.command.delay,
+						mode: this.pocinputs.command.mode,
+						cli: this.pocinputs.command.cli
 					},
 					expected: this.pocinputs.expected
 				});
@@ -267,8 +285,9 @@
 				this.ntask.routine.assertions.push({
 					dut: this.mrinputs.dut,
 					command: {
-					mode: this.mrinputs.command.mode,
-					cli: this.mrinputs.command.cli
+						delay: +this.mrinputs.command.delay,
+						mode: this.mrinputs.command.mode,
+						cli: this.mrinputs.command.cli
 					},
 					expected: this.mrinputs.expected
 				});
@@ -283,8 +302,9 @@
 				this.ntask.clear.assertions.push({
 					dut: this.crinputs.dut,
 					command: {
-					mode: this.crinputs.command.mode,
-					cli: this.crinputs.command.cli
+						delay: +this.crinputs.command.delay,
+						mode: this.crinputs.command.mode,
+						cli: this.crinputs.command.cli
 					},
 					expected: this.crinputs.expected
 				});

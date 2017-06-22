@@ -1131,6 +1131,7 @@ func (tr *NewCache) SetDUTsByID(id string, duts []*rut.RUT) error {
 					return err
 				}
 			}
+			log.Printf("%q", f.RUTDB)
 
 			return nil
 		}

@@ -3,6 +3,7 @@ package assertion
 import (
 	"command"
 	"fmt"
+	"log"
 	"regexp"
 	"rut"
 )
@@ -25,6 +26,8 @@ func (a *Assertion) Do(db *rut.DB) (string, bool) {
 	if err != nil {
 		return fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error()), false
 	}
+
+	log.Printf("Run command: %s with result: %s", a.Command.CMD, string(data))
 
 	a.Raw = string(data)
 	defer func() { a.Raw = "" }()

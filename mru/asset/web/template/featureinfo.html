@@ -170,8 +170,9 @@
 					type:"get",
 					url:"newcase",
 					async:false,
+					data: {id: this.id},
 					success:function(data) {
-						window.location.href="newcase"
+						window.location.href="newcase?id="+getCookie("FEATUREID")
 					}
 				});
 				this.submitted = true;
