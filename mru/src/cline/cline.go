@@ -24,8 +24,11 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	}
 
 	if strings.HasPrefix(cmd.CMD, "bcm.user.proxy") {
-		c.client.WriteLine(cmd.CMD + "\n\n\n") //For the stupid bcmshell
-		cmd.End = ">"
+		c.client.WriteLine(cmd.CMD) //For the stupid bcmshell
+		cmd.End = "BCM.0>"
+	} else if c.currentMode == "bcmshell" && cmd.CMD != "exit" && cmd.CMD != "quit" {
+		c.client.WriteLine(cmd.CMD) //For the stupid bcmshell
+		cmd.End = "BCM.0>"
 	} else {
 		c.client.WriteLine(cmd.CMD)
 	}
