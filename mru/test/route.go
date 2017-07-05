@@ -271,14 +271,14 @@ func (re *RouteEntry) String() string {
 	if re.AF == IPV4 {
 		if re.Length > 32 || re.NextHopIndex > threshold.MaxNexthopIndex {
 			if re.Length > 32 {
-				return Out.Sprintf("[%6d]: %32s/%-2d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv4 Address")
+				return Out.Sprintf("[%6d]: %39s/%-3d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv4 Address")
 			} else {
-				return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
+				return Out.Sprintf("[%6d]: %39s/%-3d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
 			}
 		} else if !re.ECMP {
-			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
+			return Out.Sprintf("[%6d]: %39s/%-3d (%5t|%5t) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
 		} else {
-			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
+			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
 			for i := 0; i < len(re.EG.Member); i++ {
 				base += "\n"
 				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
@@ -289,14 +289,14 @@ func (re *RouteEntry) String() string {
 	} else if re.AF == IPV6 {
 		if re.Length > 128 || re.NextHopIndex > threshold.MaxNexthopIndex {
 			if re.Length > 128 {
-				return Out.Sprintf("[%6d]: %32s/%-2d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv6 Address")
+				return Out.Sprintf("[%6d]: %39s/%-3d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv6 Address")
 			} else {
-				return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
+				return Out.Sprintf("[%6d]: %39s/%-3d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
 			}
 		} else if !re.ECMP {
-			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
+			return Out.Sprintf("[%6d]: %39s/%-3d (%5t|%5t) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
 		} else {
-			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
+			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
 			for i := 0; i < len(re.EG.Member); i++ {
 				base += "\n"
 				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
@@ -316,13 +316,13 @@ func (he *HostEntry) String() string {
 	} else {
 		Out = color.New(color.FgWhite)
 	}
-	if he.AF == IPV4 {
+	if he.AF == IPV4 && he.KeyType == 0 {
 		if he.NextHopIndex > threshold.MaxNexthopIndex {
-			return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", he.Index, he.IP, he.Length, he.NextHopIndex)
+			return Out.Sprintf("[%6d]: %39s/%-3d >> has a invalid nexthop index: %d", he.Index, he.IP, he.Length, he.NextHopIndex)
 		} else if !he.ECMP {
-			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.NextHopIndex, he.NH.OIF.MAC, he.NH.DstMac, he.NH.OIF.Index, he.NH.OIF.Vid, he.NH.DstPort)
+			return Out.Sprintf("[%6d]: %39s/%-3d (%5t|%2d) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.NextHopIndex, he.NH.OIF.MAC, he.NH.DstMac, he.NH.OIF.Index, he.NH.OIF.Vid, he.NH.DstPort)
 		} else {
-			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
+			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
 			for i := 0; i < len(he.EG.Member); i++ {
 				base += "\n"
 				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
@@ -330,13 +330,13 @@ func (he *HostEntry) String() string {
 
 			return base
 		}
-	} else if he.AF == IPV6 {
+	} else if he.AF == IPV6 && he.KeyType == 2 {
 		if he.NextHopIndex > threshold.MaxNexthopIndex {
-			return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", he.Index, he.IP, he.Length, he.NextHopIndex)
+			return Out.Sprintf("[%6d]: %39s/%-3d >> has a invalid nexthop index: %d", he.Index, he.IP, he.Length, he.NextHopIndex)
 		} else if !he.ECMP {
-			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.NextHopIndex, he.NH.OIF.MAC, he.NH.DstMac, he.NH.OIF.Index, he.NH.OIF.Vid, he.NH.DstPort)
+			return Out.Sprintf("[%6d]: %39s/%-3d (%5t|%2d) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.NextHopIndex, he.NH.OIF.MAC, he.NH.DstMac, he.NH.OIF.Index, he.NH.OIF.Vid, he.NH.DstPort)
 		} else {
-			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
+			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
 			for i := 0; i < len(he.EG.Member); i++ {
 				base += "\n"
 				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
@@ -346,7 +346,8 @@ func (he *HostEntry) String() string {
 		}
 	}
 
-	return fmt.Sprintf("Invalid Host entry: %s/%d\n", he.IP, he.Length)
+	//Currently just skip the invalid entry.
+	return ""
 }
 
 var getEntryIndex = regexp.MustCompile(`[[:word:]_]+\.\*\[(?P<index>[0-9]+)\]`)
@@ -1420,7 +1421,9 @@ func DumpIPv4HostEntry(dev *rut.RUT) {
 		if h != nil {
 			h.ParseNexthopInfo()
 		}
-		fmt.Println(h)
+		if h != nil && h.AF == IPV4 && h.KeyType == 0 {
+			fmt.Println(h)
+		}
 	}
 }
 
