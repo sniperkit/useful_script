@@ -1,7 +1,7 @@
 package configuration
 
 import (
-	"log"
+//"log"
 )
 
 type Configuration struct {
@@ -97,6 +97,6 @@ func BuildModeDBFromHostNameAndBasePrompt(host, base string) map[string]string {
 		}
 	}
 
-	log.Printf("Mode DB: %q", db)
+	//log.Printf("Mode DB: %q", db)
 	return db
 }

@@ -58,7 +58,7 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 
 	//log.Println("Run: ", cmd.CMD, " mode: ", old, " success!")
 	if old != c.currentMode {
-		log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
+		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
 	}
 
 	return data, nil
@@ -179,47 +179,47 @@ func (c *Cli) Init() error {
 	}
 
 	c.client.WriteLine("enable")
-	data, err := c.client.ReadUntil(c.conf.Prompt)
+	_, err = c.client.ReadUntil(c.conf.Prompt)
+	//data, err := c.client.ReadUntil(c.conf.Prompt)
 	if err != nil {
 		fmt.Println("Error happend when goto enable mode: ", err.Error())
 		return err
 	}
-	fmt.Println(string(data))
+	//fmt.Println(string(data))
 
 	c.client.WriteLine("terminal length 0")
-	data, err = c.client.ReadUntil("#")
+	_, err = c.client.ReadUntil("#")
 	if err != nil {
 		fmt.Println("Error happend when SetTerminalLength: ", err.Error())
 		return err
 	}
 	c.currentMode = "normal"
-	fmt.Println(string(data))
+	//fmt.Println(string(data))
 
 	return nil
 }
 
 func (c *Cli) login() error {
 	c.client.SetUnixWriteMode(true)
-	data, err := c.client.ReadUntil(c.conf.LoginPrompt)
+	_, err := c.client.ReadUntil(c.conf.LoginPrompt)
 	if err != nil {
 		fmt.Println("Error happend when get login: ", err.Error())
 		return err
 	}
-	fmt.Println(string(data))
+
 	c.client.WriteLine(c.conf.Username)
-	data, err = c.client.ReadUntil(c.conf.PasswordPrompt)
+	_, err = c.client.ReadUntil(c.conf.PasswordPrompt)
 	if err != nil {
 		fmt.Println("Error happend when get login prompt: ", err.Error())
 		return err
 	}
-	fmt.Println(string(data))
+
 	c.client.WriteLine(c.conf.Password)
-	data, err = c.client.ReadUntil(c.conf.EnablePrompt)
+	_, err = c.client.ReadUntil(c.conf.EnablePrompt)
 	if err != nil {
 		fmt.Println("Error happend when login: ", err.Error())
 		return err
 	}
-	fmt.Println(string(data))
 
 	return nil
 }
