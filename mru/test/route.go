@@ -5,6 +5,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/fatih/color"
 	"log"
 	"net"
 	"regexp"
@@ -42,7 +43,7 @@ type RouteEntry struct {
 	NextHopIndex    int64
 	Length          int64
 	Key             net.IP
-	Hit             string
+	Hit             bool
 	EvenParity      string
 	EntryOnly       string
 	ECMPPTR         int64
@@ -56,6 +57,26 @@ type RouteEntry struct {
 	EG              ECMPGroup
 	AF              int
 	IsValid         bool
+}
+
+type HostEntry struct {
+	Index        int64
+	Valid        string
+	RPE          string
+	PRI          string
+	NextHopIndex int64
+	IP           net.IP
+	Hit          bool
+	Length       int64
+	ECMPPTR      int64
+	ECMP         bool
+	DstDiscard   bool
+	Data         string
+	KeyType      int64
+	NH           Nexthop
+	EG           ECMPGroup
+	AF           int
+	IsValid      bool
 }
 
 var Dev *rut.RUT
@@ -241,20 +262,26 @@ func (nh *Nexthop) GetEGRNexthopInfo() {
 }
 
 func (re *RouteEntry) String() string {
+	var Out *color.Color
+	if re.Hit {
+		Out = color.New(color.FgGreen)
+	} else {
+		Out = color.New(color.FgWhite)
+	}
 	if re.AF == IPV4 {
 		if re.Length > 32 || re.NextHopIndex > threshold.MaxNexthopIndex {
 			if re.Length > 32 {
-				return fmt.Sprintf("[%6d]: %32s/%-2d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv4 Address")
+				return Out.Sprintf("[%6d]: %32s/%-2d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv4 Address")
 			} else {
-				return fmt.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
+				return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
 			}
 		} else if !re.ECMP {
-			return fmt.Sprintf("[%6d]: %32s/%-2d >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
+			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
 		} else {
-			base := fmt.Sprintf("[%6d]: %32s/%-2d >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
+			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
 			for i := 0; i < len(re.EG.Member); i++ {
 				base += "\n"
-				base += fmt.Sprintf("%51s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
+				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
 			}
 
 			return base
@@ -262,17 +289,17 @@ func (re *RouteEntry) String() string {
 	} else if re.AF == IPV6 {
 		if re.Length > 128 || re.NextHopIndex > threshold.MaxNexthopIndex {
 			if re.Length > 128 {
-				return fmt.Sprintf("[%6d]: %32s/%-2d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv6 Address")
+				return Out.Sprintf("[%6d]: %32s/%-2d >> %20s", re.Index, re.Key, re.Length, "is not a valid IPv6 Address")
 			} else {
-				return fmt.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
+				return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", re.Index, re.Key, re.Length, re.NextHopIndex)
 			}
 		} else if !re.ECMP {
-			return fmt.Sprintf("[%6d]: %32s/%-2d >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
+			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.NextHopIndex, re.NH.OIF.MAC, re.NH.DstMac, re.NH.OIF.Index, re.NH.OIF.Vid, re.NH.DstPort)
 		} else {
-			base := fmt.Sprintf("[%6d]: %32s/%-2d >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
+			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
 			for i := 0; i < len(re.EG.Member); i++ {
 				base += "\n"
-				base += fmt.Sprintf("%51s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
+				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
 			}
 
 			return base
@@ -280,6 +307,46 @@ func (re *RouteEntry) String() string {
 	}
 
 	return fmt.Sprintf("Invalid route entry: %s/%d\n", re.Key, re.Length)
+}
+
+func (he *HostEntry) String() string {
+	var Out *color.Color
+	if he.Hit {
+		Out = color.New(color.FgGreen)
+	} else {
+		Out = color.New(color.FgWhite)
+	}
+	if he.AF == IPV4 {
+		if he.NextHopIndex > threshold.MaxNexthopIndex {
+			return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", he.Index, he.IP, he.Length, he.NextHopIndex)
+		} else if !he.ECMP {
+			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.NextHopIndex, he.NH.OIF.MAC, he.NH.DstMac, he.NH.OIF.Index, he.NH.OIF.Vid, he.NH.DstPort)
+		} else {
+			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
+			for i := 0; i < len(he.EG.Member); i++ {
+				base += "\n"
+				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
+			}
+
+			return base
+		}
+	} else if he.AF == IPV6 {
+		if he.NextHopIndex > threshold.MaxNexthopIndex {
+			return Out.Sprintf("[%6d]: %32s/%-2d >> has a invalid nexthop index: %d", he.Index, he.IP, he.Length, he.NextHopIndex)
+		} else if !he.ECMP {
+			return Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> NH[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.NextHopIndex, he.NH.OIF.MAC, he.NH.DstMac, he.NH.OIF.Index, he.NH.OIF.Vid, he.NH.DstPort)
+		} else {
+			base := Out.Sprintf("[%6d]: %32s/%-2d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
+			for i := 0; i < len(he.EG.Member); i++ {
+				base += "\n"
+				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
+			}
+
+			return base
+		}
+	}
+
+	return fmt.Sprintf("Invalid Host entry: %s/%d\n", he.IP, he.Length)
 }
 
 var getEntryIndex = regexp.MustCompile(`[[:word:]_]+\.\*\[(?P<index>[0-9]+)\]`)
@@ -410,6 +477,85 @@ func (re *RouteEntry) ParseINGNexthopInfo() {
 	//fmt.Println(inh, err)
 }
 
+func (he *HostEntry) ParseINGNexthopInfo() {
+	inh, err := Dev.RunCommand(&command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 ING_L3_NEXT_HOP %d %d", he.NextHopIndex, he.NextHopIndex),
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	if res, err := match(inh, getINGNexthopCopyToCPU); err != nil {
+		panic(err)
+	} else {
+		if res == "0" {
+			he.NH.CopyToCPU = false
+		} else {
+			he.NH.CopyToCPU = true
+		}
+	}
+
+	if res, err := match(inh, getINGNexthopDrop); err != nil {
+		panic(err)
+	} else {
+		if res == "0" {
+			he.NH.Drop = false
+		} else {
+			he.NH.Drop = true
+		}
+	}
+
+	if res, err := match(inh, getINGNexthopTGID); err != nil {
+		panic(err)
+	} else {
+		tgid, err := strconv.ParseInt(res, 0, 32)
+		if err != nil {
+			panic(err)
+		} else {
+			he.NH.TGID = tgid
+		}
+	}
+
+	if res, err := match(inh, getINGNexthopPNUM); err != nil {
+		panic(err)
+	} else {
+		pnum, err := strconv.ParseInt(res, 0, 32)
+		if err != nil {
+			panic(err)
+		} else {
+			he.NH.DstPort = pnum
+		}
+	}
+
+	if res, err := match(inh, getINGNexthopVLAN); err != nil {
+		panic(err)
+	} else {
+		vlan, err := strconv.ParseInt(res, 0, 32)
+		if err != nil {
+			panic(err)
+		} else {
+			he.NH.VLAN = vlan
+		}
+	}
+
+	/*
+		if res, err := match(inh, getINGNexthopOIF); err != nil {
+			panic(err)
+		} else {
+			oif, err := strconv.ParseInt(res, 0, 32)
+			if err != nil {
+				panic(err)
+			} else {
+				re.NH.OIF = oif
+			}
+		}
+	*/
+
+	//fmt.Println(inh, err)
+}
+
 func (re *RouteEntry) ParseEgrNexthopInfo() {
 	enh, err := Dev.RunCommand(&command.Command{
 		Mode: "shell",
@@ -434,6 +580,35 @@ func (re *RouteEntry) ParseEgrNexthopInfo() {
 			panic(err)
 		}
 		re.NH.OIF.Index = index
+	}
+
+	//fmt.Println(enh, err)
+}
+
+func (he *HostEntry) ParseEgrNexthopInfo() {
+	enh, err := Dev.RunCommand(&command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 EGR_L3_NEXT_HOP %d %d", he.NextHopIndex, he.NextHopIndex),
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	if res, err := match(enh, getEGRNexthopMACAddress); err != nil {
+		panic(err)
+	} else {
+		he.NH.DstMac = FixMACAddress(res)
+	}
+
+	if res, err := match(enh, getEGRIfNum); err != nil {
+		panic(err)
+	} else {
+		index, err := strconv.ParseInt(res, 0, 32)
+		if err != nil {
+			panic(err)
+		}
+		he.NH.OIF.Index = index
 	}
 
 	//fmt.Println(enh, err)
@@ -487,6 +662,23 @@ func (re *RouteEntry) ParseNexthopInfo() {
 	}
 }
 
+func (he *HostEntry) ParseNexthopInfo() {
+	if he.NextHopIndex >= threshold.MaxNexthopIndex {
+		//fmt.Printf("Skip the nexthop parse for %s due to Invalid nexthop index!", re)
+		return
+	}
+
+	if !he.ECMP {
+		he.NH.Index = he.NextHopIndex
+		he.ParseINGNexthopInfo()
+		he.ParseEgrNexthopInfo()
+		he.NH.ParseOIF()
+	} else {
+		he.EG.Index = he.ECMPPTR
+		he.ParseECMPGroup()
+	}
+}
+
 //L3_ECMP_GROUP.*[256]: <URPF_COUNT=1,RSVD_COUNT=0,RSVD_BASE_PTR=0,RH_FLOW_SET_SIZE=0,RH_FLOW_SET_BASE=0,RESERVED_0=0,L3_OIF_7_TYPE=0,L3_OIF_7=0,L3_OIF_6_TYPE=0,L3_OIF_6=0,L3_OIF_5_TYPE=0,L3_OIF_5=0,L3_OIF_4_TYPE=0,L3_OIF_4=0,L3_OIF_3_TYPE=0,L3_OIF_3=0,L3_OIF_2_TYPE=0,L3_OIF_2=0,L3_OIF_1_TYPE=0,L3_OIF_1=0x46,L3_OIF_0_TYPE=0,L3_OIF_0=0x50,EVEN_PARITY_1=0,EVEN_PARITY_0=0,ENHANCED_HASHING_ENABLE=0,ECMP_GT8=0,COUNT=1,BASE_PTR=0x1000>
 
 var getECMPMemberCount = regexp.MustCompile(`\,COUNT=(?P<count>[0x]?[[:alnum:]]+)`)
@@ -532,6 +724,46 @@ func (re *RouteEntry) ParseECMPGroup() {
 	re.EG.ParseNexthop()
 }
 
+func (he *HostEntry) ParseECMPGroup() {
+	if he.ECMP == false {
+		log.Println("Cannot parse ECMP for none ECMP entry")
+		return
+	}
+
+	ecmpg, err := Dev.RunCommand(&command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ECMP_GROUP %d %d", he.ECMPPTR, he.ECMPPTR),
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	//fmt.Println(ecmpg)
+
+	if res, err := match(ecmpg, getECMPMemberCount); err != nil {
+		panic(err)
+	} else {
+		mcount, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		}
+		he.EG.MemberCount = mcount + 1
+	}
+
+	if res, err := match(ecmpg, getECMPBasePTR); err != nil {
+		panic(err)
+	} else {
+		base, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		}
+		he.EG.ECMPBasePTR = base
+	}
+
+	he.EG.ParseNexthop()
+}
+
 type FIB struct {
 	DB map[string]*RouteEntry
 }
@@ -541,20 +773,16 @@ func IsValid(es string) bool {
 		return false
 	}
 
-	if !strings.Contains(es, "VALID=1") ||
-		!strings.Contains(es, "SRC_DISCARD") ||
+	if !strings.Contains(es, "VALID") ||
+		!strings.Contains(es, "DST_DISCARD") ||
 		!strings.Contains(es, "NEXT_HOP_INDEX") ||
 		!strings.Contains(es, "KEY") ||
-		!strings.Contains(es, "LENGTH") ||
+		!strings.Contains(es, "ECMP") ||
 		!strings.Contains(es, "ECMP_PTR") {
 		return false
 	}
 
 	return true
-}
-
-func GetIPv4PrefixByHexString(p, plen string) {
-
 }
 
 func FixMACAddress(s string) string {
@@ -765,7 +993,11 @@ func ParseRouteEntryString(es string, af int) (*RouteEntry, error) {
 	if res, err := match(es, getHitBit); err != nil {
 		panic(err)
 	} else {
-		Entry.Hit = res
+		if res == "1" {
+			Entry.Hit = true
+		} else {
+			Entry.Hit = false
+		}
 	}
 
 	if res, err := match(es, getECMPPTR); err != nil {
@@ -837,7 +1069,7 @@ var Host = flag.String("hostname", "V8500", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
 var SFU = flag.String("sfu", "A", "SFU (A/B)")
-var AF = flag.String("af", "all", "Address family to dump (IPv4/IPv6/all)")
+var Table = flag.String("table", "all", "Address family to dump (IPv4/IPv6/all/arp/nd)")
 
 func main() {
 	flag.Parse()
@@ -863,7 +1095,7 @@ func main() {
 		return
 	}
 
-	if *AF != "ipv4" && *AF != "ipv6" && *AF != "all" {
+	if *Table != "ipv4" && *Table != "ipv6" && *Table != "all" && *Table != "arp" && *Table != "nd" {
 		fmt.Println("Invalid Address family to dump")
 		return
 	}
@@ -884,15 +1116,331 @@ func main() {
 		return
 	}
 
-	if *AF == "ipv4" {
+	if *Table == "ipv4" {
 		DumpIPv4Entry(dev)
-	} else if *AF == "ipv6" {
+	} else if *Table == "ipv6" {
 		DumpIPv6Entry(dev)
-	} else if *AF == "all" {
+	} else if *Table == "all" {
 		DumpIPv4Entry(dev)
 		DumpIPv6Entry(dev)
+	} else if *Table == "arp" {
+		DumpIPv4HostEntry(dev)
+	} else if *Table == "nd" {
+		DumpIPv6HostEntry(dev)
+	}
+}
+
+//L3_ENTRY_IPV4_UNICAST.*[3456]: <VRF_ID=0,VALID=1,TRILL:TREE_ID=0,TRILL:RESERVED_104_43=0x800000,TRILL:KEY=0x20,TRILL:INGRESS_RBRIDGE_NICKNAME=1,TRILL:HASH_LSB=1,TRILL:EXPECTED_TGID=0x60,TRILL:EXPECTED_T=0,TRILL:EXPECTED_PORT_NUM=0x60,TRILL:EXPECTED_MODULE_ID=8,TRILL:DATA=0x460,RSVD_VRF_ID=0,RSVD_NEXT_HOP_INDEX=0,RPE=0,RMEP:RESERVED_104_83=0,RMEP:HASH_LSB=0,RESERVED_104_82=0,PRI=0,NEXT_HOP_INDEX=8,LOCAL_ADDRESS=0,LMEP:HASH_LSB=0,KEY_TYPE=0,KEY=0x8c0000020,IP_ADDR=0x46000001,IPV4UC:VRF_ID=0,IPV4UC:RSVD_VRF_ID=0,IPV4UC:RSVD_NEXT_HOP_INDEX=0,IPV4UC:RPE=0,IPV4UC:RESERVED_104_82=0,IPV4UC:PRI=0,IPV4UC:NEXT_HOP_INDEX=8,IPV4UC:LOCAL_ADDRESS=0,IPV4UC:KEY=0x8c0000020,IPV4UC:IP_ADDR=0x46000001,IPV4UC:HASH_LSB=1,IPV4UC:ECMP_PTR=8,IPV4UC:ECMP=0,IPV4UC:DST_DISCARD=0,IPV4UC:DATA=0x10000,IPV4UC:CLASS_ID=0,IPV4UC:BFD_ENABLE=0,HIT=1,HASH_LSB=1,FCOE:VRF_ID=0x46,FCOE:S_ID=1,FCOE:RSVD_VRF_ID=0,FCOE:RSVD_NEXT_HOP_INDEX=0,FCOE:RPE=0,FCOE:RESERVED_ECMP_PTR0=2,FCOE:RESERVED_104_73=0,FCOE:PRI=0,FCOE:NEXT_HOP_INDEX=0x800,FCOE:MASKED_D_ID=1,FCOE:LOCAL_ADDRESS=0,FCOE:KEY=0x8c0000020,FCOE:HASH_LSB=1,FCOE:ECMP_PTR0=0,FCOE:ECMP=0,FCOE:D_ID=1,FCOE:DST_DISCARD=0,FCOE:DATA=0x1000000,FCOE:CLASS_ID=0,EVEN_PARITY=0,ECMP_PTR=8,ECMP=0,DUMMY_V6=0,DUMMY_IPMC=0,DUMMY=0,DST_DISCARD=0,DATA=0x10000,CLASS_ID=0,BFD_ENABLE=0>
+
+var getHostEntryNextHopIndex = regexp.MustCompile(`,IPV4UC:NEXT_HOP_INDEX=(?P<nhi>[0x]?[[:alnum:]]+)`)
+var getIPv6HostEntryNextHopIndex = regexp.MustCompile(`,IPV6UC:NEXT_HOP_INDEX=(?P<nhi>[0x]?[[:alnum:]]+)`)
+var getHostEntryIPv4Address = regexp.MustCompile(`,IPV4UC:IP_ADDR=(?P<key>[0x]?[[:alnum:]]+)`)
+var getIPv6HostEntryAddressUpper = regexp.MustCompile(`,IPV6UC:IP_ADDR_UPR_64=(?P<key>[0x]?[[:alnum:]]+)`)
+var getIPv6HostEntryAddressLower = regexp.MustCompile(`,IPV6UC:IP_ADDR_LWR_64=(?P<key>[0x]?[[:alnum:]]+)`)
+var getHostEntryECMPPTR = regexp.MustCompile(`,IPV4UC:ECMP_PTR=(?P<ecmpptr>[0x]?[[:alnum:]]+)`)
+var getIPv6HostEntryECMPPTR = regexp.MustCompile(`,IPV6UC:ECMP_PTR=(?P<ecmpptr>[0x]?[[:alnum:]]+)`)
+var getHostEntryECMP = regexp.MustCompile(`,IPV4UC:ECMP=(?P<ecmpptr>[0x]?[[:alnum:]]+)`)
+var getIPv6HostEntryECMP = regexp.MustCompile(`,IPV6UC:ECMP=(?P<ecmpptr>[0x]?[[:alnum:]]+)`)
+var getHostEntryDstDiscard = regexp.MustCompile(`,IPV4UC:DST_DISCARD=(?P<dstdis>[0-9]+)`)
+var getIPv6HostEntryDstDiscard = regexp.MustCompile(`,IPV6UC:DST_DISCARD=(?P<dstdis>[0-9]+)`)
+var getHostEntryKeyType = regexp.MustCompile(`,KEY_TYPE=(?P<keytype>[0-9]+)`)
+var getIPv6HostEntryKeyType = regexp.MustCompile(`,KEY_TYPE_1=(?P<keytype>[0-9]+)`)
+var getIPv6HostEntryValidBit = regexp.MustCompile(`VALID_1=(?P<valid>[0-9]+)`)
+var getIPv6HostEntryHitBit = regexp.MustCompile(`,HIT_1=(?P<hit>[0-9]+)`)
+
+func ParseHostEntryString(es string, af int) (*HostEntry, error) {
+	if !IsValid(es) {
+		return nil, errors.New("Invalid input string: " + es)
 	}
 
+	var Entry HostEntry
+	if af == IPV4 {
+		Entry.Length = 32
+	} else {
+		Entry.Length = 128
+	}
+
+	if res, err := match(es, getEntryIndex); err != nil {
+		panic(err)
+	} else {
+		index, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		}
+		Entry.Index = index
+	}
+	if res, err := match(es, getValidBit); err != nil {
+		panic(err)
+	} else {
+		Entry.Valid = res
+	}
+
+	if res, err := match(es, getHostEntryNextHopIndex); err != nil {
+		panic(err)
+	} else {
+		nhi, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		} else {
+			Entry.NextHopIndex = nhi
+		}
+	}
+
+	if res, err := match(es, getHostEntryKeyType); err != nil {
+		panic(err)
+	} else {
+		kt, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		} else {
+			Entry.KeyType = kt
+		}
+	}
+
+	if res, err := match(es, getHostEntryIPv4Address); err != nil {
+		panic(err)
+	} else {
+		if af == IPV4 {
+			Entry.AF = af
+			Entry.IP = FixIPv4Address(res)
+		} else if af == IPV6 {
+			Entry.AF = af
+			Entry.IP = FixIPv6Address(res)
+		} else {
+			panic("Unknown Address family")
+		}
+	}
+
+	if res, err := match(es, getHitBit); err != nil {
+		panic(err)
+	} else {
+		if res == "1" {
+			Entry.Hit = true
+		} else {
+			Entry.Hit = false
+		}
+	}
+
+	if res, err := match(es, getHostEntryECMPPTR); err != nil {
+		panic(err)
+	} else {
+		ptr, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		}
+		Entry.ECMPPTR = ptr
+	}
+
+	if res, err := match(es, getHostEntryECMP); err != nil {
+		panic(err)
+	} else {
+		if res == "0" {
+			Entry.ECMP = false
+		} else {
+			Entry.ECMP = true
+		}
+	}
+
+	if res, err := match(es, getHostEntryDstDiscard); err != nil {
+		panic(err)
+	} else {
+		if res == "0" {
+			Entry.DstDiscard = false
+		} else {
+			Entry.DstDiscard = true
+		}
+	}
+
+	return &Entry, nil
+}
+
+func ParseIPv6HostEntryString(es string, af int) (*HostEntry, error) {
+	if !IsValid(es) {
+		return nil, errors.New("Invalid input string: " + es)
+	}
+
+	var Entry HostEntry
+	if af == IPV4 {
+		Entry.Length = 32
+	} else {
+		Entry.Length = 128
+	}
+
+	if res, err := match(es, getEntryIndex); err != nil {
+		panic(err)
+	} else {
+		index, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		}
+		Entry.Index = index
+	}
+	if res, err := match(es, getIPv6HostEntryValidBit); err != nil {
+		panic(err)
+	} else {
+		Entry.Valid = res
+	}
+
+	if res, err := match(es, getIPv6HostEntryNextHopIndex); err != nil {
+		panic(err)
+	} else {
+		nhi, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		} else {
+			Entry.NextHopIndex = nhi
+		}
+	}
+
+	if res, err := match(es, getIPv6HostEntryKeyType); err != nil {
+		panic(err)
+	} else {
+		kt, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		} else {
+			Entry.KeyType = kt
+		}
+	}
+
+	if upper, err := match(es, getIPv6HostEntryAddressUpper); err != nil {
+		panic(err)
+	} else {
+		if lower, err := match(es, getIPv6HostEntryAddressLower); err != nil {
+			panic(err)
+		} else {
+			if af == IPV6 {
+				Entry.AF = af
+				Entry.IP = FixIPv6Address(MakeIPv6Address(upper, lower))
+			} else {
+				panic("Unknown Address family")
+			}
+		}
+	}
+
+	if res, err := match(es, getIPv6HostEntryHitBit); err != nil {
+		panic(err)
+	} else {
+		if res == "1" {
+			Entry.Hit = true
+		} else {
+			Entry.Hit = false
+		}
+	}
+
+	if res, err := match(es, getIPv6HostEntryECMPPTR); err != nil {
+		panic(err)
+	} else {
+		ptr, err := strconv.ParseInt(res, 0, 64)
+		if err != nil {
+			panic(err)
+		}
+		Entry.ECMPPTR = ptr
+	}
+
+	if res, err := match(es, getIPv6HostEntryECMP); err != nil {
+		panic(err)
+	} else {
+		if res == "0" {
+			Entry.ECMP = false
+		} else {
+			Entry.ECMP = true
+		}
+	}
+
+	if res, err := match(es, getIPv6HostEntryDstDiscard); err != nil {
+		panic(err)
+	} else {
+		if res == "0" {
+			Entry.DstDiscard = false
+		} else {
+			Entry.DstDiscard = true
+		}
+	}
+
+	return &Entry, nil
+}
+
+func MakeIPv6Address(upper, lower string) string {
+	if strings.HasPrefix(lower, "0x") {
+		lower = lower[2:]
+	}
+
+	if len(lower) == 15 {
+		lower = "0" + lower
+	} else if len(lower) == 14 {
+		lower = "00" + lower
+	} else if len(lower) == 13 {
+		lower = "000" + lower
+	} else if len(lower) == 12 {
+		lower = "0000" + lower
+	} else if len(lower) == 11 {
+		lower = "00000" + lower
+	} else if len(lower) == 10 {
+		lower = "00000" + lower
+	} else if len(lower) == 9 {
+		lower = "000000" + lower
+	} else if len(lower) == 8 {
+		lower = "0000000" + lower
+	} else if len(lower) == 8 {
+		lower = "00000000" + lower
+	} else if len(lower) == 7 {
+		lower = "000000000" + lower
+	} else if len(lower) == 6 {
+		lower = "0000000000" + lower
+	} else if len(lower) == 5 {
+		lower = "00000000000" + lower
+	} else if len(lower) == 4 {
+		lower = "000000000000" + lower
+	} else if len(lower) == 3 {
+		lower = "0000000000000" + lower
+	} else if len(lower) == 2 {
+		lower = "00000000000000" + lower
+	} else if len(lower) == 1 {
+		lower = "000000000000000" + lower
+	} else if len(lower) == 0 {
+		lower = "0000000000000000" + lower
+	}
+
+	return upper + lower
+}
+
+func DumpIPv4HostEntry(dev *rut.RUT) {
+	res, err := dev.RunCommand(&command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ENTRY_IPV4_UNICAST  0 16383  | grep VALID=1",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, l := range strings.Split(res, "\n") {
+		h, _ := ParseHostEntryString(l, IPV4)
+		if h != nil {
+			h.ParseNexthopInfo()
+		}
+		fmt.Println(h)
+	}
+}
+
+func DumpIPv6HostEntry(dev *rut.RUT) {
+	res, err := dev.RunCommand(&command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ENTRY_IPV6_UNICAST 0 8191  | grep VALID_1=1",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, l := range strings.Split(res, "\n") {
+		h, _ := ParseIPv6HostEntryString(l, IPV6)
+		if h != nil {
+			h.ParseNexthopInfo()
+		}
+		fmt.Println(h)
+	}
 }
 
 func DumpIPv4Entry(dev *rut.RUT) {
