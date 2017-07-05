@@ -281,7 +281,7 @@ func (re *RouteEntry) String() string {
 			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
 			for i := 0; i < len(re.EG.Member); i++ {
 				base += "\n"
-				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
+				base += Out.Sprintf("%73s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
 			}
 
 			return base
@@ -299,7 +299,7 @@ func (re *RouteEntry) String() string {
 			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%5t) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", re.Index, re.Key, re.Length, re.DstDiscard, re.SrcDiscard, re.ECMPPTR, re.EG.ECMPBasePTR, re.EG.MemberCount)
 			for i := 0; i < len(re.EG.Member); i++ {
 				base += "\n"
-				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
+				base += Out.Sprintf("%73s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", re.EG.Member[i].Index, re.EG.Member[i].OIF.MAC, re.EG.Member[i].DstMac, re.EG.Member[i].OIF.Index, re.EG.Member[i].OIF.Vid, re.EG.Member[i].DstPort)
 			}
 
 			return base
@@ -325,7 +325,7 @@ func (he *HostEntry) String() string {
 			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
 			for i := 0; i < len(he.EG.Member); i++ {
 				base += "\n"
-				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
+				base += Out.Sprintf("%73s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
 			}
 
 			return base
@@ -339,7 +339,7 @@ func (he *HostEntry) String() string {
 			base := Out.Sprintf("[%6d]: %39s/%-3d (%5t|%2d) >> is  ECMP Route, ECMP_PTR: %5d, BASE_PTR: %5d, MemberCount: %2d", he.Index, he.IP, he.Length, he.DstDiscard, he.KeyType, he.ECMPPTR, he.EG.ECMPBasePTR, he.EG.MemberCount)
 			for i := 0; i < len(he.EG.Member); i++ {
 				base += "\n"
-				base += Out.Sprintf("%65s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
+				base += Out.Sprintf("%73s[%5d]:{SMAC: %17s DMAC: %17s OIF: %4d VID: %4d DPORT: %3d}", "NH", he.EG.Member[i].Index, he.EG.Member[i].OIF.MAC, he.EG.Member[i].DstMac, he.EG.Member[i].OIF.Index, he.EG.Member[i].OIF.Vid, he.EG.Member[i].DstPort)
 			}
 
 			return base
