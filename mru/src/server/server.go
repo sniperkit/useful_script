@@ -1214,9 +1214,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func MainPage(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.Method)
-	log.Println("+++++++++")
 	if r.Method == "GET" {
-		log.Println("+++++++++")
 		t, err := template.New("main.html").Delims("|||", "|||").ParseFiles("asset/web/template/main.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
 		if err != nil {
 			log.Println(err)
@@ -1248,7 +1246,6 @@ func MonitorPage(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if r.Method == "POST" {
 		r.ParseForm()
-		log.Println("++adfaksdjfaksdjfaksdfjsk+++++++", r.FormValue("Device"))
 		for k, v := range r.Form {
 			log.Println(k, v)
 		}
