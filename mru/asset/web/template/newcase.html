@@ -142,8 +142,12 @@
 					async:false,
 					data: {newcase: JSON.stringify(this.ncase)},
 					success:function(data) {
-						alert(data);
-					}
+						window.location="caseinfo?id="+getCookie("CASEID")
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
+						window.location="newcase"
+					},
 				});
 				this.submitted = true;
 			},

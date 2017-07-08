@@ -36,7 +36,7 @@ func (ca *Cache) String() string {
 		log.Println("Cannot format db for debug")
 		return ""
 	}
-	util.SaveToFile("testcases.json", js)
+	util.SaveToFile("asset/db/common/COMMON.json", js)
 
 	json.Indent(&buffer, js, "", "    ")
 
@@ -49,7 +49,7 @@ func (ca *Cache) Save() {
 		log.Println("Cannot format db for debug")
 		return
 	}
-	util.SaveToFile("testcases.json", js)
+	util.SaveToFile("asset/db/common/COMMON.json", js)
 }
 
 func (ca *Cache) GetCaseByID(id string) (*mcase.Case, error) {

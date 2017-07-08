@@ -69,7 +69,11 @@
 			async:false,
 			success:function(data) {
 				caseinfo = data;
-			}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(XMLHttpRequest.responseText);
+				window.location="newcase"
+			},
 		});
 		return JSON.parse(caseinfo);
 	}

@@ -340,7 +340,28 @@ func NewCase(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 			return
 		}
-		sess.NewCache.AddCase(&newcase)
+		err = sess.NewCache.AddCase(&newcase)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
+		caseid := &http.Cookie{
+			Name:  "CASEID",
+			Value: newcase.ID,
+			Path:  "/",
+		}
+
+		id := &http.Cookie{
+			Name:  "UNIQUE",
+			Value: newcase.ID,
+			Path:  "/",
+		}
+
+		http.SetCookie(w, caseid)
+		http.SetCookie(w, id)
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
@@ -576,16 +597,18 @@ func CaseInfo(w http.ResponseWriter, r *http.Request) {
 		t, err := template.New("caseinfo.html").Delims("|||", "|||").ParseFiles("asset/web/template/caseinfo.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/caseheader.html")
 		if err != nil {
 			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, err.Error())
 			return
 		}
 
 		if r.FormValue("id") == "" {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, "Case ID is not set!")
 			return
 		}
 
-		featureid := &http.Cookie{
+		caseid := &http.Cookie{
 			Name:  "CASEID",
 			Value: r.FormValue("id"),
 			Path:  "/",
@@ -597,10 +620,11 @@ func CaseInfo(w http.ResponseWriter, r *http.Request) {
 			Path:  "/",
 		}
 
-		http.SetCookie(w, featureid)
+		http.SetCookie(w, caseid)
 		http.SetCookie(w, id)
 		err = t.Execute(w, nil)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
@@ -1287,9 +1311,24 @@ func MonitorMainPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.RequestURI)
 	expiration := time.Now().AddDate(0, 0, -1)
-	cookie := http.Cookie{Name: "SESSIONID", Value: "You need Login at first", Expires: expiration}
-	http.SetCookie(w, &cookie)
+	sgid := http.Cookie{Name: "SGID", Value: "You need Login at first", Expires: expiration}
+	sessid := http.Cookie{Name: "SESSIONID", Value: "You need Login at first", Expires: expiration}
+	device := http.Cookie{Name: "Device", Value: "You need Login at first", Expires: expiration}
+	taskid := http.Cookie{Name: "TASKID", Value: "You need Login at first", Expires: expiration}
+	unique := http.Cookie{Name: "UNIQUE", Value: "You need Login at first", Expires: expiration}
+	groupid := http.Cookie{Name: "GROUPID", Value: "You need Login at first", Expires: expiration}
+	featureid := http.Cookie{Name: "FEATUREID", Value: "You need Login at first", Expires: expiration}
+	http.SetCookie(w, &sgid)
+	http.SetCookie(w, &sessid)
+	http.SetCookie(w, &device)
+	http.SetCookie(w, &taskid)
+	http.SetCookie(w, &unique)
+	http.SetCookie(w, &groupid)
+	http.SetCookie(w, &featureid)
+	w.Header().Set("Location", "/login")
+	w.WriteHeader(http.StatusTemporaryRedirect)
 }
 
 func ClearCookie(w http.ResponseWriter, name string) http.ResponseWriter {
@@ -1332,6 +1371,7 @@ func Start() {
 	mux.HandleFunc("/ws", WS)
 	mux.HandleFunc("/runcaseresultws", RunCaseResultWS)
 	mux.HandleFunc("/login", Login)
+	mux.HandleFunc("/logout", Logout)
 	mux.HandleFunc("/mainpage", MainPage)
 	mux.HandleFunc("/monitor", MonitorPage)
 	mux.HandleFunc("/monitormain", MonitorMainPage)
@@ -1362,11 +1402,18 @@ func AddContextSupport(next http.Handler) http.Handler {
 					// to ctx. The provided ctx must be non-nil.
 					next.ServeHTTP(w, r.WithContext(ctx))
 				} else {
-					Logout(w, r)
-					Login(w, r)
+					if r.RequestURI == "/login" {
+						next.ServeHTTP(w, r)
+					} else {
+						Logout(w, r)
+					}
 				}
 			} else {
-				Login(w, r)
+				if r.RequestURI == "/login" || r.RequestURI == "/" {
+					next.ServeHTTP(w, r)
+				} else {
+					Logout(w, r)
+				}
 			}
 		}
 	})
@@ -1374,4 +1421,5 @@ func AddContextSupport(next http.Handler) http.Handler {
 
 func init() {
 	Engine = controller.New()
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
 }

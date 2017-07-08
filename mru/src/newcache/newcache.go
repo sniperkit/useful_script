@@ -55,12 +55,13 @@ func (tr *NewCache) Save() {
 		log.Println("Cannot format db for debug")
 		return
 	}
-	util.SaveToFile(tr.Name+".json", js)
+	util.SaveToFile("asset/db/common/COMMON.json", js)
+	util.SaveToFile("asset/db/personal/"+tr.Name+".json", js)
 }
 
 func (tr *NewCache) Restore() {
-	tr.RestoreCaseFromFile("allcases.json")
-	tr.RestoreCaseFromFile(tr.Name + ".json")
+	tr.RestoreCaseFromFile("asset/db/common/COMMON.json")
+	tr.RestoreCaseFromFile("asset/db/personal/" + tr.Name + ".json")
 }
 
 func (tr *NewCache) RestoreCaseFromFile(name string) {
