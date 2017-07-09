@@ -4,6 +4,7 @@ import (
 	//	"command"
 	"context"
 	"controller"
+	"encoding/base64"
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"html/template"
@@ -11,6 +12,7 @@ import (
 	"log"
 	"mcase"
 	"net/http"
+	"path"
 	"result"
 	"rut"
 	"script"
@@ -270,7 +272,7 @@ func TreeView(w http.ResponseWriter, r *http.Request) {
 	sessionid, _ := sid.(string)
 	sess, _ := Engine.Sessions[sessionid]
 
-	log.Printf("%q", sess.NewCache)
+	//log.Printf("%q", sess.NewCache)
 	if r.Method == "GET" {
 		log.Println("Dump tree")
 		encoder := json.NewEncoder(w)
@@ -1287,6 +1289,67 @@ func MonitorPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func UploadTopology(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := r.Cookie("SESSIONID")
+	sess, _ := Engine.Sessions[cookie.Value]
+	if r.Method == "POST" {
+		r.ParseForm()
+		//log.Printf("%#v\n", r.Form)
+
+		caseid, err := r.Cookie("CASEID")
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, err.Error())
+		}
+
+		if r.FormValue("name") == "" || r.FormValue("content") == "" {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, "Invalid input parameters")
+			return
+		}
+
+		name := string(r.FormValue("name"))
+		content := r.FormValue("content")
+
+		ss := strings.Split(content, ",")
+		if len(ss) != 2 {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, "File should be enconded as base64")
+			return
+		}
+
+		//On the client side use FileReader.readASDataUrl to encode the data in base64.
+		//Here we decode the content.
+		decoded, err := base64.StdEncoding.DecodeString(ss[1])
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		var topology string
+
+		log.Println(r.FormValue("name"))
+		if path.Ext(name) == ".png" || path.Ext(name) == ".jpg" {
+			topology = caseid.Value + path.Ext(name)
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, "Topology must be a picture of type : png/jpg")
+			return
+		}
+
+		err = sess.NewCache.SetTopologyByID(caseid.Value, topology, decoded)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	}
+}
+
 func MonitorMainPage(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.Method)
 	if r.Method == "GET" {
@@ -1375,6 +1438,7 @@ func Start() {
 	mux.HandleFunc("/mainpage", MainPage)
 	mux.HandleFunc("/monitor", MonitorPage)
 	mux.HandleFunc("/monitormain", MonitorMainPage)
+	mux.HandleFunc("/uploadtopology", UploadTopology)
 	mux.HandleFunc("/", Login)
 	mux.HandleFunc("/test", Test)
 	mux.Handle("/asset/web/", http.FileServer(http.Dir(".")))

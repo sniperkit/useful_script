@@ -36,12 +36,15 @@
 						<input type="text" v-model="ncase.DUTCount" class="form-control required" placeholder="2">
 					</div>
 				</div>
+				<form id="topologyform" enctype="multipart/form-data" action="/uploadtopology" method="post"> 
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="case_topology">Topology</label>
 					<div class="col-sm-4">
-						<input type="file" v-model="ncase.Topology" class="form-control required" placeholder="Topology.jpg">
+						<input type="file" name="topology" id="topology" class="form-control required" placeholder="Topology.jpg">
+						<input type="submit" id="uploadtopology" @click.prevent="realUpload()" value="upload" /> 
 					</div>
 				</div>
+				</form>
 			</fieldset>     
 			<fieldset class="col-sm-offset-3">
 				<legend></legend>
@@ -118,6 +121,38 @@
 			ncase.Feature=e.Name;
 		}
 	}
+
+	function uploadTopology() {
+		$("#uploadtopology").click();
+	}
+
+	function realUpload() {
+		var reader = new FileReader();
+		var fs = document.querySelector("input[type=file]").files;
+		var file = fs[0];
+
+		reader.onload = function() {
+			var Content = this.result;
+			$.ajax({
+				type: "post",
+				url: "uploadtopology",
+				async: false,
+				data: {
+					name: file.name,
+					content: Content,
+				},
+				success: function(d) {
+					window.location="caseinfo?id="+getCookie("CASEID");
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(XMLHttpRequest.responseText);
+				},
+			});
+
+		};
+		reader.readAsDataURL(file);
+		return true;
+	}
 </script>
 <script>
 	var newCase = new Vue({
@@ -142,7 +177,7 @@
 					async:false,
 					data: {newcase: JSON.stringify(this.ncase)},
 					success:function(data) {
-						window.location="caseinfo?id="+getCookie("CASEID")
+						uploadTopology();
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						alert(XMLHttpRequest.responseText);

@@ -64,6 +64,21 @@ func (tr *NewCache) Restore() {
 	tr.RestoreCaseFromFile("asset/db/personal/" + tr.Name + ".json")
 }
 
+func (tr *NewCache) SetTopologyByID(id, name string, content []byte) error {
+	//Just implement Set Case ID
+	c, err := tr.GetCaseByID(id)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("Save %s\n", name)
+	c.SetTopology(name, content)
+
+	defer tr.Save()
+
+	return nil
+}
+
 func (tr *NewCache) RestoreCaseFromFile(name string) {
 	data, err := ioutil.ReadFile(name)
 	if err != nil {

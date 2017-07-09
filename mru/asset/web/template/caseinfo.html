@@ -4,16 +4,16 @@
 <div id="caseinfo" class="container-fluid display-table v-align">
 	<form class="form-horizontal">
 	</form>
-	<div class="col-md-3">
+	<div class="col-md-5">
 		<div class="md-lid">
 			<div class="tab-featured-image">
 				<div class="tab-content">
-					<img src="http://www.dasannetworks.com/en/images/sub/solutions_en2_1.jpg" alt="tab1" class="img img-responsive">
+					<img :src="topology" alt="tab1" class="img img-responsive">
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="tab-featured-image">
 			<div class="tab-content">
 				<div class="form-group">
@@ -135,11 +135,20 @@
 		el: '#caseinfo',
 		data: {
 			current: dumpCase(getCookie("CASEID")),
+			topology: dumpCase(getCookie("CASEID")).Topology,
 			id: getCookie("CASEID"),
 			submitted:false,
 			cresults:[{
+				Group: "Sample",
+				SubGroup: "SampleSub",
+				Feature: "SampleFeature",
+				Pass: true,
 				Message: "hello"
 			}, {
+				Group: "Sample",
+				SubGroup: "SampleSub",
+				Feature: "SampleFeature",
+				Pass: false,
 				Message: "world"
 			}
 			],

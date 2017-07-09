@@ -12,6 +12,7 @@ import (
 	"rut"
 	"strings"
 	"task"
+	"util"
 )
 
 type Case struct {
@@ -24,6 +25,7 @@ type Case struct {
 	ID       string
 	DUTCount int
 	TCount   int
+	Topology string
 }
 
 func Hash(name []byte) []byte {
@@ -233,6 +235,11 @@ func (c *Case) IsTaskExist(t *task.Task) bool {
 	}
 
 	return false
+}
+
+func (c *Case) SetTopology(name string, content []byte) {
+	c.Topology = "asset/web/topology/" + name
+	util.SaveToFile(c.Topology, content)
 }
 
 func init() {
