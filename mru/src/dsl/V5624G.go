@@ -2,244 +2,223 @@ package dsl
 
 import (
 	"command"
-	"log"
 )
 
-type V8500 struct {
+type V5624G struct {
 	Name        string
 	DefaultSlot string
 }
 
-func (v8 V8500) Port(port string) string {
-	return v8.DefaultSlot + "/" + port
+func (v5 V5624G) Port(port string) string {
+	return v5.DefaultSlot + "/" + port
 }
 
-var V8 = V8500{
-	Name:        "V8",
-	DefaultSlot: "10",
+var V5 = V5624G{
+	Name: "V5",
 }
 
-func (v8 V8500) PortEnable(Port, Enable string) []*command.Command {
+func (v5 V5624G) PortEnable(Port, Enable string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(Port),
+		CMD:  "bridge",
 	})
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "no shutdown",
+		Mode: "bridge",
+		CMD:  "port enable " + Port,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 
 	return res
 }
 
-func (v8 V8500) PortDisable(Port, Disable string) []*command.Command {
+func (v5 V5624G) PortDisable(Port, Disable string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(Port),
+		CMD:  "bridge",
 	})
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "shutdown",
+		Mode: "bridge",
+		CMD:  "port disable " + Port,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 
 	return res
 }
 
-func (v8 V8500) PortPvid(Port, Pvid string) []*command.Command {
+func (v5 V5624G) PortPvid(Port, Pvid string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(Port),
+		CMD:  "bridge",
 	})
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "pvid " + Pvid,
+		Mode: "bridge",
+		CMD:  "vlan pvid " + Port + " " + Pvid,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 
 	return res
 }
 
-func (v8 V8500) PortSpeed(Port, Speed string) []*command.Command {
-	var local string
-	if Speed == "1000" {
-		local = "1g"
-	} else if Speed == "100" {
-		local = "100m"
-	} else if Speed == "10" {
-		local = "10m"
-	} else {
-		log.Printf("Invalid spped set % set port :%s speed to 1g ", Speed, Port)
-		local = "1g"
-	}
+func (v5 V5624G) PortSpeed(Port, Speed string) []*command.Command {
 
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(Port),
+		CMD:  "bridge",
 	})
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "bandwidth " + local,
+		Mode: "bridge",
+		CMD:  "port speed  " + Port + " " + Speed,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 
 	return res
 }
 
-func (v8 V8500) VLAN(VLAN string) []*command.Command {
+func (v5 V5624G) VLAN(VLAN string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "vlan database",
+		CMD:  "bridge",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-vlan",
-		CMD:  "vlan " + VLAN,
+		Mode: "bridge",
+		CMD:  "vlan create " + VLAN,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-vlan",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 
 	return res
 }
 
-func (v8 V8500) NoVLAN(VLAN string) []*command.Command {
+func (v5 V5624G) NoVLAN(VLAN string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "vlan database",
+		CMD:  "bridge",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-vlan",
+		Mode: "bridge",
 		CMD:  "no vlan " + VLAN,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-vlan",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 
 	return res
 }
 
-func (v8 V8500) VLANAdd(VLAN, Add string) []*command.Command {
+func (v5 V5624G) VLANAdd(VLAN, Add string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(Add),
+		CMD:  "bridge",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "switchport mode access",
+		Mode: "bridge",
+		CMD:  "vlan add " + VLAN + " " + Add + " untagged",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "switchport access vlan " + VLAN,
-	})
-
-	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 	return res
 }
 
-func (v8 V8500) VLANAddT(VLAN, AddT string) []*command.Command {
+func (v5 V5624G) VLANAddT(VLAN, AddT string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(AddT),
+		CMD:  "bridge",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "switchport mode trunk",
+		Mode: "bridge",
+		CMD:  "vlan add " + VLAN + " " + AddT + " tagged",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "switchport trunk allowed vlan add " + VLAN,
+		Mode: "bridge",
+		CMD:  "exit",
+	})
+
+	res = append(res, v5.PortPvid(AddT, VLAN)...)
+	return res
+}
+
+func (v5 V5624G) VLANDel(VLAN, Del string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "bridge",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
+		CMD:  "vlan del " + VLAN + " " + Del,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 	return res
 }
 
-func (v8 V8500) VLANDel(VLAN, Del string) []*command.Command {
+func (v5 V5624G) VLANDelT(VLAN, DelT string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(Del),
+		CMD:  "bridge",
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "no switchport access vlan",
+		Mode: "bridge",
+		CMD:  "vlan del " + VLAN + " " + DelT,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "bridge",
 		CMD:  "exit",
 	})
 	return res
 }
 
-func (v8 V8500) VLANDelT(VLAN, DelT string) []*command.Command {
+func (v5 V5624G) VLANShutdown(VLAN, Shutdown string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface gigabitethernet " + v8.Port(DelT),
-	})
-
-	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "no switchport access trunk",
-	})
-
-	res = append(res, &command.Command{
-		Mode: "config-if",
-		CMD:  "exit",
-	})
-	return res
-}
-
-func (v8 V8500) VLANShutdown(VLAN, Shutdown string) []*command.Command {
-	res := make([]*command.Command, 0, 1)
-	res = append(res, &command.Command{
-		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -254,11 +233,11 @@ func (v8 V8500) VLANShutdown(VLAN, Shutdown string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANNoShutdown(VLAN, NoShutdown string) []*command.Command {
+func (v5 V5624G) VLANNoShutdown(VLAN, NoShutdown string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -273,11 +252,11 @@ func (v8 V8500) VLANNoShutdown(VLAN, NoShutdown string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANIP(VLAN, IP string) []*command.Command {
+func (v5 V5624G) VLANIP(VLAN, IP string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -292,11 +271,11 @@ func (v8 V8500) VLANIP(VLAN, IP string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoVLANIP(VLAN, IP string) []*command.Command {
+func (v5 V5624G) NoVLANIP(VLAN, IP string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -311,11 +290,11 @@ func (v8 V8500) NoVLANIP(VLAN, IP string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANIP2(VLAN, IP2 string) []*command.Command {
+func (v5 V5624G) VLANIP2(VLAN, IP2 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -330,11 +309,11 @@ func (v8 V8500) VLANIP2(VLAN, IP2 string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoVLANIP2(VLAN, IP2 string) []*command.Command {
+func (v5 V5624G) NoVLANIP2(VLAN, IP2 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -349,79 +328,79 @@ func (v8 V8500) NoVLANIP2(VLAN, IP2 string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANAddTIP(VLAN, AddT, IP string) []*command.Command {
+func (v5 V5624G) VLANAddTIP(VLAN, AddT, IP string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAddT(VLAN, AddT)...)
-	res = append(res, v8.VLANIP(VLAN, IP)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAddT(VLAN, AddT)...)
+	res = append(res, v5.VLANIP(VLAN, IP)...)
 	return res
 }
 
-func (v8 V8500) VLANAddTIP2(VLAN, AddT, IP2 string) []*command.Command {
+func (v5 V5624G) VLANAddTIP2(VLAN, AddT, IP2 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAddT(VLAN, AddT)...)
-	res = append(res, v8.VLANIP2(VLAN, IP2)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAddT(VLAN, AddT)...)
+	res = append(res, v5.VLANIP2(VLAN, IP2)...)
 	return res
 }
 
-func (v8 V8500) VLANAddTIPNoShutdown(VLAN, AddT, IP, NoShutdown string) []*command.Command {
+func (v5 V5624G) VLANAddTIPNoShutdown(VLAN, AddT, IP, NoShutdown string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAddT(VLAN, AddT)...)
-	res = append(res, v8.VLANIP(VLAN, IP)...)
-	res = append(res, v8.VLANNoShutdown(VLAN, NoShutdown)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAddT(VLAN, AddT)...)
+	res = append(res, v5.VLANIP(VLAN, IP)...)
+	res = append(res, v5.VLANNoShutdown(VLAN, NoShutdown)...)
 	return res
 }
 
-func (v8 V8500) VLANAddTIP2NoShutdown(VLAN, AddT, IP2, NoShutdown string) []*command.Command {
+func (v5 V5624G) VLANAddTIP2NoShutdown(VLAN, AddT, IP2, NoShutdown string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAddT(VLAN, AddT)...)
-	res = append(res, v8.VLANIP2(VLAN, IP2)...)
-	res = append(res, v8.VLANNoShutdown(VLAN, NoShutdown)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAddT(VLAN, AddT)...)
+	res = append(res, v5.VLANIP2(VLAN, IP2)...)
+	res = append(res, v5.VLANNoShutdown(VLAN, NoShutdown)...)
 	return res
 }
 
-func (v8 V8500) VLANAddUTIP(VLAN, AddUT, IP string) []*command.Command {
+func (v5 V5624G) VLANAddUTIP(VLAN, AddUT, IP string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAdd(VLAN, AddUT)...)
-	res = append(res, v8.VLANIP(VLAN, IP)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAdd(VLAN, AddUT)...)
+	res = append(res, v5.VLANIP(VLAN, IP)...)
 	return res
 }
 
-func (v8 V8500) VLANAddUTIP2(VLAN, AddUT, IP2 string) []*command.Command {
+func (v5 V5624G) VLANAddUTIP2(VLAN, AddUT, IP2 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAdd(VLAN, AddUT)...)
-	res = append(res, v8.VLANIP2(VLAN, IP2)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAdd(VLAN, AddUT)...)
+	res = append(res, v5.VLANIP2(VLAN, IP2)...)
 	return res
 }
 
-func (v8 V8500) VLANAddUTIPNoShutdown(VLAN, AddUT, IP, NoShutdown string) []*command.Command {
+func (v5 V5624G) VLANAddUTIPNoShutdown(VLAN, AddUT, IP, NoShutdown string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAdd(VLAN, AddUT)...)
-	res = append(res, v8.VLANIP(VLAN, IP)...)
-	res = append(res, v8.VLANNoShutdown(VLAN, NoShutdown)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAdd(VLAN, AddUT)...)
+	res = append(res, v5.VLANIP(VLAN, IP)...)
+	res = append(res, v5.VLANNoShutdown(VLAN, NoShutdown)...)
 	return res
 }
 
-func (v8 V8500) VLANAddUTIP2NoShutdown(VLAN, AddUT, IP2, NoShutdown string) []*command.Command {
+func (v5 V5624G) VLANAddUTIP2NoShutdown(VLAN, AddUT, IP2, NoShutdown string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLAN(VLAN)...)
-	res = append(res, v8.VLANAdd(VLAN, AddUT)...)
-	res = append(res, v8.VLANIP2(VLAN, IP2)...)
-	res = append(res, v8.VLANNoShutdown(VLAN, NoShutdown)...)
+	res = append(res, v5.VLAN(VLAN)...)
+	res = append(res, v5.VLANAdd(VLAN, AddUT)...)
+	res = append(res, v5.VLANIP2(VLAN, IP2)...)
+	res = append(res, v5.VLANNoShutdown(VLAN, NoShutdown)...)
 	return res
 }
 
-func (v8 V8500) VLANIP6Enable(VLAN, IP6, Enable string) []*command.Command {
+func (v5 V5624G) VLANIP6Enable(VLAN, IP6, Enable string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -436,11 +415,11 @@ func (v8 V8500) VLANIP6Enable(VLAN, IP6, Enable string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoVLANIP6Enable(VLAN, IP6, Enable string) []*command.Command {
+func (v5 V5624G) NoVLANIP6Enable(VLAN, IP6, Enable string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -455,11 +434,11 @@ func (v8 V8500) NoVLANIP6Enable(VLAN, IP6, Enable string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANIP6(VLAN, IP6 string) []*command.Command {
+func (v5 V5624G) VLANIP6(VLAN, IP6 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -474,11 +453,11 @@ func (v8 V8500) VLANIP6(VLAN, IP6 string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoVLANIP6(VLAN, IP6 string) []*command.Command {
+func (v5 V5624G) NoVLANIP6(VLAN, IP6 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -493,11 +472,11 @@ func (v8 V8500) NoVLANIP6(VLAN, IP6 string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANIP6LL(VLAN, IP6LL string) []*command.Command {
+func (v5 V5624G) VLANIP6LL(VLAN, IP6LL string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -512,18 +491,18 @@ func (v8 V8500) VLANIP6LL(VLAN, IP6LL string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) VLANIP6LLIP6(VLAN, IP6LL, IP6 string) []*command.Command {
+func (v5 V5624G) VLANIP6LLIP6(VLAN, IP6LL, IP6 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
-	res = append(res, v8.VLANIP6LL(VLAN, IP6LL)...)
-	res = append(res, v8.VLANIP6(VLAN, IP6)...)
+	res = append(res, v5.VLANIP6LL(VLAN, IP6LL)...)
+	res = append(res, v5.VLANIP6(VLAN, IP6)...)
 	return res
 }
 
-func (v8 V8500) NoVLANIP6LL(VLAN, IP6LL string) []*command.Command {
+func (v5 V5624G) NoVLANIP6LL(VLAN, IP6LL string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + VLAN,
+		CMD:  "interface br" + VLAN,
 	})
 
 	res = append(res, &command.Command{
@@ -538,7 +517,7 @@ func (v8 V8500) NoVLANIP6LL(VLAN, IP6LL string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6(OSPF6 string) []*command.Command {
+func (v5 V5624G) OSPF6(OSPF6 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -552,7 +531,7 @@ func (v8 V8500) OSPF6(OSPF6 string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6(OSPF6 string) []*command.Command {
+func (v5 V5624G) NoOSPF6(OSPF6 string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -562,7 +541,7 @@ func (v8 V8500) NoOSPF6(OSPF6 string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6Rid(OSPF6, Rid string) []*command.Command {
+func (v5 V5624G) OSPF6Rid(OSPF6, Rid string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -581,7 +560,7 @@ func (v8 V8500) OSPF6Rid(OSPF6, Rid string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6Rid(OSPF6, Rid string) []*command.Command {
+func (v5 V5624G) NoOSPF6Rid(OSPF6, Rid string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -600,11 +579,11 @@ func (v8 V8500) NoOSPF6Rid(OSPF6, Rid string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceArea(OSPF6, Interface, Area string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceArea(OSPF6, Interface, Area string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -619,11 +598,11 @@ func (v8 V8500) OSPF6InterfaceArea(OSPF6, Interface, Area string) []*command.Com
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfaceArea(OSPF6, Interface, Area string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceArea(OSPF6, Interface, Area string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -638,11 +617,11 @@ func (v8 V8500) NoOSPF6InterfaceArea(OSPF6, Interface, Area string) []*command.C
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceCost(OSPF6, Interface, Cost string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceCost(OSPF6, Interface, Cost string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -657,11 +636,11 @@ func (v8 V8500) OSPF6InterfaceCost(OSPF6, Interface, Cost string) []*command.Com
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceDeadInterval(OSPF6, Interface, DeadInterval string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceDeadInterval(OSPF6, Interface, DeadInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -676,12 +655,12 @@ func (v8 V8500) OSPF6InterfaceDeadInterval(OSPF6, Interface, DeadInterval string
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceHelloInterval(OSPF6, Interface, HelloInterval string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceHelloInterval(OSPF6, Interface, HelloInterval string) []*command.Command {
 
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -696,11 +675,11 @@ func (v8 V8500) OSPF6InterfaceHelloInterval(OSPF6, Interface, HelloInterval stri
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitInterval string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -715,11 +694,11 @@ func (v8 V8500) OSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitInt
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -734,11 +713,11 @@ func (v8 V8500) OSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay stri
 	return res
 }
 
-func (v8 V8500) OSPF6InterfacePriority(OSPF6, Interface, Priority string) []*command.Command {
+func (v5 V5624G) OSPF6InterfacePriority(OSPF6, Interface, Priority string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -753,11 +732,11 @@ func (v8 V8500) OSPF6InterfacePriority(OSPF6, Interface, Priority string) []*com
 	return res
 }
 
-func (v8 V8500) OSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string) []*command.Command {
+func (v5 V5624G) OSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -772,11 +751,11 @@ func (v8 V8500) OSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string) 
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfaceCost(OSPF6, Interface, Cost string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceCost(OSPF6, Interface, Cost string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -791,11 +770,11 @@ func (v8 V8500) NoOSPF6InterfaceCost(OSPF6, Interface, Cost string) []*command.C
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfaceDeadInterval(OSPF6, Interface, DeadInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceDeadInterval(OSPF6, Interface, DeadInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -810,11 +789,11 @@ func (v8 V8500) NoOSPF6InterfaceDeadInterval(OSPF6, Interface, DeadInterval stri
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfaceHelloInterval(OSPF6, Interface, HelloInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceHelloInterval(OSPF6, Interface, HelloInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -830,11 +809,11 @@ func (v8 V8500) NoOSPF6InterfaceHelloInterval(OSPF6, Interface, HelloInterval st
 
 }
 
-func (v8 V8500) NoOSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -849,11 +828,11 @@ func (v8 V8500) NoOSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitI
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -868,11 +847,11 @@ func (v8 V8500) NoOSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay st
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfacePriority(OSPF6, Interface, Priority string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfacePriority(OSPF6, Interface, Priority string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -887,11 +866,11 @@ func (v8 V8500) NoOSPF6InterfacePriority(OSPF6, Interface, Priority string) []*c
 	return res
 }
 
-func (v8 V8500) NoOSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string) []*command.Command {
+func (v5 V5624G) NoOSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
-		CMD:  "interface vlan " + Interface,
+		CMD:  "interface br" + Interface,
 	})
 
 	res = append(res, &command.Command{
@@ -906,7 +885,7 @@ func (v8 V8500) NoOSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string
 	return res
 }
 
-func (v8 V8500) OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command {
+func (v5 V5624G) OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -925,7 +904,7 @@ func (v8 V8500) OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*com
 	return res
 }
 
-func (v8 V8500) NoOSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command {
+func (v5 V5624G) NoOSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -944,7 +923,7 @@ func (v8 V8500) NoOSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*c
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -963,7 +942,7 @@ func (v8 V8500) OSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -982,7 +961,7 @@ func (v8 V8500) OSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routemap 
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1001,7 +980,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric stri
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metrictype string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1020,7 +999,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metrict
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate, Metric, Metrictype string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate, Metric, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1039,7 +1018,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate, M
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, Metric, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, Metric, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1058,7 +1037,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, Met
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginate, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginate, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1077,7 +1056,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginate,
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Metric, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Metric, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1096,7 +1075,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOrig
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1115,7 +1094,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always stri
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, Always, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, Always, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1134,7 +1113,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, Alw
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Always, Metric string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Always, Metric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1153,7 +1132,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Alway
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate, Always, Metrictype string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate, Always, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1172,7 +1151,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate, A
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOriginate, Always, Metric, Metrictype string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOriginate, Always, Metric, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1191,7 +1170,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOrigin
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOriginate, Always, Metric, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOriginate, Always, Metric, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1210,7 +1189,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOriginat
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1229,7 +1208,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOrig
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metric, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metric, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1248,7 +1227,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, Defau
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1267,7 +1246,7 @@ func (v8 V8500) NoOSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*comma
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1286,7 +1265,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routema
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1305,7 +1284,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric st
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metrictype string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1324,7 +1303,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metri
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate, Metric, Metrictype string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate, Metric, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1343,7 +1322,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate,
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, Metric, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, Metric, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1362,7 +1341,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, M
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginate, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginate, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1381,7 +1360,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginat
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Metric, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Metric, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1400,7 +1379,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOr
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1420,7 +1399,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always st
 
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, Always, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, Always, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1440,7 +1419,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, A
 
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Always, Metric string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Always, Metric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1460,7 +1439,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Alw
 
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate, Always, Metrictype string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate, Always, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1480,7 +1459,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate,
 
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOriginate, Always, Metric, Metrictype string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOriginate, Always, Metric, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1500,7 +1479,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOrig
 
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOriginate, Always, Metric, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOriginate, Always, Metric, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1520,7 +1499,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOrigin
 
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1539,7 +1518,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOr
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metric, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, DefaultOriginate, Always, Metric, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1558,7 +1537,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, Def
 	return res
 }
 
-func (v8 V8500) OSPF6Redistribute(OSPF6, Redistribute string) []*command.Command {
+func (v5 V5624G) OSPF6Redistribute(OSPF6, Redistribute string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1577,7 +1556,7 @@ func (v8 V8500) OSPF6Redistribute(OSPF6, Redistribute string) []*command.Command
 	return res
 }
 
-func (v8 V8500) OSPF6RedistributeMetric(OSPF6, Redistribute, Metric string) []*command.Command {
+func (v5 V5624G) OSPF6RedistributeMetric(OSPF6, Redistribute, Metric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1596,7 +1575,7 @@ func (v8 V8500) OSPF6RedistributeMetric(OSPF6, Redistribute, Metric string) []*c
 	return res
 }
 
-func (v8 V8500) OSPF6RedistributeMetrictype(OSPF6, Redistribute, Metrictype string) []*command.Command {
+func (v5 V5624G) OSPF6RedistributeMetrictype(OSPF6, Redistribute, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1615,7 +1594,7 @@ func (v8 V8500) OSPF6RedistributeMetrictype(OSPF6, Redistribute, Metrictype stri
 	return res
 }
 
-func (v8 V8500) OSPF6RedistributeRoutemap(OSPF6, Redistribute, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6RedistributeRoutemap(OSPF6, Redistribute, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1634,7 +1613,7 @@ func (v8 V8500) OSPF6RedistributeRoutemap(OSPF6, Redistribute, Routemap string) 
 	return res
 }
 
-func (v8 V8500) OSPF6RedistributeMetricMetrictype(OSPF6, Redistribute, Metric, Metrictype string) []*command.Command {
+func (v5 V5624G) OSPF6RedistributeMetricMetrictype(OSPF6, Redistribute, Metric, Metrictype string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1653,7 +1632,7 @@ func (v8 V8500) OSPF6RedistributeMetricMetrictype(OSPF6, Redistribute, Metric, M
 	return res
 }
 
-func (v8 V8500) OSPF6RedistributeMetricRoutemap(OSPF6, Redistribute, Metric, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6RedistributeMetricRoutemap(OSPF6, Redistribute, Metric, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1672,7 +1651,7 @@ func (v8 V8500) OSPF6RedistributeMetricRoutemap(OSPF6, Redistribute, Metric, Rou
 	return res
 }
 
-func (v8 V8500) OSPF6RedistributeMetricMetrictypeRoutemap(OSPF6, Redistribute, Metric, Metrictype, Routemap string) []*command.Command {
+func (v5 V5624G) OSPF6RedistributeMetricMetrictypeRoutemap(OSPF6, Redistribute, Metric, Metrictype, Routemap string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1691,7 +1670,7 @@ func (v8 V8500) OSPF6RedistributeMetricMetrictypeRoutemap(OSPF6, Redistribute, M
 	return res
 }
 
-func (v8 V8500) NoOSPF6Redistribute(OSPF6, Redistribute string) []*command.Command {
+func (v5 V5624G) NoOSPF6Redistribute(OSPF6, Redistribute string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1710,31 +1689,31 @@ func (v8 V8500) NoOSPF6Redistribute(OSPF6, Redistribute string) []*command.Comma
 	return res
 }
 
-func (v8 V8500) NoOSPF6RedistributeMetric(OSPF6, Redistribute, Metric string) []*command.Command {
-	return v8.NoOSPF6Redistribute(OSPF6, Redistribute)
+func (v5 V5624G) NoOSPF6RedistributeMetric(OSPF6, Redistribute, Metric string) []*command.Command {
+	return v5.NoOSPF6Redistribute(OSPF6, Redistribute)
 }
 
-func (v8 V8500) NoOSPF6RedistributeMetrictype(OSPF6, Redistribute, Metrictype string) []*command.Command {
-	return v8.NoOSPF6Redistribute(OSPF6, Redistribute)
+func (v5 V5624G) NoOSPF6RedistributeMetrictype(OSPF6, Redistribute, Metrictype string) []*command.Command {
+	return v5.NoOSPF6Redistribute(OSPF6, Redistribute)
 }
 
-func (v8 V8500) NoOSPF6RedistributeRoutemap(OSPF6, Redistribute, Routemap string) []*command.Command {
-	return v8.NoOSPF6Redistribute(OSPF6, Redistribute)
+func (v5 V5624G) NoOSPF6RedistributeRoutemap(OSPF6, Redistribute, Routemap string) []*command.Command {
+	return v5.NoOSPF6Redistribute(OSPF6, Redistribute)
 }
 
-func (v8 V8500) NoOSPF6RedistributeMetricMetrictype(OSPF6, Redistribute, Metric, Metrictype string) []*command.Command {
-	return v8.NoOSPF6Redistribute(OSPF6, Redistribute)
+func (v5 V5624G) NoOSPF6RedistributeMetricMetrictype(OSPF6, Redistribute, Metric, Metrictype string) []*command.Command {
+	return v5.NoOSPF6Redistribute(OSPF6, Redistribute)
 }
 
-func (v8 V8500) NoOSPF6RedistributeMetricRoutemap(OSPF6, Redistribute, Metric, Routemap string) []*command.Command {
-	return v8.NoOSPF6Redistribute(OSPF6, Redistribute)
+func (v5 V5624G) NoOSPF6RedistributeMetricRoutemap(OSPF6, Redistribute, Metric, Routemap string) []*command.Command {
+	return v5.NoOSPF6Redistribute(OSPF6, Redistribute)
 }
 
-func (v8 V8500) NoOSPF6RedistributeMetricMetrictypeRoutemap(OSPF6, Redistribute, Metric, Metrictype, Routemap string) []*command.Command {
-	return v8.NoOSPF6Redistribute(OSPF6, Redistribute)
+func (v5 V5624G) NoOSPF6RedistributeMetricMetrictypeRoutemap(OSPF6, Redistribute, Metric, Metrictype, Routemap string) []*command.Command {
+	return v5.NoOSPF6Redistribute(OSPF6, Redistribute)
 }
 
-func (v8 V8500) OSPF6Summary(OSPF6, Summary string) []*command.Command {
+func (v5 V5624G) OSPF6Summary(OSPF6, Summary string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1753,7 +1732,7 @@ func (v8 V8500) OSPF6Summary(OSPF6, Summary string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []*command.Command {
+func (v5 V5624G) OSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1772,7 +1751,7 @@ func (v8 V8500) OSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []*c
 	return res
 }
 
-func (v8 V8500) NoOSPF6Summary(OSPF6, Summary string) []*command.Command {
+func (v5 V5624G) NoOSPF6Summary(OSPF6, Summary string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1791,7 +1770,7 @@ func (v8 V8500) NoOSPF6Summary(OSPF6, Summary string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []*command.Command {
+func (v5 V5624G) NoOSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1810,7 +1789,7 @@ func (v8 V8500) NoOSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []
 	return res
 }
 
-func (v8 V8500) OSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Command {
+func (v5 V5624G) OSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1829,7 +1808,7 @@ func (v8 V8500) OSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Comma
 	return res
 }
 
-func (v8 V8500) NoOSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Command {
+func (v5 V5624G) NoOSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1848,7 +1827,7 @@ func (v8 V8500) NoOSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Com
 	return res
 }
 
-func (v8 V8500) OSPF6Passive(OSPF6, Passive string) []*command.Command {
+func (v5 V5624G) OSPF6Passive(OSPF6, Passive string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1867,7 +1846,7 @@ func (v8 V8500) OSPF6Passive(OSPF6, Passive string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6Passive(OSPF6, Passive string) []*command.Command {
+func (v5 V5624G) NoOSPF6Passive(OSPF6, Passive string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1886,7 +1865,7 @@ func (v8 V8500) NoOSPF6Passive(OSPF6, Passive string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Command {
+func (v5 V5624G) OSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1905,7 +1884,7 @@ func (v8 V8500) OSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Comma
 	return res
 }
 
-func (v8 V8500) NoOSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Command {
+func (v5 V5624G) NoOSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1924,7 +1903,7 @@ func (v8 V8500) NoOSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Com
 	return res
 }
 
-func (v8 V8500) OSPF6DistanceExternal(OSPF6, Distance, External string) []*command.Command {
+func (v5 V5624G) OSPF6DistanceExternal(OSPF6, Distance, External string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1943,7 +1922,7 @@ func (v8 V8500) OSPF6DistanceExternal(OSPF6, Distance, External string) []*comma
 	return res
 }
 
-func (v8 V8500) OSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.Command {
+func (v5 V5624G) OSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1962,7 +1941,7 @@ func (v8 V8500) OSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.Com
 	return res
 }
 
-func (v8 V8500) OSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.Command {
+func (v5 V5624G) OSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -1981,7 +1960,7 @@ func (v8 V8500) OSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.Com
 	return res
 }
 
-func (v8 V8500) OSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) []*command.Command {
+func (v5 V5624G) OSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2000,7 +1979,7 @@ func (v8 V8500) OSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) []
 	return res
 }
 
-func (v8 V8500) OSPF6DistanceInterExternal(OSPF6, Distance, Inter, External string) []*command.Command {
+func (v5 V5624G) OSPF6DistanceInterExternal(OSPF6, Distance, Inter, External string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2019,7 +1998,7 @@ func (v8 V8500) OSPF6DistanceInterExternal(OSPF6, Distance, Inter, External stri
 	return res
 }
 
-func (v8 V8500) OSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra, External string) []*command.Command {
+func (v5 V5624G) OSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra, External string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2038,7 +2017,7 @@ func (v8 V8500) OSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra, E
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistanceExternal(OSPF6, Distance, External string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistanceExternal(OSPF6, Distance, External string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2057,7 +2036,7 @@ func (v8 V8500) NoOSPF6DistanceExternal(OSPF6, Distance, External string) []*com
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2076,7 +2055,7 @@ func (v8 V8500) NoOSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.C
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2095,7 +2074,7 @@ func (v8 V8500) NoOSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.C
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2114,7 +2093,7 @@ func (v8 V8500) NoOSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) 
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistanceInterExternal(OSPF6, Distance, Inter, External string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistanceInterExternal(OSPF6, Distance, Inter, External string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2133,7 +2112,7 @@ func (v8 V8500) NoOSPF6DistanceInterExternal(OSPF6, Distance, Inter, External st
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra, External string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra, External string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2152,7 +2131,7 @@ func (v8 V8500) NoOSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra,
 	return res
 }
 
-func (v8 V8500) OSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*command.Command {
+func (v5 V5624G) OSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2171,7 +2150,7 @@ func (v8 V8500) OSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*comma
 	return res
 }
 
-func (v8 V8500) OSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*command.Command {
+func (v5 V5624G) OSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2190,7 +2169,7 @@ func (v8 V8500) OSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*com
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2209,7 +2188,7 @@ func (v8 V8500) NoOSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*com
 	return res
 }
 
-func (v8 V8500) NoOSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*command.Command {
+func (v5 V5624G) NoOSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2228,7 +2207,7 @@ func (v8 V8500) NoOSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*c
 	return res
 }
 
-func (v8 V8500) OSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*command.Command {
+func (v5 V5624G) OSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2247,7 +2226,7 @@ func (v8 V8500) OSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*command
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2266,7 +2245,7 @@ func (v8 V8500) NoOSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*comma
 	return res
 }
 
-func (v8 V8500) OSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
+func (v5 V5624G) OSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2285,7 +2264,7 @@ func (v8 V8500) OSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOriginate string) []*command.Command {
+func (v5 V5624G) OSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOriginate string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2304,7 +2283,7 @@ func (v8 V8500) OSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOriginat
 	return res
 }
 
-func (v8 V8500) OSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistribution string) []*command.Command {
+func (v5 V5624G) OSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistribution string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2323,7 +2302,7 @@ func (v8 V8500) OSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistribution 
 	return res
 }
 
-func (v8 V8500) OSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*command.Command {
+func (v5 V5624G) OSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2342,7 +2321,7 @@ func (v8 V8500) OSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*com
 	return res
 }
 
-func (v8 V8500) OSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInterval string) []*command.Command {
+func (v5 V5624G) OSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2361,7 +2340,7 @@ func (v8 V8500) OSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInter
 	return res
 }
 
-func (v8 V8500) OSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []*command.Command {
+func (v5 V5624G) OSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2380,7 +2359,7 @@ func (v8 V8500) OSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []*c
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2399,7 +2378,7 @@ func (v8 V8500) NoOSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOriginate string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOriginate string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2418,7 +2397,7 @@ func (v8 V8500) NoOSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOrigin
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistribution string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistribution string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2437,7 +2416,7 @@ func (v8 V8500) NoOSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistributio
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2456,7 +2435,7 @@ func (v8 V8500) NoOSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*c
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2475,7 +2454,7 @@ func (v8 V8500) NoOSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInt
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2494,7 +2473,7 @@ func (v8 V8500) NoOSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []
 	return res
 }
 
-func (v8 V8500) OSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
+func (v5 V5624G) OSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2513,7 +2492,7 @@ func (v8 V8500) OSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []*command.Command {
+func (v5 V5624G) OSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2532,7 +2511,7 @@ func (v8 V8500) OSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []*c
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2551,7 +2530,7 @@ func (v8 V8500) NoOSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2570,7 +2549,7 @@ func (v8 V8500) NoOSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []
 	return res
 }
 
-func (v8 V8500) OSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
+func (v5 V5624G) OSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2589,7 +2568,7 @@ func (v8 V8500) OSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) OSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) []*command.Command {
+func (v5 V5624G) OSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2608,7 +2587,7 @@ func (v8 V8500) OSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) []
 	return res
 }
 
-func (v8 V8500) OSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise string) []*command.Command {
+func (v5 V5624G) OSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2627,7 +2606,7 @@ func (v8 V8500) OSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise string
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2646,7 +2625,7 @@ func (v8 V8500) NoOSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2665,7 +2644,7 @@ func (v8 V8500) NoOSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) 
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2684,7 +2663,7 @@ func (v8 V8500) NoOSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise stri
 	return res
 }
 
-func (v8 V8500) OSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*command.Command {
+func (v5 V5624G) OSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2703,7 +2682,7 @@ func (v8 V8500) OSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*command
 	return res
 }
 
-func (v8 V8500) OSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, DeadInterval string) []*command.Command {
+func (v5 V5624G) OSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, DeadInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2722,7 +2701,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, DeadI
 	return res
 }
 
-func (v8 V8500) OSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, HelloInterval string) []*command.Command {
+func (v5 V5624G) OSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, HelloInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2741,7 +2720,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, Hell
 	return res
 }
 
-func (v8 V8500) OSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanceid string) []*command.Command {
+func (v5 V5624G) OSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanceid string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2760,7 +2739,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanc
 	return res
 }
 
-func (v8 V8500) OSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink, RetransmitInterval string) []*command.Command {
+func (v5 V5624G) OSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink, RetransmitInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2779,7 +2758,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink,
 	return res
 }
 
-func (v8 V8500) OSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, TransmitDelay string) []*command.Command {
+func (v5 V5624G) OSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, TransmitDelay string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2798,7 +2777,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, Tran
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2817,7 +2796,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*comma
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, DeadInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, DeadInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2836,7 +2815,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, Dea
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, HelloInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, HelloInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2855,7 +2834,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, He
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanceid string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanceid string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2874,7 +2853,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Insta
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink, RetransmitInterval string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink, RetransmitInterval string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",
@@ -2893,7 +2872,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallin
 	return res
 }
 
-func (v8 V8500) NoOSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, TransmitDelay string) []*command.Command {
+func (v5 V5624G) NoOSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, TransmitDelay string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{
 		Mode: "config",

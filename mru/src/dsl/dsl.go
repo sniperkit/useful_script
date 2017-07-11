@@ -62,4 +62,5 @@ func (dsl *DSL) Parse(device string, cmd *command.Command) ([]*command.Command, 
 
 func init() {
 	Engine.RegisterParser(ParserV8)
+	Engine.RegisterParser(ParserV5)
 }

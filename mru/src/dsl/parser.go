@@ -23,6 +23,12 @@ var ParserV8 = &Parser{
 	Switch: V8,
 }
 
+var ParserV5 = &Parser{
+	Name:   V5.Name,
+	Ctrie:  ctrie.New(nil),
+	Switch: V5,
+}
+
 func (p *Parser) Parse(cmd *command.Command) ([]*command.Command, error) {
 	res := make([]*command.Command, 0, 1)
 
@@ -305,6 +311,7 @@ func DoGenerate() {
 }
 
 func init() {
-	DoParserInit(ParserV8)
 	DoGenerate()
+	DoParserInit(ParserV8)
+	DoParserInit(ParserV5)
 }
