@@ -182,7 +182,13 @@ func (c *Case) AddTask(t *task.Task) error {
 	}
 
 	if c.IsTaskExist(t) {
-		return errors.New("Same task :" + t.Name + " already exist in case: " + c.Name)
+		log.Printf("Updadte task: %s, ID: %s\n", t.Name, t.ID)
+		for i, v := range c.Tasks {
+			if v.Name == t.Name {
+				c.Tasks = append(c.Tasks[:i], c.Tasks[i+1:]...)
+			}
+		}
+
 	}
 
 	t.ID = c.GenerateTaskID(t) //Necessary

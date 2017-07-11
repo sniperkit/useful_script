@@ -23,6 +23,7 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, errors.New("Error: Command: " + cmd.CMD + " should be run under: " + cmd.Mode + "! But currently we are under: " + c.currentMode + " mode!")
 	}
 
+	log.Printf("Running-command: %s", cmd.CMD)
 	if strings.HasPrefix(cmd.CMD, "bcm.user.proxy") {
 		c.client.WriteLine(cmd.CMD) //For the stupid bcmshell
 		cmd.End = "BCM.0>"
@@ -45,6 +46,8 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, errors.New("Runn command: " + cmd.CMD + " with error: <<<<<<<<<<<<<<<<" + string(data) + ">>>>>>>>>>>>>>>>")
 	}
 
+	log.Println(string(data))
+
 	old := c.currentMode
 	rs := strings.Split(string(data), "\n")
 	//log.Println(len(rs))
@@ -58,75 +61,119 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 
 	//log.Println("Run: ", cmd.CMD, " mode: ", old, " success!")
 	if old != c.currentMode {
-		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
+		log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
 	}
 
 	return data, nil
 }
 
-func (c *Cli) GoNormalMode() {
+func (c *Cli) GoNormalMode() ([]byte, error) {
 	if c.currentMode == "config" ||
 		c.currentMode == "config-vlan" ||
 		c.currentMode == "config-if" ||
 		c.currentMode == "config-dhcp" ||
 		c.currentMode == "config-router" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	} else if c.currentMode == "shell" ||
 		c.currentMode == "bcmshell" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		if err != nil {
+			return res, err
+		}
 		c.GoNormalMode()
 	}
+
+	return nil, nil
 }
 
-func (c *Cli) GoShelllMode() {
+func (c *Cli) GoShelllMode() ([]byte, error) {
 	if c.currentMode == "config" ||
 		c.currentMode == "config-vlan" ||
 		c.currentMode == "config-if" ||
 		c.currentMode == "config-dhcp" ||
 		c.currentMode == "bridge" ||
 		c.currentMode == "config-router" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "do q sh -l", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "do q sh -l", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	} else if c.currentMode == "normal" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "q sh -l", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "q sh -l", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	} else if c.currentMode == "bcmshell" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	}
+	return nil, nil
 }
 
-func (c *Cli) GoBCMShelllMode() {
+func (c *Cli) GoBCMShelllMode() ([]byte, error) {
 	if c.currentMode == "config" ||
 		c.currentMode == "config-vlan" ||
 		c.currentMode == "config-if" ||
 		c.currentMode == "config-dhcp" ||
 		c.currentMode == "bridge" ||
 		c.currentMode == "config-router" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "do q sh -l", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "do q sh -l", End: "#"})
+		if err != nil {
+			return res, err
+		}
 		c.GoBCMShelllMode()
 	} else if c.currentMode == "normal" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "q sh -l", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "q sh -l", End: "#"})
+		if err != nil {
+			return res, err
+		}
 		c.GoBCMShelllMode()
 	} else if c.currentMode == "shell" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "bcm.user.proxy", End: "BCM.0>"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "bcm.user.proxy", End: "BCM.0>"})
+		if err != nil {
+			return res, err
+		}
 	}
+	return nil, nil
 }
 
-func (c *Cli) GoConfigMode() {
+func (c *Cli) GoConfigMode() ([]byte, error) {
 	if c.currentMode == "config-vlan" ||
 		c.currentMode == "config-if" ||
 		c.currentMode == "config-dhcp" ||
 		c.currentMode == "bridge" ||
 		c.currentMode == "config-router" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	} else if c.currentMode == "shell" ||
 		c.currentMode == "bcmshell" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		if err != nil {
+			return res, err
+		}
 		c.GoConfigMode()
 	} else if c.currentMode == "normal" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "configure terminal", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "configure terminal", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	} else if c.currentMode == "enable" {
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "enable", End: "#"})
-		c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "configure terminal", End: "#"})
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "enable", End: "#"})
+		if err != nil {
+			return res, err
+		}
+		res, err = c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "configure terminal", End: "#"})
+		if err != nil {
+			return res, err
+		}
 	}
+	return nil, nil
 }
 
 func NewCli(conf *configuration.Configuration) (c *Cli, err error) {

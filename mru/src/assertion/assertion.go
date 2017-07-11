@@ -2,11 +2,12 @@ package assertion
 
 import (
 	"command"
-	//"dsl"
+	"dsl"
 	"fmt"
 	"log"
 	"regexp"
 	"rut"
+	"strings"
 )
 
 type Assertion struct {
@@ -23,9 +24,23 @@ func (a *Assertion) Do(db *rut.DB) (string, bool) {
 		return fmt.Sprintf("DUT %s is not set!", a.DUT), false
 	}
 
-	data, err := dut.RunCommand(&a.Command)
+	if !dut.IsAlive() {
+		return fmt.Sprintf("DUT %s is not alive!", a.DUT), false
+	}
+
+	cmds, err := dsl.Engine.Parse(dut.Device, &a.Command)
 	if err != nil {
-		return fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error()), false
+		return fmt.Sprintf("Parse Instruction error: %s ", err.Error()), false
+	}
+
+	var data string
+	for _, c := range cmds {
+		res, err := dut.RunCommand(c)
+		if err != nil {
+			return fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error()), false
+		}
+
+		data += res
 	}
 
 	log.Printf("Run command: %s with result: %s", a.Command.CMD, string(data))
@@ -45,6 +60,11 @@ func (a *Assertion) Do(db *rut.DB) (string, bool) {
 
 func (a *Assertion) Verify() (string, bool) {
 	var re *regexp.Regexp
+	if strings.HasPrefix(a.Expected, "!!") {
+		a.UnExpected = strings.TrimLeft(a.Expected, "!!")
+		a.Expected = ""
+	}
+
 	if a.Expected != "" {
 		re = regexp.MustCompile(a.Expected)
 		match := re.FindStringSubmatch(a.Raw)

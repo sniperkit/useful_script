@@ -322,7 +322,7 @@
 					async:false,
 					data: {newtask: JSON.stringify(this.ntask)},
 					success:function(data) {
-						alert(data);
+						window.location="caseinfo?id="+getCookie("CASEID");
 					}
 				});
 				this.submitted = true;

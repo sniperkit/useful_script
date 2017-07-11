@@ -10,6 +10,7 @@ import (
 	"result"
 	"script"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -90,10 +91,6 @@ func (d *RUT) Init() error {
 
 func (d *RUT) GoInitMode() {
 	d.cli.GoNormalMode()
-}
-
-func (d *RUT) IsAlive() bool {
-	return true
 }
 
 func (d *RUT) SetModeDB(db map[string]string) {
@@ -208,6 +205,31 @@ func isValidRUTConfig(c *Config) bool {
 	}
 
 	return true
+}
+
+func (d *RUT) IsAlive() bool {
+	/*
+		msg, err := d.cli.GoNormalMode()
+		if err != nil {
+			log.Println(err, msg)
+			return false
+		}
+	*/
+
+	res, err := d.RunCommand(&command.Command{
+		Mode: d.cli.CurrentMode(),
+		CMD:  "show system",
+	})
+
+	if err != nil {
+		log.Println(err, res)
+		return false
+	}
+
+	if strings.Contains(res, "Model") {
+		return true
+	}
+	return false
 }
 
 func GetRUTByConfig(c *Config) (*RUT, error) {
