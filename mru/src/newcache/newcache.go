@@ -1209,6 +1209,7 @@ func (tr *NewCache) CheckIsReadyForRunByID(id string) (bool, error) {
 			}
 
 			log.Println(c.DUTCount, len(c.RUTs.DB))
+			log.Printf("%#v: %#v", c.RUTs, c.RUTs.DB)
 
 			return true, nil
 		}

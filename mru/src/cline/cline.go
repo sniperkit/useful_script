@@ -19,11 +19,11 @@ type Cli struct {
 }
 
 func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
+	log.Printf("Run Command: %40s mode: %15s on %20s", cmd.CMD, cmd.Mode, c.conf.IP)
 	if cmd.Mode != c.currentMode {
 		return nil, errors.New("Error: Command: " + cmd.CMD + " should be run under: " + cmd.Mode + "! But currently we are under: " + c.currentMode + " mode!")
 	}
 
-	log.Printf("Running-command: %s", cmd.CMD)
 	if strings.HasPrefix(cmd.CMD, "bcm.user.proxy") {
 		c.client.WriteLine(cmd.CMD) //For the stupid bcmshell
 		cmd.End = "BCM.0>"
@@ -46,8 +46,6 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, errors.New("Runn command: " + cmd.CMD + " with error: <<<<<<<<<<<<<<<<" + string(data) + ">>>>>>>>>>>>>>>>")
 	}
 
-	log.Println(string(data))
-
 	old := c.currentMode
 	rs := strings.Split(string(data), "\n")
 	//log.Println(len(rs))
@@ -59,9 +57,8 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		}
 	}
 
-	//log.Println("Run: ", cmd.CMD, " mode: ", old, " success!")
 	if old != c.currentMode {
-		log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
+		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
 	}
 
 	return data, nil

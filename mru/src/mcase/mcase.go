@@ -61,6 +61,7 @@ func (c *Case) MakeTreeViewKey() string {
 }
 
 func (c *Case) AddRUT(r *rut.RUT) {
+	log.Printf("Add DUT %#v\n", r)
 	if len(c.RUTs.DB) == 0 {
 		c.RUTs.DB = make(map[string]*rut.RUT, 1)
 	}

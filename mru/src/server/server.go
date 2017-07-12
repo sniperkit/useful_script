@@ -869,11 +869,13 @@ func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
 		t, err := template.New("setduts.html").Delims("|||", "|||").ParseFiles("asset/web/template/setduts.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html", "asset/web/template/caseheader.html")
 		if err != nil {
 			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, err.Error())
 			return
 		}
 		err = t.Execute(w, nil)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, err.Error())
 		}
 	} else if r.Method == "POST" {
@@ -882,11 +884,13 @@ func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
 
 		if r.FormValue("id") == "" {
 			log.Println("ID is not set")
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, "ID is not set!")
 			return
 		}
 
 		if r.FormValue("duts") == "" {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, "Invalid Input")
 			return
 		}
@@ -904,15 +908,19 @@ func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
 		for _, cn := range con {
 			d, err := rut.GetRUTByConfig(cn)
 			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
 				io.WriteString(w, err.Error())
 				return
 			}
 			duts = append(duts, d)
 		}
 
+		log.Printf("Set DUT for %s\n", r.FormValue("id"))
 		err = sess.NewCache.SetDUTsByID(r.FormValue("id"), duts)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, err.Error())
+			return
 		}
 		w.WriteHeader(http.StatusOK)
 	} else {
@@ -930,10 +938,12 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 
 		if _, ok := sess.CaseResult[sessionid]; ok {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, "You are runing another cases")
 			return
 		}
 
+		log.Printf("Run %s ID: %s\n", r.FormValue("type"), r.FormValue("id"))
 		sess.CaseResult[sessionid] = make(chan *result.Result, 10)
 
 		log.Println(sess.CaseResult[sessionid])
@@ -1374,6 +1384,12 @@ func MonitorMainPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	sid := r.Context().Value("SESSIONID")
+	sessionid, _ := sid.(string)
+	if _, ok := Engine.Sessions[sessionid]; ok {
+		delete(Engine.Sessions, sessionid)
+	}
+
 	log.Println(r.RequestURI)
 	expiration := time.Now().AddDate(0, 0, -1)
 	sgid := http.Cookie{Name: "SGID", Value: "You need Login at first", Expires: expiration}

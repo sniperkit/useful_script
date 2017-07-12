@@ -42,7 +42,10 @@
 							<img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
 						</figure>
 						-->
-						<h4 class="card-title mt-3">{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}</h4>
+						<h4 class="card-title mt-3">Goup:     {{res.Group}}</h4>
+						<h4 class="card-title mt-3">SubGroup: {{res.SubGroup}}</h4>
+						<h4 class="card-title mt-3">Feature:  {{res.Feature}}</h4>
+						<h4 class="card-title mt-3">Case:     {{res.Case}}</h4>
 						<div class="meta">
 							<a>Message</a>
 						</div>
@@ -111,6 +114,9 @@
 			},
 			success:function(data) {
 				ready = JSON.parse(data).Ready
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(XMLHttpRequest.responseText);
 			}
 		});
 		return ready
@@ -167,7 +173,11 @@
 					async:false,
 					success:function(data) {
 						$("body").html(data);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
 					}
+
 				});
 				this.submitted = true;
 			},
@@ -194,6 +204,9 @@
 						conn.onmessage = function(evt) {
 							res.push(JSON.parse(evt.data));
 						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
 					}
 
 				});
@@ -223,8 +236,10 @@
 						conn.onmessage = function(evt) {
 							res.push(JSON.parse(evt.data));
 						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
 					}
-
 				});
 				this.submitted = true;
 			},

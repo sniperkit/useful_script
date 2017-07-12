@@ -39,7 +39,7 @@ type Config struct {
 }
 
 type DB struct {
-	DB map[string]*RUT
+	DB map[string]*RUT `json:"-"`
 }
 
 func (db *DB) GetRUTByName(name string) *RUT {
@@ -50,6 +50,7 @@ func (db *DB) GetRUTByName(name string) *RUT {
 }
 
 func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
+	log.Println(r.Hostname, r.Device)
 	var conf configuration.Configuration
 	conf.Name = r.Name
 	conf.Username = r.Username
@@ -66,6 +67,7 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.Prompt = configuration.PromptEnd
 	conf.ModeDB = configuration.BuildModeDBFromHostNameAndBasePrompt(r.Hostname, r.BasePrompt)
 
+	log.Printf("%#v", conf)
 	return &conf
 }
 
@@ -74,6 +76,12 @@ func New(r *RUT) (*RUT, error) {
 }
 
 func (d *RUT) Init() error {
+	if d.Device == "V8" {
+		d.BasePrompt = d.Hostname + "[A]"
+	} else {
+		d.BasePrompt = d.Hostname
+	}
+
 	conf := buildDefaultConfiguration(d)
 	c, err := cline.NewCli(conf)
 	if err != nil {
@@ -218,7 +226,7 @@ func (d *RUT) IsAlive() bool {
 
 	res, err := d.RunCommand(&command.Command{
 		Mode: d.cli.CurrentMode(),
-		CMD:  "show system",
+		CMD:  "show running-config",
 	})
 
 	if err != nil {
@@ -226,7 +234,7 @@ func (d *RUT) IsAlive() bool {
 		return false
 	}
 
-	if strings.Contains(res, "Model") {
+	if strings.Contains(res, d.Hostname) {
 		return true
 	}
 	return false
@@ -247,7 +255,7 @@ func GetRUTByConfig(c *Config) (*RUT, error) {
 		BasePrompt: c.BasePrompt,
 	}
 
-	log.Printf("%q", newrut)
+	log.Printf("%#v", newrut)
 
 	if err := newrut.Init(); err != nil {
 		return nil, fmt.Errorf("Cannot create new DUT with config :%v. Error Message: %s", c, err.Error())
