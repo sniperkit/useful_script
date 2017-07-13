@@ -15,6 +15,7 @@ VLAN(#n).IP(#IP)
 No().VLAN(#n).IP(#IP)
 VLAN(#n).IP2(#IP)
 No().VLAN(#n).IP2(#IP)
+No().Interface().Type(#type).Ifname(#name)
 
 VLAN(#n).Add().Type(#t).Slot(#s).Port(#pnum).IP(#IP)
 VLAN(#n).Add().Type(#t).Slot(#s).Port(#pnum).IP2(#IP)

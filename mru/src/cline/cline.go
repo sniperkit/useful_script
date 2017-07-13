@@ -19,7 +19,7 @@ type Cli struct {
 }
 
 func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
-	log.Printf("Run Command: %40s cmode:%15s mode: %15s on %20s", cmd.CMD, cmd.Mode, c.CurrentMode(), c.conf.IP)
+	fmt.Printf("Run Command: %40s cmode:%15s mode: %15s on %20s\n", cmd.CMD, cmd.Mode, c.CurrentMode(), c.conf.IP)
 	if cmd.Mode != c.currentMode {
 		return nil, errors.New("Error: Command: " + cmd.CMD + " should be run under: " + cmd.Mode + "! But currently we are under: " + c.currentMode + " mode!")
 	}
@@ -58,7 +58,7 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	}
 
 	if old != c.currentMode {
-		log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
+		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
 	}
 
 	return data, nil

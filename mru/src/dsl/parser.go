@@ -44,7 +44,9 @@ func (p *Parser) Parse(cmd *command.Command) ([]*command.Command, error) {
 
 	//Not DSL intruction set(Directy device command)"
 	if !strings.HasPrefix(cmd.CMD, "$") {
-		res = append(res, cmd)
+		c := cmd.Dup()
+		c.Delay = 0
+		res = append(res, c)
 		return res, nil
 	}
 

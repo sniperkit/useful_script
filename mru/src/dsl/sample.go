@@ -74,6 +74,10 @@ func (sa Sample) NoVLANIP2(VLAN, IP2 string) []*command.Command {
 	return nil
 }
 
+func (sa Sample) NoInterfaceTypeIfname(Interface, Type, Ifname string) []*command.Command {
+	return nil
+}
+
 func (sa Sample) VLANAddTypeSlotPortIP(VLAN, Add, Type, Slot, Port, IP string) []*command.Command {
 	return nil
 }

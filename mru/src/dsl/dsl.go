@@ -53,6 +53,7 @@ func (dsl *DSL) Parse(device string, cmd *command.Command) ([]*command.Command, 
 		return nil, fmt.Errorf("Cannot parser command due to empty PARSER DB")
 	}
 
+	cmd.Validate()
 	if _, ok := dsl.Parser[device]; !ok {
 		return nil, fmt.Errorf("Cannot parser command due to Unknown command set for device: %s", device)
 	}

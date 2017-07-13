@@ -4,6 +4,7 @@ import (
 	"condition"
 	"crypto/sha1"
 	"encoding/hex"
+	"fmt"
 	"log"
 	"net/url"
 	"routine"
@@ -21,12 +22,24 @@ type Task struct {
 	ID            string               `json:"id"`
 }
 
+func (t Task) String() string {
+	res := fmt.Sprintf("Task: %20s: \n", t.Name)
+	res += fmt.Sprintf("         %#v", t.PreCondition)
+	res += fmt.Sprintf("         %#v", t.Routine)
+	res += fmt.Sprintf("         %#v", t.PreCondition)
+	res += fmt.Sprintf("         %#v", t.Clear)
+	res += fmt.Sprintf("         %#v", t.Description)
+	res += fmt.Sprintf("         %s", t.ID)
+	return res
+}
+
 func Hash(name []byte) []byte {
 	hash := sha1.New()
 	return []byte(hex.EncodeToString(hash.Sum([]byte("taskTASK" + string(name)))))
 }
 
 func (t *Task) Run(db *rut.DB) *taskresult.Result {
+	fmt.Printf("[Running Task]: {%s}\n", t.Name)
 	if res := t.CheckPreCondition(db); !res.Success {
 		return res
 	}

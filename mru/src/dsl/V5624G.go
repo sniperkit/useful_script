@@ -359,6 +359,10 @@ func (v5 V5624G) NoVLANIP2(VLAN, IP2 string) []*command.Command {
 	return res
 }
 
+func (v5 V5624G) NoInterfaceTypeIfname(Interface, Type, Ifname string) []*command.Command {
+	return nil
+}
+
 func (v5 V5624G) VLANAddTypeSlotPortIP(VLAN, Add, Type, Slot, Port, IP string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, v5.VLAN(VLAN)...)

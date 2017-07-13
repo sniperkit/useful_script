@@ -8,6 +8,7 @@ import (
 	"rut"
 	"strings"
 	"sync"
+	"time"
 )
 
 type Assertion struct {
@@ -16,6 +17,14 @@ type Assertion struct {
 	Expected   string          `json:"expected"`
 	UnExpected string
 	Raw        string
+}
+
+func (a Assertion) String() string {
+	if a.UnExpected != "" {
+		return fmt.Sprintf(">Assertion on %40s: Command: %15s, UnExpected %20s", a.DUT, a.Command.CMD, a.UnExpected)
+	} else {
+		return fmt.Sprintf(">Assertion on %40s: Command: %15s, Expected: %20s", a.DUT, a.Command.CMD, a.Expected)
+	}
 }
 
 func (a *Assertion) Do(db *rut.DB) (string, bool) {
@@ -30,11 +39,18 @@ func (a *Assertion) Do(db *rut.DB) (string, bool) {
 	}
 	*/
 
+	fmt.Printf("%s\n", a)
+
 	cmds, err := dsl.Engine.Parse(dut.Device, &a.Command)
 	if err != nil {
 		return fmt.Sprintf("Parse Instruction error: %s ", err.Error()), false
 	}
 
+	if len(cmds) == 0 {
+		return fmt.Sprintf("No Command is generated for Instruction: %s ", a.Command.CMD), false
+	}
+
+	<-time.After(time.Second * time.Duration(a.Command.Delay))
 	var data string
 	wg := sync.WaitGroup{}
 	for _, c := range cmds {
@@ -50,7 +66,7 @@ func (a *Assertion) Do(db *rut.DB) (string, bool) {
 	wg.Wait()
 
 	if IsErrorHappened(data) {
-		return data, false
+		return fmt.Sprintf("Error happend when running command: %s MESSAGE: %s", a.Command.CMD, data), false
 	}
 
 	a.Raw = string(data)
@@ -71,7 +87,9 @@ func IsErrorHappened(in string) bool {
 	if strings.Contains(in, "Invalid") || strings.Contains(in, "invalid") || strings.Contains(in, "INVALID") ||
 		strings.Contains(in, "Error") || strings.Contains(in, "error") || strings.Contains(in, "ERROR") ||
 		strings.Contains(in, "received SIGSEGV") || strings.Contains(in, "Call backtrace") {
-		return true
+		if !strings.Contains(in, "input errors") { //show interface packet statistics
+			return true
+		}
 	}
 
 	return false

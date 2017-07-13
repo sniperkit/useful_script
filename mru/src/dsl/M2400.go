@@ -294,6 +294,7 @@ func (m2 M2400) VLANNoShutdown(VLAN, NoShutdown string) []*command.Command {
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	res = append(res, m2.NoInterfaceTypeIfname("", "vlan", VLAN)...)
 	return res
 }
 
@@ -377,6 +378,18 @@ func (m2 M2400) NoVLANIP2(VLAN, IP2 string) []*command.Command {
 		Mode: "config-if",
 		CMD:  "exit",
 	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (m2 M2400) NoInterfaceTypeIfname(Interface, Type, Ifname string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "no interface " + Type + " " + Ifname,
+	})
+
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
 	return res
 }

@@ -25,11 +25,11 @@
 						</tr>
 
 						<tr>
-							<td class="text-center"><input type="text" v-model="prcinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+							<td class="text-center"><input type="text" v-model="prcinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
-							<td class="text-center"><input type="text" v-model="prcinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+							<td class="text-center"><input type="text" v-model="prcinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
-							<td class="text-center"><input type="text" v-model="prcinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
+							<td class="text-center"><input type="text" v-model="prcinputs.expected" placeholder='#' class="form-control col-sm-4 required"/></td>
 							<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewPreCondition"></button></td>
 						</tr>
 					</thead>
@@ -59,11 +59,11 @@
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
-						<td class="text-center"><input type="text" v-model="mrinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="mrinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="mrinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="mrinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
-						<td class="text-center"><input type="text" v-model="mrinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
+						<td class="text-center"><input type="text" v-model="mrinputs.expected" placeholder='#' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewMainRoutine"></button></td>
 						</tr>
 
@@ -94,11 +94,11 @@
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
-						<td class="text-center"><input type="text" v-model="pocinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="pocinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="pocinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="pocinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
-						<td class="text-center"><input type="text" v-model="pocinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
+						<td class="text-center"><input type="text" v-model="pocinputs.expected" placeholder='#' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewPostCondition"></button></td>
 						</tr>
 
@@ -130,11 +130,11 @@
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
-						<td class="text-center"><input type="text" v-model="crinputs.dut" placeholder='DUT1' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="crinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
-						<td class="text-center"><input type="text" v-model="crinputs.command.mode" placeholder='enable' class="form-control col-sm-1 required"/></td>
+						<td class="text-center"><input type="text" v-model="crinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.command.cli" placeholder='show runngin-config' class="form-control col-sm-4 required"/></td>
-						<td class="text-center"><input type="text" v-model="crinputs.expected" placeholder='br1000[[_space_]]+up' class="form-control col-sm-4 required"/></td>
+						<td class="text-center"><input type="text" v-model="crinputs.expected" placeholder='#' class="form-control col-sm-4 required"/></td>
 						<td class="text-center"><button class="btn btn-success glyphicon glyphicon-plus" @click.prevent="addNewClearRoutine"></button></td>
 						</tr>
 
@@ -194,40 +194,40 @@
 		el: '#form-newtask',
 		data: {
 			prcinputs: {
-				dut:"",
+				dut:"0",
 				command: {
 					delay: 0,
-					mode: "",
-					cli: ""
+					mode: "normal",
+					cli: "show running-config"
 				},
-				expected: ""
+				expected: "#"
 			},
 			pocinputs: {
-				dut:"",
+				dut:"0",
 				command: {
 					delay:0,
-					mode: "",
-					cli: ""
+					mode: "normal",
+					cli: "show running-config"
 				},
-				expected: ""
+				expected: "#"
 			},
 			mrinputs: {
-				dut:"",
+				dut:"0",
 				command: {
 					delay:0,
-					mode: "",
-					cli: ""
+					mode: "normal",
+					cli: "show running-config"
 				},
-				expected: ""
+				expected: "#"
 			},
 			crinputs: {
-				dut:"",
+				dut:"0",
 				command:{
 					delay: 0,
-					cli: "",
-					mode: ""
+					cli: "show running-config",
+					mode: "normal"
 				},
-				expected: ""
+				expected: "#"
 			},
 			ntask: {
 				name: "",

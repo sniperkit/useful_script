@@ -14,6 +14,10 @@ type Condition struct {
 	Description string                 `json:"description"`
 }
 
+func (cd Condition) String() string {
+	return fmt.Sprintf("Condition: %15s, Assertions %v, Description: %s", cd.Name, cd.Assertions, cd.Description)
+}
+
 func (cd *Condition) Check(db *rut.DB) error {
 	done := make(chan bool)
 	err := make(chan string)

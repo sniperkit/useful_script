@@ -277,6 +277,25 @@ if _, ok := in["IP2"]; !ok {
       return sw.NoVLANIP2(in["VLAN"], in["IP2"])
 }
 
+func NoInterfaceTypeIfname(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 4 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["Interface"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Ifname"]; !ok {
+      return nil 
+   }
+      return sw.NoInterfaceTypeIfname(in["Interface"], in["Type"], in["Ifname"])
+}
+
 func VLANAddTypeSlotPortIP(sw Switch, in map[string]string) []*command.Command{
 if len(in) != 6 {
       return nil 

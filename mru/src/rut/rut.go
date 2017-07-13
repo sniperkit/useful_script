@@ -110,7 +110,9 @@ func (d *RUT) RunCommand(cmd *command.Command) (string, error) {
 }
 
 func (d RUT) runCommand(cmd *command.Command) (string, error) {
-	<-time.After(time.Second * time.Duration(cmd.Delay))
+	if cmd.Delay != 0 {
+		<-time.After(time.Second * time.Duration(cmd.Delay))
+	}
 	data, err := d.cli.RunCommand(cmd)
 	if err != nil {
 		return "", err

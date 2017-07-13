@@ -408,6 +408,7 @@ func NewTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		log.Println(newtask)
 		err = sess.NewCache.AddTask(caseid.Value, &newtask)
 		if err != nil {
 			log.Println(err.Error())

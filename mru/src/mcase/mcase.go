@@ -182,6 +182,9 @@ func (c *Case) AddTask(t *task.Task) error {
 		c.Tasks = make([]*task.Task, 0, 1)
 	}
 
+	t.PreCondition.Name = "Pre-Condition"
+	t.PostCondition.Name = "Post-Condition"
+
 	if c.IsTaskExist(t) {
 		log.Printf("Updadte task: %s, ID: %s\n", t.Name, t.ID)
 		for i, v := range c.Tasks {
