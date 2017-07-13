@@ -85,13 +85,13 @@ func BuildModeDBFromHostNameAndBasePrompt(host, base string) map[string]string {
 		} else if m == "config" {
 			db[m] = base + "(config)"
 		} else if m == "config-vlan" {
-			db[m] = base + "(config-vlan)"
+			db[m] = base + "(config-vlan"
 		} else if m == "config-if" {
-			db[m] = base + "(config-if)"
+			db[m] = base + "(config-if"
 		} else if m == "config-dhcp" {
 			db[m] = base + "(config-dhcp"
 		} else if m == "config-router" {
-			db[m] = base + "(config-router)"
+			db[m] = base + "(config-router"
 		} else if m == "bridge" {
 			db[m] = base + "(bridge)"
 		}

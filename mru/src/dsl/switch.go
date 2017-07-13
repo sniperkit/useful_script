@@ -5,30 +5,30 @@ import (
 )
 
 type Switch interface {
-	PortEnable(Port, Enable string) []*command.Command
-	PortDisable(Port, Disable string) []*command.Command
-	PortPvid(Port, Pvid string) []*command.Command
-	PortSpeed(Port, Speed string) []*command.Command
+	PortSlotTypeEnable(Port, Slot, Type, Enable string) []*command.Command
+	PortSlotTypeDisable(Port, Slot, Type, Disable string) []*command.Command
+	PortSlotTypeSpeed(Port, Slot, Type, Speed string) []*command.Command
+	PortSlotTypePvid(Port, Slot, Type, Pvid string) []*command.Command
 	VLAN(VLAN string) []*command.Command
 	NoVLAN(VLAN string) []*command.Command
-	VLANAdd(VLAN, Add string) []*command.Command
-	VLANAddT(VLAN, AddT string) []*command.Command
-	VLANDel(VLAN, Del string) []*command.Command
-	VLANDelT(VLAN, DelT string) []*command.Command
+	VLANAddTypeSlotPort(VLAN, Add, Type, Slot, Port string) []*command.Command
+	VLANAddTTypeSlotPort(VLAN, AddT, Type, Slot, Port string) []*command.Command
+	VLANDelTypeSlotPort(VLAN, Del, Type, Slot, Port string) []*command.Command
+	VLANDelTTypeSlotPort(VLAN, DelT, Type, Slot, Port string) []*command.Command
 	VLANShutdown(VLAN, Shutdown string) []*command.Command
 	VLANNoShutdown(VLAN, NoShutdown string) []*command.Command
 	VLANIP(VLAN, IP string) []*command.Command
 	NoVLANIP(VLAN, IP string) []*command.Command
 	VLANIP2(VLAN, IP2 string) []*command.Command
 	NoVLANIP2(VLAN, IP2 string) []*command.Command
-	VLANAddTIP(VLAN, AddT, IP string) []*command.Command
-	VLANAddTIP2(VLAN, AddT, IP2 string) []*command.Command
-	VLANAddTIPNoShutdown(VLAN, AddT, IP, NoShutdown string) []*command.Command
-	VLANAddTIP2NoShutdown(VLAN, AddT, IP2, NoShutdown string) []*command.Command
-	VLANAddUTIP(VLAN, AddUT, IP string) []*command.Command
-	VLANAddUTIP2(VLAN, AddUT, IP2 string) []*command.Command
-	VLANAddUTIPNoShutdown(VLAN, AddUT, IP, NoShutdown string) []*command.Command
-	VLANAddUTIP2NoShutdown(VLAN, AddUT, IP2, NoShutdown string) []*command.Command
+	VLANAddTypeSlotPortIP(VLAN, Add, Type, Slot, Port, IP string) []*command.Command
+	VLANAddTypeSlotPortIP2(VLAN, Add, Type, Slot, Port, IP2 string) []*command.Command
+	VLANAddTypeSlotPortIPNoShutdown(VLAN, Add, Type, Slot, Port, IP, NoShutdown string) []*command.Command
+	VLANAddTypeSlotPortIP2NoShutdown(VLAN, Add, Type, Slot, Port, IP2, NoShutdown string) []*command.Command
+	VLANAddTTypeSlotPortIP(VLAN, AddT, Type, Slot, Port, IP string) []*command.Command
+	VLANAddTTypeSlotPortIP2(VLAN, AddT, Type, Slot, Port, IP2 string) []*command.Command
+	VLANAddTTypeSlotPortIPNoShutdown(VLAN, AddT, Type, Slot, Port, IP, NoShutdown string) []*command.Command
+	VLANAddTTypeSlotPortIP2NoShutdown(VLAN, AddT, Type, Slot, Port, IP2, NoShutdown string) []*command.Command
 	VLANIP6Enable(VLAN, IP6, Enable string) []*command.Command
 	NoVLANIP6Enable(VLAN, IP6, Enable string) []*command.Command
 	VLANIP6(VLAN, IP6 string) []*command.Command
@@ -166,4 +166,134 @@ type Switch interface {
 	NoOSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanceid string) []*command.Command
 	NoOSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink, RetransmitInterval string) []*command.Command
 	NoOSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, TransmitDelay string) []*command.Command
+	OSPF(OSPF string) []*command.Command
+	NoOSPF(OSPF string) []*command.Command
+	OSPFRid(OSPF, Rid string) []*command.Command
+	NoOSPFRid(OSPF, Rid string) []*command.Command
+	OSPFNetworkArea(OSPF, Network, Area string) []*command.Command
+	NoOSPFNetworkArea(OSPF, Network, Area string) []*command.Command
+	OSPFInterfaceCost(OSPF, Interface, Cost string) []*command.Command
+	OSPFInterfaceDeadInterval(OSPF, Interface, DeadInterval string) []*command.Command
+	OSPFInterfaceHelloInterval(OSPF, Interface, HelloInterval string) []*command.Command
+	OSPFInterfaceRetransmitInterval(OSPF, Interface, RetransmitInterval string) []*command.Command
+	OSPFInterfaceTransmitDelay(OSPF, Interface, TransmitDelay string) []*command.Command
+	OSPFInterfacePriority(OSPF, Interface, Priority string) []*command.Command
+	OSPFInterfaceNetworktype(OSPF, Interface, Networktype string) []*command.Command
+	NoOSPFInterfaceCost(OSPF, Interface, Cost string) []*command.Command
+	NoOSPFInterfaceDeadInterval(OSPF, Interface, DeadInterval string) []*command.Command
+	NoOSPFInterfaceHelloInterval(OSPF, Interface, HelloInterval string) []*command.Command
+	NoOSPFInterfaceRetransmitInterval(OSPF, Interface, RetransmitInterval string) []*command.Command
+	NoOSPFInterfaceTransmitDelay(OSPF, Interface, TransmitDelay string) []*command.Command
+	NoOSPFInterfacePriority(OSPF, Interface, Priority string) []*command.Command
+	NoOSPFInterfaceNetworktype(OSPF, Interface, Networktype string) []*command.Command
+	OSPFReferenceBandwidth(OSPF, ReferenceBandwidth string) []*command.Command
+	NoOSPFReferenceBandwidth(OSPF, ReferenceBandwidth string) []*command.Command
+	OSPFDefaultOriginate(OSPF, DefaultOriginate string) []*command.Command
+	OSPFDefaultOriginateRoutemap(OSPF, DefaultOriginate, Routemap string) []*command.Command
+	OSPFDefaultOriginateMetric(OSPF, DefaultOriginate, Metric string) []*command.Command
+	OSPFDefaultOriginateMetrictype(OSPF, DefaultOriginate, Metrictype string) []*command.Command
+	OSPFDefaultOriginateMetricMetrictype(OSPF, DefaultOriginate, Metric, Metrictype string) []*command.Command
+	OSPFDefaultOriginateMetricRoutemap(OSPF, DefaultOriginate, Metric, Routemap string) []*command.Command
+	OSPFDefaultOriginateMetrictypeRoutemap(OSPF, DefaultOriginate, Metrictype, Routemap string) []*command.Command
+	OSPFDefaultOriginateMetricMetrictypeRoutemap(OSPF, DefaultOriginate, Metric, Metrictype, Routemap string) []*command.Command
+	OSPFDefaultOriginateAlways(OSPF, DefaultOriginate, Always string) []*command.Command
+	OSPFDefaultOriginateAlwaysRoutemap(OSPF, DefaultOriginate, Always, Routemap string) []*command.Command
+	OSPFDefaultOriginateAlwaysMetric(OSPF, DefaultOriginate, Always, Metric string) []*command.Command
+	OSPFDefaultOriginateAlwaysMetrictype(OSPF, DefaultOriginate, Always, Metrictype string) []*command.Command
+	OSPFDefaultOriginateAlwaysMetricMetrictype(OSPF, DefaultOriginate, Always, Metric, Metrictype string) []*command.Command
+	OSPFDefaultOriginateAlwaysMetricRoutemap(OSPF, DefaultOriginate, Always, Metric, Routemap string) []*command.Command
+	OSPFDefaultOriginateAlwaysMetrictypeRoutemap(OSPF, DefaultOriginate, Always, Metrictype, Routemap string) []*command.Command
+	OSPFDefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF, DefaultOriginate, Always, Metric, Metrictype, Routemap string) []*command.Command
+	NoOSPFDefaultOriginate(OSPF, DefaultOriginate string) []*command.Command
+	NoOSPFDefaultOriginateRoutemap(OSPF, DefaultOriginate, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateMetric(OSPF, DefaultOriginate, Metric string) []*command.Command
+	NoOSPFDefaultOriginateMetrictype(OSPF, DefaultOriginate, Metrictype string) []*command.Command
+	NoOSPFDefaultOriginateMetricMetrictype(OSPF, DefaultOriginate, Metric, Metrictype string) []*command.Command
+	NoOSPFDefaultOriginateMetricRoutemap(OSPF, DefaultOriginate, Metric, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateMetrictypeRoutemap(OSPF, DefaultOriginate, Metrictype, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateMetricMetrictypeRoutemap(OSPF, DefaultOriginate, Metric, Metrictype, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateAlways(OSPF, DefaultOriginate, Always string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysRoutemap(OSPF, DefaultOriginate, Always, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysMetric(OSPF, DefaultOriginate, Always, Metric string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysMetrictype(OSPF, DefaultOriginate, Always, Metrictype string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysMetricMetrictype(OSPF, DefaultOriginate, Always, Metric, Metrictype string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysMetricRoutemap(OSPF, DefaultOriginate, Always, Metric, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysMetrictypeRoutemap(OSPF, DefaultOriginate, Always, Metrictype, Routemap string) []*command.Command
+	NoOSPFDefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF, DefaultOriginate, Always, Metric, Metrictype, Routemap string) []*command.Command
+	OSPFRedistribute(OSPF, Redistribute string) []*command.Command
+	OSPFRedistributeMetric(OSPF, Redistribute, Metric string) []*command.Command
+	OSPFRedistributeMetrictype(OSPF, Redistribute, Metrictype string) []*command.Command
+	OSPFRedistributeRoutemap(OSPF, Redistribute, Routemap string) []*command.Command
+	OSPFRedistributeMetricMetrictype(OSPF, Redistribute, Metric, Metrictype string) []*command.Command
+	OSPFRedistributeMetricRoutemap(OSPF, Redistribute, Metric, Routemap string) []*command.Command
+	OSPFRedistributeMetricMetrictypeRoutemap(OSPF, Redistribute, Metric, Metrictype, Routemap string) []*command.Command
+	NoOSPFRedistribute(OSPF, Redistribute string) []*command.Command
+	NoOSPFRedistributeMetric(OSPF, Redistribute, Metric string) []*command.Command
+	NoOSPFRedistributeMetrictype(OSPF, Redistribute, Metrictype string) []*command.Command
+	NoOSPFRedistributeRoutemap(OSPF, Redistribute, Routemap string) []*command.Command
+	NoOSPFRedistributeMetricMetrictype(OSPF, Redistribute, Metric, Metrictype string) []*command.Command
+	NoOSPFRedistributeMetricRoutemap(OSPF, Redistribute, Metric, Routemap string) []*command.Command
+	NoOSPFRedistributeMetricMetrictypeRoutemap(OSPF, Redistribute, Metric, Metrictype, Routemap string) []*command.Command
+	OSPFSummary(OSPF, Summary string) []*command.Command
+	OSPFSummaryNoAdvertise(OSPF, Summary, NoAdvertise string) []*command.Command
+	NoOSPFSummary(OSPF, Summary string) []*command.Command
+	NoOSPFSummaryNoAdvertise(OSPF, Summary, NoAdvertise string) []*command.Command
+	OSPFDefaultMetric(OSPF, DefaultMetric string) []*command.Command
+	NoOSPFDefaultMetric(OSPF, DefaultMetric string) []*command.Command
+	OSPFPassive(OSPF, Passive string) []*command.Command
+	NoOSPFPassive(OSPF, Passive string) []*command.Command
+	OSPFAdminDistance(OSPF, AdminDistance string) []*command.Command
+	NoOSPFAdminDistance(OSPF, AdminDistance string) []*command.Command
+	OSPFDistanceExternal(OSPF, Distance, External string) []*command.Command
+	OSPFDistanceInter(OSPF, Distance, Inter string) []*command.Command
+	OSPFDistanceIntra(OSPF, Distance, Intra string) []*command.Command
+	OSPFDistanceInterIntra(OSPF, Distance, Inter, Intra string) []*command.Command
+	OSPFDistanceInterExternal(OSPF, Distance, Inter, External string) []*command.Command
+	OSPFDistanceInterIntraExternal(OSPF, Distance, Inter, Intra, External string) []*command.Command
+	NoOSPFDistanceExternal(OSPF, Distance, External string) []*command.Command
+	NoOSPFDistanceInter(OSPF, Distance, Inter string) []*command.Command
+	NoOSPFDistanceIntra(OSPF, Distance, Intra string) []*command.Command
+	NoOSPFDistanceInterIntra(OSPF, Distance, Inter, Intra string) []*command.Command
+	NoOSPFDistanceInterExternal(OSPF, Distance, Inter, External string) []*command.Command
+	NoOSPFDistanceInterIntraExternal(OSPF, Distance, Inter, Intra, External string) []*command.Command
+	OSPFDistributelistIN(OSPF, Distributelist, IN string) []*command.Command
+	OSPFDistributelistOUT(OSPF, Distributelist, OUT string) []*command.Command
+	NoOSPFDistributelistIN(OSPF, Distributelist, IN string) []*command.Command
+	NoOSPFDistributelistOUT(OSPF, Distributelist, OUT string) []*command.Command
+	OSPFAreaDefaultCost(OSPF, Area, DefaultCost string) []*command.Command
+	NoOSPFAreaDefaultCost(OSPF, Area, DefaultCost string) []*command.Command
+	OSPFAreaNSSA(OSPF, Area, NSSA string) []*command.Command
+	OSPFAreaNSSADefaultOriginate(OSPF, Area, NSSA, DefaultOriginate string) []*command.Command
+	OSPFAreaNSSANoRedistribution(OSPF, Area, NSSA, NoRedistribution string) []*command.Command
+	OSPFAreaNSSANoSummary(OSPF, Area, NSSA, NoSummary string) []*command.Command
+	OSPFAreaNSSAStabilityInterval(OSPF, Area, NSSA, StabilityInterval string) []*command.Command
+	OSPFAreaTranslatorrole(OSPF, Area, Translatorrole string) []*command.Command
+	NoOSPFAreaNSSA(OSPF, Area, NSSA string) []*command.Command
+	NoOSPFAreaNSSADefaultOriginate(OSPF, Area, NSSA, DefaultOriginate string) []*command.Command
+	NoOSPFAreaNSSANoRedistribution(OSPF, Area, NSSA, NoRedistribution string) []*command.Command
+	NoOSPFAreaNSSANoSummary(OSPF, Area, NSSA, NoSummary string) []*command.Command
+	NoOSPFAreaNSSAStabilityInterval(OSPF, Area, NSSA, StabilityInterval string) []*command.Command
+	NoOSPFAreaTranslatorrole(OSPF, Area, Translatorrole string) []*command.Command
+	OSPFAreaStub(OSPF, Area, Stub string) []*command.Command
+	OSPFAreaStubNoSummary(OSPF, Area, Stub, NoSummary string) []*command.Command
+	NoOSPFAreaStub(OSPF, Area, Stub string) []*command.Command
+	NoOSPFAreaStubNoSummary(OSPF, Area, Stub, NoSummary string) []*command.Command
+	OSPFAreaRange(OSPF, Area, Range string) []*command.Command
+	OSPFAreaRangeAdvertise(OSPF, Area, Range, Advertise string) []*command.Command
+	OSPFAreaRangeNoAdvertise(OSPF, Area, Range, NoAdvertise string) []*command.Command
+	NoOSPFAreaRange(OSPF, Area, Range string) []*command.Command
+	NoOSPFAreaRangeAdvertise(OSPF, Area, Range, Advertise string) []*command.Command
+	NoOSPFAreaRangeNoAdvertise(OSPF, Area, Range, NoAdvertise string) []*command.Command
+	OSPFAreaVirtuallink(OSPF, Area, Virtuallink string) []*command.Command
+	OSPFAreaVirtuallinkDeadInterval(OSPF, Area, Virtuallink, DeadInterval string) []*command.Command
+	OSPFAreaVirtuallinkHelloInterval(OSPF, Area, Virtuallink, HelloInterval string) []*command.Command
+	OSPFAreaVirtuallinkInstanceid(OSPF, Area, Virtuallink, Instanceid string) []*command.Command
+	OSPFAreaVirtuallinkRetransmitInterval(OSPF, Area, Virtuallink, RetransmitInterval string) []*command.Command
+	OSPFAreaVirtuallinkTransmitDelay(OSPF, Area, Virtuallink, TransmitDelay string) []*command.Command
+	NoOSPFAreaVirtuallink(OSPF, Area, Virtuallink string) []*command.Command
+	NoOSPFAreaVirtuallinkDeadInterval(OSPF, Area, Virtuallink, DeadInterval string) []*command.Command
+	NoOSPFAreaVirtuallinkHelloInterval(OSPF, Area, Virtuallink, HelloInterval string) []*command.Command
+	NoOSPFAreaVirtuallinkInstanceid(OSPF, Area, Virtuallink, Instanceid string) []*command.Command
+	NoOSPFAreaVirtuallinkRetransmitInterval(OSPF, Area, Virtuallink, RetransmitInterval string) []*command.Command
+	NoOSPFAreaVirtuallinkTransmitDelay(OSPF, Area, Virtuallink, TransmitDelay string) []*command.Command
 }

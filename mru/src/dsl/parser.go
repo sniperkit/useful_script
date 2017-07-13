@@ -29,6 +29,12 @@ var ParserV5 = &Parser{
 	Switch: V5,
 }
 
+var ParserM2 = &Parser{
+	Name:   M2.Name,
+	Ctrie:  ctrie.New(nil),
+	Switch: M2,
+}
+
 func (p *Parser) Parse(cmd *command.Command) ([]*command.Command, error) {
 	res := make([]*command.Command, 0, 1)
 
@@ -262,7 +268,7 @@ func generateSampleGo() {
 
 			swparameters = strings.TrimRight(swparameters, ", ")
 			swparameters += " string"
-			sam.WriteString(fmt.Sprintf("func (sa *Sample) %s(%s) []*command.Command{\n return nil \n}\n\n", fun, swparameters))
+			sam.WriteString(fmt.Sprintf("func (sa Sample) %s(%s) []*command.Command{\n return nil \n}\n\n", fun, swparameters))
 		}
 	}
 }
@@ -314,4 +320,5 @@ func init() {
 	DoGenerate()
 	DoParserInit(ParserV8)
 	DoParserInit(ParserV5)
+	DoParserInit(ParserM2)
 }
