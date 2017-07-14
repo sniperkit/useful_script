@@ -13,6 +13,14 @@ func (v8 V8500) Port(typ, slot, port string) string {
 	return " " + typ + " " + slot + "/" + port
 }
 
+func (v8 V8500) InterfaceFromType(typ, name string) string {
+	if typ == "vlan" {
+		return " " + "vlan" + " " + name
+	} else {
+		return " " + typ + " " + name
+	}
+}
+
 var V8 = V8500{
 	Name: "V8",
 }
@@ -607,7 +615,7 @@ func (v8 V8500) OSPF6(OSPF6 string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1006,6 +1014,342 @@ func (v8 V8500) NoOSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string
 	return res
 }
 
+func (v8 V8500) OSPF6IfTypeNameArea(OSPF6, If, Type, Name, Area string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 router ospf tag " + OSPF6 + " area " + Area,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameArea(OSPF6, If, Type, Name, Area string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 router ospf area " + Area,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNameCost(OSPF6, If, Type, Name, Cost string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf cost " + Cost,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNameDeadInterval(OSPF6, If, Type, Name, DeadInterval string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf dead-interval " + DeadInterval,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNameHelloInterval(OSPF6, If, Type, Name, HelloInterval string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf hello-interval " + HelloInterval,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNameRetransmitInterval(OSPF6, If, Type, Name, RetransmitInterval string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf retransmit-interval " + RetransmitInterval,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNameTransmitDelay(OSPF6, If, Type, Name, TransmitDelay string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf transmit-delay " + TransmitDelay,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNamePriority(OSPF6, If, Type, Name, Priority string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf priority " + Priority,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) OSPF6IfTypeNameNetworktype(OSPF6, If, Type, Name, Networktype string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "ipv6 ospf network " + Networktype,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameCost(OSPF6, If, Type, Name, Cost string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf cost",
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameDeadInterval(OSPF6, If, Type, Name, DeadInterval string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf dead-interval ",
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameHelloInterval(OSPF6, If, Type, Name, HelloInterval string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf hello-interval",
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameRetransmitInterval(OSPF6, If, Type, Name, RetransmitInterval string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf retransmit-interval",
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameTransmitDelay(OSPF6, If, Type, Name, TransmitDelay string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf transmit-delay",
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNamePriority(OSPF6, If, Type, Name, Priority string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf priority",
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
+func (v8 V8500) NoOSPF6IfTypeNameNetworktype(OSPF6, If, Type, Name, Networktype string) []*command.Command {
+	res := make([]*command.Command, 0, 1)
+	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
+	res = append(res, &command.Command{
+		Mode: "config",
+		CMD:  "interface  " + v8.InterfaceFromType(Type, Name),
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "no ipv6 ospf network " + Networktype,
+	})
+
+	res = append(res, &command.Command{
+		Mode: "config-if",
+		CMD:  "exit",
+	})
+	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
+	return res
+}
+
 func (v8 V8500) OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command {
 	res := make([]*command.Command, 0, 1)
 	res = append(res, &command.Command{Mode: "normal", CMD: "configure terminal"})
@@ -1020,7 +1364,7 @@ func (v8 V8500) OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1041,7 +1385,7 @@ func (v8 V8500) NoOSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1062,7 +1406,7 @@ func (v8 V8500) OSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1083,7 +1427,7 @@ func (v8 V8500) OSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routemap 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1104,7 +1448,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1125,7 +1469,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metrict
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1146,7 +1490,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate, M
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1167,7 +1511,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, Met
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1188,7 +1532,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginate,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1209,7 +1553,7 @@ func (v8 V8500) OSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOrig
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1230,7 +1574,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1251,7 +1595,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, Alw
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1272,7 +1616,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Alway
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1293,7 +1637,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate, A
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1314,7 +1658,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOrigin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1335,7 +1679,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOriginat
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1356,7 +1700,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOrig
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1377,7 +1721,7 @@ func (v8 V8500) OSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, Defau
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1398,7 +1742,7 @@ func (v8 V8500) NoOSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1419,7 +1763,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateRoutemap(OSPF6, DefaultOriginate, Routema
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1440,7 +1784,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetric(OSPF6, DefaultOriginate, Metric st
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1461,7 +1805,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetrictype(OSPF6, DefaultOriginate, Metri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1482,7 +1826,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetricMetrictype(OSPF6, DefaultOriginate,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1503,7 +1847,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetricRoutemap(OSPF6, DefaultOriginate, M
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1524,7 +1868,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetrictypeRoutemap(OSPF6, DefaultOriginat
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1545,7 +1889,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateMetricMetrictypeRoutemap(OSPF6, DefaultOr
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1566,7 +1910,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlways(OSPF6, DefaultOriginate, Always st
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1588,7 +1932,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysRoutemap(OSPF6, DefaultOriginate, A
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1610,7 +1954,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetric(OSPF6, DefaultOriginate, Alw
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1632,7 +1976,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetrictype(OSPF6, DefaultOriginate,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1654,7 +1998,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricMetrictype(OSPF6, DefaultOrig
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1676,7 +2020,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricRoutemap(OSPF6, DefaultOrigin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1698,7 +2042,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetrictypeRoutemap(OSPF6, DefaultOr
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1719,7 +2063,7 @@ func (v8 V8500) NoOSPF6DefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF6, Def
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1740,7 +2084,7 @@ func (v8 V8500) OSPF6Redistribute(OSPF6, Redistribute string) []*command.Command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1761,7 +2105,7 @@ func (v8 V8500) OSPF6RedistributeMetric(OSPF6, Redistribute, Metric string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1782,7 +2126,7 @@ func (v8 V8500) OSPF6RedistributeMetrictype(OSPF6, Redistribute, Metrictype stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1803,7 +2147,7 @@ func (v8 V8500) OSPF6RedistributeRoutemap(OSPF6, Redistribute, Routemap string) 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1824,7 +2168,7 @@ func (v8 V8500) OSPF6RedistributeMetricMetrictype(OSPF6, Redistribute, Metric, M
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1845,7 +2189,7 @@ func (v8 V8500) OSPF6RedistributeMetricRoutemap(OSPF6, Redistribute, Metric, Rou
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1866,7 +2210,7 @@ func (v8 V8500) OSPF6RedistributeMetricMetrictypeRoutemap(OSPF6, Redistribute, M
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1887,7 +2231,7 @@ func (v8 V8500) NoOSPF6Redistribute(OSPF6, Redistribute string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1932,7 +2276,7 @@ func (v8 V8500) OSPF6Summary(OSPF6, Summary string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1953,7 +2297,7 @@ func (v8 V8500) OSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1974,7 +2318,7 @@ func (v8 V8500) NoOSPF6Summary(OSPF6, Summary string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -1995,7 +2339,7 @@ func (v8 V8500) NoOSPF6SummaryNoAdvertise(OSPF6, Summary, NoAdvertise string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2016,7 +2360,7 @@ func (v8 V8500) OSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2037,7 +2381,7 @@ func (v8 V8500) NoOSPF6DefaultMetric(OSPF6, DefaultMetric string) []*command.Com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2058,7 +2402,7 @@ func (v8 V8500) OSPF6Passive(OSPF6, Passive string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2079,7 +2423,7 @@ func (v8 V8500) NoOSPF6Passive(OSPF6, Passive string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2100,7 +2444,7 @@ func (v8 V8500) OSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2121,7 +2465,7 @@ func (v8 V8500) NoOSPF6AdminDistance(OSPF6, AdminDistance string) []*command.Com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2142,7 +2486,7 @@ func (v8 V8500) OSPF6DistanceExternal(OSPF6, Distance, External string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2163,7 +2507,7 @@ func (v8 V8500) OSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.Com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2184,7 +2528,7 @@ func (v8 V8500) OSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.Com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2205,7 +2549,7 @@ func (v8 V8500) OSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2226,7 +2570,7 @@ func (v8 V8500) OSPF6DistanceInterExternal(OSPF6, Distance, Inter, External stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2247,7 +2591,7 @@ func (v8 V8500) OSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra, E
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2268,7 +2612,7 @@ func (v8 V8500) NoOSPF6DistanceExternal(OSPF6, Distance, External string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2289,7 +2633,7 @@ func (v8 V8500) NoOSPF6DistanceInter(OSPF6, Distance, Inter string) []*command.C
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2310,7 +2654,7 @@ func (v8 V8500) NoOSPF6DistanceIntra(OSPF6, Distance, Intra string) []*command.C
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2331,7 +2675,7 @@ func (v8 V8500) NoOSPF6DistanceInterIntra(OSPF6, Distance, Inter, Intra string) 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2352,7 +2696,7 @@ func (v8 V8500) NoOSPF6DistanceInterExternal(OSPF6, Distance, Inter, External st
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2373,7 +2717,7 @@ func (v8 V8500) NoOSPF6DistanceInterIntraExternal(OSPF6, Distance, Inter, Intra,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2394,7 +2738,7 @@ func (v8 V8500) OSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2415,7 +2759,7 @@ func (v8 V8500) OSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2436,7 +2780,7 @@ func (v8 V8500) NoOSPF6DistributelistIN(OSPF6, Distributelist, IN string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2457,7 +2801,7 @@ func (v8 V8500) NoOSPF6DistributelistOUT(OSPF6, Distributelist, OUT string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2478,7 +2822,7 @@ func (v8 V8500) OSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2499,7 +2843,7 @@ func (v8 V8500) NoOSPF6AreaDefaultCost(OSPF6, Area, DefaultCost string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2520,7 +2864,7 @@ func (v8 V8500) OSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2541,7 +2885,7 @@ func (v8 V8500) OSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOriginat
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2562,7 +2906,7 @@ func (v8 V8500) OSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistribution 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2583,7 +2927,7 @@ func (v8 V8500) OSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2604,7 +2948,7 @@ func (v8 V8500) OSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInter
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2625,7 +2969,7 @@ func (v8 V8500) OSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2646,7 +2990,7 @@ func (v8 V8500) NoOSPF6AreaNSSA(OSPF6, Area, NSSA string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2667,7 +3011,7 @@ func (v8 V8500) NoOSPF6AreaNSSADefaultOriginate(OSPF6, Area, NSSA, DefaultOrigin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2688,7 +3032,7 @@ func (v8 V8500) NoOSPF6AreaNSSANoRedistribution(OSPF6, Area, NSSA, Redistributio
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2709,7 +3053,7 @@ func (v8 V8500) NoOSPF6AreaNSSANoSummary(OSPF6, Area, NSSA, Summary string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2730,7 +3074,7 @@ func (v8 V8500) NoOSPF6AreaNSSAStabilityInterval(OSPF6, Area, NSSA, StabilityInt
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2751,7 +3095,7 @@ func (v8 V8500) NoOSPF6AreaTranslatorrole(OSPF6, Area, Translatorrole string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2772,7 +3116,7 @@ func (v8 V8500) OSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2793,7 +3137,7 @@ func (v8 V8500) OSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2814,7 +3158,7 @@ func (v8 V8500) NoOSPF6AreaStub(OSPF6, Area, Stub string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2835,7 +3179,7 @@ func (v8 V8500) NoOSPF6AreaStubNoSummary(OSPF6, Area, Stub, NoSummary string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2856,7 +3200,7 @@ func (v8 V8500) OSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2877,7 +3221,7 @@ func (v8 V8500) OSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2898,7 +3242,7 @@ func (v8 V8500) OSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise string
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2919,7 +3263,7 @@ func (v8 V8500) NoOSPF6AreaRange(OSPF6, Area, Range string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2940,7 +3284,7 @@ func (v8 V8500) NoOSPF6AreaRangeAdvertise(OSPF6, Area, Range, Advertise string) 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2961,7 +3305,7 @@ func (v8 V8500) NoOSPF6AreaRangeNoAdvertise(OSPF6, Area, Range, NoAdvertise stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -2982,7 +3326,7 @@ func (v8 V8500) OSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3003,7 +3347,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, DeadI
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3024,7 +3368,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, Hell
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3045,7 +3389,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Instanc
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3066,7 +3410,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallink,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3087,7 +3431,7 @@ func (v8 V8500) OSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, Tran
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3108,7 +3452,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallink(OSPF6, Area, Virtuallink string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3129,7 +3473,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkDeadInterval(OSPF6, Area, Virtuallink, Dea
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3150,7 +3494,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkHelloInterval(OSPF6, Area, Virtuallink, He
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3171,7 +3515,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkInstanceid(OSPF6, Area, Virtuallink, Insta
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3192,7 +3536,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkRetransmitInterval(OSPF6, Area, Virtuallin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3213,7 +3557,7 @@ func (v8 V8500) NoOSPF6AreaVirtuallinkTransmitDelay(OSPF6, Area, Virtuallink, Tr
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3305,7 +3649,7 @@ func (v8 V8500) OSPFNetworkArea(OSPF, Network, Area string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3326,7 +3670,7 @@ func (v8 V8500) NoOSPFNetworkArea(OSPF, Network, Area string) []*command.Command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 
@@ -3644,7 +3988,7 @@ func (v8 V8500) OSPFReferenceBandwidth(OSPF, ReferenceBandwidth string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3665,7 +4009,7 @@ func (v8 V8500) NoOSPFReferenceBandwidth(OSPF, ReferenceBandwidth string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3686,7 +4030,7 @@ func (v8 V8500) OSPFDefaultOriginate(OSPF, DefaultOriginate string) []*command.C
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3707,7 +4051,7 @@ func (v8 V8500) OSPFDefaultOriginateRoutemap(OSPF, DefaultOriginate, Routemap st
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3728,7 +4072,7 @@ func (v8 V8500) OSPFDefaultOriginateMetric(OSPF, DefaultOriginate, Metric string
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3749,7 +4093,7 @@ func (v8 V8500) OSPFDefaultOriginateMetrictype(OSPF, DefaultOriginate, Metrictyp
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3770,7 +4114,7 @@ func (v8 V8500) OSPFDefaultOriginateMetricMetrictype(OSPF, DefaultOriginate, Met
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3791,7 +4135,7 @@ func (v8 V8500) OSPFDefaultOriginateMetricRoutemap(OSPF, DefaultOriginate, Metri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3812,7 +4156,7 @@ func (v8 V8500) OSPFDefaultOriginateMetrictypeRoutemap(OSPF, DefaultOriginate, M
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3833,7 +4177,7 @@ func (v8 V8500) OSPFDefaultOriginateMetricMetrictypeRoutemap(OSPF, DefaultOrigin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3854,7 +4198,7 @@ func (v8 V8500) OSPFDefaultOriginateAlways(OSPF, DefaultOriginate, Always string
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3875,7 +4219,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysRoutemap(OSPF, DefaultOriginate, Alway
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3896,7 +4240,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysMetric(OSPF, DefaultOriginate, Always,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3917,7 +4261,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysMetrictype(OSPF, DefaultOriginate, Alw
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3938,7 +4282,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysMetricMetrictype(OSPF, DefaultOriginat
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3959,7 +4303,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysMetricRoutemap(OSPF, DefaultOriginate,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -3980,7 +4324,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysMetrictypeRoutemap(OSPF, DefaultOrigin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4001,7 +4345,7 @@ func (v8 V8500) OSPFDefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF, Default
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4022,7 +4366,7 @@ func (v8 V8500) NoOSPFDefaultOriginate(OSPF, DefaultOriginate string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4043,7 +4387,7 @@ func (v8 V8500) NoOSPFDefaultOriginateRoutemap(OSPF, DefaultOriginate, Routemap 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4064,7 +4408,7 @@ func (v8 V8500) NoOSPFDefaultOriginateMetric(OSPF, DefaultOriginate, Metric stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4085,7 +4429,7 @@ func (v8 V8500) NoOSPFDefaultOriginateMetrictype(OSPF, DefaultOriginate, Metrict
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4106,7 +4450,7 @@ func (v8 V8500) NoOSPFDefaultOriginateMetricMetrictype(OSPF, DefaultOriginate, M
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4127,7 +4471,7 @@ func (v8 V8500) NoOSPFDefaultOriginateMetricRoutemap(OSPF, DefaultOriginate, Met
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4148,7 +4492,7 @@ func (v8 V8500) NoOSPFDefaultOriginateMetrictypeRoutemap(OSPF, DefaultOriginate,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4169,7 +4513,7 @@ func (v8 V8500) NoOSPFDefaultOriginateMetricMetrictypeRoutemap(OSPF, DefaultOrig
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4190,7 +4534,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlways(OSPF, DefaultOriginate, Always stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4212,7 +4556,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysRoutemap(OSPF, DefaultOriginate, Alw
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4234,7 +4578,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysMetric(OSPF, DefaultOriginate, Alway
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4256,7 +4600,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysMetrictype(OSPF, DefaultOriginate, A
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4278,7 +4622,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysMetricMetrictype(OSPF, DefaultOrigin
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4300,7 +4644,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysMetricRoutemap(OSPF, DefaultOriginat
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4322,7 +4666,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysMetrictypeRoutemap(OSPF, DefaultOrig
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4343,7 +4687,7 @@ func (v8 V8500) NoOSPFDefaultOriginateAlwaysMetricMetrictypeRoutemap(OSPF, Defau
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4364,7 +4708,7 @@ func (v8 V8500) OSPFRedistribute(OSPF, Redistribute string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4385,7 +4729,7 @@ func (v8 V8500) OSPFRedistributeMetric(OSPF, Redistribute, Metric string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4406,7 +4750,7 @@ func (v8 V8500) OSPFRedistributeMetrictype(OSPF, Redistribute, Metrictype string
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4427,7 +4771,7 @@ func (v8 V8500) OSPFRedistributeRoutemap(OSPF, Redistribute, Routemap string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4448,7 +4792,7 @@ func (v8 V8500) OSPFRedistributeMetricMetrictype(OSPF, Redistribute, Metric, Met
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4469,7 +4813,7 @@ func (v8 V8500) OSPFRedistributeMetricRoutemap(OSPF, Redistribute, Metric, Route
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4490,7 +4834,7 @@ func (v8 V8500) OSPFRedistributeMetricMetrictypeRoutemap(OSPF, Redistribute, Met
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4511,7 +4855,7 @@ func (v8 V8500) NoOSPFRedistribute(OSPF, Redistribute string) []*command.Command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4556,7 +4900,7 @@ func (v8 V8500) OSPFSummary(OSPF, Summary string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4577,7 +4921,7 @@ func (v8 V8500) OSPFSummaryNoAdvertise(OSPF, Summary, NoAdvertise string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4598,7 +4942,7 @@ func (v8 V8500) NoOSPFSummary(OSPF, Summary string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4619,7 +4963,7 @@ func (v8 V8500) NoOSPFSummaryNoAdvertise(OSPF, Summary, NoAdvertise string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4640,7 +4984,7 @@ func (v8 V8500) OSPFDefaultMetric(OSPF, DefaultMetric string) []*command.Command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4661,7 +5005,7 @@ func (v8 V8500) NoOSPFDefaultMetric(OSPF, DefaultMetric string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4682,7 +5026,7 @@ func (v8 V8500) OSPFPassive(OSPF, Passive string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4703,7 +5047,7 @@ func (v8 V8500) NoOSPFPassive(OSPF, Passive string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4724,7 +5068,7 @@ func (v8 V8500) OSPFAdminDistance(OSPF, AdminDistance string) []*command.Command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4745,7 +5089,7 @@ func (v8 V8500) NoOSPFAdminDistance(OSPF, AdminDistance string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4766,7 +5110,7 @@ func (v8 V8500) OSPFDistanceExternal(OSPF, Distance, External string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4787,7 +5131,7 @@ func (v8 V8500) OSPFDistanceInter(OSPF, Distance, Inter string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4808,7 +5152,7 @@ func (v8 V8500) OSPFDistanceIntra(OSPF, Distance, Intra string) []*command.Comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4829,7 +5173,7 @@ func (v8 V8500) OSPFDistanceInterIntra(OSPF, Distance, Inter, Intra string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4850,7 +5194,7 @@ func (v8 V8500) OSPFDistanceInterExternal(OSPF, Distance, Inter, External string
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4871,7 +5215,7 @@ func (v8 V8500) OSPFDistanceInterIntraExternal(OSPF, Distance, Inter, Intra, Ext
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4892,7 +5236,7 @@ func (v8 V8500) NoOSPFDistanceExternal(OSPF, Distance, External string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4913,7 +5257,7 @@ func (v8 V8500) NoOSPFDistanceInter(OSPF, Distance, Inter string) []*command.Com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4934,7 +5278,7 @@ func (v8 V8500) NoOSPFDistanceIntra(OSPF, Distance, Intra string) []*command.Com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4955,7 +5299,7 @@ func (v8 V8500) NoOSPFDistanceInterIntra(OSPF, Distance, Inter, Intra string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4976,7 +5320,7 @@ func (v8 V8500) NoOSPFDistanceInterExternal(OSPF, Distance, Inter, External stri
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -4997,7 +5341,7 @@ func (v8 V8500) NoOSPFDistanceInterIntraExternal(OSPF, Distance, Inter, Intra, E
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5018,7 +5362,7 @@ func (v8 V8500) OSPFDistributelistIN(OSPF, Distributelist, IN string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5039,7 +5383,7 @@ func (v8 V8500) OSPFDistributelistOUT(OSPF, Distributelist, OUT string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5060,7 +5404,7 @@ func (v8 V8500) NoOSPFDistributelistIN(OSPF, Distributelist, IN string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5081,7 +5425,7 @@ func (v8 V8500) NoOSPFDistributelistOUT(OSPF, Distributelist, OUT string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5102,7 +5446,7 @@ func (v8 V8500) OSPFAreaDefaultCost(OSPF, Area, DefaultCost string) []*command.C
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5123,7 +5467,7 @@ func (v8 V8500) NoOSPFAreaDefaultCost(OSPF, Area, DefaultCost string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5144,7 +5488,7 @@ func (v8 V8500) OSPFAreaNSSA(OSPF, Area, NSSA string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5165,7 +5509,7 @@ func (v8 V8500) OSPFAreaNSSADefaultOriginate(OSPF, Area, NSSA, DefaultOriginate 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5186,7 +5530,7 @@ func (v8 V8500) OSPFAreaNSSANoRedistribution(OSPF, Area, NSSA, Redistribution st
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5207,7 +5551,7 @@ func (v8 V8500) OSPFAreaNSSANoSummary(OSPF, Area, NSSA, Summary string) []*comma
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5228,7 +5572,7 @@ func (v8 V8500) OSPFAreaNSSAStabilityInterval(OSPF, Area, NSSA, StabilityInterva
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5249,7 +5593,7 @@ func (v8 V8500) OSPFAreaTranslatorrole(OSPF, Area, Translatorrole string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5270,7 +5614,7 @@ func (v8 V8500) NoOSPFAreaNSSA(OSPF, Area, NSSA string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5291,7 +5635,7 @@ func (v8 V8500) NoOSPFAreaNSSADefaultOriginate(OSPF, Area, NSSA, DefaultOriginat
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5312,7 +5656,7 @@ func (v8 V8500) NoOSPFAreaNSSANoRedistribution(OSPF, Area, NSSA, Redistribution 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5333,7 +5677,7 @@ func (v8 V8500) NoOSPFAreaNSSANoSummary(OSPF, Area, NSSA, Summary string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5354,7 +5698,7 @@ func (v8 V8500) NoOSPFAreaNSSAStabilityInterval(OSPF, Area, NSSA, StabilityInter
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5375,7 +5719,7 @@ func (v8 V8500) NoOSPFAreaTranslatorrole(OSPF, Area, Translatorrole string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5396,7 +5740,7 @@ func (v8 V8500) OSPFAreaStub(OSPF, Area, Stub string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5417,7 +5761,7 @@ func (v8 V8500) OSPFAreaStubNoSummary(OSPF, Area, Stub, NoSummary string) []*com
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5438,7 +5782,7 @@ func (v8 V8500) NoOSPFAreaStub(OSPF, Area, Stub string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5459,7 +5803,7 @@ func (v8 V8500) NoOSPFAreaStubNoSummary(OSPF, Area, Stub, NoSummary string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5480,7 +5824,7 @@ func (v8 V8500) OSPFAreaRange(OSPF, Area, Range string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5501,7 +5845,7 @@ func (v8 V8500) OSPFAreaRangeAdvertise(OSPF, Area, Range, Advertise string) []*c
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5522,7 +5866,7 @@ func (v8 V8500) OSPFAreaRangeNoAdvertise(OSPF, Area, Range, NoAdvertise string) 
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5543,7 +5887,7 @@ func (v8 V8500) NoOSPFAreaRange(OSPF, Area, Range string) []*command.Command {
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5564,7 +5908,7 @@ func (v8 V8500) NoOSPFAreaRangeAdvertise(OSPF, Area, Range, Advertise string) []
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5585,7 +5929,7 @@ func (v8 V8500) NoOSPFAreaRangeNoAdvertise(OSPF, Area, Range, NoAdvertise string
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5606,7 +5950,7 @@ func (v8 V8500) OSPFAreaVirtuallink(OSPF, Area, Virtuallink string) []*command.C
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5627,7 +5971,7 @@ func (v8 V8500) OSPFAreaVirtuallinkDeadInterval(OSPF, Area, Virtuallink, DeadInt
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5648,7 +5992,7 @@ func (v8 V8500) OSPFAreaVirtuallinkHelloInterval(OSPF, Area, Virtuallink, HelloI
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5669,7 +6013,7 @@ func (v8 V8500) OSPFAreaVirtuallinkInstanceid(OSPF, Area, Virtuallink, Instancei
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5690,7 +6034,7 @@ func (v8 V8500) OSPFAreaVirtuallinkRetransmitInterval(OSPF, Area, Virtuallink, R
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5711,7 +6055,7 @@ func (v8 V8500) OSPFAreaVirtuallinkTransmitDelay(OSPF, Area, Virtuallink, Transm
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5732,7 +6076,7 @@ func (v8 V8500) NoOSPFAreaVirtuallink(OSPF, Area, Virtuallink string) []*command
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5753,7 +6097,7 @@ func (v8 V8500) NoOSPFAreaVirtuallinkDeadInterval(OSPF, Area, Virtuallink, DeadI
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5774,7 +6118,7 @@ func (v8 V8500) NoOSPFAreaVirtuallinkHelloInterval(OSPF, Area, Virtuallink, Hell
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5795,7 +6139,7 @@ func (v8 V8500) NoOSPFAreaVirtuallinkInstanceid(OSPF, Area, Virtuallink, Instanc
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5816,7 +6160,7 @@ func (v8 V8500) NoOSPFAreaVirtuallinkRetransmitInterval(OSPF, Area, Virtuallink,
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})
@@ -5837,7 +6181,7 @@ func (v8 V8500) NoOSPFAreaVirtuallinkTransmitDelay(OSPF, Area, Virtuallink, Tran
 	})
 
 	res = append(res, &command.Command{
-		Mode: "config-if",
+		Mode: "config-router",
 		CMD:  "exit",
 	})
 	res = append(res, &command.Command{Mode: "config", CMD: "exit"})

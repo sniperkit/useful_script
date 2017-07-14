@@ -55,6 +55,22 @@ NoOSPF6InterfaceRetransmitInterval(OSPF6, Interface, RetransmitInterval string) 
 NoOSPF6InterfaceTransmitDelay(OSPF6, Interface, TransmitDelay string) []*command.Command
 NoOSPF6InterfacePriority(OSPF6, Interface, Priority string) []*command.Command
 NoOSPF6InterfaceNetworktype(OSPF6, Interface, Networktype string) []*command.Command
+OSPF6IfTypeNameArea(OSPF6, If, Type, Name, Area string) []*command.Command
+NoOSPF6IfTypeNameArea(OSPF6, If, Type, Name, Area string) []*command.Command
+OSPF6IfTypeNameCost(OSPF6, If, Type, Name, Cost string) []*command.Command
+OSPF6IfTypeNameDeadInterval(OSPF6, If, Type, Name, DeadInterval string) []*command.Command
+OSPF6IfTypeNameHelloInterval(OSPF6, If, Type, Name, HelloInterval string) []*command.Command
+OSPF6IfTypeNameRetransmitInterval(OSPF6, If, Type, Name, RetransmitInterval string) []*command.Command
+OSPF6IfTypeNameTransmitDelay(OSPF6, If, Type, Name, TransmitDelay string) []*command.Command
+OSPF6IfTypeNamePriority(OSPF6, If, Type, Name, Priority string) []*command.Command
+OSPF6IfTypeNameNetworktype(OSPF6, If, Type, Name, Networktype string) []*command.Command
+NoOSPF6IfTypeNameCost(OSPF6, If, Type, Name, Cost string) []*command.Command
+NoOSPF6IfTypeNameDeadInterval(OSPF6, If, Type, Name, DeadInterval string) []*command.Command
+NoOSPF6IfTypeNameHelloInterval(OSPF6, If, Type, Name, HelloInterval string) []*command.Command
+NoOSPF6IfTypeNameRetransmitInterval(OSPF6, If, Type, Name, RetransmitInterval string) []*command.Command
+NoOSPF6IfTypeNameTransmitDelay(OSPF6, If, Type, Name, TransmitDelay string) []*command.Command
+NoOSPF6IfTypeNamePriority(OSPF6, If, Type, Name, Priority string) []*command.Command
+NoOSPF6IfTypeNameNetworktype(OSPF6, If, Type, Name, Networktype string) []*command.Command
 OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command
 NoOSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command
 OSPF6DefaultOriginate(OSPF6, DefaultOriginate string) []*command.Command

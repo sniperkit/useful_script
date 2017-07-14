@@ -42,8 +42,9 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, err
 	}
 
+	//log.Println(string(data))
 	if c.IsErrorExist(string(data)) {
-		return nil, errors.New("Runn command: " + cmd.CMD + " with error: <<<<<<<<<<<<<<<<" + string(data) + ">>>>>>>>>>>>>>>>")
+		return nil, errors.New("Cannot run command: " + cmd.CMD + " with error: <<<" + string(data) + ">>>")
 	}
 
 	old := c.currentMode
@@ -57,11 +58,28 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		}
 	}
 
+	if c.IsModeSwitchMustBeOccured(cmd) && old == c.currentMode {
+		return nil, fmt.Errorf("Mode change must be accured after run command: %s, but there is no mode change. Result: %s", cmd.CMD, string(data))
+	}
+
 	if old != c.currentMode {
 		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
+		fmt.Printf("After run: %40s mode switch from : %15s to %15s. !\n", cmd.CMD, old, c.currentMode)
 	}
 
 	return data, nil
+}
+
+func (c *Cli) IsModeSwitchMustBeOccured(cmd *command.Command) bool {
+	cmdstr := strings.TrimSpace(cmd.CMD)
+	if strings.HasPrefix(cmdstr, "interface ") || strings.HasPrefix(cmdstr, "router ") ||
+		strings.HasPrefix(cmdstr, "configure terminal") || strings.HasPrefix(cmdstr, "vlan database") ||
+		strings.HasPrefix(cmdstr, "ip dhcp pool") || strings.HasPrefix(cmdstr, "route-map") ||
+		strings.HasPrefix(cmdstr, "ip access-list") {
+		return true
+	}
+
+	return false
 }
 
 func (c *Cli) GoNormalMode() ([]byte, error) {

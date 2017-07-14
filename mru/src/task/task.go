@@ -39,6 +39,8 @@ func Hash(name []byte) []byte {
 }
 
 func (t *Task) Run(db *rut.DB) *taskresult.Result {
+	//This must be at first, I want to do clear work when error happend.
+	defer t.RunClearRoutine(db)
 	fmt.Printf("[Running Task]: {%s}\n", t.Name)
 	if res := t.CheckPreCondition(db); !res.Success {
 		return res
@@ -51,8 +53,6 @@ func (t *Task) Run(db *rut.DB) *taskresult.Result {
 	if res := t.CheckPostCondition(db); !res.Success {
 		return res
 	}
-
-	defer t.RunClearRoutine(db)
 
 	return &taskresult.Result{Name: t.Name, Description: t.Description, Success: true}
 }

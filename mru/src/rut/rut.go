@@ -77,6 +77,7 @@ func New(r *RUT) (*RUT, error) {
 
 func (d *RUT) Init() error {
 	if d.Device == "V8" {
+		//d.BasePrompt = d.Hostname
 		d.BasePrompt = d.Hostname + "[A]"
 	} else {
 		d.BasePrompt = d.Hostname

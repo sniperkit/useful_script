@@ -87,7 +87,7 @@ func IsErrorHappened(in string) bool {
 	if strings.Contains(in, "Invalid") || strings.Contains(in, "invalid") || strings.Contains(in, "INVALID") ||
 		strings.Contains(in, "Error") || strings.Contains(in, "error") || strings.Contains(in, "ERROR") ||
 		strings.Contains(in, "received SIGSEGV") || strings.Contains(in, "Call backtrace") {
-		if !strings.Contains(in, "input errors") { //show interface packet statistics
+		if !strings.Contains(in, "input errors") && !strings.Contains(in, "crc-error") { //show interface packet statistics
 			return true
 		}
 	}

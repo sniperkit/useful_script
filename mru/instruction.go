@@ -949,6 +949,382 @@ if _, ok := in["Networktype"]; !ok {
       return sw.NoOSPF6InterfaceNetworktype(in["OSPF6"], in["Interface"], in["Networktype"])
 }
 
+func OSPF6IfTypeNameArea(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Area"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameArea(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Area"])
+}
+
+func NoOSPF6IfTypeNameArea(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Area"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameArea(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Area"])
+}
+
+func OSPF6IfTypeNameCost(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Cost"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameCost(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Cost"])
+}
+
+func OSPF6IfTypeNameDeadInterval(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["DeadInterval"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameDeadInterval(in["OSPF6"], in["If"], in["Type"], in["Name"], in["DeadInterval"])
+}
+
+func OSPF6IfTypeNameHelloInterval(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["HelloInterval"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameHelloInterval(in["OSPF6"], in["If"], in["Type"], in["Name"], in["HelloInterval"])
+}
+
+func OSPF6IfTypeNameRetransmitInterval(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["RetransmitInterval"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameRetransmitInterval(in["OSPF6"], in["If"], in["Type"], in["Name"], in["RetransmitInterval"])
+}
+
+func OSPF6IfTypeNameTransmitDelay(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["TransmitDelay"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameTransmitDelay(in["OSPF6"], in["If"], in["Type"], in["Name"], in["TransmitDelay"])
+}
+
+func OSPF6IfTypeNamePriority(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Priority"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNamePriority(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Priority"])
+}
+
+func OSPF6IfTypeNameNetworktype(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 5 {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Networktype"]; !ok {
+      return nil 
+   }
+      return sw.OSPF6IfTypeNameNetworktype(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Networktype"])
+}
+
+func NoOSPF6IfTypeNameCost(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Cost"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameCost(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Cost"])
+}
+
+func NoOSPF6IfTypeNameDeadInterval(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["DeadInterval"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameDeadInterval(in["OSPF6"], in["If"], in["Type"], in["Name"], in["DeadInterval"])
+}
+
+func NoOSPF6IfTypeNameHelloInterval(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["HelloInterval"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameHelloInterval(in["OSPF6"], in["If"], in["Type"], in["Name"], in["HelloInterval"])
+}
+
+func NoOSPF6IfTypeNameRetransmitInterval(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["RetransmitInterval"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameRetransmitInterval(in["OSPF6"], in["If"], in["Type"], in["Name"], in["RetransmitInterval"])
+}
+
+func NoOSPF6IfTypeNameTransmitDelay(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["TransmitDelay"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameTransmitDelay(in["OSPF6"], in["If"], in["Type"], in["Name"], in["TransmitDelay"])
+}
+
+func NoOSPF6IfTypeNamePriority(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Priority"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNamePriority(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Priority"])
+}
+
+func NoOSPF6IfTypeNameNetworktype(sw Switch, in map[string]string) []*command.Command{
+if len(in) != 6 {
+      return nil 
+   }
+if _, ok := in["No"]; !ok {
+      return nil 
+   }
+if _, ok := in["OSPF6"]; !ok {
+      return nil 
+   }
+if _, ok := in["If"]; !ok {
+      return nil 
+   }
+if _, ok := in["Type"]; !ok {
+      return nil 
+   }
+if _, ok := in["Name"]; !ok {
+      return nil 
+   }
+if _, ok := in["Networktype"]; !ok {
+      return nil 
+   }
+      return sw.NoOSPF6IfTypeNameNetworktype(in["OSPF6"], in["If"], in["Type"], in["Name"], in["Networktype"])
+}
+
 func OSPF6ReferenceBandwidth(sw Switch, in map[string]string) []*command.Command{
 if len(in) != 2 {
       return nil 

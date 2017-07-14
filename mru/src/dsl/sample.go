@@ -218,6 +218,70 @@ func (sa Sample) NoOSPF6InterfaceNetworktype(OSPF6, Interface, Networktype strin
 	return nil
 }
 
+func (sa Sample) OSPF6IfTypeNameArea(OSPF6, If, Type, Name, Area string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameArea(OSPF6, If, Type, Name, Area string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNameCost(OSPF6, If, Type, Name, Cost string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNameDeadInterval(OSPF6, If, Type, Name, DeadInterval string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNameHelloInterval(OSPF6, If, Type, Name, HelloInterval string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNameRetransmitInterval(OSPF6, If, Type, Name, RetransmitInterval string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNameTransmitDelay(OSPF6, If, Type, Name, TransmitDelay string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNamePriority(OSPF6, If, Type, Name, Priority string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) OSPF6IfTypeNameNetworktype(OSPF6, If, Type, Name, Networktype string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameCost(OSPF6, If, Type, Name, Cost string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameDeadInterval(OSPF6, If, Type, Name, DeadInterval string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameHelloInterval(OSPF6, If, Type, Name, HelloInterval string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameRetransmitInterval(OSPF6, If, Type, Name, RetransmitInterval string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameTransmitDelay(OSPF6, If, Type, Name, TransmitDelay string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNamePriority(OSPF6, If, Type, Name, Priority string) []*command.Command {
+	return nil
+}
+
+func (sa Sample) NoOSPF6IfTypeNameNetworktype(OSPF6, If, Type, Name, Networktype string) []*command.Command {
+	return nil
+}
+
 func (sa Sample) OSPF6ReferenceBandwidth(OSPF6, ReferenceBandwidth string) []*command.Command {
 	return nil
 }
