@@ -4,9 +4,11 @@ import (
 	"cline"
 	"command"
 	"configuration"
+	"context"
 	"errors"
 	"fmt"
 	"log"
+	"logger"
 	"result"
 	"script"
 	"strconv"
@@ -106,7 +108,8 @@ func (d *RUT) SetModeDB(db map[string]string) {
 	d.cli.SetModeDB(db)
 }
 
-func (d *RUT) RunCommand(cmd *command.Command) (string, error) {
+func (d *RUT) RunCommand(ctx context.Context, cmd *command.Command) (string, error) {
+	logger.Push(ctx, fmt.Sprintf("Run Command: %40s cmode:%15s mode: %15s on %20s\n", cmd.CMD, cmd.Mode, d.cli.CurrentMode(), d.IP))
 	return d.runCommand(cmd)
 }
 
@@ -218,7 +221,7 @@ func isValidRUTConfig(c *Config) bool {
 	return true
 }
 
-func (d *RUT) IsAlive() bool {
+func (d *RUT) IsAlive(ctx context.Context) bool {
 	/*
 		msg, err := d.cli.GoNormalMode()
 		if err != nil {
@@ -227,7 +230,7 @@ func (d *RUT) IsAlive() bool {
 		}
 	*/
 
-	res, err := d.RunCommand(&command.Command{
+	res, err := d.RunCommand(ctx, &command.Command{
 		Mode: d.cli.CurrentMode(),
 		CMD:  "show running-config",
 	})

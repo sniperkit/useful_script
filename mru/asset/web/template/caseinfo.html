@@ -28,6 +28,7 @@
 		</div>
 		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
 		<button class="btn icon-btn btn-success pull-right" @click.prevent="runCase">RUN</button>
+		<button class="btn icon-btn btn-info pull-right" @click.prevent="openLogSession">LOG</button>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -241,6 +242,13 @@
 						alert(XMLHttpRequest.responseText);
 					}
 				});
+				this.submitted = true;
+			},
+
+			openLogSession: function(e) {
+				var sess = getCookie("SESSIONID");
+				var url = "/log?id="+sess
+				window.open(url)
 				this.submitted = true;
 			},
 		}

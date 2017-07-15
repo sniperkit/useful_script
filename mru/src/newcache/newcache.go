@@ -1,6 +1,7 @@
 package newcache
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"feature"
@@ -710,10 +711,10 @@ func (tr *NewCache) GetCaseByGroup(g *group.Group) ([]*mcase.Case, error) {
 	return res, nil
 }
 
-func (tr *NewCache) RunCase(c *mcase.Case) <-chan *result.Result {
+func (tr *NewCache) RunCase(ctx context.Context, c *mcase.Case) <-chan *result.Result {
 	res := make(chan *result.Result)
 	go func(chan<- *result.Result) {
-		message, ok := c.Run()
+		message, ok := c.Run(ctx)
 		defer close(res)
 		res <- &result.Result{
 			Group:    c.Group,
@@ -728,7 +729,7 @@ func (tr *NewCache) RunCase(c *mcase.Case) <-chan *result.Result {
 	return res
 }
 
-func (tr *NewCache) RunCaseByID(id string) <-chan *result.Result {
+func (tr *NewCache) RunCaseByID(ctx context.Context, id string) <-chan *result.Result {
 	res := make(chan *result.Result)
 	c, err := tr.GetCaseByID(id)
 	if err != nil {
@@ -746,7 +747,7 @@ func (tr *NewCache) RunCaseByID(id string) <-chan *result.Result {
 		return res
 	}
 	go func(chan<- *result.Result) {
-		message, ok := c.Run()
+		message, ok := c.Run(ctx)
 		defer close(res)
 		res <- &result.Result{
 			Group:    c.Group,
@@ -761,7 +762,7 @@ func (tr *NewCache) RunCaseByID(id string) <-chan *result.Result {
 	return res
 }
 
-func (tr *NewCache) RunCasesByGroupID(id string) <-chan *result.Result {
+func (tr *NewCache) RunCasesByGroupID(ctx context.Context, id string) <-chan *result.Result {
 	res := make(chan *result.Result)
 	g, err := tr.GetGroupByID(id)
 	if err != nil {
@@ -779,10 +780,10 @@ func (tr *NewCache) RunCasesByGroupID(id string) <-chan *result.Result {
 		return res
 	}
 
-	return tr.RunAllCaseOfGroup(g)
+	return tr.RunAllCaseOfGroup(ctx, g)
 }
 
-func (tr *NewCache) RunCasesBySubGroupID(id string) <-chan *result.Result {
+func (tr *NewCache) RunCasesBySubGroupID(ctx context.Context, id string) <-chan *result.Result {
 	res := make(chan *result.Result)
 	sg, err := tr.GetSubGroupByID(id)
 	if err != nil {
@@ -800,10 +801,10 @@ func (tr *NewCache) RunCasesBySubGroupID(id string) <-chan *result.Result {
 		return res
 	}
 
-	return tr.RunAllCaseOfSubGroup(sg)
+	return tr.RunAllCaseOfSubGroup(ctx, sg)
 }
 
-func (tr *NewCache) RunCasesByFeatureID(id string) <-chan *result.Result {
+func (tr *NewCache) RunCasesByFeatureID(ctx context.Context, id string) <-chan *result.Result {
 	res := make(chan *result.Result)
 	f, err := tr.GetFeatureByID(id)
 	if err != nil {
@@ -821,10 +822,10 @@ func (tr *NewCache) RunCasesByFeatureID(id string) <-chan *result.Result {
 		return res
 	}
 
-	return tr.RunAllCaseOfFeature(f)
+	return tr.RunAllCaseOfFeature(ctx, f)
 }
 
-func (tr *NewCache) RunAllCaseOfFeature(f *feature.Feature) <-chan *result.Result {
+func (tr *NewCache) RunAllCaseOfFeature(ctx context.Context, f *feature.Feature) <-chan *result.Result {
 	res := make(chan *result.Result)
 	cases, err := tr.GetCaseByFeature(f)
 	if err != nil {
@@ -844,7 +845,7 @@ func (tr *NewCache) RunAllCaseOfFeature(f *feature.Feature) <-chan *result.Resul
 	go func(cs []*mcase.Case) {
 		wg := sync.WaitGroup{}
 		for _, c := range cases {
-			for r := range tr.RunCase(c) {
+			for r := range tr.RunCase(ctx, c) {
 				wg.Add(1)
 				go func(r *result.Result, rch chan<- *result.Result) {
 					rch <- r
@@ -859,7 +860,7 @@ func (tr *NewCache) RunAllCaseOfFeature(f *feature.Feature) <-chan *result.Resul
 	return res
 }
 
-func (tr *NewCache) RunAllCaseOfSubGroup(sg *subgroup.SubGroup) <-chan *result.Result {
+func (tr *NewCache) RunAllCaseOfSubGroup(ctx context.Context, sg *subgroup.SubGroup) <-chan *result.Result {
 	res := make(chan *result.Result)
 	cases := make([]*mcase.Case, 0, 1)
 	for _, f := range sg.Features {
@@ -881,7 +882,7 @@ func (tr *NewCache) RunAllCaseOfSubGroup(sg *subgroup.SubGroup) <-chan *result.R
 	go func(cs []*mcase.Case) {
 		wg := sync.WaitGroup{}
 		for _, c := range cases {
-			for r := range tr.RunCase(c) {
+			for r := range tr.RunCase(ctx, c) {
 				wg.Add(1)
 				go func(r *result.Result, rch chan<- *result.Result) {
 					rch <- r
@@ -896,7 +897,7 @@ func (tr *NewCache) RunAllCaseOfSubGroup(sg *subgroup.SubGroup) <-chan *result.R
 	return res
 }
 
-func (tr *NewCache) RunAllCaseOfGroup(g *group.Group) <-chan *result.Result {
+func (tr *NewCache) RunAllCaseOfGroup(ctx context.Context, g *group.Group) <-chan *result.Result {
 	res := make(chan *result.Result)
 	cases := make([]*mcase.Case, 0, 1)
 	for _, sg := range g.SubGroups {
@@ -920,7 +921,7 @@ func (tr *NewCache) RunAllCaseOfGroup(g *group.Group) <-chan *result.Result {
 	go func(cs []*mcase.Case) {
 		wg := sync.WaitGroup{}
 		for _, c := range cases {
-			for r := range tr.RunCase(c) {
+			for r := range tr.RunCase(ctx, c) {
 				wg.Add(1)
 				go func(r *result.Result) {
 					log.Printf("%#v\n", r)
@@ -1051,7 +1052,7 @@ func (tr *NewCache) GetFeatureByID(id string) (*feature.Feature, error) {
 	return nil, fmt.Errorf("Invalid Node: %s", id)
 }
 
-func (tr *NewCache) RunTaskByID(caseid, taskid string) <-chan *result.Result {
+func (tr *NewCache) RunTaskByID(ctx context.Context, caseid, taskid string) <-chan *result.Result {
 	res := make(chan *result.Result)
 	c, err := tr.GetCaseByID(caseid)
 	if err != nil {
@@ -1082,7 +1083,7 @@ func (tr *NewCache) RunTaskByID(caseid, taskid string) <-chan *result.Result {
 	}
 
 	go func(chan<- *result.Result) {
-		message, ok := c.RunTask(t)
+		message, ok := c.RunTask(ctx, t)
 		defer close(res)
 		res <- &result.Result{
 			Group:    c.Group,

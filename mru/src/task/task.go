@@ -2,10 +2,12 @@ package task
 
 import (
 	"condition"
+	"context"
 	"crypto/sha1"
 	"encoding/hex"
 	"fmt"
 	"log"
+	"logger"
 	"net/url"
 	"routine"
 	"rut"
@@ -38,31 +40,32 @@ func Hash(name []byte) []byte {
 	return []byte(hex.EncodeToString(hash.Sum([]byte("taskTASK" + string(name)))))
 }
 
-func (t *Task) Run(db *rut.DB) *taskresult.Result {
+func (t *Task) Run(ctx context.Context, db *rut.DB) *taskresult.Result {
 	//This must be at first, I want to do clear work when error happend.
-	defer t.RunClearRoutine(db)
-	fmt.Printf("[Running Task]: {%s}\n", t.Name)
-	if res := t.CheckPreCondition(db); !res.Success {
+	defer t.RunClearRoutine(ctx, db)
+	message := fmt.Sprintf("[Running Task]: {%s}\n", t.Name)
+	logger.Push(ctx, message)
+	if res := t.CheckPreCondition(ctx, db); !res.Success {
 		return res
 	}
 
-	if res := t.RunMainRoutine(db); !res.Success {
+	if res := t.RunMainRoutine(ctx, db); !res.Success {
 		return res
 	}
 
-	if res := t.CheckPostCondition(db); !res.Success {
+	if res := t.CheckPostCondition(ctx, db); !res.Success {
 		return res
 	}
 
 	return &taskresult.Result{Name: t.Name, Description: t.Description, Success: true}
 }
 
-func (t *Task) CheckPreCondition(db *rut.DB) *taskresult.Result {
+func (t *Task) CheckPreCondition(ctx context.Context, db *rut.DB) *taskresult.Result {
 	for _, r := range db.DB {
 		r.GoInitMode()
 	}
 
-	if err := t.PreCondition.Check(db); err != nil {
+	if err := t.PreCondition.Check(ctx, db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
 			Description: t.Description,
@@ -78,34 +81,12 @@ func (t *Task) CheckPreCondition(db *rut.DB) *taskresult.Result {
 	}
 }
 
-func (t *Task) CheckPostCondition(db *rut.DB) *taskresult.Result {
+func (t *Task) CheckPostCondition(ctx context.Context, db *rut.DB) *taskresult.Result {
 	for _, r := range db.DB {
 		r.GoInitMode()
 	}
 
-	if err := t.PostCondition.Check(db); err != nil {
-		return &taskresult.Result{
-			Name:        t.Name,
-			Description: t.Description,
-			Success:     false,
-			Message:     err.Error(),
-		}
-	}
-
-	return &taskresult.Result{
-		Name:        t.Name,
-		Description: t.Description,
-		Success:     true,
-	}
-
-}
-
-func (t *Task) RunMainRoutine(db *rut.DB) *taskresult.Result {
-	for _, r := range db.DB {
-		r.GoInitMode()
-	}
-
-	if err := t.Routine.Run(db); err != nil {
+	if err := t.PostCondition.Check(ctx, db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
 			Description: t.Description,
@@ -122,11 +103,33 @@ func (t *Task) RunMainRoutine(db *rut.DB) *taskresult.Result {
 
 }
 
-func (t *Task) RunClearRoutine(db *rut.DB) *taskresult.Result {
+func (t *Task) RunMainRoutine(ctx context.Context, db *rut.DB) *taskresult.Result {
 	for _, r := range db.DB {
 		r.GoInitMode()
 	}
-	if err := t.Clear.Run(db); err != nil {
+
+	if err := t.Routine.Run(ctx, db); err != nil {
+		return &taskresult.Result{
+			Name:        t.Name,
+			Description: t.Description,
+			Success:     false,
+			Message:     err.Error(),
+		}
+	}
+
+	return &taskresult.Result{
+		Name:        t.Name,
+		Description: t.Description,
+		Success:     true,
+	}
+
+}
+
+func (t *Task) RunClearRoutine(ctx context.Context, db *rut.DB) *taskresult.Result {
+	for _, r := range db.DB {
+		r.GoInitMode()
+	}
+	if err := t.Clear.Run(ctx, db); err != nil {
 		return &taskresult.Result{
 			Name:        t.Name,
 			Description: t.Description,

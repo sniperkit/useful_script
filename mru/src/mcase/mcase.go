@@ -5,10 +5,12 @@ import (
 	"log"
 	"net/url"
 	//"strconv"
+	"context"
 	"crypto/sha1"
 	"defaults"
 	"encoding/hex"
 	"fmt"
+	"logger"
 	"rut"
 	"strings"
 	"task"
@@ -115,28 +117,34 @@ func (c *Case) ClearDUTs() {
 	}
 }
 
-func (c *Case) Run() (string, bool) {
+func (c *Case) Run(ctx context.Context) (string, bool) {
 	if len(c.Tasks) == 0 {
 		log.Printf("There is no task in case: %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name)
-		return fmt.Sprintf("There is no task in case: %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name), true
+		message := fmt.Sprintf("There is no task in case: %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name)
+		logger.Push(ctx, message)
+		return message, true
 	}
 
 	if c.RUTs.DB == nil {
-		return fmt.Sprintf("You should first specify the RUT for case : %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name), true
+		message := fmt.Sprintf("You should first specify the RUT for case : %s:%s:%s:%s\n", c.Group, c.SubGroup, c.Feature, c.Name)
+		logger.Push(ctx, message)
+		return message, true
 	}
 
 	for _, t := range c.Tasks {
-		result := t.Run(&c.RUTs)
+		result := t.Run(ctx, &c.RUTs)
 		if !result.Success {
-			return fmt.Sprintf("Run Case: %s>%s>%s>%s's Task: %s failed with: %s", c.Group, c.SubGroup, c.Feature, c.Name, t.Name, result.Message), false
+			message := fmt.Sprintf("Run Case: %s>%s>%s>%s's Task: %s failed with: %s", c.Group, c.SubGroup, c.Feature, c.Name, t.Name, result.Message)
+			logger.Push(ctx, message)
+			return message, false
 		}
 	}
 
 	return "", true
 }
 
-func (c *Case) RunTask(t *task.Task) (string, bool) {
-	result := t.Run(&c.RUTs)
+func (c *Case) RunTask(ctx context.Context, t *task.Task) (string, bool) {
+	result := t.Run(ctx, &c.RUTs)
 	return result.Message, result.Success
 }
 

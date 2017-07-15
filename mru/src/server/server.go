@@ -9,13 +9,16 @@ import (
 	"github.com/gorilla/websocket"
 	"html/template"
 	"io"
+	"io/ioutil"
 	"log"
 	"mcase"
 	"net/http"
+	"os"
 	"path"
 	"result"
 	"rut"
 	"script"
+	"strconv"
 	"strings"
 	"sync"
 	"task"
@@ -34,13 +37,13 @@ const (
 	pingPeriod = (pongWait * 9) / 10
 
 	// Poll file for changes with this period.
-	filePeriod = 10 * time.Second
+	filePeriod = 3 * time.Second
 )
 
 var (
 	upgrader = websocket.Upgrader{
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
+		ReadBufferSize:  16384,
+		WriteBufferSize: 16374,
 	}
 )
 
@@ -944,14 +947,19 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		os.Remove("asset/log/" + sessionid + ".log")
+
 		log.Printf("Run %s ID: %s\n", r.FormValue("type"), r.FormValue("id"))
 		sess.CaseResult[sessionid] = make(chan *result.Result, 10)
+
+		ctx, cancel := context.WithCancel(context.WithValue(context.Background(), "SESSIONID", sessionid))
+		sess.Cancel = cancel
 
 		log.Println(sess.CaseResult[sessionid])
 		if r.FormValue("type") == "GROUP" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range sess.NewCache.RunCasesByGroupID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCasesByGroupID(ctx, r.FormValue("id")) {
 					wg.Add(1)
 					log.Printf("%#v", res)
 					go func(r *result.Result) {
@@ -966,7 +974,7 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 		} else if r.FormValue("type") == "SUBGROUP" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range sess.NewCache.RunCasesBySubGroupID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCasesBySubGroupID(ctx, r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
 						sess.CaseResult[sessionid] <- r
@@ -979,7 +987,7 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 		} else if r.FormValue("type") == "FEATURE" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range sess.NewCache.RunCasesByFeatureID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCasesByFeatureID(ctx, r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
 						sess.CaseResult[sessionid] <- r
@@ -993,7 +1001,7 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 		} else if r.FormValue("type") == "CASE" {
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range sess.NewCache.RunCaseByID(r.FormValue("id")) {
+				for res := range sess.NewCache.RunCaseByID(ctx, r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
 						sess.CaseResult[sessionid] <- r
@@ -1011,7 +1019,7 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 			}
 			go func() {
 				wg := sync.WaitGroup{}
-				for res := range sess.NewCache.RunTaskByID(caseid.Value, r.FormValue("id")) {
+				for res := range sess.NewCache.RunTaskByID(ctx, caseid.Value, r.FormValue("id")) {
 					wg.Add(1)
 					go func(r *result.Result) {
 						sess.CaseResult[sessionid] <- r
@@ -1229,9 +1237,15 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			Value: newsess.ID,
 		}
 
+		host := &http.Cookie{
+			Name:  "SERVERIP",
+			Value: r.Host,
+		}
+
 		log.Println(newsess.ID)
 
 		http.SetCookie(w, cookie)
+		http.SetCookie(w, host)
 		w.WriteHeader(http.StatusOK)
 		//	io.WriteString(w, util.GenerateSessionIDByUserNameAndPassword(r.FormValue("username"), r.FormValue("password")))
 		t, err := template.New("main.html").Delims("|||", "|||").ParseFiles("asset/web/template/main.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html", "asset/web/template/treenav.html")
@@ -1247,6 +1261,125 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			log.Println(err.Error())
 		}
 	}
+}
+
+func readFileIfModified(filename string, lastMod time.Time) ([]byte, time.Time, error) {
+	fi, err := os.Stat(filename)
+	if err != nil {
+		return nil, lastMod, err
+	}
+	if !fi.ModTime().After(lastMod) {
+		return nil, lastMod, nil
+	}
+	p, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return nil, fi.ModTime(), err
+	}
+	return p, fi.ModTime(), nil
+}
+
+func LogWSReader(ws *websocket.Conn) {
+	defer ws.Close()
+	ws.SetReadLimit(512)
+	ws.SetReadDeadline(time.Now().Add(pongWait))
+	ws.SetPongHandler(func(string) error { ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+	for {
+		_, _, err := ws.ReadMessage()
+		if err != nil {
+			break
+		}
+	}
+}
+
+func LogWSWriter(ws *websocket.Conn, filename string, lastMod time.Time) {
+	lastError := ""
+	pingTicker := time.NewTicker(pingPeriod)
+	fileTicker := time.NewTicker(filePeriod)
+	defer func() {
+		pingTicker.Stop()
+		fileTicker.Stop()
+		ws.Close()
+	}()
+	for {
+		select {
+		case <-fileTicker.C:
+			var p []byte
+			var err error
+
+			p, lastMod, err = readFileIfModified(filename, lastMod)
+
+			if err != nil {
+				if s := err.Error(); s != lastError {
+					lastError = s
+					p = []byte(lastError)
+				}
+			} else {
+				lastError = ""
+			}
+
+			msg := []byte("<pre style='word-wrap: break-word; white-space: pre-wrap; white-space: -moz-pre-wrap'>")
+			msg = append(msg, p...)
+			msg = append(msg, []byte("</pre>")...)
+			if p != nil {
+				ws.SetWriteDeadline(time.Now().Add(writeWait))
+				if err := ws.WriteMessage(websocket.TextMessage, msg); err != nil {
+					return
+				}
+			}
+		case <-pingTicker.C:
+			ws.SetWriteDeadline(time.Now().Add(writeWait))
+			if err := ws.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+				return
+			}
+		}
+	}
+}
+
+func GetSessionLog(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		t, err := template.New("log.html").Delims("|||", "|||").ParseFiles("asset/web/template/log.html", "asset/web/template/vuefooter.html", "asset/web/template/vueheader.html")
+		if err != nil {
+			log.Println(err)
+			io.WriteString(w, err.Error())
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		err = t.Execute(w, struct{ LastMode string }{LastMode: strconv.FormatInt(time.Now().UnixNano(), 16)})
+		if err != nil {
+			panic(err)
+		}
+
+		/*
+			r.ParseForm()
+			sess := string(r.FormValue("id"))
+			file, err := ioutil.ReadFile("asset/log/" + sess + ".log")
+			if err != nil {
+				io.WriteString(w, err.Error())
+			} else {
+				io.WriteString(w, string(file))
+			}
+		*/
+	}
+}
+
+func GetSessionLogWS(w http.ResponseWriter, r *http.Request) {
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		if _, ok := err.(websocket.HandshakeError); !ok {
+			log.Println(err)
+		}
+		return
+	}
+
+	var lastMod time.Time
+	if n, err := strconv.ParseInt(r.FormValue("lastMod"), 16, 64); err == nil {
+		lastMod = time.Unix(0, n)
+	}
+
+	log.Println(lastMod, r.FormValue("id"))
+	go LogWSWriter(ws, "asset/log/"+r.FormValue("id")+".log", lastMod)
+	LogWSReader(ws)
 }
 
 func MainPage(w http.ResponseWriter, r *http.Request) {
@@ -1389,6 +1522,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	sessionid, _ := sid.(string)
 	if _, ok := Engine.Sessions[sessionid]; ok {
 		delete(Engine.Sessions, sessionid)
+		os.Remove("asset/log/" + sessionid + ".log")
 	}
 
 	log.Println(r.RequestURI)
@@ -1400,6 +1534,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	unique := http.Cookie{Name: "UNIQUE", Value: "You need Login at first", Expires: expiration}
 	groupid := http.Cookie{Name: "GROUPID", Value: "You need Login at first", Expires: expiration}
 	featureid := http.Cookie{Name: "FEATUREID", Value: "You need Login at first", Expires: expiration}
+	host := http.Cookie{Name: "SERVERIP", Value: "You need Login at first", Expires: expiration}
 	http.SetCookie(w, &sgid)
 	http.SetCookie(w, &sessid)
 	http.SetCookie(w, &device)
@@ -1407,6 +1542,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &unique)
 	http.SetCookie(w, &groupid)
 	http.SetCookie(w, &featureid)
+	http.SetCookie(w, &host)
 	w.Header().Set("Location", "/login")
 	w.WriteHeader(http.StatusTemporaryRedirect)
 }
@@ -1450,6 +1586,7 @@ func Start() {
 	mux.HandleFunc("/isinitialized", CheckIsReadyForRunByID)
 	mux.HandleFunc("/ws", WS)
 	mux.HandleFunc("/runcaseresultws", RunCaseResultWS)
+	mux.HandleFunc("/logws", GetSessionLogWS)
 	mux.HandleFunc("/login", Login)
 	mux.HandleFunc("/logout", Logout)
 	mux.HandleFunc("/mainpage", MainPage)
@@ -1457,6 +1594,7 @@ func Start() {
 	mux.HandleFunc("/monitormain", MonitorMainPage)
 	mux.HandleFunc("/uploadtopology", UploadTopology)
 	mux.HandleFunc("/", Login)
+	mux.HandleFunc("/log", GetSessionLog)
 	mux.HandleFunc("/test", Test)
 	mux.Handle("/asset/web/", http.FileServer(http.Dir(".")))
 

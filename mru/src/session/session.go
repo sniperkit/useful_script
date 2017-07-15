@@ -1,6 +1,7 @@
 package session
 
 import (
+	"context"
 	"newcache"
 	"result"
 	"rut"
@@ -15,6 +16,7 @@ type Session struct {
 	Result     <-chan result.Result //For run script
 	CaseResult map[string]chan *result.Result
 	NewCache   *newcache.NewCache
+	Cancel     context.CancelFunc
 }
 
 func New(name, pass string) *Session {

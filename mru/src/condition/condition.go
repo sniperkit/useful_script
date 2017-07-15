@@ -2,6 +2,7 @@ package condition
 
 import (
 	"assertion"
+	"context"
 	"errors"
 	"fmt"
 	"rut"
@@ -18,7 +19,7 @@ func (cd Condition) String() string {
 	return fmt.Sprintf("Condition: %15s, Assertions %v, Description: %s", cd.Name, cd.Assertions, cd.Description)
 }
 
-func (cd *Condition) Check(db *rut.DB) error {
+func (cd *Condition) Check(ctx context.Context, db *rut.DB) error {
 	done := make(chan bool)
 	err := make(chan string)
 
@@ -29,7 +30,7 @@ func (cd *Condition) Check(db *rut.DB) error {
 		wg := sync.WaitGroup{}
 		for _, a := range as {
 			wg.Add(1)
-			msg, ok := a.Do(db)
+			msg, ok := a.Do(ctx, db)
 			if !ok {
 				err <- fmt.Sprintf("Condition: %s check(%s) failed with: %s", cd.Name, cd.Description, msg)
 				return

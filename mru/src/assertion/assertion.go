@@ -2,6 +2,7 @@ package assertion
 
 import (
 	"command"
+	"context"
 	"dsl"
 	"fmt"
 	"regexp"
@@ -27,7 +28,7 @@ func (a Assertion) String() string {
 	}
 }
 
-func (a *Assertion) Do(db *rut.DB) (string, bool) {
+func (a *Assertion) Do(ctx context.Context, db *rut.DB) (string, bool) {
 	dut, ok := db.DB["DUT"+a.DUT]
 	if !ok {
 		return fmt.Sprintf("DUT %s is not set!", a.DUT), false
@@ -55,7 +56,7 @@ func (a *Assertion) Do(db *rut.DB) (string, bool) {
 	wg := sync.WaitGroup{}
 	for _, c := range cmds {
 		wg.Add(1)
-		res, err := dut.RunCommand(c)
+		res, err := dut.RunCommand(ctx, c)
 		if err != nil {
 			data += res
 			data += fmt.Sprintf("Run Command: %s failed with: %s", a.Command.CMD, err.Error())
@@ -123,7 +124,7 @@ func (a *Assertion) Verify() (string, bool) {
 	return fmt.Sprintf("Invlaid assertion, Both expcted and unexpected are empty!"), false
 }
 
-func (a *Assertion) Assert(db *rut.DB) {
-	msg, _ := a.Do(db)
+func (a *Assertion) Assert(ctx context.Context, db *rut.DB) {
+	msg, _ := a.Do(ctx, db)
 	fmt.Println(msg)
 }
