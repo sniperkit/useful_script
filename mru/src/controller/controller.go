@@ -33,6 +33,14 @@ func (c *Controller) GetSessionByUsernameAndPassword(name, pass string) *session
 	return nil
 }
 
+func (c *Controller) IsSessionExist(name, pass string) bool {
+	id := session.GenerateSessionIDByUserNameAndPassword(name, pass)
+	if _, ok := c.Sessions[id]; ok {
+		return true
+	}
+	return false
+}
+
 func (c *Controller) AddSessionByUsernameAndPassword(name, pass string) (*session.Session, error) {
 	id := session.GenerateSessionIDByUserNameAndPassword(name, pass)
 	if _, ok := c.Sessions[id]; ok {

@@ -6,6 +6,7 @@ import (
 	"controller"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"html/template"
 	"io"
@@ -20,6 +21,7 @@ import (
 	"result"
 	"rut"
 	"script"
+	"session"
 	"strconv"
 	"strings"
 	"sync"
@@ -1228,16 +1230,22 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			log.Println(k, ":", v)
 		}
 
+		username := r.FormValue("username")
+		password := r.FormValue("password")
+
 		var err error = nil
-		newsess := Engine.GetSessionByUsernameAndPassword(r.FormValue("username"), r.FormValue("password"))
-		if newsess == nil {
-			log.Println("1212")
-			newsess, err = Engine.AddSessionByUsernameAndPassword(r.FormValue("username"), r.FormValue("password"))
+		var newsess *session.Session
+		if exist := Engine.IsSessionExist(username, password); !exist {
+			newsess, err = Engine.AddSessionByUsernameAndPassword(username, password)
 			if err != nil {
-				log.Printf("Cannot add user: %s with: %s\n", r.FormValue("username"), err.Error())
-				//w.WriteHeader(http.StatusNotAcceptable)
+				w.WriteHeader(http.StatusInternalServerError)
+				io.WriteString(w, fmt.Sprintf("Cannot create Session for %s:%s with: %s!", username, password, err.Error()))
 				return
 			}
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			io.WriteString(w, fmt.Sprintf("Session for %s:%s already exist!", username, password))
+			return
 		}
 		cookie := &http.Cookie{
 			Name:  "SESSIONID",
@@ -1661,13 +1669,13 @@ func AddContextSupport(next http.Handler) http.Handler {
 func init() {
 	Engine = controller.New()
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
+
 	sich := make(chan os.Signal)
 	signal.Notify(sich, syscall.SIGKILL, syscall.SIGSTOP, syscall.SIGINT)
 
 	//Clear all the log files when system restart
 	go func() {
-		select {
-		case <-sich:
+		for _ = range sich {
 			rmlog := exec.Command("rm", "-rf", "asset/log/*")
 			rmlog.Run()
 

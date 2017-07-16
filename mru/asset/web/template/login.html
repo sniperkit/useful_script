@@ -50,6 +50,9 @@
 						window.location.href="mainpage";
 						//document.write(data)
 					//	$("#body").html(data)
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
 					}
 				});
 				this.submitted = true;
