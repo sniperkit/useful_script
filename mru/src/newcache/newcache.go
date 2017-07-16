@@ -66,7 +66,9 @@ func (tr *NewCache) Save() {
 
 func (tr *NewCache) Restore() {
 	tr.RestoreCaseFromFile("asset/db/common/COMMON.json")
-	tr.RestoreCaseFromFile("asset/db/personal/" + tr.Name + ".json")
+	if tr.Name != util.GenerateSessionIDByUserNameAndPassword("mra", "") {
+		tr.RestoreCaseFromFile("asset/db/personal/" + tr.Name + ".json")
+	}
 }
 
 func (tr *NewCache) SetTopologyByID(id, name string, content []byte) error {
@@ -185,13 +187,13 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 			SubGroup: c.SubGroup,
 			Name:     c.Feature,
 			DUTCount: c.DUTCount,
-			ID:       string(subgroup.Hash(tr.GetFeatureKeyByCase(c))),
+			ID:       string(feature.Hash(tr.GetFeatureKeyByCase(c))),
 			Cases:    make(map[string]*mcase.Case, 1),
 		}
 
 		newnode := &Node{
 			Key:      c.Feature,
-			ID:       string(subgroup.Hash(tr.GetFeatureKeyByCase(c))),
+			ID:       string(feature.Hash(tr.GetFeatureKeyByCase(c))),
 			Type:     "FEATURE",
 			Link:     "featureinfo?id=" + string(feature.Hash(tr.GetFeatureKeyByCase(c))),
 			Children: make([]*Node, 0, 1),
@@ -253,12 +255,38 @@ func (tr *NewCache) AddCase(c *mcase.Case) error {
 }
 
 func (tr *NewCache) DelCase(c *mcase.Case) error {
-	if tr.isNodeExist(mcase.Hash(tr.CaseKey(c))) {
+	if !tr.isNodeExist(mcase.Hash(tr.CaseKey(c))) {
 		return fmt.Errorf("Case %s does not exist!", c.Name)
 	}
 
-	defer tr.Save()
-	tr.Remove(mcase.Hash(tr.CaseKey(c)))
+	if _, ok := tr.Remove(mcase.Hash(tr.CaseKey(c))); !ok {
+		return fmt.Errorf("Try to delete unexist case entry: %s\n", c.Name)
+	}
+
+	n, err := tr.Get(feature.Hash(tr.GetFeatureKeyByCase(c)))
+	if err != nil {
+		panic(err)
+	}
+
+	del := -1
+	for i, ca := range n.Children {
+		if res, ok := ca.Data.(*mcase.Case); ok {
+			if res.ID == string(mcase.Hash(tr.CaseKey(c))) {
+				del = i
+				break
+			}
+		}
+	}
+
+	if del != -1 {
+		if Data, ok := n.Data.(*feature.Feature); ok {
+			Data.CCount--
+			delete(Data.Cases, c.Name)
+		}
+		n.Children = append(n.Children[0:del], n.Children[del+1:]...)
+	}
+
+	tr.Save()
 	return nil
 }
 
@@ -317,7 +345,10 @@ func (tr *NewCache) DelGroup(g *group.Group) error {
 		return fmt.Errorf("Group %s is not exist", string(tr.GetKeyByGroup(g)))
 	}
 
-	tr.Remove(group.Hash(tr.GetKeyByGroup(g)))
+	if _, ok := tr.Remove(group.Hash(tr.GetKeyByGroup(g))); !ok {
+		return fmt.Errorf("Try to delete unexist group: %s\n", g.Name)
+	}
+
 	del := -1
 	for i, c := range tr.Node.Children {
 		if res, ok := c.Data.(*group.Group); ok {
@@ -328,10 +359,10 @@ func (tr *NewCache) DelGroup(g *group.Group) error {
 		}
 	}
 
-	defer tr.Save()
 	if del != -1 {
 		tr.Node.Children = append(tr.Node.Children[0:del], tr.Node.Children[del+1:]...)
 		delete(tr.Groups, g.Name)
+		tr.Save()
 	}
 
 	return nil
@@ -403,7 +434,10 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 		return fmt.Errorf("SubGroup %s is not exist", string(tr.GetKeyBySubGroup(sg)))
 	}
 
-	tr.Remove(subgroup.Hash(tr.GetKeyBySubGroup(sg)))
+	if _, ok := tr.Remove(subgroup.Hash(tr.GetKeyBySubGroup(sg))); !ok {
+		return fmt.Errorf("Try to delete unexist subgroup: %s\n", sg.Name)
+	}
+
 	del := -1
 	n, err := tr.Get(group.Hash(tr.GetGroupKeyBySubGroup(sg)))
 	if err != nil {
@@ -419,7 +453,6 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 		}
 	}
 
-	defer tr.Save()
 	if del != -1 {
 		if Data, ok := n.Data.(*group.Group); ok {
 			Data.SGCount--
@@ -429,6 +462,7 @@ func (tr *NewCache) DelSubGroup(sg *subgroup.SubGroup) error {
 		n.Children = append(n.Children[0:del], n.Children[del+1:]...)
 	}
 
+	tr.Save()
 	return nil
 }
 
@@ -495,7 +529,10 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 		return fmt.Errorf("Feature %s is not exist", string(tr.GetKeyByFeature(f)))
 	}
 
-	tr.Remove(feature.Hash(tr.GetKeyByFeature(f)))
+	if _, ok := tr.Remove(feature.Hash(tr.GetKeyByFeature(f))); !ok {
+		return fmt.Errorf("Try to delete unexist feature entry: %s\n", f.Name)
+	}
+
 	del := -1
 	n, err := tr.Get(subgroup.Hash(tr.GetSubGroupKeyByFeature(f)))
 	if err != nil {
@@ -511,7 +548,6 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 		}
 	}
 
-	defer tr.Save()
 	if del != -1 {
 		if Data, ok := n.Data.(*subgroup.SubGroup); ok {
 			Data.FCount--
@@ -520,6 +556,7 @@ func (tr *NewCache) DelFeature(f *feature.Feature) error {
 		n.Children = append(n.Children[0:del], n.Children[del+1:]...)
 	}
 
+	tr.Save()
 	return nil
 }
 
@@ -969,7 +1006,6 @@ func (tr *NewCache) DelTask(caseid string, t *task.Task) error {
 		return err
 	}
 
-	tr.Save()
 	return nil
 }
 
@@ -1008,7 +1044,6 @@ func (tr *NewCache) GetCaseByID(id string) (*mcase.Case, error) {
 }
 
 func (tr *NewCache) GetGroupByID(id string) (*group.Group, error) {
-	log.Printf("+++++++++++++++++++++%s+++++++++++++++++++++++\n", id)
 	if !tr.isNodeExist([]byte(id)) {
 		return nil, fmt.Errorf("Group %s is not exist", id)
 	}

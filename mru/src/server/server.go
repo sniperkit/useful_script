@@ -772,33 +772,59 @@ func DeleteNode(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 
 		if _, ok := sess.CaseResult[sessionid]; ok {
+			w.WriteHeader(http.StatusInternalServerError)
 			io.WriteString(w, "You are runing another cases")
 			return
 		}
 
-		var err error
 		if r.FormValue("type") == "GROUP" {
 			err := sess.NewCache.DelGroupByID(r.FormValue("id"))
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				io.WriteString(w, "Delete error: "+err.Error())
+				return
+			}
 		} else if r.FormValue("type") == "SUBGROUP" {
 			err := sess.NewCache.DelSubGroupByID(r.FormValue("id"))
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				io.WriteString(w, "Delete error: "+err.Error())
+				return
+			}
 		} else if r.FormValue("type") == "FEATURE" {
 			err := sess.NewCache.DelFeatureByID(r.FormValue("id"))
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				io.WriteString(w, "Delete error: "+err.Error())
+				return
+			}
 		} else if r.FormValue("type") == "CASE" {
 			err := sess.NewCache.DelCaseByID(r.FormValue("id"))
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				io.WriteString(w, "Delete error: "+err.Error())
+				return
+			}
 		} else if r.FormValue("type") == "TASK" {
-			caseid, err = r.Cookie("CASEID")
+			caseid, err := r.Cookie("CASEID")
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
 				io.WriteString(w, "Case ID is not set when delete task")
 				return
 			}
 			err = sess.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
-			w.WriteHeader(http.StatusOK)
-			io.WriteString("Delete success")
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				io.WriteString(w, "Delete error: "+err.Error())
+				return
+			}
 		} else {
 			w.WriteHeader(http.StatusBadRequest)
 			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
+			return
 		}
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, "Delete success")
 	}
 }
 

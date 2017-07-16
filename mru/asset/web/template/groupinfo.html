@@ -2,9 +2,9 @@
 |||template "treenav"|||
 |||template "groupheader"|||
 <div id="groupinfo" class="container-fluid display-table v-align">
-	<div id="testapp">
 	<form class="form-horizontal">
-	<div class="col-md-3">
+	</form>
+	<div class="col-md-4">
 		<div class="md-lid">
 			<div class="tab-featured-image">
 				<div class="tab-content">
@@ -13,32 +13,61 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6 pull-right">
+		<button class="btn icon-btn btn-success pull-left" @click.prevent="runGoToNewCase">NewCase</button>
+		<button class="btn icon-btn btn-primary pull-left" @click.prevent="runCaseByGroup" disabled="disabled">Run</button>
+		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete" disabled="disabled">Delete</button>
+	</div>
+	<legend class="col-md-6 pull-right"></legend>
+	<div class="col-md-6 pull-right">
 		<div class="tab-featured-image">
 			<div class="tab-content">
 				<div class="form-group">
-					<div v-for="task in current.Tasks">
+					<div v-for="sg in current.SubGroups">
 						<div class="update-nag">
 							<div class="update-split update-info"><i class="glyphicon glyphicon-leaf"></i></div>
-							<div class="update-text"><a :href="'taskinfo?id='+task.id">{{task.name}}</a></div>
+							<div class="update-text"><a :href="'subgroupinfo?id='+sg.ID">{{sg.Name}}</a></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<button class="btn icon-btn btn-success pull-right" @click.prevent="runGoToNewCase">NewCase</button>
-		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete">Delete</button>
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseByGroup" disabled="disabled">RUN</button>
+	</div>
+	<legend class="col-md-10 pull-right"></legend>
+	<div class="container">
+		<div class="row">
+			<div v-for="(res, i) in results">
+				<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+					<div class="card">
+						<button v-if="res.Pass" class="btn btn-success ignore btn-block"><h4>Success</h4></button>
+						<button v-else class="btn btn-danger ignore btn-block"><h4>Failed</h4></button>
+						<div class="card-block">
+							<!--
+		   <figure class="profile">
+		   <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
+		   </figure>
+							-->
+							<h4 class="card-title mt-3">Goup:     {{res.Group}}</h4>
+							<h4 class="card-title mt-3">SubGroup: {{res.SubGroup}}</h4>
+							<h4 class="card-title mt-3">Feature:  {{res.Feature}}</h4>
+							<h4 class="card-title mt-3">Case:     {{res.Case}}</h4>
+							<div class="meta">
+								<a>Message</a>
+							</div>
+							<div class="card-text">
+								{{res.Message}}
+							</div>
+						</div>
+						<div class="card-footer">
+							<small>For More Informations...</small>
+							<button class="btn btn-secondary float-right btn-sm pull-right">Go</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<div class="col-md-6 pull-left">
-	 <div v-for="res in results">
-		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green">Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
-		 <h4 class="text-center text-danger" v-else><strong color="green">Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
-	 </div>
-	</div>
-	</form>
-	</div>
 </div>
 <script>
 	function dumpGroup(id) {
@@ -76,22 +105,22 @@
 			((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 	}
 
-    function notify(style, data) {
-        $.notify({
-            title: 'Email Notification',
-            text: data,
-            image: "<img src='asset/web/static/notifyjs/examples/images/Mail.png'/>"
-        }, {
-            style: 'metro',
-            className: style,
-            autoHide: false,
-            clickToHide: true
-        });
-    }
+	function notify(style, data) {
+		$.notify({
+			title: 'Email Notification',
+			text: data,
+			image: "<img src='asset/web/static/notifyjs/examples/images/Mail.png'/>"
+		}, {
+			style: 'metro',
+			className: style,
+			autoHide: false,
+			clickToHide: true
+		});
+	}
 </script>
-	<link href="asset/web/static/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
-	<script src="asset/web/static/notifyjs/dist/notify.js"></script>
-	<script src="asset/web/static/notifyjs/dist/styles/metro/notify-metro.js"></script>
+<link href="asset/web/static/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+<script src="asset/web/static/notifyjs/dist/notify.js"></script>
+<script src="asset/web/static/notifyjs/dist/styles/metro/notify-metro.js"></script>
 
 <script>
 	var caseInfo = new Vue({
@@ -142,6 +171,7 @@
 					},
 					success:function(data) {
 						notify("success", "Delete group success!");
+						window.location.href="groupinfo?id="+getCookie("GROUPID");
 					}
 				});
 				this.submitted = true;

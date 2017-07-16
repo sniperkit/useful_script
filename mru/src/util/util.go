@@ -21,6 +21,7 @@ func SaveToFile(name string, data []byte) {
 	}
 
 	file.Write(data)
+	file.Sync()
 	defer file.Close()
 }
 

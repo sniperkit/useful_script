@@ -4,7 +4,7 @@
 <div id="subgroupinfo" class="container-fluid display-table v-align">
 	<form class="form-horizontal">
 	</form>
-	<div class="col-md-3">
+	<div class="col-md-4">
 		<div class="md-lid">
 			<div class="tab-featured-image">
 				<div class="tab-content">
@@ -13,28 +13,59 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6 pull-right">
+		<button class="btn icon-btn btn-success pull-left" @click.prevent="runGoToNewCase">NewCase</button>
+		<button class="btn icon-btn btn-primary pull-left" @click.prevent="runCaseBySubGroup" disabled="disabled">Run</button>
+		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete">Delete</button>
+	</div>
+	<legend class="col-md-6 pull-right"></legend>
+	<div class="col-md-6 pull-right">
 		<div class="tab-featured-image">
 			<div class="tab-content">
 				<div class="form-group">
-					<div v-for="task in current.Tasks">
+					<div v-for="fea in current.Features">
 						<div class="update-nag">
 							<div class="update-split update-info"><i class="glyphicon glyphicon-leaf"></i></div>
-							<div class="update-text"><a :href="'taskinfo?id='+task.id">{{task.name}}</a></div>
+							<div class="update-text"><a :href="'featureinfo?id='+fea.ID">{{fea.Name}}</a></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<button class="btn icon-btn btn-success pull-right" @click.prevent="runGoToNewCase">NewCase</button>
-		<button class="btn icon-btn btn-danger pull-right" @click.prevent="runDelete">Delete</button>
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="runCaseBySubGroup" disabled="disabled">Run</button>
 	</div>
-	<div class="col-md-6 pull-left">
-	 <div v-for="res in results">
-		 <h4 class="text-center text-success" v-if="res.Pass"><strong color="green">Success:</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
-		 <h4 class="text-center text-danger" v-else><strong color="green">Faield :</strong>{{res.Group}}>{{res.SubGroup}}>{{res.Feature}}>{{res.Case}}: {{res.Message}}</h4>
-	 </div>
+	<legend class="col-md-10 pull-right"></legend>
+	<div class="container">
+		<div class="row">
+			<div v-for="(res, i) in results">
+				<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+					<div class="card">
+						<button v-if="res.Pass" class="btn btn-success ignore btn-block"><h4>Success</h4></button>
+						<button v-else class="btn btn-danger ignore btn-block"><h4>Failed</h4></button>
+						<div class="card-block">
+							<!--
+		   <figure class="profile">
+		   <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
+		   </figure>
+							-->
+							<h4 class="card-title mt-3">Goup:     {{res.Group}}</h4>
+							<h4 class="card-title mt-3">SubGroup: {{res.SubGroup}}</h4>
+							<h4 class="card-title mt-3">Feature:  {{res.Feature}}</h4>
+							<h4 class="card-title mt-3">Case:     {{res.Case}}</h4>
+							<div class="meta">
+								<a>Message</a>
+							</div>
+							<div class="card-text">
+								{{res.Message}}
+							</div>
+						</div>
+						<div class="card-footer">
+							<small>For More Informations...</small>
+							<button class="btn btn-secondary float-right btn-sm pull-right">Go</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
@@ -81,8 +112,16 @@
 			id: getCookie("SGID"),
 			submitted:false,
 			results:[{
+				Group: "Sample",
+				SubGroup: "SampleSub",
+				Feature: "SampleFeature",
+				Pass: true,
 				Message: "hello"
 			}, {
+				Group: "Sample",
+				SubGroup: "SampleSub",
+				Feature: "SampleFeature",
+				Pass: false,
 				Message: "world"
 			}
 			]
@@ -122,7 +161,8 @@
 						id: this.id
 					},
 					success:function(data) {
-						notify("success", "Delete subgroup success!");
+						alert("success", "Delete subgroup success!");
+						window.location.href="subgroupinfo?id="+getCookie("SGID");
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						alert(XMLHttpRequest.responseText);

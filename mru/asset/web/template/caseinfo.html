@@ -21,7 +21,7 @@
 		<button class="btn icon-btn btn-success pull-left" @click.prevent="runCase">RUN</button>
 	</div>
 	<legend class="col-md-6 pull-right"></legend>
-	<div class="col-md-4 pull-center">
+	<div class="col-md-6 pull-right">
 		<div class="tab-featured-image">
 			<div class="tab-content">
 				<div class="form-group">
@@ -202,7 +202,7 @@
 					async:false,
 					data: {
 						type: "CASE",
-						id: this.id
+						id: getCookie("CASEID")
 					},
 					success:function(data) {
 						var conn = new WebSocket("ws://"+data+"/runcaseresultws");
@@ -228,12 +228,13 @@
 					async:false,
 					data: {
 						type: "CASE",
-						id: this.id
+						id: getCookie("CASEID")
 					},
 					success:function(data) {
-						notify("success", "Delete Feature success!");
+						window.location.href="caseinfo?id="+getCookie("CASEID");
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(getCookie("CASEID"))
 						alert(XMLHttpRequest.responseText);
 					}
 				});
@@ -281,7 +282,7 @@
 						id: e,
 					},
 					success:function(data) {
-						notify("success", "Delete task success!");
+						window.location.href="caseinfo?id="+getCookie("CASEID");
 					}, 
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						alert(XMLHttpRequest.responseText);
