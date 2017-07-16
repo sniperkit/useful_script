@@ -160,6 +160,9 @@
 					},
 					success:function(data) {
 						notify("success", "Delete Feature success!");
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
 					}
 				});
 				this.submitted = true;

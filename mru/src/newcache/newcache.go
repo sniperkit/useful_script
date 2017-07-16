@@ -56,7 +56,11 @@ func (tr *NewCache) Save() {
 		log.Println("Cannot format db for debug")
 		return
 	}
-	util.SaveToFile("asset/db/common/COMMON.json", js)
+
+	//This is very stupid, but I'm really very tired.
+	if tr.Name == util.GenerateSessionIDByUserNameAndPassword("mra", "") {
+		util.SaveToFile("asset/db/common/COMMON.json", js)
+	}
 	util.SaveToFile("asset/db/personal/"+tr.Name+".json", js)
 }
 

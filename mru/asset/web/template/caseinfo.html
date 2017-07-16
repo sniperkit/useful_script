@@ -4,7 +4,7 @@
 <div id="caseinfo" class="container-fluid display-table v-align">
 	<form class="form-horizontal">
 	</form>
-	<div class="col-md-5">
+	<div class="col-md-4">
 		<div class="md-lid">
 			<div class="tab-featured-image">
 				<div class="tab-content">
@@ -13,24 +13,30 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4">
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
-		<button class="btn icon-btn btn-success pull-right" @click.prevent="runCase">RUN</button>
-		<button class="btn icon-btn btn-info pull-right" @click.prevent="openLogSession">LOG</button>
-		<button class="btn icon-btn btn-warning pull-right" @click.prevent="openLogSession('full')">FULL</button>
+	<div class="col-md-6 pull-right">
+		<button class="btn icon-btn btn-danger pull-right" @click.prevent="delCase">Delete</button>
+		<button class="btn icon-btn btn-primary pull-left" @click.prevent="newTask">NewTask</button>
+		<button class="btn icon-btn btn-info pull-left" @click.prevent="openLogSession">LOG</button>
+		<button class="btn icon-btn btn-warning pull-left" @click.prevent="openLogSession('full')">FULL</button>
+		<button class="btn icon-btn btn-success pull-left" @click.prevent="runCase">RUN</button>
+	</div>
+	<legend class="col-md-6 pull-right"></legend>
+	<div class="col-md-4 pull-center">
 		<div class="tab-featured-image">
 			<div class="tab-content">
 				<div class="form-group">
 					<div v-for="task in current.Tasks">
 						<div class="update-nag">
 							<button class="update-split update-success glyphicon glyphicon-play" @click.prevent="runTask(task.id)"></button>
+							<button class="update-split update-danger glyphicon glyphicon-remove" @click.prevent="DelTask(task.id)"></button>
 							<div class="update-text"><a :href="'taskinfo?id='+task.id">{{task.name}}</a></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		</div>
+	</div>
+	<legend class="col-md-10 pull-right"></legend>
 	<div class="container">
 		<div class="row">
 		<div v-for="(res, i) in cresults">
@@ -215,6 +221,25 @@
 				this.submitted = true;
 			},
 
+			delCase: function(e) {
+				$.ajax({
+					type:"post",
+					url:"delete",
+					async:false,
+					data: {
+						type: "CASE",
+						id: this.id
+					},
+					success:function(data) {
+						notify("success", "Delete Feature success!");
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
+					}
+				});
+				this.submitted = true;
+			},
+
 			runTask: function(e) {
 				if (!isReadyForRun(this.id)){
 					doInitializeWork(this.id)
@@ -239,6 +264,25 @@
 							res.push(JSON.parse(evt.data));
 						}
 					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(XMLHttpRequest.responseText);
+					}
+				});
+				this.submitted = true;
+			},
+
+			DelTask: function(e) {
+				$.ajax({
+					type:"post",
+					url:"delete",
+					async:false,
+					data: {
+						type: "TASK",
+						id: e,
+					},
+					success:function(data) {
+						notify("success", "Delete task success!");
+					}, 
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						alert(XMLHttpRequest.responseText);
 					}

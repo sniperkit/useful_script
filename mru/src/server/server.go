@@ -776,21 +776,25 @@ func DeleteNode(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		var err error
 		if r.FormValue("type") == "GROUP" {
-			sess.NewCache.DelGroupByID(r.FormValue("id"))
+			err := sess.NewCache.DelGroupByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "SUBGROUP" {
-			sess.NewCache.DelSubGroupByID(r.FormValue("id"))
+			err := sess.NewCache.DelSubGroupByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "FEATURE" {
-			sess.NewCache.DelFeatureByID(r.FormValue("id"))
+			err := sess.NewCache.DelFeatureByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "CASE" {
-			sess.NewCache.DelCaseByID(r.FormValue("id"))
+			err := sess.NewCache.DelCaseByID(r.FormValue("id"))
 		} else if r.FormValue("type") == "TASK" {
-			caseid, err := r.Cookie("CASEID")
+			caseid, err = r.Cookie("CASEID")
 			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
 				io.WriteString(w, "Case ID is not set when delete task")
 				return
 			}
-			sess.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
+			err = sess.NewCache.DelTaskByID(caseid.Value, r.FormValue("id"))
+			w.WriteHeader(http.StatusOK)
+			io.WriteString("Delete success")
 		} else {
 			w.WriteHeader(http.StatusBadRequest)
 			io.WriteString(w, "Invalid request") //A proper status code in more usefull.
