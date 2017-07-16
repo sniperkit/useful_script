@@ -18,6 +18,7 @@ type Configuration struct {
 	ModeDB         map[string]string
 	Name           string
 	Hostname       string
+	SessionID      string
 }
 
 /*

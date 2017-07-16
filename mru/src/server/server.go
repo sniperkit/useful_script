@@ -14,6 +14,8 @@ import (
 	"mcase"
 	"net/http"
 	"os"
+	"os/exec"
+	"os/signal"
 	"path"
 	"result"
 	"rut"
@@ -21,6 +23,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"task"
 	"time"
 	"util"
@@ -81,6 +84,7 @@ func Product(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Printf("%#v", con)
 		log.Printf("%#q", con)
+		con.SessionID = sessionid
 
 		dev, err := rut.GetRUTByConfig(&con)
 		if err != nil {
@@ -910,6 +914,8 @@ func SetDUTsByID(w http.ResponseWriter, r *http.Request) {
 
 		var duts []*rut.RUT
 		for _, cn := range con {
+			//For command  excutation log.
+			cn.SessionID = sessionid
 			d, err := rut.GetRUTByConfig(cn)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
@@ -948,6 +954,7 @@ func RunCases(w http.ResponseWriter, r *http.Request) {
 		}
 
 		os.Remove("asset/log/" + sessionid + ".log")
+		os.Remove("asset/log/" + sessionid + "_full.log")
 
 		log.Printf("Run %s ID: %s\n", r.FormValue("type"), r.FormValue("id"))
 		sess.CaseResult[sessionid] = make(chan *result.Result, 10)
@@ -1345,7 +1352,10 @@ func GetSessionLog(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		err = t.Execute(w, struct{ LastMode string }{LastMode: strconv.FormatInt(time.Now().UnixNano(), 16)})
+		err = t.Execute(w, struct {
+			LastMode string
+			Full     string
+		}{LastMode: strconv.FormatInt(time.Now().UnixNano(), 16), Full: r.FormValue("full")})
 		if err != nil {
 			panic(err)
 		}
@@ -1372,13 +1382,19 @@ func GetSessionLogWS(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println(".................", r.FormValue("full"))
 	var lastMod time.Time
 	if n, err := strconv.ParseInt(r.FormValue("lastMod"), 16, 64); err == nil {
 		lastMod = time.Unix(0, n)
 	}
 
-	log.Println(lastMod, r.FormValue("id"))
-	go LogWSWriter(ws, "asset/log/"+r.FormValue("id")+".log", lastMod)
+	var file string
+	if r.FormValue("full") == "1" {
+		file = "asset/log/" + r.FormValue("id") + "_full.log"
+	} else {
+		file = "asset/log/" + r.FormValue("id") + ".log"
+	}
+	go LogWSWriter(ws, file, lastMod)
 	LogWSReader(ws)
 }
 
@@ -1520,9 +1536,13 @@ func MonitorMainPage(w http.ResponseWriter, r *http.Request) {
 func Logout(w http.ResponseWriter, r *http.Request) {
 	sid := r.Context().Value("SESSIONID")
 	sessionid, _ := sid.(string)
-	if _, ok := Engine.Sessions[sessionid]; ok {
+	if sess, ok := Engine.Sessions[sessionid]; ok {
 		delete(Engine.Sessions, sessionid)
 		os.Remove("asset/log/" + sessionid + ".log")
+		os.Remove("asset/log/" + sessionid + "_full.log")
+		if sess.Cancel != nil {
+			sess.Cancel()
+		}
 	}
 
 	log.Println(r.RequestURI)
@@ -1641,4 +1661,22 @@ func AddContextSupport(next http.Handler) http.Handler {
 func init() {
 	Engine = controller.New()
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
+	sich := make(chan os.Signal)
+	signal.Notify(sich, syscall.SIGKILL, syscall.SIGSTOP, syscall.SIGINT)
+
+	//Clear all the log files when system restart
+	go func() {
+		select {
+		case <-sich:
+			rmlog := exec.Command("rm", "-rf", "asset/log/*")
+			rmlog.Run()
+
+			for _, sess := range Engine.Sessions {
+				if sess.Cancel != nil {
+					sess.Cancel()
+				}
+			}
+			os.Exit(-100000)
+		}
+	}()
 }

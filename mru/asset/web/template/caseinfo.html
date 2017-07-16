@@ -14,6 +14,10 @@
 		</div>
 	</div>
 	<div class="col-md-4">
+		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
+		<button class="btn icon-btn btn-success pull-right" @click.prevent="runCase">RUN</button>
+		<button class="btn icon-btn btn-info pull-right" @click.prevent="openLogSession">LOG</button>
+		<button class="btn icon-btn btn-warning pull-right" @click.prevent="openLogSession('full')">FULL</button>
 		<div class="tab-featured-image">
 			<div class="tab-content">
 				<div class="form-group">
@@ -26,10 +30,7 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn icon-btn btn-primary pull-right" @click.prevent="newTask">NewTask</button>
-		<button class="btn icon-btn btn-success pull-right" @click.prevent="runCase">RUN</button>
-		<button class="btn icon-btn btn-info pull-right" @click.prevent="openLogSession">LOG</button>
-	</div>
+		</div>
 	<div class="container">
 		<div class="row">
 		<div v-for="(res, i) in cresults">
@@ -246,8 +247,15 @@
 			},
 
 			openLogSession: function(e) {
+				var full
+				if (e == "full") {
+					full = 1;
+				} else {
+					full = 0;
+				}
+				alert(full)
 				var sess = getCookie("SESSIONID");
-				var url = "/log?id="+sess
+				var url = "/log?id="+sess+"&full="+full
 				window.open(url)
 				this.submitted = true;
 			},

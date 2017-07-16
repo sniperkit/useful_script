@@ -6,7 +6,9 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
 	"strings"
+	"sync"
 	"telnetclient"
 )
 
@@ -16,10 +18,13 @@ type Cli struct {
 	currentMode  string
 	modeToPrompt map[string]string
 	promptToMode map[string]string
+	logLock      sync.Mutex
 }
 
 func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
-	fmt.Printf("Run Command: %40s cmode:%15s mode: %15s on %20s\n", cmd.CMD, cmd.Mode, c.CurrentMode(), c.conf.IP)
+	message := fmt.Sprintf("Run Command: %40s cmode:%15s mode: %15s on %20s\n", cmd.CMD, cmd.Mode, c.CurrentMode(), c.conf.IP)
+	c.Log(message)
+
 	if cmd.Mode != c.currentMode {
 		return nil, errors.New("Error: Command: " + cmd.CMD + " should be run under: " + cmd.Mode + "! But currently we are under: " + c.currentMode + " mode!")
 	}
@@ -42,7 +47,7 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, err
 	}
 
-	//log.Println(string(data))
+	c.Log(string(data))
 	if c.IsErrorExist(string(data)) {
 		return nil, errors.New("Cannot run command: " + cmd.CMD + " with error: <<<" + string(data) + ">>>")
 	}
@@ -64,7 +69,8 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 
 	if old != c.currentMode {
 		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
-		fmt.Printf("After run: %40s mode switch from : %15s to %15s. !\n", cmd.CMD, old, c.currentMode)
+		message = fmt.Sprintf("After run: %40s mode switch from : %15s to %15s. !\n", cmd.CMD, old, c.currentMode)
+		c.Log(message)
 	}
 
 	return data, nil
@@ -203,6 +209,7 @@ func NewCli(conf *configuration.Configuration) (c *Cli, err error) {
 		conf:         conf,
 		modeToPrompt: make(map[string]string, 1),
 		promptToMode: make(map[string]string, 1),
+		logLock:      sync.Mutex{},
 	}, nil
 }
 
@@ -218,6 +225,19 @@ func (c *Cli) SetModeDB(db map[string]string) {
 			fmt.Println(err.Error())
 		}
 	}
+}
+
+func (c *Cli) Log(message string) {
+	c.logLock.Lock()
+	file, err := os.OpenFile("asset/log/"+c.conf.SessionID+"_full.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+	if err != nil {
+		log.Println("cannot Open file: ", c.conf.SessionID+"_full.log", " ", err.Error())
+		return
+	}
+
+	file.WriteString(message)
+	file.Close()
+	c.logLock.Unlock()
 }
 
 func (c *Cli) ClearModeDB() {

@@ -27,6 +27,7 @@ type RUT struct {
 	Port       string
 	BasePrompt string
 	Hostname   string //hostName
+	SessionID  string
 }
 
 type Config struct {
@@ -38,6 +39,7 @@ type Config struct {
 	Password   string `json:"passowrd"`
 	BasePrompt string `json:"baseprompt"`
 	Hostname   string `json:"hostname"`
+	SessionID  string `json:"-"`
 }
 
 type DB struct {
@@ -68,6 +70,7 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.PasswordPrompt = configuration.DefaultPasswordPrompt
 	conf.Prompt = configuration.PromptEnd
 	conf.ModeDB = configuration.BuildModeDBFromHostNameAndBasePrompt(r.Hostname, r.BasePrompt)
+	conf.SessionID = r.SessionID
 
 	log.Printf("%#v", conf)
 	return &conf
@@ -259,6 +262,7 @@ func GetRUTByConfig(c *Config) (*RUT, error) {
 		Port:       c.Port,
 		Hostname:   c.Hostname,
 		BasePrompt: c.BasePrompt,
+		SessionID:  c.SessionID,
 	}
 
 	log.Printf("%#v", newrut)

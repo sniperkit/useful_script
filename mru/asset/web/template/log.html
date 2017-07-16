@@ -17,12 +17,13 @@
 			}
 			$(function() {
 				var sess = getCookie("SESSIONID");
-				var conn = new WebSocket("ws://"+window.location.host+"/logws?id="+sess+"&lastMode=|||.LastMode|||");
+				var conn = new WebSocket("ws://"+window.location.host+"/logws?id="+sess+"&lastMode=|||.LastMode|||&full=|||.Full|||");
 				conn.onclose = function(evt) {
 					console.log(evt.data);
 				};
 				conn.onmessage = function(evt) {
 					document.write(evt.data);
+					document.close();
 				};
 				conn.onerror = function(evt) {
 					console.log(evt.data);
