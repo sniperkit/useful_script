@@ -2,6 +2,7 @@ package server
 
 import (
 	//	"command"
+	"bot"
 	"context"
 	"controller"
 	"encoding/base64"
@@ -1232,6 +1233,8 @@ func TestCaseResultWriter(ws *websocket.Conn, sessionid string) {
 			log.Println("error happend when encoding result")
 			continue
 		}
+
+		bot.ATB.PostMessage(fmt.Sprintf("%s", res))
 		if err := ws.WriteMessage(websocket.TextMessage, js); err != nil {
 			log.Println(err.Error())
 		}

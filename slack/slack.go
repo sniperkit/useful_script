@@ -38,14 +38,16 @@ func main() {
 	}
 
 	params := slack.PostMessageParameters{
-		Username: "ats",
-		AsUser:   true,
+		Username:  "ats",
+		AsUser:    true,
+		Markdown:  true,
+		LinkNames: 1,
 	}
 
 	/*
 			attachment := slack.Attachment{
 				Pretext: "some pretext",
-				Text:    "some text",
+				Text:    "*bold* `code` _italic_ ~strike~",
 				Fields: []slack.AttachmentField{
 					slack.AttachmentField{
 						Title: "a",
@@ -56,7 +58,7 @@ func main() {
 
 		params.Attachments = []slack.Attachment{attachment}
 	*/
-	channelID, timestamp, err := api.PostMessage("G68RDPX8D", "Some text", params)
+	channelID, timestamp, err := api.PostMessage("G68RDPX8D", "@kkkmmu  *bold* `code` _italic_ ~strike~", params)
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		return
