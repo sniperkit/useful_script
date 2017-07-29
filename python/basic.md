@@ -27,3 +27,4 @@
 23. python3.6 -m pip install Pillow
 24. sudo vim /etc/sudoers
 	secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+25.可以用help函数来获取某一对象的所有属性.
