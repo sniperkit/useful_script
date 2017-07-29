@@ -16,15 +16,17 @@
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
+							<th class="text-center col-sm-1">Index</th>
 							<th class="text-center col-sm-1">DUT</th>
 							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-2">Mode</th>
 							<th class="text-center col-sm-3">CLI</th>
 							<th class="text-center col-sm-4">Expected</th>
-							<th class="text-center col-sm-1">+/-</th>
+							<th class="text-center col-sm-2">+/-</th>
 						</tr>
 
 						<tr>
+							<td class="text-center"><input type="text" v-model="prcinputs.index" placeholder='0' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 							<td class="text-center"><input type="text" v-model="prcinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
@@ -35,6 +37,7 @@
 					</thead>
 					<tbody v-for="(assertion, index) in ntask.precondition.assertions">
 						<tr>
+							<td class="text-center">{{index}}</td>
 							<td class="text-center">{{assertion.dut}}</td>
 							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
@@ -52,6 +55,7 @@
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
+							<th class="text-center col-sm-1">Index</th>
 							<th class="text-center col-sm-1">DUT</th>
 							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-2">Mode</th>
@@ -59,6 +63,7 @@
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
+						<td class="text-center"><input type="text" v-model="mrinputs.index" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="mrinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
@@ -70,6 +75,7 @@
 					</thead>
 					<tbody v-for="(assertion, index) in ntask.routine.assertions">
 						<tr>
+							<td class="text-center">{{index}}</td>
 							<td class="text-center">{{assertion.dut}}</td>
 							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
@@ -87,6 +93,7 @@
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
+							<th class="text-center col-sm-1">Index</th>
 							<th class="text-center col-sm-1">DUT</th>
 							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-2">Mode</th>
@@ -94,6 +101,7 @@
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
+						<td class="text-center"><input type="text" v-model="pocinputs.index" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="pocinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
@@ -106,6 +114,7 @@
 					<tbody v-for="(assertion, index) in ntask.postcondition.assertions">
 
 						<tr>
+							<td class="text-center">{{index}}</td>
 							<td class="text-center">{{assertion.dut}}</td>
 							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
@@ -123,6 +132,7 @@
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
+							<th class="text-center col-sm-1">Index</th>
 							<th class="text-center col-sm-1">DUT</th>
 							<th class="text-center col-sm-1">Delay</th>
 							<th class="text-center col-sm-2">Mode</th>
@@ -130,6 +140,7 @@
 							<th class="text-center col-sm-4">Expected</th>
 							<th class="text-center col-sm-1">+/-</th>
 						</tr>
+						<td class="text-center"><input type="text" v-model="crinputs.index" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.dut" placeholder='1' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.command.delay" placeholder='0' class="form-control col-sm-1 required"/></td>
 						<td class="text-center"><input type="text" v-model="crinputs.command.mode" placeholder='normal' class="form-control col-sm-1 required"/></td>
@@ -141,7 +152,7 @@
 					</thead>
 					<tbody v-for="(assertion, index) in ntask.clear.assertions">
 						<tr>
-
+							<td class="text-center">{{index}}</td>
 							<td class="text-center">{{assertion.dut}}</td>
 							<td class="text-center">{{assertion.command.delay}}</td>
 							<td class="text-center">{{assertion.command.mode}}</td>
@@ -194,6 +205,7 @@
 		el: '#form-newtask',
 		data: {
 			prcinputs: {
+				index: "0",
 				dut:"0",
 				command: {
 					delay: 0,
@@ -203,6 +215,7 @@
 				expected: "#"
 			},
 			pocinputs: {
+				index: "0",
 				dut:"0",
 				command: {
 					delay:0,
@@ -212,6 +225,7 @@
 				expected: "#"
 			},
 			mrinputs: {
+				index: "0",
 				dut:"0",
 				command: {
 					delay:0,
@@ -222,6 +236,7 @@
 			},
 			crinputs: {
 				dut:"0",
+				index: "0",
 				command:{
 					delay: 0,
 					cli: "show running-config",
@@ -249,15 +264,28 @@
 		},
 		methods: {
 			addNewPreCondition: function(){
-				this.ntask.precondition.assertions.push({
-					dut: this.prcinputs.dut,
-					command: {
-						delay: +this.prcinputs.command.delay,
-						mode: this.prcinputs.command.mode,
-						cli: this.prcinputs.command.cli
-					},
-					expected: this.prcinputs.expected
-				});
+				if (this.prcinputs.index == 0) {
+					this.ntask.precondition.assertions.push({
+						dut: this.prcinputs.dut,
+						command: {
+							delay: +this.prcinputs.command.delay,
+							mode: this.prcinputs.command.mode,
+							cli: this.prcinputs.command.cli
+						},
+						expected: this.prcinputs.expected
+					});
+				} else  {
+					this.ntask.precondition.assertions.splice(this.prcinputs.index, 0, {
+						dut: this.prcinputs.dut,
+						command: {
+							delay: +this.prcinputs.command.delay,
+							mode: this.prcinputs.command.mode,
+							cli: this.prcinputs.command.cli
+						},
+						expected: this.prcinputs.expected
+
+					});
+				}
 				this.inputs = {};
 			},
 			delPreCondition: function(index){
@@ -265,15 +293,28 @@
 			},
 
 			addNewPostCondition: function(){
-				this.ntask.postcondition.assertions.push({
-					dut: this.pocinputs.dut,
-					command: {
-						delay: +this.pocinputs.command.delay,
-						mode: this.pocinputs.command.mode,
-						cli: this.pocinputs.command.cli
-					},
-					expected: this.pocinputs.expected
-				});
+				if (this.pocinputs.index == 0) {
+					this.ntask.postcondition.assertions.push({
+						dut: this.pocinputs.dut,
+						command: {
+							delay: +this.pocinputs.command.delay,
+							mode: this.pocinputs.command.mode,
+							cli: this.pocinputs.command.cli
+						},
+						expected: this.pocinputs.expected
+					});
+				} else  {
+					this.ntask.postcondition.assertions.splice(this.pocinputs.index, 0, {
+						dut: this.pocinputs.dut,
+						command: {
+							delay: +this.pocinputs.command.delay,
+							mode: this.pocinputs.command.mode,
+							cli: this.pocinputs.command.cli
+						},
+						expected: this.pocinputs.expected
+
+					});
+				}
 				this.inputs = {};
 			},
 
@@ -282,15 +323,28 @@
 			},
 
 			addNewMainRoutine: function(){
-				this.ntask.routine.assertions.push({
-					dut: this.mrinputs.dut,
-					command: {
-						delay: +this.mrinputs.command.delay,
-						mode: this.mrinputs.command.mode,
-						cli: this.mrinputs.command.cli
-					},
-					expected: this.mrinputs.expected
-				});
+				if (this.mrinputs.index == 0) {
+					this.ntask.routine.assertions.push({
+						dut: this.mrinputs.dut,
+						command: {
+							delay: +this.mrinputs.command.delay,
+							mode: this.mrinputs.command.mode,
+							cli: this.mrinputs.command.cli
+						},
+						expected: this.mrinputs.expected
+					});
+				} else  {
+					this.ntask.routine.assertions.splice(this.mrinputs.index, 0, {
+						dut: this.mrinputs.dut,
+						command: {
+							delay: +this.mrinputs.command.delay,
+							mode: this.mrinputs.command.mode,
+							cli: this.mrinputs.command.cli
+						},
+						expected: this.mrinputs.expected
+
+					});
+				}
 				this.inputs = {};
 			},
 
@@ -299,15 +353,27 @@
 			},
 
 			addNewClearRoutine: function(){
-				this.ntask.clear.assertions.push({
-					dut: this.crinputs.dut,
-					command: {
-						delay: +this.crinputs.command.delay,
-						mode: this.crinputs.command.mode,
-						cli: this.crinputs.command.cli
-					},
-					expected: this.crinputs.expected
-				});
+				if (this.mrinputs.index == 0) {
+					this.ntask.clear.assertions.push({
+						dut: this.crinputs.dut,
+						command: {
+							delay: +this.crinputs.command.delay,
+							mode: this.crinputs.command.mode,
+							cli: this.crinputs.command.cli
+						},
+						expected: this.crinputs.expected
+					});
+				} else  {
+					this.ntask.clear.assertions.splice(this.crinputs.index, 0, {
+						dut: this.crinputs.dut,
+						command: {
+							delay: +this.crinputs.command.delay,
+							mode: this.crinputs.command.mode,
+							cli: this.crinputs.command.cli
+						},
+						expected: this.crinputs.expected
+					});
+				}
 				this.inputs = {};
 			},
 

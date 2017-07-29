@@ -194,19 +194,23 @@ func (c *Case) AddTask(t *task.Task) error {
 	t.PreCondition.Name = "Pre-Condition"
 	t.PostCondition.Name = "Post-Condition"
 
+	t.ID = c.GenerateTaskID(t) //Necessary
 	if c.IsTaskExist(t) {
 		log.Printf("Updadte task: %s, ID: %s\n", t.Name, t.ID)
+		var index int
 		for i, v := range c.Tasks {
 			if v.Name == t.Name {
-				c.Tasks = append(c.Tasks[:i], c.Tasks[i+1:]...)
+				index = i
+				break
 			}
 		}
-
+		if index < len(c.Tasks) {
+			c.Tasks[index] = t
+		}
+	} else {
+		c.Tasks = append(c.Tasks, t)
+		c.TCount++
 	}
-
-	t.ID = c.GenerateTaskID(t) //Necessary
-	c.Tasks = append(c.Tasks, t)
-	c.TCount++
 
 	return nil
 }
