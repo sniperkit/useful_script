@@ -11,7 +11,7 @@ import (
 
 var (
 	device       string = "ens33"
-	snapshot_len int32  = 1024
+	snapshot_len int32  = 65535
 	promiscuous  bool   = true
 	err          error
 	timeout      time.Duration = 30 * time.Second
@@ -35,9 +35,28 @@ func main() {
 		log.Fatal(err)
 	}
 	packetSource := gopacket.NewPacketSource(handle, layers.LayerTypeEthernet)
-	for packet := range packetSource.Packets() {
+	for pkt := range packetSource.Packets() {
 		// Do something with a packet here.
-		fmt.Println(packet)
+		fmt.Println(pkt)
+		ethLayer := pkt.Layer(layers.LayerTypeEthernet)
+		if ethLayer == nil {
+			log.Println("Not an Ethernet frame")
+			return
+		}
+		eth := ethLayer.(*layers.Ethernet)
+
+		ipLayer := pkt.Layer(layers.LayerTypeIPv4)
+		if ipLayer == nil {
+			log.Println("Not an IP packet")
+			return
+		}
+
+		ospfPkt := ipLayer.LayerPayload()
+		ospfData := ospfPkt[24:]
+		log.Printf("eth: %#v\n", eth)
+		log.Printf("ip:  %#v\n", ipLayer)
+		log.Printf("ospf: %#v\n", ospfPkt)
+		log.Printf("ospfdata: %#v\n", ospfData)
 	}
 
 }

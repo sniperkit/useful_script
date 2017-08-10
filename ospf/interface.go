@@ -1,22 +1,49 @@
 package ospf
 
 import (
-	"errors"
 	"net"
+)
+
+const (
+	IFSMS_Down         = 1
+	IFSMS_Loopback     = 2
+	IFSMS_Waiting      = 3
+	IFSMS_PointToPoint = 4
+	IFSMS_DROther      = 5
+	IFSMS_Backup       = 6
+	IFSMS_DR           = 7
+)
+
+const (
+	IFSME_InterfaceUp    = 0
+	IFSME_WaitTimer      = 1
+	IFSME_BackupSeen     = 2
+	IFSME_NeighborChange = 3
+	IFSME_LoopInd        = 4
+	IFSME_UnloopInd      = 5
+	IFSME_InterfaceDown  = 6
 )
 
 type Interface struct {
 	Name                   string
-	Priority               uint8
+	Type                   int
+	State                  int
+	AreaID                 net.IP
+	RouterPriority         uint8
 	HelloInterval          uint16
-	DeadInterval           uint32
-	RetransmitInterval     int
-	TransmitDelay          int
+	RouterDeadInterval     uint32
+	RxmtInterval           int
+	InfTransDelay          int
 	NetworkType            int
 	Options                uint8
+	Cost                   uint32
+	AuType                 uint32
+	AuthenticationKey      uint64
 	Interface              *net.Interface
 	IP                     net.IP
 	NetworkMask            net.IPMask
+	HelloTimer             uint32
+	WaitTimer              uint32
 	DesignatedRouter       net.IP
 	BackupDesignatedRouter net.IP
 	Neighbors              []*Neighbor
@@ -67,15 +94,7 @@ func GetIPv4Address(ifp *net.Interface) (*net.IP, *net.IPMask, error) {
 	return nil, nil, errors.New("Interface has no ipv4 addresss")
 }
 
-func (oi *Interface) Start() error {
-	return nil
-}
-
-func (oi *Interface) Stop() error {
-	return nil
-}
-
-func (oi *Interface) GetAllAttachedNeighbors() []net.IP {
+func (oi *Interface) GetAttachedNeighbors() []net.IP {
 	ns := make([]net.IP, 0, len(oi.Neighbors))
 	for _, n := range oi.Neighbors {
 		ns = append(ns, n.RouterID)
