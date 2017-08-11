@@ -40,8 +40,17 @@ func UnMarshalDBD(b []byte, length int) (*DBD, error) {
 	return d, nil
 }
 
-func (d *DBD) Marshal() ([]byte, error) {
-	return nil, nil
+func (d DBD) Marshal() ([]byte, error) {
+	b := make([]byte, 8)
+	binary.BigEndian.PutUint16(b[0:2], uint16(d.InterfaceMTU))
+	b[2] = d.Options
+	b[3] = d.MasterSlave
+	binary.BigEndian.PutUint32(b[4:8], uint32(d.DDSequenceNumber))
+	return b, nil
+}
+
+func (d DBD) IsOSPF()  bool {
+	return true
 }
 
 var MasterSlaveValueToString = map[uint8]string{
@@ -67,4 +76,9 @@ func (d *DBD) String() string {
 	}
 
 	return s
+}
+
+
+func (d DBD) UnMarshal(data []byte) (interface{}, error) {
+	return nil, nil
 }

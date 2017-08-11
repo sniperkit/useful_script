@@ -91,7 +91,8 @@ func (o *OSPF) PacketHandler() {
 			log.Fatal(err)
 		}
 
-		c, err := UnMarshalOSPFPacket(p, oh.Type, oh.PacketLength - HeaderLen)
+		log.Println("oh.Type: ", oh.Type, oh.PacketLength, HeaderLen, len(p))
+		c, err := UnMarshalOSPFPacket(p, oh.Type, oh.PacketLength-HeaderLen)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -102,9 +103,21 @@ func (o *OSPF) PacketHandler() {
 			h.Header = *oh
 			o.ProcessHello(iph, h)
 		case *DBD:
+			d, _ := c.(*DBD)
+			d.Header = *oh
+			o.ProcessDBD(iph, d)
 		case *LSR:
+			lsr, _ := c.(*LSR)
+			lsr.Header = *oh
+			o.ProcessLSR(iph, lsr)
 		case *LSU:
+			lsu, _ := c.(*LSU)
+			lsu.Header = *oh
+			o.ProcessLSU(iph, lsu)
 		case *LSAck:
+			lsack, _ := c.(*LSAck)
+			lsack.Header = *oh
+			o.ProcessLSAck(iph, lsack)
 		default:
 			panic("Unkown ospf packe")
 		}
@@ -163,7 +176,58 @@ func (o *OSPF) SendHello() {
 	}
 }
 
-func BuildHelloPkt(ifp *net.Interface) []byte {
+func (o *OSPF) SendDBD(n *Neighbor) error {
+	hello := Packet{
+		Header: Header{
+			Version:        2,
+			Type:           2,
+			PacketLength:   24,
+			RouterID:       o.RouterID,
+			AreaID:         o.AreaID,
+			CheckSum:       0,
+			AuType:         0,
+			Authentication: 0,
+		},
+		Payload: DBD{
+			InterfaceMTU:     1500,
+			Options:          0x2,
+			MasterSlave:      0x0,
+			DDSequenceNumber: n.LastReceivedDBD.DDSequenceNumber,
+			LSAHeader:        nil,
+		},
+	}
+
+	p, err := hello.Marshal()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	iph := &ipv4.Header{
+		Version:  ipv4.Version,
+		Len:      ipv4.HeaderLen,
+		TOS:      0xc0, // DSCP CS6
+		TotalLen: ipv4.HeaderLen + len(p),
+		TTL:      1,
+		Protocol: 89,
+		Dst:      net.IPv4(10, 71, 1, 123),
+	}
+
+	if err := o.Conn.WriteTo(iph, p, o.CM); err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
+}
+
+func (o *OSPF) SendLSR() error {
+	return nil
+}
+
+func (o *OSPF) SendLSU() error {
+	return nil
+}
+
+func (o *OSPF) SendLSAck() error {
 	return nil
 }
 
@@ -187,6 +251,13 @@ func (o *OSPF) ProcessHello(iph *ipv4.Header, h *Hello) error {
 }
 
 func (o *OSPF) ProcessDBD(iph *ipv4.Header, d *DBD) error {
+	n, ok := o.Interface.Neighbors[d.Header.RouterID.String()]
+	if !ok {
+		log.Fatal("Cannot find neighbor: %s\n", d.Header.RouterID)
+	}
+	n.LastReceivedDBD = *d
+	//We work as slave, and just confirm to master, if no more lsa from master, stop.
+	go o.SendDBD(n)
 	return nil
 }
 

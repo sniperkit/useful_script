@@ -2,7 +2,9 @@ package ospf
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
+	"log"
 	"net"
 )
 
@@ -11,10 +13,12 @@ const (
 	Network        = 2
 	NetworkSummary = 3
 	ASBRSummary    = 4
-	ASExternal     = 5
+	External       = 5
 )
 
 type LSA interface {
+	IsLSA() bool
+	Marshal() ([]byte, error)
 }
 
 type LSAIdentity struct {
@@ -71,18 +75,78 @@ func (lsh *LSAHeader) String() string {
 	return s
 }
 
+var vebValueToString = map[uint8]string{
+	1: "Boarder Router",
+	2: "External Route Capabable",
+	3: "Boarder Router, External Route Capbable",
+	4: "Virtuallink Endpoint",
+	5: "Virtuallink Endpoint, Boarder Router",
+	6: "Virutallink Endpoint, External Route Capabable",
+	7: "Virtuallink Endpoint, Boarder Router, External Route Capabable",
+}
+
+type RouterLSA struct {
+	Header    LSAHeader
+	VEB       uint8
+	Reserved  uint8
+	LinkCount uint16
+	Links     []LinkState
+}
+
+func (rl RouterLSA) IsLSA() bool {
+	return true
+}
+
+func (rl RouterLSA) Marshal() ([]byte, error) {
+	return nil, nil
+}
+
+func (rl RouterLSA) String() string {
+	var s string
+	s += fmt.Sprintf("   Router LSA:\n")
+	s += fmt.Sprintf("                 V|E|B           : 0x%x(%s)\n", rl.VEB, vebValueToString[rl.VEB])
+	s += fmt.Sprintf("                 Reverved        : 0x%x\n", rl.Reserved)
+	s += fmt.Sprintf("                 Link Count      : %d\n", rl.LinkCount)
+	for _, l := range rl.Links {
+		s += fmt.Sprintf("                                %s\n", l)
+	}
+
+	return s
+}
+
 type LinkState struct {
 	LinkID      net.IP
 	LinkData    net.IP
 	Type        uint8
 	NumberOfTOS uint8
-	TOS0Metric  uint16
+	Metric      uint16
 }
 
 type NetworkLSA struct {
-	LSAHeader
+	Header         LSAHeader
 	NetworkMask    net.IP
 	AttachedRouter []net.IP
+}
+
+func (nl NetworkLSA) String() string {
+	var s string
+
+	s += fmt.Sprint("Network LSA: \n")
+	s += fmt.Sprint("            Network Mask    : %s\n", nl.NetworkMask)
+	s += fmt.Sprint("            AttachedRouter  : \n")
+	for _, ar := range nl.AttachedRouter {
+		s += fmt.Sprint("                    : %s\n", ar)
+	}
+
+	return s
+}
+
+func (nl NetworkLSA) IsLSA() bool {
+	return true
+}
+
+func (nl NetworkLSA) Marshal() ([]byte, error) {
+	return nil, nil
 }
 
 type NetworkSum struct {
@@ -93,8 +157,16 @@ type NetworkSum struct {
 }
 
 type NetworkSummaryLSA struct {
-	LSAHeader
+	Header   LSAHeader
 	Networks []NetworkSum
+}
+
+func (nsl NetworkSummaryLSA) IsLSA() bool {
+	return true
+}
+
+func (nsl NetworkSummaryLSA) Marshal() ([]byte, error) {
+	return nil, nil
 }
 
 type ASBRSum struct {
@@ -105,8 +177,16 @@ type ASBRSum struct {
 }
 
 type ASBRSummaryLSA struct {
-	LSAHeader
-	ASBRs []ASBRSum
+	Header LSAHeader
+	ASBRs  []ASBRSum
+}
+
+func (abl ASBRSummaryLSA) IsLSA() bool {
+	return true
+}
+
+func (abl ASBRSummaryLSA) Marshal() ([]byte, error) {
+	return nil, nil
 }
 
 type ExternalNetwork struct {
@@ -117,7 +197,150 @@ type ExternalNetwork struct {
 	ExternalRouteTag  uint32
 }
 
-type ASExternalLSA struct {
-	LSAHeader
+type ExternalLSA struct {
+	Header   LSAHeader
 	Networks []ExternalNetwork
+}
+
+func (asel ExternalLSA) IsLSA() bool {
+	return true
+}
+
+func (asel ExternalLSA) Marshal() ([]byte, error) {
+	return nil, nil
+}
+
+func UnMarshalLSAFromLSU(b []byte, count, length uint32) ([]LSA, error) {
+	if length < 20 {
+		return nil, errors.New("LSU's LSA field is too short")
+	}
+
+	var off = 0
+	lsas := make([]LSA, 0, count)
+	for i := 0; i < int(count); i++ {
+		lsah, err := UnMarshalLSAHeader(b)
+		if err != nil {
+			log.Fatal("Cannot parse LSA header")
+		}
+
+		switch lsah.LSType {
+		case Router:
+			lsa, err := UnMarshalRouterLSA(b[off:off+int(lsah.Length)], lsah)
+			if err != nil {
+				log.Fatal("Cannot Parase Router LSA")
+				continue
+			}
+			lsa.Header = *lsah
+			lsas = append(lsas, *lsa)
+		case Network:
+			lsa, err := UnMarshalNetworkLSA(b[off:off+int(lsah.Length)], lsah)
+			if err != nil {
+				log.Fatal("Cannot Parase Network LSA")
+				continue
+			}
+			lsa.Header = *lsah
+			lsas = append(lsas, *lsa)
+		case NetworkSummary:
+			lsa, err := UnMarshalNetworkSummaryLSA(b[off:off+int(lsah.Length)], lsah)
+			if err != nil {
+				log.Fatal("Cannot Parase Network Summary LSA")
+				continue
+			}
+			lsa.Header = *lsah
+			lsas = append(lsas, *lsa)
+		case ASBRSummary:
+			lsa, err := UnMarshalASBRSummaryLSA(b[off:off+int(lsah.Length)], lsah)
+			if err != nil {
+				log.Fatal("Cannot Parase ASBR Summary LSA")
+				continue
+			}
+			lsa.Header = *lsah
+			lsas = append(lsas, *lsa)
+		case External:
+			lsa, err := UnMarshalExternalLSA(b[off:off+int(lsah.Length)], lsah)
+			if err != nil {
+				log.Fatal("Cannot Parase External LSA")
+				continue
+			}
+			lsa.Header = *lsah
+			lsas = append(lsas, *lsa)
+		default:
+			panic("Unknow LSA type")
+		}
+		off += int(lsah.Length)
+	}
+
+	return lsas, nil
+}
+
+func UnMarshalLinkState(b []byte) (*LinkState, error) {
+	var ls = &LinkState{}
+	ls.LinkID = net.IPv4(b[0], b[1], b[2], b[3])
+	ls.LinkData = net.IPv4(b[4], b[5], b[6], b[7])
+	ls.Type = b[8]
+	ls.NumberOfTOS = b[9]
+	ls.Metric = binary.BigEndian.Uint16(b[10:12])
+	return ls, nil
+}
+
+var linkTypeToName = map[uint8]string{
+	1: "Point-to-Point connect to another router",
+	2: "Connection to a transit network",
+	3: "Connection to a stub network",
+	4: "Virtual link",
+}
+
+func (ls LinkState) String() string {
+	var s string
+	s += fmt.Sprintf("Link %s: ID(%s) Data(%s) Type(%d:%s) Metric(%d)\n", ls.LinkID, ls.LinkID, ls.LinkData, ls.Type, linkTypeToName[ls.Type], ls.Metric)
+	return s
+}
+
+func UnMarshalRouterLSA(b []byte, lsah *LSAHeader) (*RouterLSA, error) {
+	var rl = &RouterLSA{}
+	rl.VEB = b[20]
+	rl.Reserved = b[21]
+	rl.LinkCount = binary.BigEndian.Uint16(b[22:24])
+
+	count := (lsah.Length - 24) / 12
+	if count > rl.LinkCount {
+		count = rl.LinkCount
+	}
+
+	if count != 0 {
+		rl.Links = make([]LinkState, 0, count)
+		for i := 0; i < int(count); i++ {
+			if ls, err := UnMarshalLinkState(b[24+i*12 : 24+(i+1)*12]); err != nil {
+				log.Fatal("Cannot Decode link state from router LSA")
+				continue
+			} else {
+				rl.Links = append(rl.Links, *ls)
+			}
+		}
+	}
+	return rl, nil
+}
+
+func UnMarshalNetworkLSA(b []byte, lsah *LSAHeader) (*NetworkLSA, error) {
+	var nl = &NetworkLSA{}
+	atrcount := (lsah.Length - 24) / 4
+	nl.NetworkMask = net.IPv4(b[0], b[1], b[2], b[3])
+	nl.AttachedRouter = make([]net.IP, 0, atrcount)
+
+	for i := 0; i < int(atrcount); i++ {
+		nl.AttachedRouter = append(nl.AttachedRouter, net.IPv4(b[24+i*4], b[25+i*4], b[26+i*4], b[27+i*4]))
+	}
+	return nl, nil
+}
+
+func UnMarshalNetworkSummaryLSA(b []byte, lsah *LSAHeader) (*NetworkSummaryLSA, error) {
+	return nil, errors.New("Cannot parse Network Summary lsa")
+}
+
+func UnMarshalASBRSummaryLSA(b []byte, lsah *LSAHeader) (*ASBRSummaryLSA, error) {
+	return nil, errors.New("Cannot parse ASBR Summary lsa")
+}
+
+func UnMarshalExternalLSA(b []byte, lsah *LSAHeader) (*ExternalLSA, error) {
+	return nil, errors.New("Cannot parse Exteral lsa")
 }
