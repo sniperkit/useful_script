@@ -3,6 +3,7 @@ package ospf
 import (
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"net"
 	"syscall"
 )
@@ -50,10 +51,41 @@ func (h *Header) Marshal() ([]byte, error) {
 	return b, nil
 }
 
-func (h *Header) UnMarshal() ([]byte, error) {
-	return nil, nil
+func UnMarshalOSPFHeader(b []byte) (*Header, []byte, error) {
+	if len(b) < HeaderLen {
+		return nil, nil, errors.New("OSPF Header is too short")
+	}
+
+	o := &Header{}
+	o.Version = b[0]
+	o.Type = b[1]
+	o.PacketLength = int(binary.BigEndian.Uint16(b[2:4]))
+	o.RouterID = net.IPv4(b[4], b[5], b[6], b[7])
+	o.AreaID = net.IPv4(b[8], b[9], b[10], b[11])
+	o.CheckSum = binary.BigEndian.Uint16(b[12:14])
+	o.AuType = binary.BigEndian.Uint16(b[14:16])
+	o.Authentication = binary.BigEndian.Uint64(b[16:24])
+	return o, b[HeaderLen:], nil
+}
+
+var TypeToName = map[byte]string{
+	1: "Hello",
+	2: "Database Description",
+	3: "Link State Request",
+	4: "Link State Update",
+	5: "Link State Acknowledge",
 }
 
 func (h *Header) String() string {
-	return ""
+	var s string
+	s += fmt.Sprintf("OSPF Packet: \n")
+	s += fmt.Sprintf("         Version                : %d \n", h.Version)
+	s += fmt.Sprintf("         Packet Type            : (%d)%s \n", h.Type, TypeToName[h.Type])
+	s += fmt.Sprintf("         Packet Length          : %d \n", h.PacketLength)
+	s += fmt.Sprintf("         Router ID              : %s \n", h.RouterID)
+	s += fmt.Sprintf("         Area ID                : %s \n", h.AreaID)
+	s += fmt.Sprintf("         CheckSum               : 0x%x \n", h.CheckSum)
+	s += fmt.Sprintf("         AuType                 : 0x%x \n", h.AuType)
+	s += fmt.Sprintf("         Authentication         : 0x%x \n", h.Authentication)
+	return s
 }

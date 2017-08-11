@@ -3,8 +3,16 @@ package ospf
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 	"log"
-	"net"
+)
+
+const (
+	PTypeHello = 1
+	PTypeDBD   = 2
+	PTypeLSR   = 3
+	PTypeLSU   = 4
+	PTypeLSAck = 5
 )
 
 type Packet struct {
@@ -51,8 +59,21 @@ func (p *Packet) Marshal() ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-func (p *Packet) UnMarshal() (interface{}, error) {
-	return nil, nil
+func UnMarshalOSPFPacket(b []byte, pType byte, length int) (interface{}, error) {
+	switch pType {
+	case PTypeHello:
+		return UnMarshalHello(b, length)
+	case PTypeDBD:
+		return UnMarshalDBD(b, length)
+	case PTypeLSR:
+		return UnMarshalLSR(b, length)
+	case PTypeLSU:
+		return UnMarshalLSU(b, length)
+	case PTypeLSAck:
+		return UnMarshalLSAck(b, length)
+	default:
+		return nil, fmt.Errorf("Unknown OSPF packet type: ", pType)
+	}
 }
 
 type Payload interface {

@@ -1,6 +1,8 @@
 package ospf
 
 import (
+	"encoding/binary"
+	"fmt"
 	"net"
 )
 
@@ -11,6 +13,9 @@ const (
 	ASBRSummary    = 4
 	ASExternal     = 5
 )
+
+type LSA interface {
+}
 
 type LSAIdentity struct {
 	LSType            uint32
@@ -27,6 +32,43 @@ type LSAHeader struct {
 	LSSequenceNumber  uint32
 	LSCheckSum        uint16
 	Length            uint16
+}
+
+func UnMarshalLSAHeader(b []byte) (*LSAHeader, error) {
+	lsh := &LSAHeader{}
+	lsh.LSAge = binary.BigEndian.Uint16(b[0:2])
+	lsh.Options = b[2]
+	lsh.LSType = b[3]
+	lsh.LinkStateID = net.IPv4(b[4], b[5], b[6], b[7])
+	lsh.AdvertisingRouter = net.IPv4(b[8], b[9], b[10], b[11])
+	lsh.LSSequenceNumber = binary.BigEndian.Uint32(b[12:16])
+	lsh.LSCheckSum = binary.BigEndian.Uint16(b[16:18])
+	lsh.Length = binary.BigEndian.Uint16(b[18:20])
+
+	return lsh, nil
+}
+
+var LSATypeToName = map[uint8]string{
+	1: "Router LSA",
+	2: "Network LSA",
+	3: "Network Summary LSA",
+	4: "ASBR Summary LSA",
+	5: "AS External LSA",
+}
+
+func (lsh *LSAHeader) String() string {
+	var s string
+	s += fmt.Sprintf("----------------------------------------------------------------------\n")
+	s += fmt.Sprintf("        Type:                   :%d(%s)\n", lsh.LSType, LSATypeToName[lsh.LSType])
+	s += fmt.Sprintf("        LinkStateID             : %s\n", lsh.LinkStateID)
+	s += fmt.Sprintf("        AdvertisingRouter       : %s\n", lsh.AdvertisingRouter)
+	s += fmt.Sprintf("        Age                     : %d\n", lsh.LSAge)
+	s += fmt.Sprintf("        LSCheckSum              : 0x%x\n", lsh.LSCheckSum)
+	s += fmt.Sprintf("        LSSequenceNumber        : 0x%x\n", lsh.LSSequenceNumber)
+	s += fmt.Sprintf("        Options                 : 0x%x\n", lsh.Options)
+	s += fmt.Sprintf("        Length                  : %d\n", lsh.Length)
+
+	return s
 }
 
 type LinkState struct {

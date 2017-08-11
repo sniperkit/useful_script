@@ -62,78 +62,59 @@ func New(ifname string, routerid string, area string, areaType int) (*OSPF, erro
 	return instance, nil
 }
 
-var (
-	device       string = "ens33"
-	snapshot_len int32  = 65535
-	promiscuous  bool   = true
-	err          error
-	timeout      time.Duration = 40 * time.Second
-	rxHandler    *pcap.Handle
-	txHandler    *pcap.Handle
-)
-
 func (o *OSPF) Start() error {
-	txHandler, err := pcap.OpenLive(device, snapshot_len, promiscuous, timeout)
-	if sendHdl == nil {
-		server.logger.Err(fmt.Sprintln("SendHdl: No device found.", ent.IfName, err))
-		return
-	}
-
-	rxHandler, err = pcap.OpenLive(device, snapshot_len, promiscuous, timeout)
+	err := o.Conn.JoinGroup(nil, &allSPFRouters)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Cannot join group: %s\n", err.Error())
+		return err
 	}
-
-	//go o.Hello()
+	go o.Hello()
 	go o.PacketHandler()
-
 	return nil
 }
 
 func (o *OSPF) Stop() error {
-	o.Conn.LeaveGroup(o.Interface.Interface, &allSPFRouters)
+	o.Conn.LeaveGroup(nil, &allSPFRouters)
 	return nil
 }
 
 func (o *OSPF) PacketHandler() {
-	// Set filter
-	//var filter string = "tcp and port 22"
-	var filter string = "proto ospf and not src host 10.71.1.122" //Try to capture ospf packet
-
-	err = rxHandler.SetBPFFilter(filter)
-	if err != nil {
-		log.Fatal(err)
-	}
-	packetSource := gopacket.NewPacketSource(rxHandler, layers.LayerTypeEthernet)
-	for pkt := range packetSource.Packets() {
-		// Do something with a packet here.
-		fmt.Println(pkt)
-		ethLayer := pkt.Layer(layers.LayerTypeEthernet)
-		if ethLayer == nil {
-			log.Println("Not an Ethernet frame")
-			return
-		}
-		eth := ethLayer.(*layers.Ethernet)
-
-		ipLayer := pkt.Layer(layers.LayerTypeIPv4)
-		if ipLayer == nil {
-			log.Println("Not an IP packet")
-			return
+	buf := make([]byte, 1024)
+	for {
+		iph, op, cm, err := o.Conn.ReadFrom(buf)
+		if err != nil {
+			log.Printf("%s", err.Error())
 		}
 
-		ospfPkt := ipLayer.LayerPayload()
-		ospfData := ospfPkt[24:]
-		log.Printf("eth: %#v\n", eth)
-		log.Printf("ip:  %#v\n", ipLayer)
-		log.Printf("ospf: %#v\n", ospfPkt)
-		log.Printf("ospfdata: %#v\n", ospfData)
-	}
+		oh, p, err := UnMarshalOSPFHeader(op)
+		if err != nil {
+			log.Fatal(err)
+		}
 
+		c, err := UnMarshalOSPFPacket(p, oh.Type, oh.PacketLength - HeaderLen)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		switch c.(type) {
+		case *Hello:
+			h, _ := c.(*Hello)
+			h.Header = *oh
+			o.ProcessHello(iph, h)
+		case *DBD:
+		case *LSR:
+		case *LSU:
+		case *LSAck:
+		default:
+			panic("Unkown ospf packe")
+		}
+		log.Printf("Received a packet %#v from:\n %s %s %s\n", cm, PrettyIPv4Header(iph), oh, c)
+	}
 }
 
 func (o *OSPF) Hello() {
 	//for time.Duration(time.Second * o.Interface.HelloInterval) {
-	for range time.Tick(time.Duration(time.Second * 10)) {
+	for range time.Tick(time.Duration(time.Second * 2)) {
 		o.SendHello()
 	}
 }
@@ -154,11 +135,11 @@ func (o *OSPF) SendHello() {
 			NetworkMask:            o.Interface.NetworkMask,
 			HelloInterval:          o.Interface.HelloInterval,
 			Options:                o.Interface.Options,
-			RtrPri:                 o.Interface.Priority,
-			RouterDeadInterval:     o.Interface.DeadInterval,
+			RtrPri:                 o.Interface.RouterPriority,
+			RouterDeadInterval:     o.Interface.RouterDeadInterval,
 			DesignatedRouter:       o.Interface.DesignatedRouter,
 			BackupDesignatedRouter: o.Interface.BackupDesignatedRouter,
-			Neighbors:              o.Interface.GetAllAttachedNeighbors(),
+			Neighbors:              o.Interface.GetAttachedNeighbors(),
 		},
 	}
 
@@ -177,112 +158,46 @@ func (o *OSPF) SendHello() {
 		Dst:      allSPFRouters.IP.To4(),
 	}
 
-	err = txHandler.WritePacketData()
 	if err := o.Conn.WriteTo(iph, p, o.CM); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func BuildHelloPkt(ifp *net.Interface) []byte {
-	ospfHdr := OSPFHeader{
-		ver:      OSPF_VERSION_2,
-		pktType:  uint8(HelloType),
-		pktlen:   0,
-		routerId: server.ospfGlobalConf.RouterId,
-		areaId:   ent.IfAreaId,
-		chksum:   0,
-		authType: ent.IfAuthType,
-		//authKey:        ent.IfAuthKey,
+	return nil
+}
+
+func (o *OSPF) ProcessHello(iph *ipv4.Header, h *Hello) error {
+	n := &Neighbor{}
+	n.RouterID = h.Header.RouterID
+	n.AreaID = h.Header.AreaID
+	n.IP = iph.Src
+	n.Options = h.Options
+	n.Priority = h.RtrPri
+	n.DesignatedRouter = h.DesignatedRouter
+	n.BackupDesignatedRouter = h.BackupDesignatedRouter
+
+	ifp := o.Interface
+
+	if _, ok := ifp.Neighbors[n.RouterID.String()]; !ok {
+		ifp.Neighbors[n.RouterID.String()] = n
 	}
 
-	/*
-	   Rfc 2328 4.5
-	   ExternalRoutingCapability
-	           Entire OSPF areas can be configured as "stubs" (see Section
-	           3.6).  AS-external-LSAs will not be flooded into stub areas.
-	           This capability is represented by the E-bit in the OSPF
-	           Options field (see Section A.2).  In order to ensure
-	           consistent configuration of stub areas, all routers
-	           interfacing to such an area must have the E-bit clear in
-	           their Hello packets
-	*/
-	if ent.IfAreaId == nil {
-		log.Printf("HELLO: Null area id for intfkey %v", ent)
-		return nil
-	}
-	areaId := config.AreaId(convertIPInByteToString(ent.IfAreaId))
-	isStub := server.isStubArea(areaId)
-	option := uint8(2)
-	if isStub {
-		option = uint8(0)
-	}
-	helloData := OSPFHelloData{
-		netmask:             ent.IfNetmask,
-		helloInterval:       ent.IfHelloInterval,
-		options:             option,
-		rtrPrio:             ent.IfRtrPriority,
-		rtrDeadInterval:     ent.IfRtrDeadInterval,
-		designatedRtr:       ent.IfDRIp,
-		backupDesignatedRtr: ent.IfBDRIp,
-		//designatedRtr:          []byte {0, 0, 0, 0},
-		//backupDesignatedRtr:    []byte {0, 0, 0, 0},
-		//neighbor:               []byte {1, 1, 1, 1},
-	}
+	return nil
+}
 
-	var neighbor []byte
-	var nbrlen = 0
-	nbr := make([]byte, 4)
-	for key, _ := range ent.NeighborMap {
-		nbrConf := server.NeighborConfigMap[key]
-		binary.BigEndian.PutUint32(nbr, nbrConf.OspfNbrRtrId)
-		nbrlen = nbrlen + 4
-		neighbor = append(neighbor, nbr...)
-	}
+func (o *OSPF) ProcessDBD(iph *ipv4.Header, d *DBD) error {
+	return nil
+}
 
-	ospfPktlen := OSPF_HEADER_SIZE
-	ospfPktlen = ospfPktlen + OSPF_HELLO_MIN_SIZE + nbrlen
+func (o *OSPF) ProcessLSR(iph *ipv4.Header, l *LSR) error {
+	return nil
+}
 
-	ospfHdr.pktlen = uint16(ospfPktlen)
+func (o *OSPF) ProcessLSU(iph *ipv4.Header, l *LSU) error {
+	return nil
+}
 
-	ospfEncHdr := encodeOspfHdr(ospfHdr)
-	//server.logger.Debug(fmt.Sprintln("ospfEncHdr:", ospfEncHdr))
-	helloDataEnc := encodeOspfHelloData(helloData)
-	//server.logger.Debug(fmt.Sprintln("HelloPkt:", helloDataEnc))
-	helloDataNbrEnc := append(helloDataEnc, neighbor...)
-	//server.logger.Debug(fmt.Sprintln("HelloPkt with Neighbor:", helloDataNbrEnc))
-
-	ospf := append(ospfEncHdr, helloDataNbrEnc...)
-	//server.logger.Debug(fmt.Sprintln("ospf:", ospf))
-	csum := computeCheckSum(ospf)
-	binary.BigEndian.PutUint16(ospf[12:14], csum)
-	copy(ospf[16:24], ent.IfAuthKey)
-
-	ipPktlen := IP_HEADER_MIN_LEN + ospfHdr.pktlen
-	ipLayer := layers.IPv4{
-		Version:  uint8(4),
-		IHL:      uint8(IP_HEADER_MIN_LEN),
-		TOS:      uint8(0xc0),
-		Length:   uint16(ipPktlen),
-		TTL:      uint8(1),
-		Protocol: layers.IPProtocol(OSPF_PROTO_ID),
-		SrcIP:    ent.IfIpAddr,
-		DstIP:    net.IP{224, 0, 0, 5},
-	}
-
-	ethLayer := layers.Ethernet{
-		SrcMAC:       ent.IfMacAddr,
-		DstMAC:       net.HardwareAddr{0x01, 0x00, 0x5e, 0x00, 0x00, 0x05},
-		EthernetType: layers.EthernetTypeIPv4,
-	}
-
-	buffer := gopacket.NewSerializeBuffer()
-	options := gopacket.SerializeOptions{
-		FixLengths:       true,
-		ComputeChecksums: true,
-	}
-	gopacket.SerializeLayers(buffer, options, &ethLayer, &ipLayer, gopacket.Payload(ospf))
-	//server.logger.Debug(fmt.Sprintln("buffer: ", buffer))
-	ospfPkt := buffer.Bytes()
-	//server.logger.Debug(fmt.Sprintln("ospfPkt: ", ospfPkt))
-	return ospfPkt
+func (o *OSPF) ProcessLSAck(iph *ipv4.Header, l *LSAck) error {
+	return nil
 }
