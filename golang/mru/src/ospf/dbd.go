@@ -2,8 +2,8 @@ package ospf
 
 import (
 	"encoding/binary"
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 type DBD struct {
@@ -38,6 +38,10 @@ func UnMarshalDBD(b []byte, length int) (*DBD, error) {
 	}
 
 	return d, nil
+}
+
+func (d *DBD) Marshal() ([]byte, error) {
+	return nil, nil
 }
 
 var MasterSlaveValueToString = map[uint8]string{

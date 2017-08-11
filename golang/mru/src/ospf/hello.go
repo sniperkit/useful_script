@@ -19,7 +19,7 @@ type Hello struct {
 }
 
 func (h Hello) Marshal() ([]byte, error) {
-	b := make([]byte, HeaderLen+4*len(h.Neighbors))
+	b := make([]byte, HeaderLen+4*len(h.Neighbors)*4)
 	copy(b[0:4], h.NetworkMask)
 
 	binary.BigEndian.PutUint16(b[4:6], uint16(h.HelloInterval))
