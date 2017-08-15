@@ -48,4 +48,5 @@ type Neighbor struct {
 	LinkStateRetransmitList []LSA
 	DatabaseSummaryList     []LSA
 	LinkStateRequestList    []LSA
+	NeighborState
 }

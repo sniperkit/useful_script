@@ -48,6 +48,7 @@ type Interface struct {
 	DesignatedRouter       net.IP
 	BackupDesignatedRouter net.IP
 	Neighbors              map[string]*Neighbor
+	InterfaceState
 }
 
 func NewOSPFInterface(ifp *net.Interface) (*Interface, error) {
@@ -61,7 +62,7 @@ func NewOSPFInterface(ifp *net.Interface) (*Interface, error) {
 		NetworkType:        1,
 		Interface:          ifp,
 		Options:            0x2,
-		Neighbors: make(map[string]*Neighbor, 1),
+		Neighbors:          make(map[string]*Neighbor, 1),
 	}
 
 	ip, mask, err := GetIPv4Address(ifp)

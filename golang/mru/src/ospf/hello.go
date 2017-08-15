@@ -19,7 +19,7 @@ type Hello struct {
 }
 
 func (h Hello) Marshal() ([]byte, error) {
-	b := make([]byte, HeaderLen+4*len(h.Neighbors)*4)
+	b := make([]byte, 20+len(h.Neighbors)*4)
 	copy(b[0:4], h.NetworkMask)
 
 	binary.BigEndian.PutUint16(b[4:6], uint16(h.HelloInterval))
@@ -60,7 +60,7 @@ func UnMarshalHello(b []byte, length int) (*Hello, error) {
 	hello.Neighbors = make([]net.IP, 0, (length-20)/4)
 
 	for i := 0; i < (length-20)/4; i++ {
-		hello.Neighbors = append(hello.Neighbors, net.IPv4(b[20+i], b[20+i+1], b[20+i+2], b[20+i+3]))
+		hello.Neighbors = append(hello.Neighbors, net.IPv4(b[20+i*4], b[20+i*4+1], b[20+i*4+2], b[20+i*4+3]))
 	}
 
 	return hello, nil

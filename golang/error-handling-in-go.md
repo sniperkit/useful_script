@@ -123,16 +123,16 @@ func init() {
 }
 
 func viewRecord(w http.ResponseWriter, r *http.Request) {
-c := appengine.NewContext(r)
+       c := appengine.NewContext(r)
        key := datastore.NewKey(c, "Record", r.FormValue("id"), 0, nil)
        record := new(Record)
        if err := datastore.Get(c, key, record); err != nil {
-	   http.Error(w, err.Error(), 500)
+	  	   http.Error(w, err.Error(), 500)
 	       return
        }
-   if err := viewTemplate.Execute(w, record); err != nil {
-       http.Error(w, err.Error(), 500)
-   }
+       if err := viewTemplate.Execute(w, record); err != nil {
+           http.Error(w, err.Error(), 500)
+       }
 }
 This function handles errors returned by the datastore.Get function and viewTemplate's Execute method. In both cases, it presents a simple error message to the user with the HTTP status code 500 ("Internal Server Error"). This looks like a manageable amount of code, but add some more HTTP handlers and you quickly end up with many copies of identical error handling code.
 
@@ -142,11 +142,11 @@ type appHandler func(http.ResponseWriter, *http.Request) error
 Then we can change our viewRecord function to return errors:
 
 func viewRecord(w http.ResponseWriter, r *http.Request) error {
-c := appengine.NewContext(r)
+       c := appengine.NewContext(r)
        key := datastore.NewKey(c, "Record", r.FormValue("id"), 0, nil)
        record := new(Record)
        if err := datastore.Get(c, key, record); err != nil {
-	   return err
+	       return err
        }
    return viewTemplate.Execute(w, record)
 }
@@ -169,7 +169,7 @@ With this basic error handling infrastructure in place, we can make it more user
 To do this we create an appError struct containing an error and some other fields:
 
     type appError struct {
-	Error   error
+	    Error   error
 	    Message string
 	    Code    int
     }
@@ -182,7 +182,7 @@ And make appHandler's ServeHTTP method display the appError's Message to the use
 
 func (fn appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     if e := fn(w, r); e != nil { // e is *appError, not os.Error.
-c := appengine.NewContext(r)
+       c := appengine.NewContext(r)
        c.Errorf("%v", e.Error)
        http.Error(w, e.Message, e.Code)
     }
@@ -190,16 +190,16 @@ c := appengine.NewContext(r)
 Finally, we update viewRecord to the new function signature and have it return more context when it encounters an error:
 
 func viewRecord(w http.ResponseWriter, r *http.Request) *appError {
-c := appengine.NewContext(r)
+       c := appengine.NewContext(r)
        key := datastore.NewKey(c, "Record", r.FormValue("id"), 0, nil)
        record := new(Record)
        if err := datastore.Get(c, key, record); err != nil {
-	   return &appError{err, "Record not found", 404}
+	       return &appError{err, "Record not found", 404}
        }
-   if err := viewTemplate.Execute(w, record); err != nil {
-       return &appError{err, "Can't display record", 500}
-   }
-   return nil
+       if err := viewTemplate.Execute(w, record); err != nil {
+           return &appError{err, "Can't display record", 500}
+       }
+       return nil
 }
 This version of viewRecord is the same length as the original, but now each of those lines has specific meaning and we are providing a friendlier user experience.
 

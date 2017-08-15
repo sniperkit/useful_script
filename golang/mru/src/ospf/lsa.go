@@ -76,13 +76,14 @@ func (lsh *LSAHeader) String() string {
 }
 
 var vebValueToString = map[uint8]string{
-	1: "Boarder Router",
-	2: "External Route Capabable",
-	3: "Boarder Router, External Route Capbable",
+	0: "Intra area normal router",
+	1: "Area Boarder Router",
+	2: "AS Boundary Router",
+	3: "Area Boarder Router, AS Boundary Router",
 	4: "Virtuallink Endpoint",
-	5: "Virtuallink Endpoint, Boarder Router",
-	6: "Virutallink Endpoint, External Route Capabable",
-	7: "Virtuallink Endpoint, Boarder Router, External Route Capabable",
+	5: "Virtuallink Endpoint, Area Boarder Router",
+	6: "Virutallink Endpoint, AS Boundary Router",
+	7: "Virtuallink Endpoint, Area Boarder Router, AS Boundary Router",
 }
 
 type RouterLSA struct {
@@ -131,11 +132,11 @@ type NetworkLSA struct {
 func (nl NetworkLSA) String() string {
 	var s string
 
-	s += fmt.Sprint("Network LSA: \n")
-	s += fmt.Sprint("            Network Mask    : %s\n", nl.NetworkMask)
-	s += fmt.Sprint("            AttachedRouter  : \n")
+	s += fmt.Sprintf("Network LSA: \n")
+	s += fmt.Sprintf("            Network Mask        : %s\n", nl.NetworkMask)
+	s += fmt.Sprintf("            AttachedRouter      : \n")
 	for _, ar := range nl.AttachedRouter {
-		s += fmt.Sprint("                    : %s\n", ar)
+		s += fmt.Sprintf("                                : %s\n", ar)
 	}
 
 	return s
@@ -324,7 +325,7 @@ func UnMarshalRouterLSA(b []byte, lsah *LSAHeader) (*RouterLSA, error) {
 func UnMarshalNetworkLSA(b []byte, lsah *LSAHeader) (*NetworkLSA, error) {
 	var nl = &NetworkLSA{}
 	atrcount := (lsah.Length - 24) / 4
-	nl.NetworkMask = net.IPv4(b[0], b[1], b[2], b[3])
+	nl.NetworkMask = net.IPv4(b[20], b[21], b[22], b[23])
 	nl.AttachedRouter = make([]net.IP, 0, atrcount)
 
 	for i := 0; i < int(atrcount); i++ {

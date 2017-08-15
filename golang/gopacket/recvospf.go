@@ -27,7 +27,7 @@ func main() {
 	}
 	defer r.LeaveGroup(nil, &allSPFRouters)
 
-	buf := make([]byte, 1024)
+	buf := make([]byte, 10240)
 	for {
 		log.Println("Try to receive packet!\n")
 		_, _, _, err := r.ReadFrom(buf)

@@ -282,6 +282,7 @@ func (c *Cli) Init() error {
 }
 
 func (c *Cli) login() error {
+	c.client.WriteLine("\n") //For serial server
 	c.client.SetUnixWriteMode(true)
 	_, err := c.client.ReadUntil(c.conf.LoginPrompt)
 	if err != nil {

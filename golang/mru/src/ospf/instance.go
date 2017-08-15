@@ -22,7 +22,7 @@ type OSPF struct {
 	Options   int
 	IfName    string
 	Conn      *ipv4.RawConn
-	Interface *Interface
+	Interface map[int]*Interface
 	CM        *ipv4.ControlMessage
 }
 
@@ -43,6 +43,11 @@ func New(ifname string, routerid string, area string, areaType int) (*OSPF, erro
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	err = r.SetControlMessage(ipv4.FlagInterface, true)
+	if err != nil {
+		log.Fatal(err)
+	}
 	instance.Conn = r
 
 	ifp, err := net.InterfaceByName(ifname)
@@ -50,13 +55,14 @@ func New(ifname string, routerid string, area string, areaType int) (*OSPF, erro
 		log.Fatal(err)
 	}
 
-	oif, err := NewOSPFInterface(ifp)
+	oi, err := NewOSPFInterface(ifp)
 	if err != nil {
 
 		log.Fatal(err)
 	}
 
-	instance.Interface = oif
+	instance.Interface = make(map[int]*Interface, 1)
+	instance.Interface[ifp.Index] = oi
 	instance.CM = &ipv4.ControlMessage{IfIndex: ifp.Index}
 
 	return instance, nil
@@ -91,9 +97,13 @@ func (o *OSPF) PacketHandler() {
 			log.Fatal(err)
 		}
 
-		log.Println("oh.Type: ", oh.Type, oh.PacketLength, HeaderLen, len(p))
 		c, err := UnMarshalOSPFPacket(p, oh.Type, oh.PacketLength-HeaderLen)
 		if err != nil {
+			log.Fatal(err)
+		}
+
+		oi, ok := o.Interface[cm.IfIndex]
+		if !ok {
 			log.Fatal(err)
 		}
 
@@ -101,23 +111,23 @@ func (o *OSPF) PacketHandler() {
 		case *Hello:
 			h, _ := c.(*Hello)
 			h.Header = *oh
-			o.ProcessHello(iph, h)
+			o.ProcessHello(oi, iph, h)
 		case *DBD:
 			d, _ := c.(*DBD)
 			d.Header = *oh
-			o.ProcessDBD(iph, d)
+			o.ProcessDBD(oi, iph, d)
 		case *LSR:
 			lsr, _ := c.(*LSR)
 			lsr.Header = *oh
-			o.ProcessLSR(iph, lsr)
+			o.ProcessLSR(oi, iph, lsr)
 		case *LSU:
 			lsu, _ := c.(*LSU)
 			lsu.Header = *oh
-			o.ProcessLSU(iph, lsu)
+			o.ProcessLSU(oi, iph, lsu)
 		case *LSAck:
 			lsack, _ := c.(*LSAck)
 			lsack.Header = *oh
-			o.ProcessLSAck(iph, lsack)
+			o.ProcessLSAck(oi, iph, lsack)
 		default:
 			panic("Unkown ospf packe")
 		}
@@ -128,11 +138,11 @@ func (o *OSPF) PacketHandler() {
 func (o *OSPF) Hello() {
 	//for time.Duration(time.Second * o.Interface.HelloInterval) {
 	for range time.Tick(time.Duration(time.Second * 2)) {
-		o.SendHello()
+		o.SendHello(2)
 	}
 }
 
-func (o *OSPF) SendHello() {
+func (o *OSPF) SendHello(ifindex int) {
 	hello := Packet{
 		Header: Header{
 			Version:        2,
@@ -145,14 +155,14 @@ func (o *OSPF) SendHello() {
 			Authentication: 0,
 		},
 		Payload: Hello{
-			NetworkMask:            o.Interface.NetworkMask,
-			HelloInterval:          o.Interface.HelloInterval,
-			Options:                o.Interface.Options,
-			RtrPri:                 o.Interface.RouterPriority,
-			RouterDeadInterval:     o.Interface.RouterDeadInterval,
-			DesignatedRouter:       o.Interface.DesignatedRouter,
-			BackupDesignatedRouter: o.Interface.BackupDesignatedRouter,
-			Neighbors:              o.Interface.GetAttachedNeighbors(),
+			NetworkMask:            o.Interface[ifindex].NetworkMask,
+			HelloInterval:          o.Interface[ifindex].HelloInterval,
+			Options:                o.Interface[ifindex].Options,
+			RtrPri:                 o.Interface[ifindex].RouterPriority,
+			RouterDeadInterval:     o.Interface[ifindex].RouterDeadInterval,
+			DesignatedRouter:       o.Interface[ifindex].DesignatedRouter,
+			BackupDesignatedRouter: o.Interface[ifindex].BackupDesignatedRouter,
+			Neighbors:              o.Interface[ifindex].GetAttachedNeighbors(),
 		},
 	}
 
@@ -219,19 +229,19 @@ func (o *OSPF) SendDBD(n *Neighbor) error {
 	return nil
 }
 
-func (o *OSPF) SendLSR() error {
+func (o *OSPF) SendLSR(oi *Interface) error {
 	return nil
 }
 
-func (o *OSPF) SendLSU() error {
+func (o *OSPF) SendLSU(oi *Interface) error {
 	return nil
 }
 
-func (o *OSPF) SendLSAck() error {
+func (o *OSPF) SendLSAck(oi *Interface) error {
 	return nil
 }
 
-func (o *OSPF) ProcessHello(iph *ipv4.Header, h *Hello) error {
+func (o *OSPF) ProcessHello(oi *Interface, iph *ipv4.Header, h *Hello) error {
 	n := &Neighbor{}
 	n.RouterID = h.Header.RouterID
 	n.AreaID = h.Header.AreaID
@@ -241,17 +251,16 @@ func (o *OSPF) ProcessHello(iph *ipv4.Header, h *Hello) error {
 	n.DesignatedRouter = h.DesignatedRouter
 	n.BackupDesignatedRouter = h.BackupDesignatedRouter
 
-	ifp := o.Interface
-
-	if _, ok := ifp.Neighbors[n.RouterID.String()]; !ok {
-		ifp.Neighbors[n.RouterID.String()] = n
+	log.Println("New neighbor: ", n.RouterID.String())
+	if _, ok := oi.Neighbors[n.RouterID.String()]; !ok {
+		oi.Neighbors[n.RouterID.String()] = n
 	}
 
 	return nil
 }
 
-func (o *OSPF) ProcessDBD(iph *ipv4.Header, d *DBD) error {
-	n, ok := o.Interface.Neighbors[d.Header.RouterID.String()]
+func (o *OSPF) ProcessDBD(oi *Interface, iph *ipv4.Header, d *DBD) error {
+	n, ok := oi.Neighbors[d.Header.RouterID.String()]
 	if !ok {
 		log.Fatal("Cannot find neighbor: %s\n", d.Header.RouterID)
 	}
@@ -261,14 +270,14 @@ func (o *OSPF) ProcessDBD(iph *ipv4.Header, d *DBD) error {
 	return nil
 }
 
-func (o *OSPF) ProcessLSR(iph *ipv4.Header, l *LSR) error {
+func (o *OSPF) ProcessLSR(oi *Interface, iph *ipv4.Header, l *LSR) error {
 	return nil
 }
 
-func (o *OSPF) ProcessLSU(iph *ipv4.Header, l *LSU) error {
+func (o *OSPF) ProcessLSU(oi *Interface, iph *ipv4.Header, l *LSU) error {
 	return nil
 }
 
-func (o *OSPF) ProcessLSAck(iph *ipv4.Header, l *LSAck) error {
+func (o *OSPF) ProcessLSAck(oi *Interface, iph *ipv4.Header, l *LSAck) error {
 	return nil
 }

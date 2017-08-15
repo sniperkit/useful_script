@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"os/exec"
 	"strconv"
 	"time"
 )
@@ -77,4 +78,14 @@ func Download(link, name string) error {
 	}
 
 	return nil
+}
+
+func Wait(cmd string, args ...string) error {
+	c := exec.Command(cmd, args...)
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
+	if err := c.Start(); err != nil {
+		return err
+	}
+	return c.Wait()
 }
