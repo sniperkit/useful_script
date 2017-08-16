@@ -2,6 +2,7 @@ package main
 
 import (
 	"command"
+	"context"
 	"errors"
 	"flag"
 	"fmt"
@@ -106,12 +107,14 @@ type ECMPGroup struct {
 	ECMPBasePTR int64
 }
 
+var CTX = context.Background()
+
 func (eg *ECMPGroup) ParseNexthop() {
 	nhs := make([]*Nexthop, 0, eg.MemberCount)
 
 	var i int64
 	for i = 0; i < eg.MemberCount; i++ {
-		nh, err := Dev.RunCommand(&command.Command{
+		nh, err := Dev.RunCommand(CTX, &command.Command{
 			Mode: "shell",
 			CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ECMP %d %d", eg.ECMPBasePTR+i, eg.ECMPBasePTR+i),
 		})
@@ -156,7 +159,7 @@ func ParseNexthopByIndex(index int64) (*Nexthop, error) {
 }
 
 func (nh *Nexthop) GetINGNexthopInfo() {
-	inh, err := Dev.RunCommand(&command.Command{
+	inh, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 ING_L3_NEXT_HOP %d %d", nh.Index, nh.Index),
 	})
@@ -235,7 +238,7 @@ func (nh *Nexthop) GetINGNexthopInfo() {
 }
 
 func (nh *Nexthop) GetEGRNexthopInfo() {
-	enh, err := Dev.RunCommand(&command.Command{
+	enh, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 EGR_L3_NEXT_HOP %d %d", nh.Index, nh.Index),
 	})
@@ -400,7 +403,7 @@ func (re *RouteEntry) Validate() {
 }
 
 func (re *RouteEntry) ParseINGNexthopInfo() {
-	inh, err := Dev.RunCommand(&command.Command{
+	inh, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 ING_L3_NEXT_HOP %d %d", re.NextHopIndex, re.NextHopIndex),
 	})
@@ -479,7 +482,7 @@ func (re *RouteEntry) ParseINGNexthopInfo() {
 }
 
 func (he *HostEntry) ParseINGNexthopInfo() {
-	inh, err := Dev.RunCommand(&command.Command{
+	inh, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 ING_L3_NEXT_HOP %d %d", he.NextHopIndex, he.NextHopIndex),
 	})
@@ -558,7 +561,7 @@ func (he *HostEntry) ParseINGNexthopInfo() {
 }
 
 func (re *RouteEntry) ParseEgrNexthopInfo() {
-	enh, err := Dev.RunCommand(&command.Command{
+	enh, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 EGR_L3_NEXT_HOP %d %d", re.NextHopIndex, re.NextHopIndex),
 	})
@@ -587,7 +590,7 @@ func (re *RouteEntry) ParseEgrNexthopInfo() {
 }
 
 func (he *HostEntry) ParseEgrNexthopInfo() {
-	enh, err := Dev.RunCommand(&command.Command{
+	enh, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 EGR_L3_NEXT_HOP %d %d", he.NextHopIndex, he.NextHopIndex),
 	})
@@ -619,7 +622,7 @@ var getOIFMACAddress = regexp.MustCompile(`,MAC_ADDRESS=(?P<nmac>[0x]?[[:alnum:]
 var getOIFVID = regexp.MustCompile(`\<VID=(?P<vid>[0x]?[[:alnum:]]+)`)
 
 func (nh *Nexthop) ParseOIF() {
-	oif, err := Dev.RunCommand(&command.Command{
+	oif, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 EGR_L3_INTF  %d, %d", nh.OIF.Index, nh.OIF.Index),
 	})
@@ -691,7 +694,7 @@ func (re *RouteEntry) ParseECMPGroup() {
 		return
 	}
 
-	ecmpg, err := Dev.RunCommand(&command.Command{
+	ecmpg, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ECMP_GROUP %d %d", re.ECMPPTR, re.ECMPPTR),
 	})
@@ -731,7 +734,7 @@ func (he *HostEntry) ParseECMPGroup() {
 		return
 	}
 
-	ecmpg, err := Dev.RunCommand(&command.Command{
+	ecmpg, err := Dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  fmt.Sprintf("scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ECMP_GROUP %d %d", he.ECMPPTR, he.ECMPPTR),
 	})
@@ -1102,14 +1105,13 @@ func main() {
 	}
 
 	dev, err := prepare(&rut.RUT{
-		Name:       "DUT1",
-		Device:     "V8500",
-		IP:         *IP,
-		Port:       "23",
-		Username:   *User,
-		Hostname:   *Host,
-		Password:   *Password,
-		BasePrompt: *Host + "[" + *SFU + "]",
+		Name:     "DUT1",
+		Device:   "V8",
+		IP:       *IP,
+		Port:     "23",
+		Username: *User,
+		Hostname: *Host,
+		Password: *Password,
 	})
 
 	if err != nil {
@@ -1407,7 +1409,7 @@ func MakeIPv6Address(upper, lower string) string {
 }
 
 func DumpIPv4HostEntry(dev *rut.RUT) {
-	res, err := dev.RunCommand(&command.Command{
+	res, err := dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ENTRY_IPV4_UNICAST  0 16383  | grep VALID=1",
 	})
@@ -1428,7 +1430,7 @@ func DumpIPv4HostEntry(dev *rut.RUT) {
 }
 
 func DumpIPv6HostEntry(dev *rut.RUT) {
-	res, err := dev.RunCommand(&command.Command{
+	res, err := dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ENTRY_IPV6_UNICAST 0 8191  | grep VALID_1=1",
 	})
@@ -1447,7 +1449,7 @@ func DumpIPv6HostEntry(dev *rut.RUT) {
 }
 
 func DumpIPv4Entry(dev *rut.RUT) {
-	res, err := dev.RunCommand(&command.Command{
+	res, err := dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_DEFIP_ALPM_IPV4 0 393215  | grep VALID=1",
 	})
@@ -1466,7 +1468,7 @@ func DumpIPv4Entry(dev *rut.RUT) {
 }
 
 func DumpIPv6Entry(dev *rut.RUT) {
-	res, err := dev.RunCommand(&command.Command{
+	res, err := dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_DEFIP_ALPM_IPV6_64 0 262143 | grep VALID=1",
 	})
@@ -1483,7 +1485,7 @@ func DumpIPv6Entry(dev *rut.RUT) {
 		fmt.Println(r)
 	}
 
-	res, err = dev.RunCommand(&command.Command{
+	res, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_DEFIP_ALPM_IPV6_128 0 131071 | grep VALID=1",
 	})
@@ -1514,7 +1516,7 @@ func prepare(r *rut.RUT) (*rut.RUT, error) {
 
 	Dev = dev
 
-	_, err = dev.RunCommand(&command.Command{
+	_, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "normal",
 		CMD:  "terminal length 0",
 	})
@@ -1523,7 +1525,7 @@ func prepare(r *rut.RUT) (*rut.RUT, error) {
 		return nil, err
 	}
 
-	_, err = dev.RunCommand(&command.Command{
+	_, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "normal",
 		CMD:  "configure terminal",
 	})
@@ -1531,7 +1533,7 @@ func prepare(r *rut.RUT) (*rut.RUT, error) {
 		return nil, err
 	}
 
-	_, err = dev.RunCommand(&command.Command{
+	_, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "config",
 		CMD:  "do q sh -l",
 	})
@@ -1539,7 +1541,7 @@ func prepare(r *rut.RUT) (*rut.RUT, error) {
 		return nil, err
 	}
 
-	_, err = dev.RunCommand(&command.Command{
+	_, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
 		CMD:  "ls -al",
 	})
