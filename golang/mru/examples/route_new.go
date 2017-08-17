@@ -157,8 +157,6 @@ func DumpECMPGroupByIndex(index int64) (ECMPGroup, error) {
 		panic(err)
 	}
 
-	//fmt.Println(ecmpg)
-
 	if res, err := match(ecmpg, getECMPMemberCount); err != nil {
 		panic(err)
 	} else {
@@ -1006,6 +1004,7 @@ func FixIPv6Address(s string) net.IP {
 	if len(s) != 32 {
 		panic("Invalid IPv6 address to parse")
 	}
+	fmt.Println(s)
 	return net.ParseIP(s[:4] + ":" + s[4:8] + ":" + s[8:12] + ":" + s[12:16] + ":" + s[16:20] + ":" + s[20:24] + ":" + s[24:28] + ":" + s[28:32])
 }
 
@@ -1662,7 +1661,7 @@ func (re *L3DEFIPHalfEntry) String() string {
 
 			return base
 		}
-	} else if re.AF == IPV6 {
+	} /*else if re.AF == IPV6 {
 		if re.IPAddrMaskLen > 128 || re.NexthopIndex > threshold.MaxNexthopIndex {
 			if re.IPAddrMaskLen > 128 {
 				return Out.Sprintf("[%6d]: %39s/%-3d >> %20s", re.Index, re.IPAddr, re.IPAddrMaskLen, "is not a valid IPv6 Address")
@@ -1681,8 +1680,11 @@ func (re *L3DEFIPHalfEntry) String() string {
 			return base
 		}
 	}
-
 	return fmt.Sprintf("Invalid route entry: %s/%d\n", re.IPAddr, re.IPAddrMaskLen)
+	*/
+
+	return ""
+
 }
 
 var HalfEntryFields = []string{
@@ -1703,7 +1705,7 @@ var HalfEntryFields = []string{
 	"HIT",
 	"GLOBAL_ROUTE",
 	"ENTRY_TYPE",
-	"ECMP_PTR",
+	",ECMP_PTR",
 	"ECMP",
 	"DEFAULT_MISS",
 	"DEFAULT_ROUTE",
@@ -1866,7 +1868,7 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 				}
 				en.EntryType = et
 
-			case "ECMP_PTR":
+			case ",ECMP_PTR":
 				ep, err := strconv.ParseInt(matches[1], 0, 64)
 				if err != nil {
 					panic(err)
@@ -1942,7 +1944,7 @@ func DumpALPMIPv4DB(dev *rut.RUT) {
 
 	for _, l := range strings.Split(res, "\n") {
 		if res, err := match(l, getEntryIndex); err != nil {
-			fmt.Println("Cannot get entry index of: ", l)
+			//fmt.Println("Cannot get entry index of: ", l)
 			continue
 		} else {
 			index, err := strconv.ParseInt(res, 0, 64)
@@ -1968,7 +1970,7 @@ func DumpALPMIPv664DB(dev *rut.RUT) {
 
 	for _, l := range strings.Split(res, "\n") {
 		if res, err := match(l, getEntryIndex); err != nil {
-			fmt.Println("Cannot get entry index of: ", l)
+			//fmt.Println("Cannot get entry index of: ", l)
 			continue
 		} else {
 			index, err := strconv.ParseInt(res, 0, 64)
@@ -1995,6 +1997,10 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 	for _, l := range strings.Split(res, "\n") {
 		if strings.Contains(l, "VALID0=1") {
 			en, _ := DumpL3DEFIPHalfEntry(l, 0)
+			//Currently just dump ipv4 entry
+			if en.Mode != 0 {
+				continue
+			}
 
 			fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
 			fmt.Printf("Best Prefix route: \n")
@@ -2067,6 +2073,10 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 		}
 		if strings.Contains(l, "VALID1=1") {
 			en, _ := DumpL3DEFIPHalfEntry(l, 1)
+			if en.Mode != 0 {
+				//Currently just dump IPv4 entry.
+				continue
+			}
 			fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
 			fmt.Printf("Best Prefix route: \n")
 			fmt.Printf("%s\n", en)
@@ -2138,7 +2148,7 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 		}
 
 		if !strings.Contains(l, "VALID1=1") && !strings.Contains(l, "VALID0=1") {
-			fmt.Println("Invalid result: ", l)
+			//fmt.Println("Invalid result: ", l)
 		}
 
 		/*

@@ -64,7 +64,7 @@ func (db *DB) GetRUTByName(name string) *RUT {
 }
 
 func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
-	log.Println(r.Hostname, r.Device)
+	//log.Println(r.Hostname, r.Device)
 	var conf configuration.Configuration
 	conf.Name = r.Name
 	conf.Username = r.Username
@@ -82,7 +82,7 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.ModeDB = configuration.BuildModeDBFromHostNameAndBasePrompt(r.Hostname, r.BasePrompt)
 	conf.SessionID = r.SessionID
 
-	log.Printf("%#v", conf)
+	//log.Printf("%#v", conf)
 	return &conf
 }
 
