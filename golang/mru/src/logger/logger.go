@@ -2,13 +2,14 @@ package logger
 
 import (
 	"context"
-	"fmt"
+	//"fmt"
 	"log"
 	"os"
 	"sync"
 )
 
 var loggerLock = sync.Mutex{}
+var PrintToTerminal bool = false
 
 func Push(ctx context.Context, message string) {
 	sid := ctx.Value("SESSIONID")
@@ -33,5 +34,7 @@ func Push(ctx context.Context, message string) {
 	full.Close()
 
 	loggerLock.Unlock()
-	fmt.Printf("%s", message)
+	if PrintToTerminal {
+		fmt.Printf("%s", message)
+	}
 }
