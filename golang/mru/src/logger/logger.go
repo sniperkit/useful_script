@@ -2,7 +2,7 @@ package logger
 
 import (
 	"context"
-	//"fmt"
+	"fmt"
 	"log"
 	"os"
 	"sync"
