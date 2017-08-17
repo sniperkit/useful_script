@@ -1004,7 +1004,6 @@ func FixIPv6Address(s string) net.IP {
 	if len(s) != 32 {
 		panic("Invalid IPv6 address to parse")
 	}
-	fmt.Println(s)
 	return net.ParseIP(s[:4] + ":" + s[4:8] + ":" + s[8:12] + ":" + s[12:16] + ":" + s[16:20] + ":" + s[20:24] + ":" + s[24:28] + ":" + s[28:32])
 }
 
