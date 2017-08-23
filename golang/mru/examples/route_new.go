@@ -932,6 +932,80 @@ func FixIPv4NetMask(s string) net.IPMask {
 	return net.IPv4Mask(byte(f1), byte(f2), byte(f3), byte(f4))
 }
 
+func FixIPv6AddressDEFIP(s string) net.IP {
+	if strings.HasPrefix(s, "0x") {
+		s = s[2:]
+	}
+
+	if len(s) == 17 {
+		s = "000000000000000" + s
+	} else if len(s) == 18 {
+		s = "00000000000000" + s
+	} else if len(s) == 19 {
+		s = "0000000000000" + s
+	} else if len(s) == 20 {
+		s = "000000000000" + s
+	} else if len(s) == 21 {
+		s = "00000000000" + s
+	} else if len(s) == 22 {
+		s = "0000000000" + s
+	} else if len(s) == 23 {
+		s = "000000000" + s
+	} else if len(s) == 24 {
+		s = "00000000" + s
+	} else if len(s) == 25 {
+		s = "0000000" + s
+	} else if len(s) == 26 {
+		s = "000000" + s
+	} else if len(s) == 27 {
+		s = "00000" + s
+	} else if len(s) == 28 {
+		s = "0000" + s
+	} else if len(s) == 29 {
+		s = "000" + s
+	} else if len(s) == 30 {
+		s = "00" + s
+	} else if len(s) == 31 {
+		s = "0" + s
+	} else if len(s) == 16 {
+		s = s + "0000000000000000"
+	} else if len(s) == 15 {
+		s = s + "0" + "0000000000000000"
+	} else if len(s) == 14 {
+		s = s + "00" + "0000000000000000"
+	} else if len(s) == 13 {
+		s = s + "000" + "0000000000000000"
+	} else if len(s) == 12 {
+		s = s + "0000" + "0000000000000000"
+	} else if len(s) == 11 {
+		s = s + "00000" + "0000000000000000"
+	} else if len(s) == 10 {
+		s = s + "000000" + "0000000000000000"
+	} else if len(s) == 9 {
+		s = s + "0000000" + "0000000000000000"
+	} else if len(s) == 8 {
+		s = s + "00000000" + "0000000000000000"
+	} else if len(s) == 7 {
+		s = s + "000000000" + "0000000000000000"
+	} else if len(s) == 6 {
+		s = s + "0000000000" + "0000000000000000"
+	} else if len(s) == 5 {
+		s = s + "00000000000" + "0000000000000000"
+	} else if len(s) == 4 {
+		s = s + "000000000000" + "0000000000000000"
+	} else if len(s) == 3 {
+		s = s + "0000000000000" + "0000000000000000"
+	} else if len(s) == 2 {
+		s = s + "00000000000000" + "0000000000000000"
+	} else if len(s) == 1 {
+		s = s + "000000000000000" + "0000000000000000"
+	}
+
+	if len(s) != 32 {
+		panic("Invalid IPv6 address to parse")
+	}
+	return net.ParseIP(s[:4] + ":" + s[4:8] + ":" + s[8:12] + ":" + s[12:16] + ":" + s[16:20] + ":" + s[20:24] + ":" + s[24:28] + ":" + s[28:32])
+}
 func FixIPv6Address(s string) net.IP {
 	if strings.HasPrefix(s, "0x") {
 		s = s[2:]
@@ -1000,6 +1074,8 @@ func FixIPv6Address(s string) net.IP {
 	} else if len(s) == 1 {
 		s = "000000000000000" + s + "0000000000000000"
 	}
+
+	fmt.Println(s, len(s))
 
 	if len(s) != 32 {
 		panic("Invalid IPv6 address to parse")
@@ -1660,7 +1736,7 @@ func (re *L3DEFIPHalfEntry) String() string {
 
 			return base
 		}
-	} /*else if re.AF == IPV6 {
+	} else if re.AF == IPV6 {
 		if re.IPAddrMaskLen > 128 || re.NexthopIndex > threshold.MaxNexthopIndex {
 			if re.IPAddrMaskLen > 128 {
 				return Out.Sprintf("[%6d]: %39s/%-3d >> %20s", re.Index, re.IPAddr, re.IPAddrMaskLen, "is not a valid IPv6 Address")
@@ -1680,9 +1756,8 @@ func (re *L3DEFIPHalfEntry) String() string {
 		}
 	}
 	return fmt.Sprintf("Invalid route entry: %s/%d\n", re.IPAddr, re.IPAddrMaskLen)
-	*/
 
-	return ""
+	//	return ""
 
 }
 
@@ -1696,7 +1771,7 @@ var HalfEntryFields = []string{
 	"PRI",
 	"RESERVED_ECMP_PTR",
 	"NEXT_HOP_INDEX",
-	"MODE",
+	",MODE",
 	//"MASK",
 	//"KEY",
 	"IP_ADDR_MASK",
@@ -1710,6 +1785,97 @@ var HalfEntryFields = []string{
 	"DEFAULT_ROUTE",
 	"ALG_HIT_IDX",
 	"ALG_BKT_PTR",
+}
+
+var ip1r = regexp.MustCompile("IP_ADDR1=(?P<f>[0x]?[[:alnum:]]+)")
+var ip0r = regexp.MustCompile("IP_ADDR0=(?P<f>[0x]?[[:alnum:]]+)")
+
+func ParseIPv6BestPrefixRouteFromDEFIP(entry string, index int) (net.IP, error) {
+	var ip1 string
+	var ip0 string
+	if matches := ip1r.FindStringSubmatch(entry); len(matches) == 2 {
+		ip1 = matches[1]
+		if strings.HasPrefix(ip1, "0x") {
+			ip1 = ip1[2:]
+		}
+	}
+
+	if matches := ip0r.FindStringSubmatch(entry); len(matches) == 2 {
+		ip0 = matches[1]
+		if strings.HasPrefix(ip0, "0x") {
+			ip0 = ip0[2:]
+		}
+	}
+
+	ip := ip1 + ip0
+
+	nip := FixIPv6AddressDEFIP(ip)
+
+	return nip, nil
+}
+
+var ipmr0 = regexp.MustCompile("IP_ADDR_MASK0=(?P<f>[0x]?[[:alnum:]]+)")
+var ipmr1 = regexp.MustCompile("IP_ADDR_MASK1=(?P<f>[0x]?[[:alnum:]]+)")
+
+var HexToBin = map[rune]string{
+	'0': "0000",
+	'1': "0001",
+	'2': "0010",
+	'3': "0011",
+	'4': "0100",
+	'5': "0101",
+	'6': "0110",
+	'7': "0111",
+	'8': "1000",
+	'9': "1001",
+	'a': "1010",
+	'b': "1011",
+	'c': "1100",
+	'd': "1101",
+	'e': "1110",
+	'f': "1111",
+}
+
+func GetLeadingOnes(entry string) int {
+	var res string
+	for _, c := range entry {
+		if c != 'f' && c != 'e' && c != 'c' && c != '8' && c != '0' {
+			panic("Invalid mask")
+		}
+		res += HexToBin[c]
+	}
+
+	var count int
+	for _, c := range res {
+		if c == '1' {
+			count++
+		}
+	}
+
+	return count
+}
+
+func ParseIPv6BestPrefixRouteMaskLengthFromDEFIP(entry string, index int) (int, error) {
+	var ipm1 string
+	var ipm0 string
+	if matches := ipmr1.FindStringSubmatch(entry); len(matches) == 2 {
+		ipm1 = matches[1]
+		if strings.HasPrefix(ipm1, "0x") {
+			ipm1 = ipm1[2:]
+		}
+	}
+
+	if matches := ipmr1.FindStringSubmatch(entry); len(matches) == 2 {
+		ipm0 = matches[1]
+		if strings.HasPrefix(ipm0, "0x") {
+			ipm0 = ipm0[2:]
+		}
+	}
+
+	ipm := ipm1 + ipm0
+
+	return GetLeadingOnes(ipm), nil
+
 }
 
 func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
@@ -1823,23 +1989,62 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 				}
 
 				en.NH = *nh
-			case "MODE":
+			case ",MODE":
 				mode, err := strconv.ParseInt(matches[1], 0, 64)
 				if err != nil {
 					panic(err)
 				}
 				en.Mode = mode
-			case "IP_ADDR_MASK":
-				en.IPAddrMask = FixIPv4NetMask(matches[1])
-				en.IPAddrMaskLen, _ = en.IPAddrMask.Size()
-			case "IP_ADDR":
-				if en.Mode == 0 {
-					en.AF = IPV4
-					en.IPAddr = FixIPv4Address(matches[1])
+
+				var ipr *regexp.Regexp
+				if index == 0 {
+					ipr = regexp.MustCompile("IP_ADDR0=(?P<f>[0x]?[[:alnum:]]+)")
+
 				} else {
-					en.AF = IPV6
-					en.IPAddr = FixIPv6Address(matches[1])
+					ipr = regexp.MustCompile("IP_ADDR1=(?P<f>[0x]?[[:alnum:]]+)")
+
 				}
+				if ms := ipr.FindStringSubmatch(entry); len(ms) == 2 {
+					if en.Mode == 0 {
+						en.AF = IPV4
+						en.IPAddr = FixIPv4Address(ms[1])
+					} else {
+						en.AF = IPV6
+						en.IPAddr, _ = ParseIPv6BestPrefixRouteFromDEFIP(entry, index)
+					}
+				}
+
+				var ipmr *regexp.Regexp
+				if index == 0 {
+					ipmr = regexp.MustCompile("IP_ADDR_MASK0=(?P<f>[0x]?[[:alnum:]]+)")
+
+				} else {
+					ipmr = regexp.MustCompile("IP_ADDR_MASK1=(?P<f>[0x]?[[:alnum:]]+)")
+
+				}
+
+				if ms := ipmr.FindStringSubmatch(entry); len(ms) == 2 {
+					if en.Mode == 0 {
+						en.IPAddrMask = FixIPv4NetMask(matches[1])
+						en.IPAddrMaskLen, _ = en.IPAddrMask.Size()
+					} else {
+						en.IPAddrMaskLen, _ = ParseIPv6BestPrefixRouteMaskLengthFromDEFIP(entry, index)
+					}
+				}
+				/*
+					case "IP_ADDR_MASK":
+						en.IPAddrMask = FixIPv4NetMask(matches[1])
+						en.IPAddrMaskLen, _ = en.IPAddrMask.Size()
+					case "IP_ADDR":
+						fmt.Println("[", en.Mode, "]", entry)
+						if en.Mode == 0 {
+							en.AF = IPV4
+							en.IPAddr = FixIPv4Address(matches[1])
+						} else {
+							en.AF = IPV6
+							en.IPAddr, _ = ParseIPv6BestPrefixRouteFromDEFIP(entry, index)
+						}
+				*/
 			case "HIT":
 				hit, err := strconv.ParseInt(matches[1], 0, 64)
 				if err != nil {
@@ -1996,15 +2201,12 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 	for _, l := range strings.Split(res, "\n") {
 		if strings.Contains(l, "VALID0=1") {
 			en, _ := DumpL3DEFIPHalfEntry(l, 0)
-			//Currently just dump ipv4 entry
-			if en.Mode != 0 {
-				continue
-			}
-
-			fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
-			fmt.Printf("Best Prefix route: \n")
-			fmt.Printf("%s\n", en)
+			//Currently just dump ipv4 entry for this half entry
 			if en.Mode == 0 {
+				fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
+				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("%s\n", en)
+
 				for bank := 0; bank < 4; bank++ {
 					for eindex := 0; eindex < 6; eindex++ {
 						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
@@ -2025,57 +2227,15 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 						}
 					}
 				}
-			} else if en.Mode == 1 {
-				for bank := 0; bank < 4; bank++ {
-					for eindex := 0; eindex < 4; eindex++ {
-						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
-						//DumpIPv4EntryByIndex(dev, alpmidx)
-						if e, ok := ALPMIPv664[int64(alpmidx)]; !ok {
-							//Do not display invlaid entry.
-							//fmt.Printf("Entry %d does not exist\n", alpmidx)
-						} else {
-							if !strings.Contains(e, "VALID=1") {
-								fmt.Printf("Entry %d is invalid\n", alpmidx)
-								continue
-							}
-							r, _ := ParseRouteEntryString(e, IPV6)
-							if r != nil {
-								r.ParseNexthopInfo()
-							}
-							fmt.Println(r)
-						}
-					}
-				}
-
-			} else if en.Mode == 3 {
-				for bank := 0; bank < 4; bank++ {
-					for eindex := 0; eindex < 2; eindex++ {
-						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
-						//DumpIPv4EntryByIndex(dev, alpmidx)
-						if e, ok := ALPMIPv6128[int64(alpmidx)]; !ok {
-							//Do not display invlaid entry.
-							//fmt.Printf("Entry %d does not exist\n", alpmidx)
-						} else {
-							if !strings.Contains(e, "VALID=1") {
-								fmt.Printf("Entry %d is invalid\n", alpmidx)
-								continue
-							}
-							r, _ := ParseRouteEntryString(e, IPV6)
-							if r != nil {
-								r.ParseNexthopInfo()
-							}
-							fmt.Println(r)
-						}
-					}
-				}
 			}
 		}
 		if strings.Contains(l, "VALID1=1") {
 			en, _ := DumpL3DEFIPHalfEntry(l, 1)
-			if en.Mode != 0 {
+			/* if en.Mode != 0 {
 				//Currently just dump IPv4 entry.
 				continue
 			}
+			*/
 			fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
 			fmt.Printf("Best Prefix route: \n")
 			fmt.Printf("%s\n", en)
@@ -2122,27 +2282,6 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 					}
 				}
 
-			} else if en.Mode == 3 {
-				for bank := 0; bank < 4; bank++ {
-					for eindex := 0; eindex < 2; eindex++ {
-						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
-						//DumpIPv4EntryByIndex(dev, alpmidx)
-						if e, ok := ALPMIPv6128[int64(alpmidx)]; !ok {
-							//Do not display invlaid entry.
-							//fmt.Printf("Entry %d does not exist\n", alpmidx)
-						} else {
-							if !strings.Contains(e, "VALID=1") {
-								fmt.Printf("Entry %d is invalid\n", alpmidx)
-								continue
-							}
-							r, _ := ParseRouteEntryString(e, IPV6)
-							if r != nil {
-								r.ParseNexthopInfo()
-							}
-							fmt.Println(r)
-						}
-					}
-				}
 			}
 		}
 
