@@ -2034,7 +2034,7 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 
 				if ms := ipmr.FindStringSubmatch(entry); len(ms) == 2 {
 					if en.Mode == 0 {
-						en.IPAddrMask = FixIPv4NetMask(matches[1])
+						en.IPAddrMask = FixIPv4NetMask(ms[1])
 						en.IPAddrMaskLen, _ = en.IPAddrMask.Size()
 					} else {
 						en.IPAddrMaskLen, _ = ParseIPv6BestPrefixRouteMaskLengthFromDEFIP(entry, index)
@@ -2131,6 +2131,30 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 					en.EG, _ = DumpECMPGroupByIndex(en.ECMPPtr)
 				}
 
+				//GLOBAL route
+				var grr *regexp.Regexp
+				if index == 0 {
+					grr = regexp.MustCompile("GLOBAL_ROUTE0=(?P<f>[0x]?[[:alnum:]]+)")
+				} else {
+					if en.Mode == 1 || en.Mode == 3 {
+						grr = regexp.MustCompile("GLOBAL_ROUTE0=(?P<f>[0x]?[[:alnum:]]+)")
+					} else {
+						grr = regexp.MustCompile("GLOBAL_ROUTE1=(?P<f>[0x]?[[:alnum:]]+)")
+					}
+				}
+
+				if ms := grr.FindStringSubmatch(entry); len(ms) == 2 {
+					gr, err := strconv.ParseInt(ms[1], 0, 64)
+					if err != nil {
+						panic(err)
+					}
+					if gr == 1 {
+						en.GlobalRoute = true
+					} else {
+						en.GlobalRoute = false
+					}
+				}
+
 				//ecmp_ptr
 				/*
 					case "IP_ADDR_MASK":
@@ -2156,16 +2180,18 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 				} else {
 					en.Hit = false
 				}
-			case "GLOBAL_ROUTE":
-				gr, err := strconv.ParseInt(matches[1], 0, 64)
-				if err != nil {
-					panic(err)
-				}
-				if gr == 1 {
-					en.GlobalRoute = true
-				} else {
-					en.GlobalRoute = false
-				}
+				/*
+					case "GLOBAL_ROUTE":
+						gr, err := strconv.ParseInt(matches[1], 0, 64)
+						if err != nil {
+							panic(err)
+						}
+						if gr == 1 {
+							en.GlobalRoute = true
+						} else {
+							en.GlobalRoute = false
+						}
+				*/
 			case "ENTRY_TYPE":
 				et, err := strconv.ParseInt(matches[1], 0, 64)
 				if err != nil {
@@ -2309,7 +2335,6 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 			//Currently just dump ipv4 entry for this half entry
 			if en.Mode == 0 {
 				fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
-				fmt.Printf("Best Prefix route: \n")
 				fmt.Printf("%s\n", en)
 
 				for bank := 0; bank < 4; bank++ {
@@ -2342,7 +2367,6 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 			}
 			*/
 			fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
-			fmt.Printf("Best Prefix route: \n")
 			fmt.Printf("%s\n", en)
 			if en.Mode == 0 {
 				for bank := 0; bank < 4; bank++ {
@@ -2422,8 +2446,7 @@ func DumpL3IPv4DEFIPEntry(dev *rut.RUT) {
 			en, _ := DumpL3DEFIPHalfEntry(l, 0)
 			//Currently just dump ipv4 entry for this half entry
 			if en.Mode == 0 {
-				fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
-				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("<<<Root[%d(0)(%6s)]: %32s/%2d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
 				fmt.Printf("%s\n", en)
 
 				for bank := 0; bank < 4; bank++ {
@@ -2456,8 +2479,7 @@ func DumpL3IPv4DEFIPEntry(dev *rut.RUT) {
 			}
 			*/
 			if en.Mode == 0 {
-				fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
-				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("<<<Root[%d(1)(%6s)]: %32s/%2d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
 				fmt.Printf("%s\n", en)
 
 				for bank := 0; bank < 4; bank++ {
@@ -2518,8 +2540,7 @@ func DumpL3IPv664DEFIPEntry(dev *rut.RUT) {
 			}
 			*/
 			if en.Mode == 1 {
-				fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
-				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("<<<Root[%d(1)(%6s)]: %24s/%2d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
 				fmt.Printf("%s\n", en)
 
 				for bank := 0; bank < 4; bank++ {
