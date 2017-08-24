@@ -1075,7 +1075,7 @@ func FixIPv6Address(s string) net.IP {
 		s = "000000000000000" + s + "0000000000000000"
 	}
 
-	fmt.Println(s, len(s))
+	//fmt.Println(s, len(s))
 
 	if len(s) != 32 {
 		panic("Invalid IPv6 address to parse")
@@ -1977,18 +1977,20 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 					panic(err)
 				}
 				en.ReservedECMPPtr = rep
-			case "NEXT_HOP_INDEX":
-				nhi, err := strconv.ParseInt(matches[1], 0, 64)
-				if err != nil {
-					panic(err)
-				}
-				en.NexthopIndex = nhi
-				nh, err := ParseNexthopByIndex(en.NexthopIndex)
-				if err != nil {
-					panic(err)
-				}
+				/*
+					case "NEXT_HOP_INDEX":
+						nhi, err := strconv.ParseInt(matches[1], 0, 64)
+						if err != nil {
+							panic(err)
+						}
+						en.NexthopIndex = nhi
+						nh, err := ParseNexthopByIndex(en.NexthopIndex)
+						if err != nil {
+							panic(err)
+						}
 
-				en.NH = *nh
+						en.NH = *nh
+				*/
 			case ",MODE":
 				mode, err := strconv.ParseInt(matches[1], 0, 64)
 				if err != nil {
@@ -2014,6 +2016,7 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 					}
 				}
 
+				//ip mask
 				var ipmr *regexp.Regexp
 				if index == 0 {
 					ipmr = regexp.MustCompile("IP_ADDR_MASK0=(?P<f>[0x]?[[:alnum:]]+)")
@@ -2031,6 +2034,98 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 						en.IPAddrMaskLen, _ = ParseIPv6BestPrefixRouteMaskLengthFromDEFIP(entry, index)
 					}
 				}
+
+				//ALG_BKT_PTR
+				var abpr *regexp.Regexp
+				if index == 0 {
+					abpr = regexp.MustCompile("ALG_BKT_PTR0=(?P<f>[0x]?[[:alnum:]]+)")
+				} else {
+					if en.Mode == 1 || en.Mode == 3 { //IPv6 64 && IPv6 128
+						abpr = regexp.MustCompile("ALG_BKT_PTR0=(?P<f>[0x]?[[:alnum:]]+)")
+					} else {
+						abpr = regexp.MustCompile("ALG_BKT_PTR1=(?P<f>[0x]?[[:alnum:]]+)")
+					}
+				}
+
+				if ms := abpr.FindStringSubmatch(entry); len(ms) == 2 {
+					abp, err := strconv.ParseInt(ms[1], 0, 64)
+					if err != nil {
+						panic(err)
+					}
+					en.ALGBktPtr = abp
+				}
+
+				//Nexthop.
+				var nhpr *regexp.Regexp
+				if index == 0 {
+					nhpr = regexp.MustCompile("NEXT_HOP_INDEX0=(?P<f>[0x]?[[:alnum:]]+)")
+				} else {
+					if en.Mode == 1 || en.Mode == 3 {
+						nhpr = regexp.MustCompile("NEXT_HOP_INDEX0=(?P<f>[0x]?[[:alnum:]]+)")
+					} else {
+						nhpr = regexp.MustCompile("NEXT_HOP_INDEX1=(?P<f>[0x]?[[:alnum:]]+)")
+					}
+				}
+
+				if ms := nhpr.FindStringSubmatch(entry); len(ms) == 2 {
+					nhi, err := strconv.ParseInt(ms[1], 0, 64)
+					if err != nil {
+						panic(err)
+					}
+					en.NexthopIndex = nhi
+					nh, err := ParseNexthopByIndex(en.NexthopIndex)
+					if err != nil {
+						panic(err)
+					}
+
+					en.NH = *nh
+				}
+
+				//ecmp
+				var ecmpr *regexp.Regexp
+				if index == 0 {
+					ecmpr = regexp.MustCompile("ECMP0=(?P<f>[0x]?[[:alnum:]]+)")
+				} else {
+					if en.Mode == 1 || en.Mode == 3 {
+						ecmpr = regexp.MustCompile("ECMP0=(?P<f>[0x]?[[:alnum:]]+)")
+					} else {
+						ecmpr = regexp.MustCompile("ECMP1=(?P<f>[0x]?[[:alnum:]]+)")
+					}
+				}
+
+				if ms := ecmpr.FindStringSubmatch(entry); len(ms) == 2 {
+					ecmp, err := strconv.ParseInt(ms[1], 0, 64)
+					if err != nil {
+						panic(err)
+					}
+					if ecmp == 1 {
+						en.ECMP = true
+					} else {
+						en.ECMP = false
+					}
+				}
+
+				//ecmp_ptr
+				var ecmpptrr *regexp.Regexp
+				if index == 0 {
+					ecmpptrr = regexp.MustCompile(",ECMP_PTR0=(?P<f>[0x]?[[:alnum:]]+)")
+				} else {
+					if en.Mode == 1 || en.Mode == 3 {
+						ecmpptrr = regexp.MustCompile(",ECMP_PTR0=(?P<f>[0x]?[[:alnum:]]+)")
+					} else {
+						ecmpptrr = regexp.MustCompile(",ECMP_PTR1=(?P<f>[0x]?[[:alnum:]]+)")
+					}
+				}
+				if ms := ecmpptrr.FindStringSubmatch(entry); len(ms) == 2 {
+					ep, err := strconv.ParseInt(ms[1], 0, 64)
+					if err != nil {
+						panic(err)
+					}
+					en.ECMPPtr = ep
+					en.EG, _ = DumpECMPGroupByIndex(en.ECMPPtr)
+				}
+
+				//ecmp_ptr
 				/*
 					case "IP_ADDR_MASK":
 						en.IPAddrMask = FixIPv4NetMask(matches[1])
@@ -2072,24 +2167,26 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 				}
 				en.EntryType = et
 
-			case ",ECMP_PTR":
-				ep, err := strconv.ParseInt(matches[1], 0, 64)
-				if err != nil {
-					panic(err)
-				}
-				en.ECMPPtr = ep
+				/*
+					case ",ECMP_PTR":
+						ep, err := strconv.ParseInt(matches[1], 0, 64)
+						if err != nil {
+							panic(err)
+						}
+						en.ECMPPtr = ep
 
-				en.EG, _ = DumpECMPGroupByIndex(en.ECMPPtr)
-			case "ECMP":
-				ecmp, err := strconv.ParseInt(matches[1], 0, 64)
-				if err != nil {
-					panic(err)
-				}
-				if ecmp == 1 {
-					en.ECMP = true
-				} else {
-					en.ECMP = false
-				}
+						en.EG, _ = DumpECMPGroupByIndex(en.ECMPPtr)
+					case "ECMP":
+						ecmp, err := strconv.ParseInt(matches[1], 0, 64)
+						if err != nil {
+							panic(err)
+						}
+						if ecmp == 1 {
+							en.ECMP = true
+						} else {
+							en.ECMP = false
+						}
+				*/
 			case "DEFAULT_MISS":
 				dm, err := strconv.ParseInt(matches[1], 0, 64)
 				if err != nil {
@@ -2116,12 +2213,14 @@ func DumpL3DEFIPHalfEntry(entry string, index int) (*L3DEFIPHalfEntry, error) {
 					panic(err)
 				}
 				en.ALGHitIndex = ahi
-			case "ALG_BKT_PTR":
-				abp, err := strconv.ParseInt(matches[1], 0, 64)
-				if err != nil {
-					panic(err)
-				}
-				en.ALGBktPtr = abp
+				/*
+					case "ALG_BKT_PTR":
+						abp, err := strconv.ParseInt(matches[1], 0, 64)
+						if err != nil {
+							panic(err)
+						}
+						en.ALGBktPtr = abp
+				*/
 			}
 		}
 	}
@@ -2273,6 +2372,7 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 								fmt.Printf("Entry %d is invalid\n", alpmidx)
 								continue
 							}
+							//fmt.Println(e)
 							r, _ := ParseRouteEntryString(e, IPV6)
 							if r != nil {
 								r.ParseNexthopInfo()
