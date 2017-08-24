@@ -1225,7 +1225,7 @@ var Host = flag.String("hostname", "V8500", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
 var SFU = flag.String("sfu", "A", "SFU (A/B)")
-var Table = flag.String("table", "all", "Address family to dump (v4/v6/all/arp/nd/alpm)")
+var Table = flag.String("table", "all", "Address family to dump (v4/v6/all/arp/nd/alpm/alpm4/alpm6)")
 
 func main() {
 	flag.Parse()
@@ -1251,7 +1251,7 @@ func main() {
 		return
 	}
 
-	if *Table != "v4" && *Table != "v6" && *Table != "all" && *Table != "arp" && *Table != "nd" && *Table != "alpm" {
+	if *Table != "v4" && *Table != "v6" && *Table != "all" && *Table != "arp" && *Table != "nd" && *Table != "alpm" && *Table != "alpm4" && *Table != "alpm6" {
 		fmt.Println("Valid table is: v4/v6/all/arp/nd/alpm")
 		return
 	}
@@ -1284,6 +1284,12 @@ func main() {
 		DumpIPv6HostEntry(dev)
 	} else if *Table == "alpm" {
 		DumpL3DEFIPEntry(dev)
+	} else if *Table == "alpm4" {
+		DumpL3IPv4DEFIPEntry(dev)
+	} else if *Table == "alpm6" {
+		DumpL3IPv664DEFIPEntry(dev)
+	} else {
+		fmt.Println("Invalid table: ", *Table, " to dump")
 	}
 }
 
@@ -2302,7 +2308,7 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 			en, _ := DumpL3DEFIPHalfEntry(l, 0)
 			//Currently just dump ipv4 entry for this half entry
 			if en.Mode == 0 {
-				fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
+				fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
 				fmt.Printf("Best Prefix route: \n")
 				fmt.Printf("%s\n", en)
 
@@ -2335,7 +2341,7 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 				continue
 			}
 			*/
-			fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute)
+			fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
 			fmt.Printf("Best Prefix route: \n")
 			fmt.Printf("%s\n", en)
 			if en.Mode == 0 {
@@ -2361,6 +2367,163 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 				}
 			} else if en.Mode == 1 {
 				for bank := 0; bank < 4; bank++ {
+					for eindex := 0; eindex < 4; eindex++ {
+						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
+						//DumpIPv4EntryByIndex(dev, alpmidx)
+						if e, ok := ALPMIPv664[int64(alpmidx)]; !ok {
+							//Do not display invlaid entry.
+							//fmt.Printf("Entry %d does not exist\n", alpmidx)
+						} else {
+							if !strings.Contains(e, "VALID=1") {
+								fmt.Printf("Entry %d is invalid\n", alpmidx)
+								continue
+							}
+							//fmt.Println(e)
+							r, _ := ParseRouteEntryString(e, IPV6)
+							if r != nil {
+								r.ParseNexthopInfo()
+							}
+							fmt.Println(r)
+						}
+					}
+				}
+
+			}
+		}
+
+		if !strings.Contains(l, "VALID1=1") && !strings.Contains(l, "VALID0=1") {
+			//fmt.Println("Invalid result: ", l)
+		}
+
+		/*
+			r, _ := ParseRouteEntryString(l, IPV6)
+			if r != nil {
+				r.ParseNexthopInfo()
+			}
+			fmt.Println(r)
+		*/
+	}
+}
+
+func DumpL3IPv4DEFIPEntry(dev *rut.RUT) {
+	DumpALPMIPv4DB(dev)
+	DumpALPMIPv664DB(dev)
+	res, err := dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_DEFIP 0 8191 | grep -E 'VALID(0|1)=1'",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, l := range strings.Split(res, "\n") {
+		if strings.Contains(l, "VALID0=1") {
+			en, _ := DumpL3DEFIPHalfEntry(l, 0)
+			//Currently just dump ipv4 entry for this half entry
+			if en.Mode == 0 {
+				fmt.Printf("<<<Root[%d(0)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
+				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("%s\n", en)
+
+				for bank := 0; bank < 4; bank++ {
+					for eindex := 0; eindex < 6; eindex++ {
+						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
+						//DumpIPv4EntryByIndex(dev, alpmidx)
+						if e, ok := ALPMIPv4[int64(alpmidx)]; !ok {
+							//Do not display invlaid entry.
+							//fmt.Printf("Entry %d does not exist\n", alpmidx)
+						} else {
+							if !strings.Contains(e, "VALID=1") {
+								fmt.Printf("Entry %d is invalid\n", alpmidx)
+								continue
+							}
+							r, _ := ParseRouteEntryString(e, IPV4)
+							if r != nil {
+								r.ParseNexthopInfo()
+							}
+							fmt.Println(r)
+						}
+					}
+				}
+			}
+		}
+		if strings.Contains(l, "VALID1=1") {
+			en, _ := DumpL3DEFIPHalfEntry(l, 1)
+			/* if en.Mode != 0 {
+				//Currently just dump IPv4 entry.
+				continue
+			}
+			*/
+			if en.Mode == 0 {
+				fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
+				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("%s\n", en)
+
+				for bank := 0; bank < 4; bank++ {
+					for eindex := 0; eindex < 6; eindex++ {
+						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
+						//DumpIPv4EntryByIndex(dev, alpmidx)
+						if e, ok := ALPMIPv4[int64(alpmidx)]; !ok {
+							//Do not display invlaid entry.
+							//fmt.Printf("Entry %d does not exist\n", alpmidx)
+						} else {
+							if !strings.Contains(e, "VALID=1") {
+								fmt.Printf("Entry %d is invalid\n", alpmidx)
+								continue
+							}
+							r, _ := ParseRouteEntryString(e, IPV4)
+							if r != nil {
+								r.ParseNexthopInfo()
+							}
+							fmt.Println(r)
+						}
+					}
+				}
+			}
+		}
+
+		if !strings.Contains(l, "VALID1=1") && !strings.Contains(l, "VALID0=1") {
+			//fmt.Println("Invalid result: ", l)
+		}
+
+		/*
+			r, _ := ParseRouteEntryString(l, IPV6)
+			if r != nil {
+				r.ParseNexthopInfo()
+			}
+			fmt.Println(r)
+		*/
+	}
+}
+
+func DumpL3IPv664DEFIPEntry(dev *rut.RUT) {
+	DumpALPMIPv4DB(dev)
+	DumpALPMIPv664DB(dev)
+	res, err := dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_DEFIP 0 8191 | grep -E 'VALID(0|1)=1'",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, l := range strings.Split(res, "\n") {
+		if strings.Contains(l, "VALID1=1") {
+			en, _ := DumpL3DEFIPHalfEntry(l, 1)
+			/* if en.Mode != 0 {
+				//Currently just dump IPv4 entry.
+				continue
+			}
+			*/
+			if en.Mode == 1 {
+				fmt.Printf("<<<Root[%d(1)(%6s)]: %s/%d (0x%-4x) Global: %5t -> VRF : %2d)>>>: \n", en.Index, DEFIPModeValueToString[en.Mode], en.IPAddr, en.IPAddrMaskLen, en.ALGBktPtr, en.GlobalRoute, en.VRF)
+				fmt.Printf("Best Prefix route: \n")
+				fmt.Printf("%s\n", en)
+
+				for bank := 0; bank < 4; bank++ {
+
 					for eindex := 0; eindex < 4; eindex++ {
 						alpmidx := eindex<<16 | int(en.ALGBktPtr<<2) | bank
 						//DumpIPv4EntryByIndex(dev, alpmidx)
