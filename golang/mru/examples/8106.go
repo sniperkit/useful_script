@@ -658,7 +658,7 @@ func (he *HostEntry) ParseEgrNexthopInfo() {
 }
 
 var getOIFMACAddress = regexp.MustCompile(`,MAC_ADDRESS=(?P<nmac>[0x]?[[:alnum:]]+)`)
-var getOIFVID = regexp.MustCompile(`\<VID=(?P<vid>[0x]?[[:alnum:]]+)`)
+var getOIFVID = regexp.MustCompile(`,VID=(?P<vid>[0x]?[[:alnum:]]+)`)
 
 func (nh *Nexthop) ParseOIF() {
 	oif, err := Dev.RunCommand(CTX, &command.Command{
@@ -2328,7 +2328,6 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(res)
 
 	for _, l := range strings.Split(res, "\n") {
 		if strings.Contains(l, "VALID0=1") {
