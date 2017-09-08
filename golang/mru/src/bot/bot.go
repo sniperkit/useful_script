@@ -17,6 +17,7 @@ type Bot struct {
 	groups   map[string]string
 	teamID   string
 	team     string
+	rtm      *slack.RTM
 }
 
 var ATB Bot
@@ -78,10 +79,10 @@ func (b *Bot) GetGroupID(name string) (string, error) {
 }
 
 func (b *Bot) EventHandler() {
-	rtm := b.client.NewRTM()
-	go rtm.ManageConnection()
+	b.rtm = b.client.NewRTM()
+	go b.rtm.ManageConnection()
 
-	for msg := range rtm.IncomingEvents {
+	for msg := range b.rtm.IncomingEvents {
 
 		fmt.Print("Event Received: ")
 		switch ev := msg.Data.(type) {
@@ -89,7 +90,7 @@ func (b *Bot) EventHandler() {
 			fmt.Printf("Received Hello: %#v\n", ev)
 
 		case *slack.ConnectedEvent:
-			rtm.SendMessage(rtm.NewOutgoingMessage("Hello Eveyone, I'm Back!", "G68RDPX8D"))
+			b.rtm.SendMessage(b.rtm.NewOutgoingMessage("Hello Eveyone, I'm Back!", "G68RDPX8D"))
 
 		case *slack.MessageEvent:
 			b.HandleMessageEvent(ev)
@@ -130,6 +131,8 @@ func (b *Bot) HandleMessageEvent(msg *slack.MessageEvent) {
 	if !ok {
 		return
 	}
+
+	b.rtm.SendMessage(b.rtm.NewOutgoingMessage(context, "G68RDPX8D"))
 	fmt.Println(context)
 }
 
