@@ -129,6 +129,7 @@ int DListInsertSorted(struct DList* list, void* data){
 
 	if (dlistIsEmpty(list)) {
 		list->head = new;
+		return 0;
 	}
 
 	pos = list->head;
@@ -141,12 +142,12 @@ int DListInsertSorted(struct DList* list, void* data){
 		break;
 	}
 
-	printf("-----------------------\n");
 	//1. At last.
 	if (pos == NULL) {
 		pos = dlistGetLastNode(list);
 		pos->next = new;
 		new->prev = pos;
+		return 0;
 	}
 
 	//2. Insert At first.
@@ -154,6 +155,7 @@ int DListInsertSorted(struct DList* list, void* data){
 		list->head->prev = new;
 		new->next = list->head;
 		list->head = new;
+		return 0;
 	}
 
 	//3.
