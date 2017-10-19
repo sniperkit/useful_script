@@ -61,6 +61,20 @@ assert.h
 -
 
 /home/leeweop/kkkmmu/pppp/src/vector.c
+vector.h
+/home/leeweop/kkkmmu/pppp/src/vector.h
+stdlib.h
+-
+string.h
+-
+stdio.h
+-
+
+/home/leeweop/kkkmmu/pppp/src/vector.h
+inttypes.h
+-
+util.h
+/home/leeweop/kkkmmu/pppp/src/util.h
 
 lib/llog/src/llog.h
 stdio.h

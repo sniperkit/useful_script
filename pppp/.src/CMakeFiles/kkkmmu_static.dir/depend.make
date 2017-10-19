@@ -24,5 +24,7 @@
 
 .src/CMakeFiles/kkkmmu_static.dir/stack.c.o: src/stack.c
 
+.src/CMakeFiles/kkkmmu_static.dir/vector.c.o: src/util.h
 .src/CMakeFiles/kkkmmu_static.dir/vector.c.o: src/vector.c
+.src/CMakeFiles/kkkmmu_static.dir/vector.c.o: src/vector.h
 

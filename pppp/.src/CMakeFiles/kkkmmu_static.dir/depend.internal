@@ -25,4 +25,6 @@
 .src/CMakeFiles/kkkmmu_static.dir/stack.c.o
  /home/leeweop/kkkmmu/pppp/src/stack.c
 .src/CMakeFiles/kkkmmu_static.dir/vector.c.o
+ /home/leeweop/kkkmmu/pppp/src/util.h
  /home/leeweop/kkkmmu/pppp/src/vector.c
+ /home/leeweop/kkkmmu/pppp/src/vector.h

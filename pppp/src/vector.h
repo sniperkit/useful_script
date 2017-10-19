@@ -7,7 +7,10 @@
 struct Vector {
 	uint32_t cap;
 	uint32_t count;
-	char data[0];
+	uint32_t size;
+	COMPARE cmp;
+	DESTROY dest;
+	void **data;
 };
 
 struct Vector* VectorCreate(COMPARE cmp, DESTROY dest, uint32_t cap);
@@ -16,12 +19,15 @@ int VectorInsert(struct Vector* vec, void* data);
 int VectorInsertSorted(struct Vector* vec, void* data);
 int VectorInsertFront(struct Vector* vec, void* data);
 int VectorInsertLast(struct Vector* vec, void* data);
-void* VectorDeleteFirst(struct Vector* vec);
-void* VectorDeleteLast(struct Vector* vec);
-void* VectorDelete(struct Vector* vec, void* key);
+int VectorInsertAt(struct Vector* vec, void* data, uint32_t idx);
+int VectorDeleteFirst(struct Vector* vec);
+int VectorDeleteLast(struct Vector* vec);
+int VectorDelete(struct Vector* vec, void* key);
+int VectorDeleteAt(struct Vector* vec, uint32_t idx);
 void* VectorGetFirst(struct Vector* vec);
 void* VectorGetLast(struct Vector* vec);
 void* VectorGet(struct Vector* vec, void* key);
-void* VectorForEach(struct Vector* vec, OPERATE op);
-void* VectorSort(struct Vector* vec);
+void* VectorGetAt(struct Vector* vec, uint32_t idx);
+void VectorForEach(struct Vector* vec, OPERATE op);
+void VectorSort(struct Vector* vec);
 #endif /* ___VECTOR_H___ */

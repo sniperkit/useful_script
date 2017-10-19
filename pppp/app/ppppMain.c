@@ -2,6 +2,7 @@
 #define DEBUG
 #include "fault.h"
 #include "list.h"
+#include "vector.h"
 #include "leak_detector.h"
 #include "util.h"
 #include <stdio.h>
@@ -150,12 +151,47 @@ void DListFunctionTest() {
 	DListForEach(list, print);
 }
 
+void VectorFunctionTest() {
+	struct Vector *vec = NULL;
+	vec = VectorCreate(compare, destroy, 100);
+	ASSERT(vec != NULL, , "%s\n", "Cannot create new vector");
+	VectorInsert(vec, (void*)10);
+	VectorInsert(vec, (void*)12);
+	VectorInsert(vec, (void*)19);
+	VectorInsert(vec, (void*)13);
+	VectorInsert(vec, (void*)18);
+	VectorInsert(vec, (void*)110);
+	VectorInsert(vec, (void*)11);
+	VectorForEach(vec, print);
+	VectorInsertFront(vec, (void*)1234);
+	VectorInsertFront(vec, (void*)234);
+	VectorForEach(vec, print);
+	VectorInsertLast(vec, (void*)2234);
+	VectorInsertLast(vec, (void*)223);
+	VectorForEach(vec, print);
+	VectorDeleteFirst(vec);
+	VectorForEach(vec, print);
+	VectorDeleteFirst(vec);
+	VectorForEach(vec, print);
+	VectorDeleteLast(vec);
+	VectorForEach(vec, print);
+	VectorDeleteLast(vec);
+	VectorForEach(vec, print);
+	VectorDeleteAt(vec, 2);
+	VectorForEach(vec, print);
+	VectorDelete(vec, (void*)13);
+	VectorForEach(vec, print);
+	VectorInsertAt(vec, (void*)4567, 2);
+	VectorForEach(vec, print);
+}
+
 int main(int argc, char** argv)
 {
     register_fault_handlers();
     memleak_detect_start();
 	ListFunctionTest();
 	DListFunctionTest();
+	VectorFunctionTest();
     memleak_detect_stop();
 
     return 0;

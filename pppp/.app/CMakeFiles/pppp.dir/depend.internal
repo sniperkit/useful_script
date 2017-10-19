@@ -11,3 +11,4 @@
  src/list.h
  src/pppp.h
  src/util.h
+ src/vector.h
