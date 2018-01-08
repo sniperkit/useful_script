@@ -23,6 +23,7 @@ type Cli struct {
 
 func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	message := fmt.Sprintf("Run Command: %-40s cmode:%15s mode: %15s on %20s\n", cmd.CMD, cmd.Mode, c.CurrentMode(), c.conf.IP)
+	fmt.Println(message)
 	c.Log(message)
 
 	if cmd.Mode != c.currentMode {
@@ -41,38 +42,48 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	if cmd.End == "" {
 		cmd.End = c.conf.Prompt
 	}
+	fmt.Println(cmd.End)
 	data, err := c.client.ReadUntil(cmd.End)
 	if err != nil {
-		c.Log(fmt.Sprintf("Connection to %s is broken\n", c.conf.IP))
+		fmt.Println(fmt.Sprintf("Connection to %s is broken\n", c.conf.IP))
 		return nil, err
 	}
 
-	c.Log(string(data))
+	fmt.Println(string(data))
 	if c.IsErrorExist(string(data)) {
+		fmt.Println("+++++++++++++++++++++++++++++++++++")
 		return nil, errors.New("Cannot run command: " + cmd.CMD + " with error: <<<" + string(data) + ">>>")
 	}
 
 	old := c.currentMode
 	rs := strings.Split(string(data), "\n")
-	//log.Println(len(rs))
-	//log.Println(c.promptToMode)
+	log.Println(len(rs))
+	log.Println(c.promptToMode)
 	for p, m := range c.promptToMode {
 		//log.Println(p, m, rs[len(rs)-1])
 		if strings.Contains(rs[len(rs)-1], p) && m != old {
 			c.currentMode = m
 		}
+		fmt.Println("1-------------------------------------------------")
 	}
 
+	fmt.Println("3-------------------------------------------------")
 	if c.IsModeSwitchMustBeOccured(cmd) && old == c.currentMode {
+		fmt.Println("2-------------------------------------------------")
 		return nil, fmt.Errorf("Mode change must be accured after run command: %s, but there is no mode change. Result: %s", cmd.CMD, string(data))
 	}
 
+	fmt.Println("4-------------------------------------------------")
 	if old != c.currentMode {
 		//log.Println("After run: ", cmd.CMD, " mode switch from: ", old, " to: ", c.currentMode, "!")
+		fmt.Println("5-------------------------------------------------")
 		message = fmt.Sprintf("After run: %40s mode switch from : %15s to %15s. !\n", cmd.CMD, old, c.currentMode)
+		fmt.Println("j-------------------------------------------------")
 		c.Log(message)
+		fmt.Println("6-------------------------------------------------")
 	}
 
+	fmt.Println("-------------------------------------------------")
 	return data, nil
 }
 
@@ -229,15 +240,15 @@ func (c *Cli) SetModeDB(db map[string]string) {
 
 func (c *Cli) Log(message string) {
 	c.logLock.Lock()
+	defer c.logLock.Unlock()
 	file, err := os.OpenFile("asset/log/"+c.conf.SessionID+"_full.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
 		log.Println("cannot Open file: ", c.conf.SessionID+"_full.log", " ", err.Error())
 		return
 	}
+	defer file.Close()
 
 	file.WriteString(message)
-	file.Close()
-	c.logLock.Unlock()
 }
 
 func (c *Cli) ClearModeDB() {

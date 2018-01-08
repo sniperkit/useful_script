@@ -53,6 +53,7 @@ var Modes = []string{
 	"bridge",
 	"shell",
 	"bcmshell",
+	"rtkshell",
 }
 
 var DefaultHostName = "SWITCH"
@@ -98,6 +99,8 @@ func BuildModeDBFromHostNameAndBasePrompt(host, base string) map[string]string {
 			db[m] = base + "(bridge)"
 		} else if m == "config-route-map" {
 			db[m] = base + "(config-route-map)"
+		} else if m == "rtkshell" {
+			db[m] = "RTK.0>"
 		}
 	}
 

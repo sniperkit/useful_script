@@ -16,6 +16,7 @@ func Push(ctx context.Context, message string) {
 	sessionid, _ := sid.(string)
 
 	loggerLock.Lock()
+	defer loggerLock.Unlock()
 	file, err := os.OpenFile("asset/log/"+sessionid+".log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
 		log.Println("cannot Open file: ", sessionid+".log", " ", err.Error())
@@ -33,7 +34,6 @@ func Push(ctx context.Context, message string) {
 	full.WriteString(message)
 	full.Close()
 
-	loggerLock.Unlock()
 	if PrintToTerminal {
 		fmt.Printf("%s", message)
 	}
