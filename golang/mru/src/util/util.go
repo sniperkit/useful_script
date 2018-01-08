@@ -89,3 +89,29 @@ func Wait(cmd string, args ...string) error {
 	}
 	return c.Wait()
 }
+
+func PathExists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+
+	return false, err
+}
+
+func DirExists(path string) (bool, error) {
+	info, err := os.Stat(path)
+	if err == nil && info.IsDir() {
+		return true, nil
+	}
+
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+
+	return false, err
+}

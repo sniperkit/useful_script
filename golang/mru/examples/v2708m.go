@@ -38,9 +38,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(string(data))
 
-	fmt.Println("running-config=================")
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "config",
 		CMD:  " show running-config",
@@ -49,5 +47,49 @@ func main() {
 		fmt.Println(err)
 	}
 
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "config",
+		CMD:  " do q sh -l",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " diag",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "rtkshell",
+		CMD:  " terminal set pager length 0",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "rtkshell",
+		CMD:  " port dump port all",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	fmt.Println(string(data))
+
+	for i := 0; i < 2048; i++ {
+		data, err = dev.RunCommand(CTX, &command.Command{
+			Mode: "rtkshell",
+			CMD:  fmt.Sprintf(" acl get entry phase 0 entry %d", i),
+		})
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Println(string(data))
+	}
 }

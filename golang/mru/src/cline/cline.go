@@ -29,37 +29,43 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		return nil, errors.New("Error: Command: " + cmd.CMD + " should be run under: " + cmd.Mode + "! But currently we are under: " + c.currentMode + " mode!")
 	}
 
+	cmd.CMD = strings.TrimSpace(cmd.CMD)
 	if strings.HasPrefix(cmd.CMD, "bcm.user.proxy") {
 		c.client.WriteLine(cmd.CMD) //For the stupid bcmshell
 		cmd.End = "BCM.0>"
+	} else if strings.HasPrefix(cmd.CMD, "diag") {
+		c.client.WriteLine(cmd.CMD)
+		cmd.End = "RTK.0>"
 	} else if c.currentMode == "bcmshell" && cmd.CMD != "exit" && cmd.CMD != "quit" {
 		c.client.WriteLine(cmd.CMD) //For the stupid bcmshell
 		cmd.End = "BCM.0>"
+	} else if c.currentMode == "rtkshell" && cmd.CMD != "exit" && cmd.CMD != "quit" {
+		c.client.WriteLine(cmd.CMD)
+		cmd.End = "RTK.0>"
 	} else {
 		c.client.WriteLine(cmd.CMD)
 	}
 	if cmd.End == "" {
 		cmd.End = c.conf.Prompt
 	}
-	fmt.Println(cmd.End)
 	data, err := c.client.ReadUntil(cmd.End)
 	if err != nil {
 		fmt.Println(fmt.Sprintf("Connection to %s is broken\n", c.conf.IP))
 		return nil, err
 	}
 
-	fmt.Println(string(data))
 	if c.IsErrorExist(string(data)) {
 		return nil, errors.New("Cannot run command: " + cmd.CMD + " with error: <<<" + string(data) + ">>>")
 	}
 
 	old := c.currentMode
 	rs := strings.Split(string(data), "\n")
-	log.Println(len(rs))
-	log.Println(c.promptToMode)
+	//log.Println(len(rs))
+	//log.Println(c.promptToMode)
 	for p, m := range c.promptToMode {
 		//log.Println(p, m, rs[len(rs)-1])
-		if strings.Contains(rs[len(rs)-1], p) && m != old {
+		//if strings.Contains(rs[len(rs)-1], p) && m != old {
+		if strings.HasPrefix(strings.TrimSpace(rs[len(rs)-1]), p) && m != old {
 			c.currentMode = m
 		}
 	}
@@ -229,11 +235,18 @@ func (c *Cli) SetModeDB(db map[string]string) {
 }
 
 func (c *Cli) Log(message string) {
+	fmt.Println(c.conf.SessionID)
 	c.logLock.Lock()
 	defer c.logLock.Unlock()
-	file, err := os.OpenFile("asset/log/"+c.conf.SessionID+"_full.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+	logfile := c.conf.SessionID
+	if logfile == "" {
+		logfile = "default"
+	}
+
+	file, err := os.OpenFile("asset/log/"+logfile+"_full.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 	if err != nil {
-		log.Println("cannot Open file: ", c.conf.SessionID+"_full.log", " ", err.Error())
+		log.Println("cannot Open file: ", logfile+"_full.log", " ", err.Error())
 		return
 	}
 	defer file.Close()
