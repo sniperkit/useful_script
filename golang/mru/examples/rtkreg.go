@@ -7,7 +7,10 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"net"
+	"net/http"
 	"rut"
 	"strconv"
 )
@@ -158,3 +161,19 @@ func main() {
 
 	fmt.Println(string(data))
 }
+
+// hello world, the web server
+func Main(w http.ResponseWriter, req *http.Request) {
+	content, err := ioutil.ReadFile("index.html")
+	if err != nil {
+		io.WriteString(w, "Cannot open the file!\n")
+	}
+	w.Write(content)
+}
+
+/*
+func init() {
+	http.HandleFunc("/", Main)
+	http.ListenAndServe(":9090", nil)
+}
+*/
