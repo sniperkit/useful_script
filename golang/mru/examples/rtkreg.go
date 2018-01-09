@@ -148,15 +148,13 @@ func main() {
 		fmt.Println(string(data))
 	*/
 
-	for i := si; i <= ei; i++ {
-		data, err = dev.RunCommand(CTX, &command.Command{
-			Mode: "rtkshell",
-			CMD:  fmt.Sprintf(" acl get entry phase 0 entry %d", i),
-		})
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		fmt.Println(string(data))
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "rtkshell",
+		CMD:  "register get all",
+	})
+	if err != nil {
+		fmt.Println(err)
 	}
+
+	fmt.Println(string(data))
 }
