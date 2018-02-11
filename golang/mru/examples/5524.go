@@ -658,7 +658,7 @@ func (he *HostEntry) ParseEgrNexthopInfo() {
 }
 
 var getOIFMACAddress = regexp.MustCompile(`,MAC_ADDRESS=(?P<nmac>[0x]?[[:alnum:]]+)`)
-var getOIFVID = regexp.MustCompile(`,VID=(?P<vid>[0x]?[[:alnum:]]+)`)
+var getOIFVID = regexp.MustCompile(`\<VID=(?P<vid>[0x]?[[:alnum:]]+)`)
 
 func (nh *Nexthop) ParseOIF() {
 	oif, err := Dev.RunCommand(CTX, &command.Command{
@@ -1573,7 +1573,7 @@ func MakeIPv6Address(upper, lower string) string {
 func DumpIPv4HostEntry(dev *rut.RUT) {
 	res, err := dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
-		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ENTRY_IPV4_UNICAST  0 81919 | grep VALID=1",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 L3_ENTRY_IPV4_UNICAST  0 16383  | grep VALID=1",
 	})
 
 	if err != nil {
@@ -2328,6 +2328,7 @@ func DumpL3DEFIPEntry(dev *rut.RUT) {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(res)
 
 	for _, l := range strings.Split(res, "\n") {
 		if strings.Contains(l, "VALID0=1") {

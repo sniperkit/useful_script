@@ -53,3 +53,8 @@
 42. 使用__slots__: 如果我们想要限制实例的属性怎么办？比如，只允许对Student实例添加name和age属性。为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性：
 43. 可以对所有实现了__iter__方法的对象行进迭代。__iter__方法返回一个迭代器（iterator)，所谓的迭代器就是实现了__next__方法的对象.next函数其实就是调用了迭代器的__next__方法。
 43. 一个实现了__iter__方法的对象是可迭代的，一个实现了__next__方法的对象是迭代器。
+44. 凡是可用作for循环的对象都是Iterable类型。凡是可用作于next()函数的对象都是Iterator类型，它表示一个惰性计算的序列。
+45. 集合数据类型如list, dict, str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。
+46. python的for循环本质上就是通过不断调用next()函数实现的。
+47. 使用type()函数来获取一个对象的类型。
+48. 先定义metaclass，然后创建类，最后就可以创建类的实例了。metaclass允许你创建类或者修改类，换句话说，你可以把类看成是metaclass创建出来的实例。

@@ -14,12 +14,13 @@ import (
 
 var CTX = context.Background()
 
-var IP = flag.String("ip", "10.71.20.149", "IP address of the remote device")
+var IP = flag.String("ip", "10.71.20.177", "IP address of the remote device")
 var Host = flag.String("hostname", "SWITCH", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
 var Start = flag.String("start", "", "start index")
 var End = flag.String("end", "", "end index")
+var Phase = flag.String("p", "0", "rule stage(0/1)")
 
 func main() {
 	flag.Parse()
@@ -69,7 +70,7 @@ func main() {
 		}
 		ei = e
 	} else {
-		ei = 2047
+		ei = 2303
 	}
 
 	if si > ei {
@@ -151,7 +152,7 @@ func main() {
 	for i := si; i <= ei; i++ {
 		data, err = dev.RunCommand(CTX, &command.Command{
 			Mode: "rtkshell",
-			CMD:  fmt.Sprintf(" acl get entry phase 0 entry %d", i),
+			CMD:  fmt.Sprintf(" acl get entry phase %s entry %d", *Phase, i),
 		})
 		if err != nil {
 			fmt.Println(err)
