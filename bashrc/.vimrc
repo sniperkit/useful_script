@@ -76,6 +76,7 @@ Bundle 'wellle/targets.vim'
 Bundle "rhysd/vim-clang-format"
 Bundle "mattn/emmet-vim"
 Bundle "pangloss/vim-javascript"
+Bundle 'posva/vim-vue'
 call vundle#end()
 
 let &runtimepath.=',~/.vim/bundle/ale'
