@@ -28,6 +28,7 @@ type RUT struct {
 	BasePrompt string
 	Hostname   string //hostName
 	SessionID  string
+	SFU        string
 }
 
 type Config struct {
@@ -40,6 +41,7 @@ type Config struct {
 	BasePrompt string `json:"baseprompt"`
 	Hostname   string `json:"hostname"`
 	SessionID  string `json:"-"`
+	SFU        string `json:"sfu"`
 }
 
 type DB struct {
@@ -82,6 +84,12 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.ModeDB = configuration.BuildModeDBFromHostNameAndBasePrompt(r.Hostname, r.BasePrompt)
 	conf.SessionID = r.SessionID
 
+	if r.SFU == "" {
+		conf.SFU = configuration.DefaultSFU
+	} else {
+		conf.SFU = r.SFU
+	}
+
 	//log.Printf("%#v", conf)
 	return &conf
 }
@@ -92,8 +100,7 @@ func New(r *RUT) (*RUT, error) {
 
 func (d *RUT) Init() error {
 	if d.Device == "V8" {
-		//d.BasePrompt = d.Hostname
-		d.BasePrompt = d.Hostname + "[A]"
+		d.BasePrompt = d.Hostname + "[" + d.SFU + "]"
 	} else {
 		d.BasePrompt = d.Hostname
 	}
@@ -284,6 +291,7 @@ func GetRUTByConfig(c *Config) (*RUT, error) {
 		Hostname:   c.Hostname,
 		BasePrompt: c.BasePrompt,
 		SessionID:  c.SessionID,
+		SFU:        c.SFU,
 	}
 
 	log.Printf("%#v", newrut)

@@ -27,10 +27,10 @@ var Start = flag.String("start", "", "start index")
 var End = flag.String("end", "", "end index")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
 
-func AddRule(dev *rut.RUT, name string) error {
+func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
 		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: " ip any any"},
+		&command.Command{Mode: "config-flow", CMD: flow},
 		&command.Command{Mode: "config-flow", CMD: " apply"},
 		&command.Command{Mode: "config-flow", CMD: " exit"},
 		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
@@ -40,7 +40,7 @@ func AddRule(dev *rut.RUT, name string) error {
 		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
 		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match deny"},
+		&command.Command{Mode: "config-policy", CMD: " action match " + action},
 		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress 1-10"},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
@@ -60,21 +60,26 @@ func DelRule(dev *rut.RUT, name string) error {
 }
 
 func DumpTable(dev *rut.RUT, version string) {
-	err := os.Remove("FP_TCAM_" + version + ".txt")
+	err := os.Remove(FP_TCAM_FILE(version))
 	if err != nil && !os.IsNotExist(err) {
 		panic(err)
 	}
-	err = os.Remove("FP_POLICY_TABLE_" + version + ".txt")
-	if err != nil && !os.IsNotExist(err) {
-		panic(err)
-	}
-
-	err = os.Remove("FP_GLOBAL_MASK_TCAM_" + version + ".txt")
+	err = os.Remove(FP_POLICY_TABLE_FILE(version))
 	if err != nil && !os.IsNotExist(err) {
 		panic(err)
 	}
 
-	err = os.Remove("FP_PORT_FIELD_SEL_" + version + ".txt")
+	err = os.Remove(FP_GLOBAL_MASK_TCAM_FILE(version))
+	if err != nil && !os.IsNotExist(err) {
+		panic(err)
+	}
+
+	err = os.Remove(FP_PORT_FIELD_SEL_FILE(version))
+	if err != nil && !os.IsNotExist(err) {
+		panic(err)
+	}
+
+	err = os.Remove(FP_SLICE_KEY_CONTROL_FILE(version))
 	if err != nil && !os.IsNotExist(err) {
 		panic(err)
 	}
@@ -105,7 +110,7 @@ func DumpTable(dev *rut.RUT, version string) {
 		fmt.Println(err)
 	}
 
-	util.SaveToFile("FP_PORT_FIELD_SEL_"+version+".txt", []byte(data))
+	util.SaveToFile(FP_PORT_FIELD_SEL_FILE(version), []byte(data))
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
@@ -115,7 +120,7 @@ func DumpTable(dev *rut.RUT, version string) {
 		fmt.Println(err)
 	}
 
-	util.SaveToFile("FP_TCAM_"+version+".txt", []byte(data))
+	util.SaveToFile(FP_TCAM_FILE(version), []byte(data))
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
@@ -125,7 +130,7 @@ func DumpTable(dev *rut.RUT, version string) {
 		fmt.Println(err)
 	}
 
-	util.SaveToFile("FP_GLOBAL_MASK_TCAM_"+version+".txt", []byte(data))
+	util.SaveToFile(FP_GLOBAL_MASK_TCAM_FILE(version), []byte(data))
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
@@ -135,7 +140,17 @@ func DumpTable(dev *rut.RUT, version string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	util.SaveToFile("FP_POLICY_TABLE_"+version+".txt", []byte(data))
+	util.SaveToFile(FP_POLICY_TABLE_FILE(version), []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 FP_SLICE_KEY_CONTROL 0 1",
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	util.SaveToFile(FP_SLICE_KEY_CONTROL_FILE(version), []byte(data))
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
@@ -145,6 +160,26 @@ func DumpTable(dev *rut.RUT, version string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func FP_TCAM_FILE(version string) string {
+	return "FP_TCAM." + version + ".txt"
+}
+
+func FP_POLICY_TABLE_FILE(version string) string {
+	return "FP_POLICY_TABLE." + version + ".txt"
+}
+
+func FP_PORT_FIELD_SEL_FILE(version string) string {
+	return "FP_PORT_FIELD_SEL." + version + ".txt"
+}
+
+func FP_GLOBAL_MASK_TCAM_FILE(version string) string {
+	return "FP_GLOBAL_MASK_TCAM_FILE." + version + ".txt"
+}
+
+func FP_SLICE_KEY_CONTROL_FILE(version string) string {
+	return "FP_SLICE_KEY_CONTROL_FILE." + version + ".txt"
 }
 
 func main() {
@@ -239,17 +274,48 @@ func main() {
 		fmt.Println(err)
 	}
 
-	DelRule(dev, "test33")
-	DumpTable(dev, "Before")
-	AddRule(dev, "test33")
-	DumpTable(dev, "After")
+	DelRule(dev, "ipany")
+	DumpTable(dev, "ipany_b")
+	AddRule(dev, "ipany", "ip any any", "copy-to-cpu")
+	DumpTable(dev, "ipany_a")
+	DelRule(dev, "macany")
+	DumpTable(dev, "macany_b")
+	AddRule(dev, "macany", "mac any any", "deny")
+	DumpTable(dev, "macany_a")
 
-	util.DiffFile("FP_TCAM_Before.txt", "FP_TCAM_After.txt")
-	util.DiffFileToText("FP_TCAM_Before.txt", "FP_TCAM_After.txt")
-	util.DiffFileToHtml("FP_TCAM_Before.txt", "FP_TCAM_After.txt")
-	util.DiffFile("FP_POLICY_TABLE_Before.txt", "FP_POLICY_TABLE_After.txt")
-	util.DiffFile("FP_PORT_FIELD_SEL_Before.txt", "FP_PORT_FIELD_SEL_After.txt")
-	util.DiffFile("FP_GLOBAL_MASK_TCAM_Before.txt", "FP_GLOBAL_MASK_TCAM_After.txt")
+	util.DiffFile(FP_TCAM_FILE("ipany_b"), FP_TCAM_FILE("ipany_a"))
+	util.DiffFileToHtml(FP_TCAM_FILE("ipany_b"), FP_TCAM_FILE("ipany_a"))
+	util.DiffFile(FP_POLICY_TABLE_FILE("ipany_b"), FP_POLICY_TABLE_FILE("ipany_a"))
+	util.DiffFile(FP_PORT_FIELD_SEL_FILE("ipany_b"), FP_PORT_FIELD_SEL_FILE("ipany_a"))
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("ipany_b"), FP_GLOBAL_MASK_TCAM_FILE("ipany_a"))
+
+	util.DiffFile(FP_TCAM_FILE("macany_b"), FP_TCAM_FILE("macany_a"))
+	util.DiffFileToHtml(FP_TCAM_FILE("macany_b"), FP_TCAM_FILE("macany_a"))
+	util.DiffFile(FP_POLICY_TABLE_FILE("macany_b"), FP_POLICY_TABLE_FILE("macany_a"))
+	util.DiffFile(FP_PORT_FIELD_SEL_FILE("macany_b"), FP_PORT_FIELD_SEL_FILE("macany_a"))
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("macany_b"), FP_GLOBAL_MASK_TCAM_FILE("macany_a"))
+
+	DelRule(dev, "ip10.10.10.10")
+	DumpTable(dev, "ip10.10.10.10_b")
+	AddRule(dev, "ip10.10.10.10", "ip 10.10.10.10 8.8.8.8", "deny")
+	DumpTable(dev, "ip10.10.10.10_a")
+
+	util.DiffFile(FP_TCAM_FILE("ip10.10.10.10_b"), FP_TCAM_FILE("ip10.10.10.10_a"))
+	util.DiffFileToHtml(FP_TCAM_FILE("ip10.10.10.10_b"), FP_TCAM_FILE("ip10.10.10.10_a"))
+	util.DiffFile(FP_POLICY_TABLE_FILE("ip10.10.10.10_b"), FP_POLICY_TABLE_FILE("ip10.10.10.10_a"))
+	util.DiffFile(FP_PORT_FIELD_SEL_FILE("ip10.10.10.10_b"), FP_PORT_FIELD_SEL_FILE("ip10.10.10.10_a"))
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("ip10.10.10.10_b"), FP_GLOBAL_MASK_TCAM_FILE("ip10.10.10.10_a"))
+
+	DelRule(dev, "ip6_2001_db8")
+	DumpTable(dev, "ip6_2001_db8_b")
+	AddRule(dev, "ip6_2001_db8", "ipv6 2001:db8::10 2001:db8::20", "deny")
+	DumpTable(dev, "ip6_2001_db8_a")
+
+	util.DiffFile(FP_TCAM_FILE("ip6_2001_db8_b"), FP_TCAM_FILE("ip6_2001_db8_a"))
+	util.DiffFileToHtml(FP_TCAM_FILE("ip6_2001_db8_b"), FP_TCAM_FILE("ip6_2001_db8_a"))
+	util.DiffFile(FP_POLICY_TABLE_FILE("ip6_2001_db8_b"), FP_POLICY_TABLE_FILE("ip6_2001_db8_a"))
+	util.DiffFile(FP_PORT_FIELD_SEL_FILE("ip6_2001_db8_b"), FP_PORT_FIELD_SEL_FILE("ip6_2001_db8_a"))
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("ip6_2001_db8_b"), FP_GLOBAL_MASK_TCAM_FILE("ip6_2001_db8_a"))
 
 	StartServer()
 }

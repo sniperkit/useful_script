@@ -19,6 +19,7 @@ type Configuration struct {
 	Name           string
 	Hostname       string
 	SessionID      string
+	SFU            string
 }
 
 /*
@@ -64,6 +65,7 @@ var DefaultBasePrompt = "SWITCH"
 var DefaultEnablePrompt = ">"
 var DefaultLoginPrompt = "login"
 var DefaultPasswordPrompt = "Password"
+var DefaultSFU = "A"
 var PromptEnd = "#"
 
 func BuildModeDBFromHostNameAndBasePrompt(host, base string) map[string]string {

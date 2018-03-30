@@ -120,10 +120,10 @@ func DirExists(path string) (bool, error) {
 	return false, err
 }
 
-func DiffFile(after string, before string) {
-	os.Remove(after + "_line.diff")
-	content1, _ := ioutil.ReadFile(after)
-	content2, _ := ioutil.ReadFile(before)
+func DiffFile(before string, after string) {
+	os.Remove(after + ".line.diff")
+	content1, _ := ioutil.ReadFile(before)
+	content2, _ := ioutil.ReadFile(after)
 
 	lines1 := strings.Split(string(content1), "\n")
 	lines2 := strings.Split(string(content2), "\n")
@@ -155,7 +155,7 @@ func DiffFile(after string, before string) {
 			}
 		}
 		fmt.Println(buff.String())
-		AppendToFile(after+"_line_.diff", buff.Bytes())
+		AppendToFile(after+".line..diff", buff.Bytes())
 	}
 }
 
