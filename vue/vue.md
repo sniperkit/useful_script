@@ -194,3 +194,17 @@
     <router-view class="view two" name="a"></router-view>
     <router-view class="view three" name="b"></router-view>
     一个视图使用一个组件渲染，因此对于同个路由，多个视图就需要多个组件。确保正确使用 components 配置（带上 s）
+86. For Vue, there is a parameter called e1. It takes the id of the DOM element. In the above example, we have the id #vue_det. It is the id of the div element, which is present in .html.
+     <div id="vue_det"></div>
+    Now, whatever we are going to do will affect the div element and nothing outside it.
+87. To assign any attribute to HMTL tag, we need to use v-bind directive.
+88. It's really easy to create components with Vue.js. The only three things you have to do are as follows:
+    1. Create a component, and give it a template, data, methods, and whatever you need to give to it.
+    2. Register it in the Vue app under the components object.
+    3. Use it within the application's template.
+89.  Each component can be stored in its own file with its own HTML, JavaScript, and CSS code. These are special files with the .vue extension. Inside each file, there's a <script> section for the JavaScript code, a <style> section for the CSS code, and a<template> section for the HTML code. 
+90. The three most important parts of a Vuex store are state, getters, and mutations:
+    State: This is an initial state of the application, basically the data of the application
+    Getters: These are exactly what you think, functions that return data from the store
+    Mutations: These are functions that can mutate data on the store
+

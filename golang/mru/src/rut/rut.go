@@ -126,6 +126,17 @@ func (d *RUT) RunCommand(ctx context.Context, cmd *command.Command) (string, err
 	return d.runCommand(cmd)
 }
 
+func (d *RUT) RunCommands(ctx context.Context, cmds []*command.Command) (string, error) {
+	for _, c := range cmds {
+		data, err := d.RunCommand(ctx, c)
+		if err != nil {
+			return data, err
+		}
+	}
+
+	return "", nil
+}
+
 func (d RUT) runCommand(cmd *command.Command) (string, error) {
 	if cmd.Delay != 0 {
 		<-time.After(time.Second * time.Duration(cmd.Delay))

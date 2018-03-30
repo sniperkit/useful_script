@@ -10,6 +10,7 @@ import (
 	"strings"
 	"sync"
 	"telnetclient"
+	"util"
 )
 
 type Cli struct {
@@ -53,6 +54,8 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 		fmt.Println(fmt.Sprintf("Connection to %s is broken\n", c.conf.IP))
 		return nil, err
 	}
+
+	util.AppendToFile("command_log.txt", []byte(fmt.Sprintf("Command: %s, Result: %s\n", cmd.CMD, string(data))))
 
 	if c.IsErrorExist(string(data)) {
 		return nil, errors.New("Cannot run command: " + cmd.CMD + " with error: <<<" + string(data) + ">>>")
@@ -281,7 +284,6 @@ func (c *Cli) Init() error {
 		fmt.Println("Error happend when goto enable mode: ", err.Error())
 		return err
 	}
-	//fmt.Println(string(data))
 
 	c.client.WriteLine("terminal length 0")
 	_, err = c.client.ReadUntil("#")

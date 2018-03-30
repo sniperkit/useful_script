@@ -1,9 +1,12 @@
 package util
 
 import (
+	"bytes"
 	"crypto/sha1"
 	"encoding/hex"
 	"errors"
+	"fmt"
+	"github.com/sergi/go-diff/diffmatchpatch"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -11,6 +14,7 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -27,7 +31,7 @@ func SaveToFile(name string, data []byte) {
 }
 
 func AppendToFile(name string, data []byte) {
-	file, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	file, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		panic(err)
 	}
@@ -114,4 +118,63 @@ func DirExists(path string) (bool, error) {
 	}
 
 	return false, err
+}
+
+func DiffFile(after string, before string) {
+	os.Remove(after + "_line.diff")
+	content1, _ := ioutil.ReadFile(after)
+	content2, _ := ioutil.ReadFile(before)
+
+	lines1 := strings.Split(string(content1), "\n")
+	lines2 := strings.Split(string(content2), "\n")
+
+	for i, line := range lines1 {
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		dmp := diffmatchpatch.New()
+
+		diffs := dmp.DiffMain(string(line), string(lines2[i]), false)
+
+		if len(diffs) == 1 {
+			continue
+		}
+
+		var buff bytes.Buffer
+		for _, d := range diffs {
+			if d.Type == diffmatchpatch.DiffInsert {
+				_, _ = buff.WriteString("\x1b[32m")
+				_, _ = buff.WriteString(d.Text)
+				_, _ = buff.WriteString("\x1b[0m")
+			} else if d.Type == diffmatchpatch.DiffDelete {
+				_, _ = buff.WriteString("\x1b[31m")
+				_, _ = buff.WriteString(d.Text)
+				_, _ = buff.WriteString("\x1b[0m")
+			} else if d.Type == diffmatchpatch.DiffEqual {
+				_, _ = buff.WriteString(d.Text)
+			}
+		}
+		fmt.Println(buff.String())
+		AppendToFile(after+"_line_.diff", buff.Bytes())
+	}
+}
+
+func DiffFileToText(after string, before string) {
+	os.Remove(after + ".diff")
+	content1, _ := ioutil.ReadFile(after)
+	content2, _ := ioutil.ReadFile(before)
+
+	dmp := diffmatchpatch.New()
+	diffs := dmp.DiffMain(string(content1), string(content2), false)
+	SaveToFile(after+".diff", []byte(dmp.DiffPrettyText(diffs)))
+}
+
+func DiffFileToHtml(after string, before string) {
+	os.Remove(after + ".html")
+	content1, _ := ioutil.ReadFile(after)
+	content2, _ := ioutil.ReadFile(before)
+
+	dmp := diffmatchpatch.New()
+	diffs := dmp.DiffMain(string(content1), string(content2), false)
+	SaveToFile(after+".html", []byte(fmt.Sprintf("<html><head><title>%s</title></head><body>%s</body></html>", after, dmp.DiffPrettyHtml(diffs))))
 }

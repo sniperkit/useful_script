@@ -50,3 +50,5 @@
 			//TO-DO after fail/done request.
 			console.log("ended");
 		});
+17. 使用Flex进行页面布局。
+18. 通过chrome的console可以查看和修改javacript中定义的变量，对象。

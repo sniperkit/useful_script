@@ -50,6 +50,9 @@ var Modes = []string{
 	"config-dhcp",
 	"config-router",
 	"config-route-map",
+	"config-flow",
+	"config-policer",
+	"config-policy",
 	"bridge",
 	"shell",
 	"bcmshell",
@@ -95,6 +98,12 @@ func BuildModeDBFromHostNameAndBasePrompt(host, base string) map[string]string {
 			db[m] = base + "(config-dhcp"
 		} else if m == "config-router" {
 			db[m] = base + "(config-router"
+		} else if m == "config-flow" {
+			db[m] = base + "(config-flow"
+		} else if m == "config-policer" {
+			db[m] = base + "(config-policer"
+		} else if m == "config-policy" {
+			db[m] = base + "(config-policy"
 		} else if m == "bridge" {
 			db[m] = base + "(bridge)"
 		} else if m == "config-route-map" {

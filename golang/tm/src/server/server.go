@@ -17,7 +17,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 func Test(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("%+v\n", r)
 	if r.Method == "GET" {
-		t, err := template.New("index.html").ParseFiles("asset/web/html/index.html")
+		t, err := template.New("vue-v-for-filter.html").Delims("|||", "|||").ParseFiles("asset/web/html/vue-v-for-filter.html")
 		if err != nil {
 			log.Println(err)
 			io.WriteString(w, err.Error())
