@@ -1213,12 +1213,12 @@ var BCM56850ICAPFieldSelector_Double = ICAPFieldSelector{
 
 var CTX = context.Background()
 
-var IP = flag.String("ip", "10.71.20.129", "IP address of the remote device")
-var Host = flag.String("hostname", "V8500_SFU", "Host name of the remote device")
+var IP = flag.String("ip", "10.71.20.191", "IP address of the remote device")
+var Host = flag.String("hostname", "V8500_2", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
-var SFU = flag.String("sfu", "B", "SFU (A/B)")
+var SFU = flag.String("sfu", "A", "SFU (A/B)")
 
 func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
@@ -1236,7 +1236,7 @@ func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface gigabitethernet 6/1"},
+		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
 		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
 		&command.Command{Mode: "config-if", CMD: " exit"},
 	})
@@ -1246,7 +1246,7 @@ func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 
 func DelRule(dev *rut.RUT, name string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " interface gigabitethernet 6/1"},
+		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
 		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
 		&command.Command{Mode: "config-if", CMD: " exit"},
 		&command.Command{Mode: "config", CMD: " no policy " + name},
@@ -1379,16 +1379,16 @@ type SliceFieldSelector struct {
 	NORMALIZE_MAC_ADDR int64
 	NORMALIZE_IP_ADDR  int64
 	FIELDS             string
-	F3                 int64
-	F2                 int64
-	F1                 int64
+	FP3                int64
+	FP2                int64
+	FP1                int64
 	D_TYPE_SEL         int64
 	PARING_ODD_SLICE   int64
 	PAIRING_IPBM_F0    int64
 }
 
 func (sfs *SliceFieldSelector) String() string {
-	return fmt.Sprintf("S_TYPE_SEL: %d, PAIRING_IPBB: %d, PAIRING_FIXED: %d, NORMALIZE_MAC_ADDR: %d, NORMALIZE_IP_ADDR: %d, FIELDS: %s, F3: %d, F2: %d, F1: %d, D_TYPE_SEL: %d, PARING_ODD_SLICE: %d, PAIRING_IPBM_F0: %d", sfs.S_TYPE_SEL, sfs.PAIRING_IPBM, sfs.PAIRING_FIXED, sfs.NORMALIZE_MAC_ADDR, sfs.NORMALIZE_IP_ADDR, sfs.FIELDS, sfs.F3, sfs.F2, sfs.F1, sfs.D_TYPE_SEL, sfs.PARING_ODD_SLICE, sfs.PAIRING_IPBM_F0)
+	return fmt.Sprintf("S_TYPE_SEL: %d, PAIRING_IPBB: %d, PAIRING_FIXED: %d, NORMALIZE_MAC_ADDR: %d, NORMALIZE_IP_ADDR: %d, FIELDS: %s, FP3: %d, FP2: %d, FP1: %d, D_TYPE_SEL: %d, PARING_ODD_SLICE: %d, PAIRING_IPBM_F0: %d", sfs.S_TYPE_SEL, sfs.PAIRING_IPBM, sfs.PAIRING_FIXED, sfs.NORMALIZE_MAC_ADDR, sfs.NORMALIZE_IP_ADDR, sfs.FIELDS, sfs.FP3, sfs.FP2, sfs.FP1, sfs.D_TYPE_SEL, sfs.PARING_ODD_SLICE, sfs.PAIRING_IPBM_F0)
 
 }
 
@@ -1416,7 +1416,6 @@ func DumpPortFieldSelector(dev *rut.RUT) {
 	dumpTableAndSaveToFile(dev, "FP_PORT_FIELD_SEL", "0", "127", FP_PORT_FIELD_SEL_FILE("info"))
 	table, _ := ioutil.ReadFile(FP_PORT_FIELD_SEL_FILE("info"))
 
-	fmt.Println(string(table))
 	lines := strings.Split(string(table), "\r\n")
 	for _, line := range lines {
 		if strings.HasPrefix(line, "FP_PORT_FIELD_SEL") {
@@ -1439,9 +1438,9 @@ func DumpPortFieldSelector(dev *rut.RUT) {
 						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[4], 0, 32)
 						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[5], 0, 32)
 						fs.FIELDS = match[6]
-						fs.F3, _ = strconv.ParseInt(match[7], 0, 32)
-						fs.F2, _ = strconv.ParseInt(match[8], 0, 32)
-						fs.F1, _ = strconv.ParseInt(match[9], 0, 32)
+						fs.FP3, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.FP2, _ = strconv.ParseInt(match[8], 0, 32)
+						fs.FP1, _ = strconv.ParseInt(match[9], 0, 32)
 						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[10], 0, 32)
 						fs.PARING_ODD_SLICE, _ = strconv.ParseInt(match[11], 0, 32)
 					}
@@ -1455,9 +1454,9 @@ func DumpPortFieldSelector(dev *rut.RUT) {
 						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[4], 0, 32)
 						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[5], 0, 32)
 						fs.FIELDS = match[6]
-						fs.F3, _ = strconv.ParseInt(match[7], 0, 32)
-						fs.F2, _ = strconv.ParseInt(match[8], 0, 32)
-						fs.F1, _ = strconv.ParseInt(match[9], 0, 32)
+						fs.FP3, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.FP2, _ = strconv.ParseInt(match[8], 0, 32)
+						fs.FP1, _ = strconv.ParseInt(match[9], 0, 32)
 						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[10], 0, 32)
 					}
 				}
@@ -1466,7 +1465,29 @@ func DumpPortFieldSelector(dev *rut.RUT) {
 			DB.PFS[pfs.Index] = &pfs
 		}
 	}
-	fmt.Printf("%+v\n", DB.PFS)
+	for i := 0; i < DB.SliceCount; i++ {
+		fmt.Printf("Slice: %d\n", i)
+		fmt.Printf("       FP1: %+v\n", BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[int64(i)].FP1)])
+		fmt.Printf("       FP2: %+v\n", BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[int64(i)].FP2)])
+		fmt.Printf("       FP3: %+v\n", BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[int64(i)].FP3)])
+	}
+}
+
+var FPTCAMIndexReg = regexp.MustCompile(`FP_TCAM\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
+
+func FPTCAMEntryParse(file string) {
+	table, _ := ioutil.ReadFile(file)
+	match := FPTCAMIndexReg.FindAllStringSubmatch(string(table), -1)
+	if len(match) > 0 {
+		fmt.Printf("%+v\n", match)
+		for _, m := range match {
+			index, _ := strconv.ParseInt(m[1], 0, 32)
+			fmt.Printf("Entry: %d is in Slice: %d\n", index, DB.EntryToSliceMap[index])
+			fmt.Printf(" %+v\n", BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP1)])
+			fmt.Printf(" %+v\n", BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP2)])
+			fmt.Printf(" %+v\n", BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP3)])
+		}
+	}
 }
 
 func DumpTable(dev *rut.RUT, version string) {
@@ -1725,8 +1746,21 @@ func main() {
 	util.DiffFile(FP_PORT_FIELD_SEL_FILE("ip6_2002:db8_b"), FP_PORT_FIELD_SEL_FILE("ip6_2002:db8_a"))
 	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("ip6_2002:db8_b"), FP_GLOBAL_MASK_TCAM_FILE("ip6_2002:db8_a"))
 
+	DelRule(dev, "mac_00_d0_cb")
+	DumpTable(dev, "mac_00_d0_cb_b")
+	AddRule(dev, "mac_00_d0_cb", "mac 00:d0:cb:01:02:03 11:22:33:44:55:66", "deny")
+	DumpTable(dev, "mac_00_d0_cb_a")
+
+	util.DiffFile(FP_TCAM_FILE("mac_00_d0_cb_b"), FP_TCAM_FILE("mac_00_d0_cb_a"))
+	util.DiffFileToHtml(FP_TCAM_FILE("mac_00_d0_cb_b"), FP_TCAM_FILE("mac_00_d0_cb_a"))
+	util.DiffFile(FP_POLICY_TABLE_FILE("mac_00_d0_cb_b"), FP_POLICY_TABLE_FILE("mac_00_d0_cb_a"))
+	util.DiffFile(FP_PORT_FIELD_SEL_FILE("mac_00_d0_cb_b"), FP_PORT_FIELD_SEL_FILE("mac_00_d0_cb_a"))
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("mac_00_d0_cb_b"), FP_GLOBAL_MASK_TCAM_FILE("mac_00_d0_cb_a"))
+
 	DumpSliceInfo(dev)
 	DumpPortFieldSelector(dev)
+	FPTCAMEntryParse(FP_TCAM_FILE("ip10.10.10.10_a") + ".line.diff")
+	FPTCAMEntryParse(FP_TCAM_FILE("mac_00_d0_cb_a") + ".line.diff")
 	StartServer()
 }
 
