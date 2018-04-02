@@ -27,16 +27,50 @@ type TLV struct {
 }
 
 type RuleField struct {
-	Key  []*TLV
+	Key  []TLV
 	Data string
 	Mask string
 }
 
+const (
+	FP1 = iota
+	FP2
+	FP3
+	FP4
+	FIXED
+)
+
 type RuleEntry struct {
-	Mode  int
-	Index int
-	Parts []*RuleEntry
-	Role  int
+	Key        map[int][]TLV
+	Index      int64
+	FP1        string
+	FP1_MASK   string
+	FP2        string
+	FP2_MASK   string
+	FP3        string
+	FP3_MASK   string
+	FP4        string
+	FP4_MASK   string
+	FIXED      string
+	FIXED_MASK string
+}
+
+func (re *RuleEntry) String() string {
+	res := fmt.Sprintf("[%05d]:\n", re.Index)
+	res += fmt.Sprintf("   Key: \n")
+	res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
+	res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
+	res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
+	res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
+	res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+	res += fmt.Sprintf("   Field: \n")
+	res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
+	res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
+	res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
+	res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
+	res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
+
+	return res
 }
 
 type RuleDB struct {
@@ -49,9 +83,9 @@ type RuleDB struct {
 	SliceStartIndexMap map[int64]int64
 	SliceEndIndexMap   map[int64]int64
 	EntryToSliceMap    map[int64]int64
-	Entries            []*RuleEntry
 	EntryCount         int64
 	PFS                map[int64]*PortFieldSelector
+	RuleEntries        []*RuleEntry
 }
 
 var DB RuleDB = RuleDB{
@@ -62,6 +96,7 @@ var DB RuleDB = RuleDB{
 	SliceEndIndexMap:   make(map[int64]int64, 1),
 	EntryToSliceMap:    make(map[int64]int64, 1),
 	PFS:                make(map[int64]*PortFieldSelector, 1),
+	RuleEntries:        make([]*RuleEntry, 1),
 }
 
 //Refer to AG201
@@ -1376,6 +1411,7 @@ type SliceFieldSelector struct {
 	NORMALIZE_IP_ADDR  int64
 	FIELDS             string
 	FP3                int64
+	FP4                int64
 	FP2                int64
 	FP1                int64
 	D_TYPE_SEL         int64
@@ -1461,29 +1497,66 @@ func DumpPortFieldSelector(dev *rut.RUT) {
 			DB.PFS[pfs.Index] = &pfs
 		}
 	}
-	for i := 0; i < DB.SliceCount; i++ {
-		fmt.Printf("Slice: %d\n", i)
-		fmt.Printf("       FP1: %+v\n", BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[int64(i)].FP1)])
-		fmt.Printf("       FP2: %+v\n", BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[int64(i)].FP2)])
-		fmt.Printf("       FP3: %+v\n", BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[int64(i)].FP3)])
-	}
 }
 
 var FPTCAMIndexReg = regexp.MustCompile(`FP_TCAM\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
 
 func FPTCAMEntryParse(file string) {
 	table, _ := ioutil.ReadFile(file)
-	match := FPTCAMIndexReg.FindAllStringSubmatch(string(table), -1)
-	if len(match) > 0 {
-		fmt.Printf("%+v\n", match)
-		for _, m := range match {
-			index, _ := strconv.ParseInt(m[1], 0, 32)
-			fmt.Printf("Entry: %d is in Slice: %d\n", index, DB.EntryToSliceMap[index])
-			fmt.Printf(" %+v\n", BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP1)])
-			fmt.Printf(" %+v\n", BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP2)])
-			fmt.Printf(" %+v\n", BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP3)])
+	lines := strings.Split(string(table), "\r\n")
+	for _, line := range lines {
+		if strings.HasPrefix(line, "FP_TCAM") && strings.Contains(line, "VALID=3") {
+			FPTCAMParseLine(line)
 		}
 	}
+}
+
+var FPTCAMEntryF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F])+,F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryF2Reg = regexp.MustCompile("F2_MASK=(?P<f2m>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryF3Reg = regexp.MustCompile("F3_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryF4Reg = regexp.MustCompile("F4_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),F4=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[0-9a-fA-F]+),FIXED=(?P<fi>[0]*[xX]*[0-9a-fA-F]+)")
+
+func FPTCAMParseLine(line string) {
+	var rule RuleEntry
+	match := FPTCAMIndexReg.FindStringSubmatch(string(line))
+	index, _ := strconv.ParseInt(match[1], 0, 32)
+	rule.Index = index
+	rule.Key = make(map[int][]TLV, 1)
+	rule.Key[FP1] = BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP1)]
+	rule.Key[FP2] = BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP2)]
+	rule.Key[FP3] = BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP3)]
+	rule.Key[FP4] = BCM56850ICAPFieldSelector_single.FP4[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP4)]
+	rule.Key[FIXED] = BCM56850ICAPFieldSelector_single.FIXED[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].PAIRING_FIXED)]
+
+	f1match := FPTCAMEntryF1Reg.FindStringSubmatch(line)
+	if len(f1match) > 1 {
+		rule.FP1 = f1match[2]
+		rule.FP1_MASK = f1match[1]
+	}
+	f2match := FPTCAMEntryF2Reg.FindStringSubmatch(line)
+	if len(f2match) > 1 {
+		rule.FP2 = f2match[2]
+		rule.FP2_MASK = f2match[1]
+	}
+
+	f3match := FPTCAMEntryF3Reg.FindStringSubmatch(line)
+	if len(f3match) > 1 {
+		rule.FP3 = f3match[2]
+		rule.FP3_MASK = f3match[1]
+	}
+	f4match := FPTCAMEntryF4Reg.FindStringSubmatch(line)
+	if len(f4match) > 1 {
+		rule.FP4 = f4match[2]
+		rule.FP4_MASK = f4match[1]
+	}
+
+	fixedmatch := FPTCAMEntryFIXEDReg.FindStringSubmatch(line)
+	if len(fixedmatch) > 1 {
+		rule.FIXED = fixedmatch[2]
+		rule.FIXED_MASK = fixedmatch[1]
+	}
+	DB.RuleEntries = append(DB.RuleEntries, &rule)
 }
 
 func DumpTable(dev *rut.RUT, version string) {
@@ -1793,6 +1866,8 @@ func main() {
 	FPTCAMEntryParse(FP_TCAM_FILE("ip_tcp_100_200_a") + ".line.diff")
 	FPTCAMEntryParse(FP_TCAM_FILE("ipv6_tcp_300_400_a") + ".line.diff")
 	FPTCAMEntryParse(FP_TCAM_FILE("ether_type_8899_a") + ".line.diff")
+	FPTCAMEntryParse(FP_TCAM_FILE("ipv6_tcp_300_400_a"))
+	fmt.Printf("%+v\n", DB.RuleEntries)
 	StartServer()
 }
 
