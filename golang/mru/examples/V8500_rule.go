@@ -12,7 +12,10 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"regexp"
 	"rut"
+	"strconv"
+	"strings"
 	"util"
 )
 
@@ -21,6 +24,44 @@ type TLV struct {
 	Size   int
 	Offset int
 	Value  string
+}
+
+type RuleField struct {
+	Key  []*TLV
+	Data string
+	Mask string
+}
+
+type RuleEntry struct {
+	Mode  int
+	Index int
+	Parts []*RuleEntry
+	Role  int
+}
+
+type RuleDB struct {
+	Device             string
+	SliceCount         int
+	VirtualSliceMap    map[int64]int64 /* key physicla slice, value virtual slice */
+	GroupCount         int
+	SliceGroupMap      map[int64]int64 /* key slice, value group */
+	SliceEntryCountMap map[int64]int64
+	SliceStartIndexMap map[int64]int64
+	SliceEndIndexMap   map[int64]int64
+	EntryToSliceMap    map[int64]int64
+	Entries            []*RuleEntry
+	EntryCount         int64
+	PFS                map[int64]*PortFieldSelector
+}
+
+var DB RuleDB = RuleDB{
+	VirtualSliceMap:    make(map[int64]int64, 1),
+	SliceGroupMap:      make(map[int64]int64, 1),
+	SliceEntryCountMap: make(map[int64]int64, 1),
+	SliceStartIndexMap: make(map[int64]int64, 1),
+	SliceEndIndexMap:   make(map[int64]int64, 1),
+	EntryToSliceMap:    make(map[int64]int64, 1),
+	PFS:                make(map[int64]*PortFieldSelector, 1),
 }
 
 //Refer to AG201
@@ -1216,6 +1257,218 @@ func DelRule(dev *rut.RUT, name string) error {
 	return err
 }
 
+func dumpTableAndSaveToFile(dev *rut.RUT, name, start, end, file string) error {
+	err := os.Remove(file)
+	if err != nil && !os.IsNotExist(err) {
+		panic(err)
+	}
+
+	data, err := dev.RunCommand(CTX, &command.Command{
+		Mode: "config",
+		CMD:  " do q sh -l",
+	})
+	if err != nil {
+		fmt.Println(err)
+		return fmt.Errorf("Cannot go to shell mode")
+	}
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 " + name + " " + start + " " + end,
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	util.SaveToFile(file, []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " exit",
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return nil
+}
+
+/*
+VIRTUAL_SLICE_9_VIRTUAL_SLICE_GROUP_ENTRY_0=9,VIRTUAL_SLICE_9_PHYSICAL_SLICE_NUMBER_ENTRY_0=9
+*/
+var SliceGroupMapReg = regexp.MustCompile(`VIRTUAL_SLICE_(?P<sliceidx>0*[xX]*[0-9a-fA-F]+)_VIRTUAL_SLICE_GROUP_ENTRY_0=(?P<groupidx>0*[xX]*[0-9a-fA-F]+)`)
+var VirtualSliceMapReg = regexp.MustCompile(`VIRTUAL_SLICE_(?P<sliceidx>0*[xX]*[0-9a-fA-F]+)_PHYSICAL_SLICE_NUMBER_ENTRY_0=(?P<physliceidx>0*[xX]*[0-9a-fA-F]+)`)
+
+func DumpSliceInfo(dev *rut.RUT) {
+	dumpTableAndSaveToFile(dev, "FP_SLICE_MAP", "0", "0", FP_SLICE_MAP_FILE("info"))
+	table, _ := ioutil.ReadFile(FP_SLICE_MAP_FILE("info"))
+
+	groups := SliceGroupMapReg.FindAllStringSubmatch(string(table), -1)
+	for _, g := range groups {
+		gidx, err := strconv.ParseInt(g[2], 0, 32)
+		if err != nil {
+			panic(err)
+		}
+		DB.GroupCount++
+		sidx, err := strconv.ParseInt(g[1], 0, 32)
+		if err != nil {
+			panic(err)
+		}
+		DB.SliceGroupMap[sidx] = gidx
+	}
+
+	slices := VirtualSliceMapReg.FindAllStringSubmatch(string(table), -1)
+	for _, s := range slices {
+		pidx, err := strconv.ParseInt(s[2], 0, 32)
+		if err != nil {
+			panic(err)
+		}
+		DB.SliceCount++
+		vidx, err := strconv.ParseInt(s[1], 0, 32)
+		if err != nil {
+			panic(err)
+		}
+		DB.SliceGroupMap[pidx] = vidx
+	}
+
+	for s := 0; s < DB.SliceCount; s++ {
+		if s < 4 {
+			DB.SliceEntryCountMap[int64(s)] = 512
+			DB.EntryCount += 512
+			if s == 0 {
+				DB.SliceStartIndexMap[int64(s)] = 0
+				DB.SliceEndIndexMap[int64(s)] = 512
+			} else {
+				DB.SliceStartIndexMap[int64(s)] = DB.SliceStartIndexMap[int64(s-1)] + DB.SliceEntryCountMap[int64(s-1)]
+				DB.SliceEndIndexMap[int64(s)] = DB.SliceStartIndexMap[int64(s)] + DB.SliceEntryCountMap[int64(s)] - 1
+			}
+		} else {
+			DB.SliceEntryCountMap[int64(s)] = 256
+			DB.EntryCount += 256
+			if s == 0 {
+				DB.SliceStartIndexMap[int64(s)] = 0
+				DB.SliceEndIndexMap[int64(s)] = 256
+			} else {
+				DB.SliceStartIndexMap[int64(s)] = DB.SliceStartIndexMap[int64(s-1)] + DB.SliceEntryCountMap[int64(s-1)]
+				DB.SliceEndIndexMap[int64(s)] = DB.SliceStartIndexMap[int64(s)] + DB.SliceEntryCountMap[int64(s)] - 1
+			}
+		}
+	}
+
+	for e := 0; e < int(DB.EntryCount); e++ {
+		for s := 0; s < DB.SliceCount; s++ {
+			if e < int(DB.SliceStartIndexMap[int64(s)]+DB.SliceEntryCountMap[int64(s)])-1 {
+				DB.EntryToSliceMap[int64(e)] = int64(s)
+				break
+			}
+		}
+	}
+	fmt.Printf("%+v\n", DB)
+}
+
+/*
+FP_PORT_FIELD_SEL.*[0]: <SLICE9_S_TYPE_SEL=1,SLICE9_PAIRING_IPBM_F0=0,SLICE9_PAIRING_FIXED=0,SLICE9_NORMALIZE_MAC_ADDR=0,SLICE9_NORMALIZE_IP_ADDR=0,SLICE9_FIELDS=0x401ea6,SLICE9_F3=0xf,SLICE9_F2=5,SLICE9_F1=6,SLICE9_D_TYPE_SEL=0,SLICE9_8_PAIRING=1,SLICE8_S_TYPE_SEL=0,SLICE8_PAIRING_IPBM_F0=0,SLICE8_PAIRING_FIXED=0,SLICE8_NORMALIZE_MAC_ADDR=0,SLICE8_NORMALIZE_IP_ADDR=0,SLICE8_FIELDS=0xe09,SLICE8_F3=7,SLICE8_F2=0,SLICE8_F1=9,SLICE8_D_TYPE_SEL=0,SLICE7_S_TYPE_SEL=0,SLICE7_PAIRING_IPBM_F0=0,SLICE7_PAIRING_FIXED=0,SLICE7_NORMALIZE_MAC_ADDR=0,SLICE7_NORMALIZE_IP_ADDR=0,SLICE7_FIELDS=0xe64,SLICE7_F3=7,SLICE7_F2=3,SLICE7_F1=4,SLICE7_D_TYPE_SEL=0,SLICE7_6_PAIRING=1,SLICE6_S_TYPE_SEL=1,SLICE6_PAIRING_IPBM_F0=0,SLICE6_PAIRING_FIXED=0,SLICE6_NORMALIZE_MAC_ADDR=0,SLICE6_NORMALIZE_IP_ADDR=0,SLICE6_FIELDS=0x401a41,SLICE6_F3=0xd,SLICE6_F2=2,SLICE6_F1=1,SLICE6_D_TYPE_SEL=0,SLICE5_S_TYPE_SEL=1,SLICE5_PAIRING_IPBM_F0=0,SLICE5_PAIRING_FIXED=0,SLICE5_NORMALIZE_MAC_ADDR=0,SLICE5_NORMALIZE_IP_ADDR=0,SLICE5_FIELDS=0x401ea6,SLICE5_F3=0xf,SLICE5_F2=5,SLICE5_F1=6,SLICE5_D_TYPE_SEL=0,SLICE5_4_PAIRING=1,SLICE4_S_TYPE_SEL=0,SLICE4_PAIRING_IPBM_F0=0,SLICE4_PAIRING_FIXED=0,SLICE4_NORMALIZE_MAC_ADDR=0,SLICE4_NORMALIZE_IP_ADDR=0,SLICE4_FIELDS=0xe09,SLICE4_F3=7,SLICE4_F2=0,SLICE4_F1=9,SLICE4_D_TYPE_SEL=0,SLICE3_S_TYPE_SEL=1,SLICE3_PAIRING_IPBM_F0=0,SLICE3_PAIRING_FIXED=0,SLICE3_NORMALIZE_MAC_ADDR=0,SLICE3_NORMALIZE_IP_ADDR=0,SLICE3_FIELDS=0x401ea6,SLICE3_F3=0xf,SLICE3_F2=5,SLICE3_F1=6,SLICE3_D_TYPE_SEL=0,SLICE3_2_PAIRING=1,SLICE2_S_TYPE_SEL=0,SLICE2_PAIRING_IPBM_F0=0,SLICE2_PAIRING_FIXED=0,SLICE2_NORMALIZE_MAC_ADDR=0,SLICE2_NORMALIZE_IP_ADDR=0,SLICE2_FIELDS=0xe09,SLICE2_F3=7,SLICE2_F2=0,SLICE2_F1=9,SLICE2_D_TYPE_SEL=0,SLICE1_S_TYPE_SEL=1,SLICE1_PAIRING_IPBM_F0=0,SLICE1_PAIRING_FIXED=0,SLICE1_NORMALIZE_MAC_ADDR=0,SLICE1_NORMALIZE_IP_ADDR=0,SLICE1_FIELDS=0x401ea6,SLICE1_F3=0xf,SLICE1_F2=5,SLICE1_F1=6,SLICE1_D_TYPE_SEL=0,SLICE1_0_PAIRING=1,SLICE11_S_TYPE_SEL=1,SLICE11_PAIRING_IPBM_F0=0,SLICE11_PAIRING_FIXED=0,SLICE11_NORMALIZE_MAC_ADDR=0,SLICE11_NORMALIZE_IP_ADDR=0,SLICE11_FIELDS=0x401ea6,SLICE11_F3=0xf,SLICE11_F2=5,SLICE11_F1=6,SLICE11_D_TYPE_SEL=0,SLICE11_10_PAIRING=1,SLICE10_S_TYPE_SEL=0,SLICE10_PAIRING_IPBM_F0=0,SLICE10_PAIRING_FIXED=0,SLICE10_NORMALIZE_MAC_ADDR=0,SLICE10_NORMALIZE_IP_ADDR=0,SLICE10_FIELDS=0xe09,SLICE10_F3=7,SLICE10_F2=0,SLICE10_F1=9,SLICE10_D_TYPE_SEL=0,SLICE0_S_TYPE_SEL=0,SLICE0_PAIRING_IPBM_F0=0,SLICE0_PAIRING_FIXED=0,SLICE0_NORMALIZE_MAC_ADDR=0,SLICE0_NORMALIZE_IP_ADDR=0,SLICE0_FIELDS=0xe09,SLICE0_F3=7,SLICE0_F2=0,SLICE0_F1=9,SLICE0_D_TYPE_SEL=0,EVEN_PARITY_1=0,EVEN_PARITY_0=0>
+*/
+
+type SliceFieldSelector struct {
+	raw                string
+	S_TYPE_SEL         int64
+	PAIRING_IPBM       int64
+	PAIRING_FIXED      int64
+	NORMALIZE_MAC_ADDR int64
+	NORMALIZE_IP_ADDR  int64
+	FIELDS             string
+	F3                 int64
+	F2                 int64
+	F1                 int64
+	D_TYPE_SEL         int64
+	PARING_ODD_SLICE   int64
+	PAIRING_IPBM_F0    int64
+}
+
+func (sfs *SliceFieldSelector) String() string {
+	return fmt.Sprintf("S_TYPE_SEL: %d, PAIRING_IPBB: %d, PAIRING_FIXED: %d, NORMALIZE_MAC_ADDR: %d, NORMALIZE_IP_ADDR: %d, FIELDS: %s, F3: %d, F2: %d, F1: %d, D_TYPE_SEL: %d, PARING_ODD_SLICE: %d, PAIRING_IPBM_F0: %d", sfs.S_TYPE_SEL, sfs.PAIRING_IPBM, sfs.PAIRING_FIXED, sfs.NORMALIZE_MAC_ADDR, sfs.NORMALIZE_IP_ADDR, sfs.FIELDS, sfs.F3, sfs.F2, sfs.F1, sfs.D_TYPE_SEL, sfs.PARING_ODD_SLICE, sfs.PAIRING_IPBM_F0)
+
+}
+
+var EvenSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sv>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_IPBM_F0=(?P<pipbm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_FIXED=(?P<pf>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<nmac>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<nip>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<fields>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<dts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_%d_PAIRING=(?P<evp>[0]*[xX]*[0-9a-fA-F]+),"
+var OddSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_IPBM_F0=(?P<pipm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_FIXED=(?P<pf>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<nmac>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<nip>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<fields>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<dts>[0]*[xX]*[0-9a-fA-F]+),"
+
+type PortFieldSelector struct {
+	Index               int64
+	SliceFieldSelectors map[int64]*SliceFieldSelector
+}
+
+func (pfs *PortFieldSelector) String() string {
+	res := fmt.Sprintf("Port: %d\n", pfs.Index)
+	for i, sfs := range pfs.SliceFieldSelectors {
+		res += fmt.Sprintf("     Slice: %d\n", i)
+		res += fmt.Sprintf("            %s\n", sfs)
+	}
+
+	return res
+}
+
+var PFSIndexReg = regexp.MustCompile(`FP_PORT_FIELD_SEL\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
+
+func DumpPortFieldSelector(dev *rut.RUT) {
+	dumpTableAndSaveToFile(dev, "FP_PORT_FIELD_SEL", "0", "127", FP_PORT_FIELD_SEL_FILE("info"))
+	table, _ := ioutil.ReadFile(FP_PORT_FIELD_SEL_FILE("info"))
+
+	fmt.Println(string(table))
+	lines := strings.Split(string(table), "\r\n")
+	for _, line := range lines {
+		if strings.HasPrefix(line, "FP_PORT_FIELD_SEL") {
+			index, _ := strconv.ParseInt(PFSIndexReg.FindStringSubmatch(line)[1], 0, 32)
+			var pfs PortFieldSelector
+			pfs.Index = index
+			pfs.SliceFieldSelectors = make(map[int64]*SliceFieldSelector, 1)
+			for i := 0; i < DB.SliceCount; i++ {
+				var EvenSliceReg = regexp.MustCompile(fmt.Sprintf(EvenSliceMatchFormat, i, i, i, i, i, i, i, i, i, i, i, i-1))
+				var OddSliceReg = regexp.MustCompile(fmt.Sprintf(OddSliceMatchFormat, i, i, i, i, i, i, i, i, i, i))
+				var fs SliceFieldSelector
+
+				if i%2 != 0 {
+					match := EvenSliceReg.FindStringSubmatch(line)
+					if len(match) != 0 {
+						fs.raw = match[0]
+						fs.S_TYPE_SEL, _ = strconv.ParseInt(match[1], 0, 32)
+						fs.PAIRING_IPBM, _ = strconv.ParseInt(match[2], 0, 32)
+						fs.PAIRING_FIXED, _ = strconv.ParseInt(match[3], 0, 32)
+						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[4], 0, 32)
+						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[5], 0, 32)
+						fs.FIELDS = match[6]
+						fs.F3, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.F2, _ = strconv.ParseInt(match[8], 0, 32)
+						fs.F1, _ = strconv.ParseInt(match[9], 0, 32)
+						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[10], 0, 32)
+						fs.PARING_ODD_SLICE, _ = strconv.ParseInt(match[11], 0, 32)
+					}
+				} else {
+					match := OddSliceReg.FindStringSubmatch(line)
+					if len(match) != 0 {
+						fs.raw = match[0]
+						fs.S_TYPE_SEL, _ = strconv.ParseInt(match[1], 0, 32)
+						fs.PAIRING_IPBM_F0, _ = strconv.ParseInt(match[2], 0, 32)
+						fs.PAIRING_FIXED, _ = strconv.ParseInt(match[3], 0, 32)
+						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[4], 0, 32)
+						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[5], 0, 32)
+						fs.FIELDS = match[6]
+						fs.F3, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.F2, _ = strconv.ParseInt(match[8], 0, 32)
+						fs.F1, _ = strconv.ParseInt(match[9], 0, 32)
+						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[10], 0, 32)
+					}
+				}
+				pfs.SliceFieldSelectors[int64(i)] = &fs
+			}
+			DB.PFS[pfs.Index] = &pfs
+		}
+	}
+	fmt.Printf("%+v\n", DB.PFS)
+}
+
 func DumpTable(dev *rut.RUT, version string) {
 	err := os.Remove(FP_TCAM_FILE(version))
 	if err != nil && !os.IsNotExist(err) {
@@ -1242,6 +1495,11 @@ func DumpTable(dev *rut.RUT, version string) {
 	}
 
 	err = os.Remove(FP_SLICE_INDEX_CONTROL_FILE(version))
+	if err != nil && !os.IsNotExist(err) {
+		panic(err)
+	}
+
+	err = os.Remove(FP_SLICE_MAP_FILE(version))
 	if err != nil && !os.IsNotExist(err) {
 		panic(err)
 	}
@@ -1316,6 +1574,16 @@ func DumpTable(dev *rut.RUT, version string) {
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 FP_SLICE_MAP 0 0",
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	util.SaveToFile(FP_SLICE_MAP_FILE(version), []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
 		CMD:  " exit",
 	})
 
@@ -1340,8 +1608,16 @@ func FP_SLICE_KEY_CONTROL_FILE(version string) string {
 	return "FP_SLICE_KEY_CONTROL." + version + ".txt"
 }
 
+func FP_SLICE_INDEX_CONTROL_FILE(version string) string {
+	return "FP_SLICE_INDEX_CONTROL." + version + ".txt"
+}
+
 func FP_GLOBAL_MASK_TCAM_FILE(version string) string {
 	return "FP_GLOBAL_MASK_TCAM_FILE." + version + ".txt"
+}
+
+func FP_SLICE_MAP_FILE(version string) string {
+	return "FP_SLICE_MAP_FILE." + version + ".txt"
 }
 
 func main() {
@@ -1449,6 +1725,8 @@ func main() {
 	util.DiffFile(FP_PORT_FIELD_SEL_FILE("ip6_2002:db8_b"), FP_PORT_FIELD_SEL_FILE("ip6_2002:db8_a"))
 	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("ip6_2002:db8_b"), FP_GLOBAL_MASK_TCAM_FILE("ip6_2002:db8_a"))
 
+	DumpSliceInfo(dev)
+	DumpPortFieldSelector(dev)
 	StartServer()
 }
 
