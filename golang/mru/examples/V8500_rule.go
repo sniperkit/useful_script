@@ -41,34 +41,82 @@ const (
 )
 
 type RuleEntry struct {
-	Key        map[int][]TLV
-	Index      int64
-	FP1        string
-	FP1_MASK   string
-	FP2        string
-	FP2_MASK   string
-	FP3        string
-	FP3_MASK   string
-	FP4        string
-	FP4_MASK   string
-	FIXED      string
-	FIXED_MASK string
+	Key         map[int][]TLV
+	Index       int64
+	FP1         string
+	FP1_MASK    string
+	FP2         string
+	FP2_MASK    string
+	FP3         string
+	FP3_MASK    string
+	FP4         string
+	FP4_MASK    string
+	FIXED       string
+	FIXED_MASK  string
+	PairedEntry *RuleEntry
 }
 
 func (re *RuleEntry) String() string {
-	res := fmt.Sprintf("[%05d]:\n", re.Index)
-	res += fmt.Sprintf("   Key: \n")
-	res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
-	res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
-	res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
-	res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-	res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
-	res += fmt.Sprintf("   Field: \n")
-	res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
-	res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
-	res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
-	res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-	res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
+	var res string
+	if DB.EntryToSliceMap[re.Index]%2 == 0 {
+		if DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[re.Index]+1].PARING_ODD_SLICE != 0 {
+			res += fmt.Sprintf("[%05d] + [%05d]:\n", re.Index, re.PairedEntry.Index)
+			res += fmt.Sprintf("   Key: \n")
+			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+			res += fmt.Sprintf("   Field: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
+			res += fmt.Sprintf("   PairedEntryKey: \n")
+			res += fmt.Sprintf("       FP1: %+v\n", re.PairedEntry.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", re.PairedEntry.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", re.PairedEntry.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", re.PairedEntry.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", re.PairedEntry.Key[FIXED])
+			res += fmt.Sprintf("   PairedEntryField: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.PairedEntry.FP1, re.PairedEntry.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.PairedEntry.FP2, re.PairedEntry.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.PairedEntry.FP3, re.PairedEntry.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.PairedEntry.FP4, re.PairedEntry.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.PairedEntry.FIXED, re.PairedEntry.FIXED_MASK)
+		} else {
+			res += fmt.Sprintf("[%05d] \n", re.Index)
+			res += fmt.Sprintf("   Key: \n")
+			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+			res += fmt.Sprintf("   Field: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
+		}
+	} else {
+		if DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[re.Index]].PARING_ODD_SLICE == 0 {
+			res += fmt.Sprintf("[%05d] \n", re.Index)
+			res += fmt.Sprintf("   Key: \n")
+			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+			res += fmt.Sprintf("   Field: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
+		}
+	}
 
 	return res
 }
@@ -85,7 +133,7 @@ type RuleDB struct {
 	EntryToSliceMap    map[int64]int64
 	EntryCount         int64
 	PFS                map[int64]*PortFieldSelector
-	RuleEntries        []*RuleEntry
+	RuleEntries        map[int64]*RuleEntry
 }
 
 var DB RuleDB = RuleDB{
@@ -96,7 +144,7 @@ var DB RuleDB = RuleDB{
 	SliceEndIndexMap:   make(map[int64]int64, 1),
 	EntryToSliceMap:    make(map[int64]int64, 1),
 	PFS:                make(map[int64]*PortFieldSelector, 1),
-	RuleEntries:        make([]*RuleEntry, 1),
+	RuleEntries:        make(map[int64]*RuleEntry, 1),
 }
 
 //Refer to AG201
@@ -1279,9 +1327,71 @@ func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 	return err
 }
 
+func AddRulePort(dev *rut.RUT, name string, flow string, action string, port string) error {
+	_, err := dev.RunCommands(CTX, []*command.Command{
+		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
+		&command.Command{Mode: "config-flow", CMD: flow},
+		&command.Command{Mode: "config-flow", CMD: " apply"},
+		&command.Command{Mode: "config-flow", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
+		&command.Command{Mode: "config-policer", CMD: " counter"},
+		&command.Command{Mode: "config-policer", CMD: " apply"},
+		&command.Command{Mode: "config-policer", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
+		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
+		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
+		&command.Command{Mode: "config-policy", CMD: " action match " + action},
+		&command.Command{Mode: "config-policy", CMD: " apply"},
+		&command.Command{Mode: "config-policy", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " interface " + port},
+		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
+		&command.Command{Mode: "config-if", CMD: " exit"},
+	})
+
+	return err
+}
+
+func AddRulePortPriority(dev *rut.RUT, name, flow, action, port, priority string) error {
+	_, err := dev.RunCommands(CTX, []*command.Command{
+		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
+		&command.Command{Mode: "config-flow", CMD: flow},
+		&command.Command{Mode: "config-flow", CMD: " apply"},
+		&command.Command{Mode: "config-flow", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
+		&command.Command{Mode: "config-policer", CMD: " counter"},
+		&command.Command{Mode: "config-policer", CMD: " apply"},
+		&command.Command{Mode: "config-policer", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
+		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
+		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
+		&command.Command{Mode: "config-policy", CMD: " action match " + action},
+		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
+		&command.Command{Mode: "config-policy", CMD: " apply"},
+		&command.Command{Mode: "config-policy", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " interface " + port},
+		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
+		&command.Command{Mode: "config-if", CMD: " exit"},
+	})
+
+	return err
+}
+
 func DelRule(dev *rut.RUT, name string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
 		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
+		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
+		&command.Command{Mode: "config-if", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " no policy " + name},
+		&command.Command{Mode: "config", CMD: " no policer " + name},
+		&command.Command{Mode: "config", CMD: " no flow " + name},
+	})
+
+	return err
+}
+
+func DelRulePort(dev *rut.RUT, name, port string) error {
+	_, err := dev.RunCommands(CTX, []*command.Command{
+		&command.Command{Mode: "config", CMD: " interface " + port},
 		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
 		&command.Command{Mode: "config-if", CMD: " exit"},
 		&command.Command{Mode: "config", CMD: " no policy " + name},
@@ -1399,7 +1509,6 @@ func DumpSliceInfo(dev *rut.RUT) {
 			}
 		}
 	}
-	fmt.Printf("%+v\n", DB)
 }
 
 type SliceFieldSelector struct {
@@ -1509,6 +1618,7 @@ func FPTCAMEntryParse(file string) {
 			FPTCAMParseLine(line)
 		}
 	}
+	fmt.Printf("Total entry count: (%d)\n", len(DB.RuleEntries))
 }
 
 var FPTCAMEntryF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F])+,F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
@@ -1523,11 +1633,19 @@ func FPTCAMParseLine(line string) {
 	index, _ := strconv.ParseInt(match[1], 0, 32)
 	rule.Index = index
 	rule.Key = make(map[int][]TLV, 1)
-	rule.Key[FP1] = BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP1)]
-	rule.Key[FP2] = BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP2)]
-	rule.Key[FP3] = BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP3)]
-	rule.Key[FP4] = BCM56850ICAPFieldSelector_single.FP4[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP4)]
-	rule.Key[FIXED] = BCM56850ICAPFieldSelector_single.FIXED[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].PAIRING_FIXED)]
+	if DB.EntryToSliceMap[index]%2 != 0 {
+		rule.Key[FP1] = BCM56850ICAPFieldSelector_single.FP1[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP1)]
+		rule.Key[FP2] = BCM56850ICAPFieldSelector_single.FP2[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP2)]
+		rule.Key[FP3] = BCM56850ICAPFieldSelector_single.FP3[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP3)]
+		rule.Key[FP4] = BCM56850ICAPFieldSelector_single.FP4[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP4)]
+		rule.Key[FIXED] = BCM56850ICAPFieldSelector_single.FIXED[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].PAIRING_FIXED)]
+	} else {
+		rule.Key[FP1] = BCM56850ICAPFieldSelector_Double.FP1[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP1)]
+		rule.Key[FP2] = BCM56850ICAPFieldSelector_Double.FP2[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP2)]
+		rule.Key[FP3] = BCM56850ICAPFieldSelector_Double.FP3[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP3)]
+		rule.Key[FP4] = BCM56850ICAPFieldSelector_Double.FP4[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].FP4)]
+		rule.Key[FIXED] = BCM56850ICAPFieldSelector_Double.FIXED[int(DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[index]].PAIRING_FIXED)]
+	}
 
 	f1match := FPTCAMEntryF1Reg.FindStringSubmatch(line)
 	if len(f1match) > 1 {
@@ -1556,7 +1674,15 @@ func FPTCAMParseLine(line string) {
 		rule.FIXED = fixedmatch[2]
 		rule.FIXED_MASK = fixedmatch[1]
 	}
-	DB.RuleEntries = append(DB.RuleEntries, &rule)
+	DB.RuleEntries[index] = &rule
+
+	for id, rule := range DB.RuleEntries {
+		slice := DB.EntryToSliceMap[id]
+		if slice%2 == 0 {
+			pindex := id + DB.SliceEntryCountMap[slice]
+			rule.PairedEntry = DB.RuleEntries[pindex]
+		}
+	}
 }
 
 func DumpTable(dev *rut.RUT, version string) {
@@ -1710,67 +1836,83 @@ func FP_SLICE_MAP_FILE(version string) string {
 	return "FP_SLICE_MAP_FILE." + version + ".txt"
 }
 
-func main() {
-	flag.Parse()
+func RulePortBindingTest(dev *rut.RUT) {
+	DelRulePort(dev, "giga8_1", "gigabitethernet 8/1")
+	DumpTable(dev, "giga8_1_b")
+	AddRulePort(dev, "giga8_1", "ip any any", "copy-to-cpu", "gigabitethernet 8/1")
+	DumpTable(dev, "giga8_1_a")
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("giga8_1_b"), FP_GLOBAL_MASK_TCAM_FILE("giga8_1_a"))
+	util.DiffFile(FP_TCAM_FILE("giga8_1_b"), FP_TCAM_FILE("giga8_1_a"))
 
-	ip := net.ParseIP(*IP)
-	if ip == nil {
-		fmt.Printf("Invalid IP address: %s\n", *IP)
-		return
+	DelRulePort(dev, "giga8_2", "gigabitethernet 8/2")
+	DumpTable(dev, "giga8_2_b")
+	AddRulePort(dev, "giga8_2", "ip any any", "copy-to-cpu", "gigabitethernet 8/2")
+	DumpTable(dev, "giga8_2_a")
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("giga8_2_b"), FP_GLOBAL_MASK_TCAM_FILE("giga8_2_a"))
+	util.DiffFile(FP_TCAM_FILE("giga8_2_b"), FP_TCAM_FILE("giga8_2_a"))
+
+	DelRulePort(dev, "giga8_3", "gigabitethernet 8/3")
+	DumpTable(dev, "giga8_3_b")
+	AddRulePort(dev, "giga8_3", "ip any any", "copy-to-cpu", "gigabitethernet 8/3")
+	DumpTable(dev, "giga8_3_a")
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("giga8_3_b"), FP_GLOBAL_MASK_TCAM_FILE("giga8_3_a"))
+	util.DiffFile(FP_TCAM_FILE("giga8_3_b"), FP_TCAM_FILE("giga8_3_a"))
+
+	DelRulePort(dev, "giga8_4", "gigabitethernet 8/4")
+	DumpTable(dev, "giga8_4_b")
+	AddRulePort(dev, "giga8_4", "ip any any", "copy-to-cpu", "gigabitethernet 8/4")
+	DumpTable(dev, "giga8_4_a")
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("giga8_4_b"), FP_GLOBAL_MASK_TCAM_FILE("giga8_4_a"))
+	util.DiffFile(FP_TCAM_FILE("giga8_4_b"), FP_TCAM_FILE("giga8_4_a"))
+
+	DelRulePort(dev, "giga8_5", "gigabitethernet 8/5")
+	DumpTable(dev, "giga8_5_b")
+	AddRulePort(dev, "giga8_5", "ip any any", "copy-to-cpu", "gigabitethernet 8/5")
+	DumpTable(dev, "giga8_5_a")
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("giga8_5_b"), FP_GLOBAL_MASK_TCAM_FILE("giga8_5_a"))
+	util.DiffFile(FP_TCAM_FILE("giga8_5_b"), FP_TCAM_FILE("giga8_5_a"))
+
+	DelRulePort(dev, "giga8_6", "gigabitethernet 8/6")
+	DumpTable(dev, "giga8_6_b")
+	AddRulePort(dev, "giga8_6", "ip any any", "copy-to-cpu", "gigabitethernet 8/6")
+	DumpTable(dev, "giga8_6_a")
+	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("giga8_6_b"), FP_GLOBAL_MASK_TCAM_FILE("giga8_6_a"))
+	util.DiffFile(FP_TCAM_FILE("giga8_6_b"), FP_TCAM_FILE("giga8_6_a"))
+
+	DelRulePort(dev, "giga8_1", "gigabitethernet 8/1")
+	DelRulePort(dev, "giga8_2", "gigabitethernet 8/2")
+	DelRulePort(dev, "giga8_3", "gigabitethernet 8/3")
+	DelRulePort(dev, "giga8_4", "gigabitethernet 8/4")
+	DelRulePort(dev, "giga8_5", "gigabitethernet 8/5")
+	DelRulePort(dev, "giga8_6", "gigabitethernet 8/6")
+}
+
+const (
+	PriorityLow = iota
+	PriorityMiddle
+	PriorityHigh
+	PriorityHighest
+)
+
+var RulePriorityMap = map[int]string{
+	PriorityLow:     "low",
+	PriorityMiddle:  "medium",
+	PriorityHigh:    "high",
+	PriorityHighest: "highest",
+}
+
+func RulePriorityTest(dev *rut.RUT) {
+	for _, p := range RulePriorityMap {
+		DelRulePort(dev, p, "gigabitethernet 8/6")
+		DumpTable(dev, p+"_b")
+		AddRulePortPriority(dev, p, "ip any any", "copy-to-cpu", "gigabitethernet 8/6", p)
+		DumpTable(dev, p+"_a")
+		util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE(p+"_b"), FP_GLOBAL_MASK_TCAM_FILE(p+"_a"))
+		util.DiffFile(FP_TCAM_FILE(p+"_b"), FP_TCAM_FILE(p+"_a"))
 	}
+}
 
-	if *Host == "" {
-		fmt.Println("Invalid Host name")
-		return
-	}
-
-	if *User == "" {
-		fmt.Println("Invalid username")
-		return
-	}
-
-	if *SFU != "A" && *SFU != "B" {
-		fmt.Printf("Invalid SFU: %s\n", *SFU)
-		return
-	}
-
-	dev, err := rut.New(&rut.RUT{
-		Name:     "V8500_SFU",
-		Device:   "V8",
-		IP:       *IP,
-		Port:     "23",
-		Username: *User,
-		Hostname: *Host,
-		Password: *Password,
-		SFU:      *SFU,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	err = dev.Init()
-	if err != nil {
-		panic(err)
-	}
-
-	data, err := dev.RunCommand(CTX, &command.Command{
-		Mode: "normal",
-		CMD:  " config terminal",
-	})
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(data)
-
-	data, err = dev.RunCommand(CTX, &command.Command{
-		Mode: "config",
-		CMD:  " show running-config",
-	})
-	if err != nil {
-		fmt.Println(err)
-	}
-
+func BasicRuleFunctionTest(dev *rut.RUT) {
 	DelRule(dev, "ipany")
 	DumpTable(dev, "ipany_b")
 	AddRule(dev, "ipany", "ip any any", "copy-to-cpu")
@@ -1858,16 +2000,79 @@ func main() {
 	util.DiffFile(FP_POLICY_TABLE_FILE("ether_type_8899_b"), FP_POLICY_TABLE_FILE("ether_type_8899_a"))
 	util.DiffFile(FP_PORT_FIELD_SEL_FILE("ether_type_8899_b"), FP_PORT_FIELD_SEL_FILE("ether_type_8899_a"))
 	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE("ether_type_8899_b"), FP_GLOBAL_MASK_TCAM_FILE("ether_type_8899_a"))
+}
 
+func main() {
+	flag.Parse()
+
+	ip := net.ParseIP(*IP)
+	if ip == nil {
+		fmt.Printf("Invalid IP address: %s\n", *IP)
+		return
+	}
+
+	if *Host == "" {
+		fmt.Println("Invalid Host name")
+		return
+	}
+
+	if *User == "" {
+		fmt.Println("Invalid username")
+		return
+	}
+
+	if *SFU != "A" && *SFU != "B" {
+		fmt.Printf("Invalid SFU: %s\n", *SFU)
+		return
+	}
+
+	dev, err := rut.New(&rut.RUT{
+		Name:     "V8500_SFU",
+		Device:   "V8",
+		IP:       *IP,
+		Port:     "23",
+		Username: *User,
+		Hostname: *Host,
+		Password: *Password,
+		SFU:      *SFU,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = dev.Init()
+	if err != nil {
+		panic(err)
+	}
+
+	data, err := dev.RunCommand(CTX, &command.Command{
+		Mode: "normal",
+		CMD:  " config terminal",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(data)
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "config",
+		CMD:  " show running-config",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	DumpTable(dev, "raw")
 	DumpSliceInfo(dev)
 	DumpPortFieldSelector(dev)
-	FPTCAMEntryParse(FP_TCAM_FILE("ip10.10.10.10_a") + ".line.diff")
-	FPTCAMEntryParse(FP_TCAM_FILE("mac_00_d0_cb_a") + ".line.diff")
-	FPTCAMEntryParse(FP_TCAM_FILE("ip_tcp_100_200_a") + ".line.diff")
-	FPTCAMEntryParse(FP_TCAM_FILE("ipv6_tcp_300_400_a") + ".line.diff")
-	FPTCAMEntryParse(FP_TCAM_FILE("ether_type_8899_a") + ".line.diff")
-	FPTCAMEntryParse(FP_TCAM_FILE("ipv6_tcp_300_400_a"))
-	fmt.Printf("%+v\n", DB.RuleEntries)
+	BasicRuleFunctionTest(dev)
+	//RulePortBindingTest(dev)
+	//RulePriorityTest(dev)
+	FPTCAMEntryParse(FP_TCAM_FILE("ip10.10.10.10_a"))
+	for _, r := range DB.RuleEntries {
+		fmt.Printf("%+v\n", r)
+	}
 	StartServer()
 }
 
