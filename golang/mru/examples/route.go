@@ -1112,6 +1112,7 @@ func main() {
 		Username: *User,
 		Hostname: *Host,
 		Password: *Password,
+		SFU:      *SFU,
 	})
 
 	if err != nil {

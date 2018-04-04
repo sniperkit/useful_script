@@ -2327,41 +2327,12 @@ func main() {
 		fmt.Println(err)
 	}
 
-	DB.Dump(dev, "before.txt")
-	/*
-		DB.AnalysisRule(dev, "ether_any", "ethtype any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ether_8765", "ethtype 0x8765", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "length_1234", "length 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "inner_vid_2345", "inner-vid 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "outer_vid_2345", "outer-vid 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "cos_6", "cos 6", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "mac_any_any", "mac any any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "mac_08_07", "mac 08:08:08:08:08:08 07:07:07:07:07:07", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ip_any_any", "ip any any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ip_50_40_proto_123", "ip 50.50.50.50 40.40.40.40 123", "deny", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ip_50_40_tcp_100_200", "ip 50.50.50.50 40.40.40.40 tcp 100 200", "deny", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ip_50_40_udp_100_200", "ip 50.50.50.50 40.40.40.40 udp 100 200", "deny", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
-	*/
-	DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_nh_50", "ipv6 2001:db8::1000 2001:db8::2000 50", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_nh_51", "ipv6 2001:db8::1000 2001:db8::2000 51", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_nh_52", "ipv6 2001:db8::1000 2001:db8::2000 52", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_nh_53", "ipv6 2001:db8::1000 2001:db8::2000 53", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_nh_54", "ipv6 2001:db8::1000 2001:db8::2000 54", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 tcp 100 200", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_300_400", "ipv6 2001:db8::1000 2001:db8::2000 tcp 300 400", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_udp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 udp 100 200", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500 600", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.Dump(dev, "after.txt")
-	StartServer()
+	DB.Dump(dev, "realtime")
+	//StartServer()
 }
 
 func StartServer() {
-
 	mux := http.NewServeMux()
-	//@liwei: This need more analysis.
 	mux.HandleFunc("/", Login)
 	mux.Handle("/asset/web/", http.FileServer(http.Dir(".")))
 

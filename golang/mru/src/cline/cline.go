@@ -238,7 +238,6 @@ func (c *Cli) SetModeDB(db map[string]string) {
 }
 
 func (c *Cli) Log(message string) {
-	fmt.Println(c.conf.SessionID)
 	c.logLock.Lock()
 	defer c.logLock.Unlock()
 
@@ -319,6 +318,8 @@ func (c *Cli) login() error {
 		fmt.Println("Error happend when login: ", err.Error())
 		return err
 	}
+
+	os.Remove("command_log.txt")
 
 	return nil
 }

@@ -154,8 +154,7 @@ func DiffFile(before string, after string) {
 				_, _ = buff.WriteString(d.Text)
 			}
 		}
-		fmt.Println(buff.String())
-		AppendToFile(after+".line..diff", buff.Bytes())
+		AppendToFile(after+".line.diff", buff.Bytes())
 	}
 }
 
