@@ -1923,22 +1923,22 @@ func (rdb *RuleDB) ParseSliceInfo() {
 	}
 
 	for s := 0; s < rdb.SliceCount; s++ {
-		if s < 8 {
-			rdb.SliceEntryCountMap[int64(s)] = 256
-			rdb.EntryCount += 256
-			if s == 0 {
-				rdb.SliceStartIndexMap[int64(s)] = 0
-				rdb.SliceEndIndexMap[int64(s)] = 256
-			} else {
-				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
-				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
-			}
-		} else {
+		if s < 4 {
 			rdb.SliceEntryCountMap[int64(s)] = 512
 			rdb.EntryCount += 512
 			if s == 0 {
 				rdb.SliceStartIndexMap[int64(s)] = 512
 				rdb.SliceEndIndexMap[int64(s)] = 512
+			} else {
+				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
+				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
+			}
+		} else {
+			rdb.SliceEntryCountMap[int64(s)] = 256
+			rdb.EntryCount += 256
+			if s == 0 {
+				rdb.SliceStartIndexMap[int64(s)] = 256
+				rdb.SliceEndIndexMap[int64(s)] = 256
 			} else {
 				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
 				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
