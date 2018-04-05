@@ -248,7 +248,7 @@ func (re *RuleEntry) String() string {
 	if DB.EntryToSliceMap[re.Index]%2 == 0 {
 		res += fmt.Sprintf("{")
 		if DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[re.Index]+1].PAIRING_EVEN_SLICE != 0 {
-			res += Yellow.Sprintf("[%05d] + [%05d]:\n", re.Index, re.PairedEntry.Index)
+			res += Yellow.Sprintf("[%05d(%d)] + [%05d(%d)]:\n", re.Index, DB.EntryToSliceMap[re.Index], re.PairedEntry.Index, DB.EntryToSliceMap[re.PairedEntry.Index])
 			res += fmt.Sprintf("   Key: \n")
 			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
 			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
@@ -281,7 +281,7 @@ func (re *RuleEntry) String() string {
 			res += Green.Sprintf("   PairedEntryAction: \n")
 			res += fmt.Sprintf("       %s\n", re.PairedEntry.Policy)
 		} else {
-			res += Yellow.Sprintf("[%05d] \n", re.Index)
+			res += Yellow.Sprintf("[%05d(%d)] \n", re.Index, DB.EntryToSliceMap[re.Index])
 			res += fmt.Sprintf("   Key: \n")
 			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
 			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
@@ -302,7 +302,7 @@ func (re *RuleEntry) String() string {
 	} else {
 		if DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[re.Index]].PAIRING_EVEN_SLICE == 0 {
 			res += fmt.Sprintf("{")
-			res += Yellow.Sprintf("[%05d] \n", re.Index)
+			res += Yellow.Sprintf("[%05d(%d)] \n", re.Index, DB.EntryToSliceMap[re.Index])
 			res += fmt.Sprintf("   Key: \n")
 			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
 			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
@@ -1923,22 +1923,22 @@ func (rdb *RuleDB) ParseSliceInfo() {
 	}
 
 	for s := 0; s < rdb.SliceCount; s++ {
-		if s < 4 {
-			rdb.SliceEntryCountMap[int64(s)] = 512
-			rdb.EntryCount += 512
-			if s == 0 {
-				rdb.SliceStartIndexMap[int64(s)] = 0
-				rdb.SliceEndIndexMap[int64(s)] = 512
-			} else {
-				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
-				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
-			}
-		} else {
+		if s < 8 {
 			rdb.SliceEntryCountMap[int64(s)] = 256
 			rdb.EntryCount += 256
 			if s == 0 {
 				rdb.SliceStartIndexMap[int64(s)] = 0
 				rdb.SliceEndIndexMap[int64(s)] = 256
+			} else {
+				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
+				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
+			}
+		} else {
+			rdb.SliceEntryCountMap[int64(s)] = 512
+			rdb.EntryCount += 512
+			if s == 0 {
+				rdb.SliceStartIndexMap[int64(s)] = 512
+				rdb.SliceEndIndexMap[int64(s)] = 512
 			} else {
 				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
 				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
@@ -2141,7 +2141,7 @@ func (rdb *RuleDB) DumpTables(dev *rut.RUT, version string) {
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
-		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 FP_SLICE_KEY_CONTROL 0 1",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 FP_SLICE_KEY_CONTROL 0 0",
 	})
 
 	if err != nil {
@@ -2160,6 +2160,39 @@ func (rdb *RuleDB) DumpTables(dev *rut.RUT, version string) {
 	}
 	rdb.RawTables["FP_SLICE_MAP"] = string(data)
 	util.SaveToFile(FP_SLICE_MAP_FILE(version), []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 UDF_TCAM 0 511",
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	rdb.RawTables["UDF_TCAM"] = string(data)
+	util.SaveToFile(FP_UDF_TCAM_FILE(version), []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 UDF_OFFSET 0 511",
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	rdb.RawTables["UDF_OFFSET"] = string(data)
+	util.SaveToFile(FP_UDF_OFFSET_FILE(version), []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 FP_RANGE_CHECK 0 31",
+	})
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	rdb.RawTables["FP_RANGE_CHECK"] = string(data)
+	util.SaveToFile(FP_RANGE_CHECK_FILE(version), []byte(data))
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
@@ -2189,6 +2222,9 @@ func (rdb *RuleDB) CompareTables(version1, version2 string) {
 	util.DiffFile(FP_TCAM_FILE(version1), FP_TCAM_FILE(version2))
 	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE(version1), FP_GLOBAL_MASK_TCAM_FILE(version2))
 	util.DiffFile(FP_POLICY_TABLE_FILE(version1), FP_POLICY_TABLE_FILE(version2))
+	util.DiffFile(FP_UDF_OFFSET_FILE(version1), FP_UDF_OFFSET_FILE(version2))
+	util.DiffFile(FP_UDF_TCAM_FILE(version1), FP_UDF_TCAM_FILE(version2))
+	util.DiffFile(FP_RANGE_CHECK_FILE(version1), FP_RANGE_CHECK_FILE(version2))
 }
 
 func FP_TCAM_FILE(version string) string {
@@ -2203,6 +2239,14 @@ func FP_PORT_FIELD_SEL_FILE(version string) string {
 	return "FP_PORT_FIELD_SEL." + version + ".txt"
 }
 
+func FP_UDF_TCAM_FILE(version string) string {
+	return "FP_UDF_TCAM." + version + ".txt"
+}
+
+func FP_UDF_OFFSET_FILE(version string) string {
+	return "FP_UDF_OFFSET." + version + ".txt"
+}
+
 func FP_SLICE_KEY_CONTROL_FILE(version string) string {
 	return "FP_SLICE_KEY_CONTROL." + version + ".txt"
 }
@@ -2213,6 +2257,10 @@ func FP_SLICE_INDEX_CONTROL_FILE(version string) string {
 
 func FP_GLOBAL_MASK_TCAM_FILE(version string) string {
 	return "FP_GLOBAL_MASK_TCAM_FILE." + version + ".txt"
+}
+
+func FP_RANGE_CHECK_FILE(version string) string {
+	return "FP_RANGE_CHECK_FILE." + version + ".txt"
 }
 
 func FP_SLICE_MAP_FILE(version string) string {
