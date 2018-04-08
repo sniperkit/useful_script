@@ -663,20 +663,20 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RuleEntry {
 
 	df2match := FPTCAMEntryDWF2Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df2match) > 1 {
-		rule.DWFP2 = df1match[2]
-		rule.DWFP2_MASK = df1match[1]
+		rule.DWFP2 = df2match[2]
+		rule.DWFP2_MASK = df2match[1]
 	}
 
 	df3match := FPTCAMEntryDWF3Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df3match) > 1 {
-		rule.DWFP3 = df1match[2]
-		rule.DWFP3_MASK = df1match[1]
+		rule.DWFP3 = df3match[2]
+		rule.DWFP3_MASK = df3match[1]
 	}
 
 	df4match := FPTCAMEntryDWF4Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df4match) > 1 {
-		rule.DWFP4 = df1match[2]
-		rule.DWFP4_MASK = df1match[1]
+		rule.DWFP4 = df4match[2]
+		rule.DWFP4_MASK = df4match[1]
 	}
 
 	/* Get F0, Fixed, IPBM from FP_GLOBAL_MASK_TCAM */
