@@ -35,31 +35,55 @@ type RuleField struct {
 }
 
 const (
-	FP1 = iota
+	FP0 = iota
+	FP1
 	FP2
 	FP3
 	FP4
+	DWFP1
+	DWFP2
+	DWFP3
+	DWFP4
 	FIXED
 	IPBM
 )
 
+//FP_TCAM.*[1]: <VALID=3,MASK=0x1fffe000000000000000000,KEY=0x10dba000000000000000000,F4_MASK=0,F4=0,F3_MASK=0,F3=0,F2_MASK=0xffff0000,F2=0x86dd0000,F1_MASK=0,F1=0,DW_DOUBLE_WIDE_MODE_MASK=0,DW_DOUBLE_WIDE_MODE=0,DWF4_MASK=0,DWF4=0,DWF3_MASK=0,DWF3=0,DWF2_MASK=0x01fffe00000000,DWF2=0x010dba00000000,DWF1_MASK=0,DWF1=0,DOUBLE_WIDE_MODE_MASK=0,DOUBLE_WIDE_MODE=0,DATA_MASK=0xffff000000000000000000,DATA_KEY=0x86dd000000000000000000>
+//FP_GLOBAL_MASK_TCAM.*[1]: <VALID=1,RESERVED_SINGLE_WIDE_MASK=0,RESERVED_SINGLE_WIDE=0,MASK=0x3c3ffe001fffffff,KEY=0x3ffe001fffffff,IPBM_MASK=0x3c3ffe001fffffff,IPBM=0x3ffe001fffffff,FIXED_MASK=0,FIXED_KEY=0,DOUBLE_WIDE_F0_MASK=0x3c3ffe001fffffff,DOUBLE_WIDE_F0=0x3ffe001fffffff>
+
 type RuleEntry struct {
-	Key         map[int][]TLV
-	Index       int64
-	FP1         string
-	FP1_MASK    string
-	FP2         string
-	FP2_MASK    string
-	FP3         string
-	FP3_MASK    string
-	FP4         string
-	FP4_MASK    string
-	FIXED       string
-	FIXED_MASK  string
-	IPBM        string
-	IPBM_MASK   string
-	PairedEntry *RuleEntry
-	Policy      *PolicyEntry
+	Key                      map[int][]TLV
+	Index                    int64
+	FP0                      string
+	FP0_MASK                 string
+	FP1                      string
+	FP1_MASK                 string
+	FP2                      string
+	FP2_MASK                 string
+	FP3                      string
+	FP3_MASK                 string
+	FP4                      string
+	FP4_MASK                 string
+	DW_DOUBLE_WIDE_MODE      string
+	DW_DOUBLE_WIDE_MODE_MASK string
+	DOUBLE_WIDE_MODE         string
+	DOUBLE_WIDE_MODE_MASK    string
+	DOUBLE_WIDE_FP0          string
+	DOUBLE_WIDE_FP0_MASK     string
+	DWFP4                    string
+	DWFP4_MASK               string
+	DWFP3                    string
+	DWFP3_MASK               string
+	DWFP2                    string
+	DWFP2_MASK               string
+	DWFP1                    string
+	DWFP1_MASK               string
+	FIXED                    string
+	FIXED_MASK               string
+	IPBM                     string
+	IPBM_MASK                string
+	PairedEntry              *RuleEntry
+	Policy                   *PolicyEntry
 }
 
 type RuleEntrySlice []*RuleEntry
@@ -68,6 +92,146 @@ func (res RuleEntrySlice) Len() int           { return len(res) }
 func (res RuleEntrySlice) Swap(i, j int)      { res[i], res[j] = res[j], res[i] }
 func (res RuleEntrySlice) Less(i, j int) bool { return res[i].Index < res[j].Index }
 
+var PolicyEntryFields = []string{
+	"Y_NEW_PKT_PRI",
+	"Y_NEW_ECN",
+	"Y_NEW_DSCP",
+	"Y_DROP_PRECEDENCE",
+	"Y_DROP",
+	"Y_COUNTER_OFFSET",
+	"Y_COS_INT_PRI",
+	"Y_COPY_TO_CPU",
+	"Y_CHANGE_PKT_PRI",
+	"Y_CHANGE_ECN",
+	"Y_CHANGE_DSCP",
+	"Y_CHANGE_COS_OR_INT_PRI",
+	"USE_SVC_METER_COLOR",
+	"UNICAST_REDIRECT_CONTROL",
+	"SUPPRESS_SW_ACTIONS",
+	"SUPPRESS_COLOR_SENSITIVE_ACTIONS",
+	"SPLIT_DROP_RESOLVE",
+	"SHARED_METER_SET",
+	"SHARED_METER_PAIR_POOL_RESERVED_1",
+	"SHARED_METER_PAIR_POOL_RESERVED_0",
+	"SHARED_METER_PAIR_POOL_NUMBER",
+	"SHARED_METER_PAIR_POOL_INDEX",
+	"SHARED_METER_PAIR_MODE",
+	"R_NEW_PKT_PRI",
+	"R_NEW_ECN",
+	"R_NEW_DSCP",
+	"R_DROP_PRECEDENCE",
+	"R_DROP",
+	"R_COUNTER_OFFSET",
+	"R_COS_INT_PRI",
+	"R_COPY_TO_CPU",
+	"R_CHANGE_PKT_PRI",
+	"R_CHANGE_ECN",
+	"R_CHANGE_DSCP",
+	"R_CHANGE_COS_OR_INT_PRI",
+	"RESERVED",
+	"REDIRECT_USE_IFP_PBM",
+	"REDIRECT_T",
+	"REDIRECT_SET",
+	"REDIRECT_PORT_NUM",
+	"REDIRECT_NHI",
+	"REDIRECT_MODID",
+	"REDIRECT_L3MC_INDEX",
+	"REDIRECT_L2MC_INDEX",
+	"REDIRECT_INDEX_TYPE",
+	"REDIRECT_IFP_PROFILE_INDEX",
+	"REDIRECT_ECMP_GROUP",
+	"REDIRECT_DVP",
+	"REDIRECT_DGLP",
+	"REDIRECTION",
+	"PROTECTION_SWITCHING_DROP_OVERIDE",
+	"PROFILE_SET",
+	"PPD3_CLASS_TAG",
+	"PPD1_CLASS_TAG",
+	"OAM_UP_MEP",
+	"OAM_TX",
+	"OAM_TUNNEL_CONTROL",
+	"OAM_TAG_STATUS_CHECK_CONTROL",
+	"OAM_SET",
+	"OAM_SERVICE_PRI_MAPPING_PTR",
+	"OAM_LM_EN",
+	"OAM_LM_BASE_PTR",
+	"OAM_LMEP_MDL",
+	"OAM_LMEP_EN",
+	"OAM_ENABLE_LM_DM_SAMPLE",
+	"OAM_DM_TYPE",
+	"OAM_DM_EN",
+	"NEXT_HOP_INDEX",
+	"MTP_INDEX3",
+	"MTP_INDEX2",
+	"MTP_INDEX1",
+	"MTP_INDEX0",
+	"MISC_2_SET",
+	"MISC_1_SET",
+	"MIRROR_SET",
+	"MIRROR_OVERRIDE",
+	"MIRROR",
+	"METER_SHARING_MODE_MODIFIER",
+	"METER_SHARING_MODE",
+	"METER_SET",
+	"METER_PAIR_POOL_RESERVED_1",
+	"METER_PAIR_POOL_RESERVED_0",
+	"METER_PAIR_POOL_NUMBER",
+	"METER_PAIR_POOL_INDEX",
+	"METER_PAIR_MODE_MODIFIER",
+	"METER_PAIR_MODE",
+	"MATCHED_RULE",
+	"LAG_DLB_DISABLE",
+	"L3SW_L2_FIELDS_SET",
+	"L2MOD_TBL_INDEX",
+	"I2E_CLASSID_SEL",
+	"I2E_CLASSID",
+	"HI_PRI_SUPPRESS_VXLT",
+	"HI_PRI_RESOLVE",
+	"HI_PRI_ACTION_CONTROL",
+	"HG_CLASSID_SEL",
+	"HGT_DLB_DISABLE",
+	"G_PACKET_REDIRECTION",
+	"G_NEW_PKT_PRI",
+	"G_NEW_ECN",
+	"G_NEW_DSCP_TOS",
+	"G_L3SW_CHANGE_L2_FIELDS",
+	"G_DROP_PRECEDENCE",
+	"G_DROP",
+	"G_COUNTER_OFFSET",
+	"G_COS_INT_PRI",
+	"G_COPY_TO_CPU",
+	"G_CHANGE_PKT_PRI",
+	"G_CHANGE_ECN",
+	"G_CHANGE_DSCP_TOS",
+	"G_CHANGE_COS_OR_INT_PRI",
+	"GREEN_TO_PID",
+	"GOA_SET",
+	"FP_POLICY_TABLE_B",
+	"FP_POLICY_TABLE_A",
+	"EVEN_PARITY_B",
+	"EVEN_PARITY_A",
+	"EH_TM",
+	"EH_TAG_TYPE",
+	"EH_QUEUE_TAG",
+	"ECMP_PTR",
+	"ECMP_NH_INFO",
+	"ECMP_HASH_SEL",
+	"ECMP",
+	"DO_NOT_URPF",
+	"DO_NOT_GENERATE_CNM",
+	"DO_NOT_CHANGE_TTL",
+	"DEFER_QOS_MARKINGS",
+	"CPU_COS_SET",
+	"CPU_COS",
+	"COUNTER_SET",
+	"COUNTER_POOL_NUMBER",
+	"COUNTER_POOL_INDEX",
+	"COPY_TO_PASSTHRU_NLF",
+	"COPY_TO_CPU_SET",
+	"CHANGE_CPU_COS",
+}
+
+/*
 var PolicyEntryFields = []string{
 	"Y_NEW_PKT_PRI",
 	"Y_NEW_ECN",
@@ -188,6 +352,7 @@ var PolicyEntryFields = []string{
 	"COUNTER_INDEX",
 	"CHANGE_CPU_COS",
 }
+*/
 
 type PolicyEntry struct {
 	Fields map[string]int64
@@ -235,11 +400,6 @@ func (pe *PolicyEntry) String() string {
 }
 
 //Flow 配置的内容是由FP_GLOBAL_MASK_TCAM 和FP_TCAM两张表决定的, 所以Rule Entry的内容需要解析这两张表.
-// F2, F4, FIXED 从FP_TCAM中获取，
-// F1, F3, IPBM 从FP_GLOBAL_MASK_TCAM中获取
-/* FP_GLOBAL_MASK_TCAM.*[1]: <VALID=3,SPARE_MASK=0,SPARE=0,MASK=0x807fffffffffffffffffffffffc000000000000000000000000,KEY=0x7fffffffffffffffffffffffc000000000000000000000000,IPBM_MASK=0x201ffffffffffffffffffffffff,IPBM=0x1ffffffffffffffffffffffff,F3_MASK=0,F3=0,F1_MASK=0,F1=0>
- */
-
 func (re *RuleEntry) String() string {
 	var res string
 	var Yellow = color.New(color.FgYellow)
@@ -254,30 +414,29 @@ func (re *RuleEntry) String() string {
 			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
 			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
 			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-			res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+			res += fmt.Sprintf("       DWF1: %+v\n", re.Key[DWFP1])
+			res += fmt.Sprintf("       DWF2: %+v\n", re.Key[DWFP2])
+			res += fmt.Sprintf("       DWF3: %+v\n", re.Key[DWFP3])
+			res += fmt.Sprintf("       DWF4: %+v\n", re.Key[DWFP4])
 			res += Cyan.Sprintf("   Field: \n")
 			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
 			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
 			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
 			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
-			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.IPBM, re.IPBM_MASK)
+			res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", re.DWFP1, re.DWFP1_MASK)
+			res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", re.DWFP2, re.DWFP2_MASK)
+			res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", re.DWFP3, re.DWFP3_MASK)
+			res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", re.DWFP4, re.DWFP4_MASK)
 			res += Green.Sprintf("   Action: \n")
 			res += fmt.Sprintf("       %s\n", re.Policy)
 			res += fmt.Sprintf("   PairedEntryKey: \n")
-			res += fmt.Sprintf("       FP1: %+v\n", re.PairedEntry.Key[FP1])
-			res += fmt.Sprintf("       FP2: %+v\n", re.PairedEntry.Key[FP2])
-			res += fmt.Sprintf("       FP3: %+v\n", re.PairedEntry.Key[FP3])
-			res += fmt.Sprintf("       FP4: %+v\n", re.PairedEntry.Key[FP4])
+			res += fmt.Sprintf("       FP0: %+v\n", re.PairedEntry.Key[FP0])
 			res += fmt.Sprintf("       FIXED: %+v\n", re.PairedEntry.Key[FIXED])
-			res += fmt.Sprintf("       PAIRING_IPBM_F0: %+v\n", re.PairedEntry.Key[IPBM])
+			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.IPBM, re.IPBM_MASK)
 			res += Cyan.Sprintf("   PairedEntryField: \n")
-			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.PairedEntry.FP1, re.PairedEntry.FP1_MASK)
-			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.PairedEntry.FP2, re.PairedEntry.FP2_MASK)
-			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.PairedEntry.FP3, re.PairedEntry.FP3_MASK)
-			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.PairedEntry.FP4, re.PairedEntry.FP4_MASK)
+			res += fmt.Sprintf("       FP0: %40s:  FP0_MASK: %40s\n", re.PairedEntry.FP0, re.PairedEntry.FP0_MASK)
 			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.PairedEntry.FIXED, re.PairedEntry.FIXED_MASK)
-			res += fmt.Sprintf("       PAIRING_IPBM_F0: %28s:  PAIRING_IPBM_F0_MASK: %28s\n", re.PairedEntry.IPBM, re.PairedEntry.IPBM_MASK)
+			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.PairedEntry.IPBM, re.PairedEntry.IPBM_MASK)
 			res += Green.Sprintf("   PairedEntryAction: \n")
 			res += fmt.Sprintf("       %s\n", re.PairedEntry.Policy)
 		} else {
@@ -287,14 +446,19 @@ func (re *RuleEntry) String() string {
 			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
 			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
 			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-			res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+			res += fmt.Sprintf("       DWF1: %+v\n", re.Key[DWFP1])
+			res += fmt.Sprintf("       DWF2: %+v\n", re.Key[DWFP2])
+			res += fmt.Sprintf("       DWF3: %+v\n", re.Key[DWFP3])
+			res += fmt.Sprintf("       DWF4: %+v\n", re.Key[DWFP4])
 			res += Cyan.Sprintf("   Field: \n")
 			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
 			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
 			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
 			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
-			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.IPBM, re.IPBM_MASK)
+			res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", re.DWFP1, re.DWFP1_MASK)
+			res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", re.DWFP2, re.DWFP2_MASK)
+			res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", re.DWFP3, re.DWFP3_MASK)
+			res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", re.DWFP4, re.DWFP4_MASK)
 			res += Green.Sprintf("   Action: \n")
 			res += fmt.Sprintf("       %s\n", re.Policy)
 		}
@@ -308,14 +472,19 @@ func (re *RuleEntry) String() string {
 			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
 			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
 			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-			res += fmt.Sprintf("       FIXED: %+v\n", re.Key[FIXED])
+			res += fmt.Sprintf("       DWF1: %+v\n", re.Key[DWFP1])
+			res += fmt.Sprintf("       DWF2: %+v\n", re.Key[DWFP2])
+			res += fmt.Sprintf("       DWF3: %+v\n", re.Key[DWFP3])
+			res += fmt.Sprintf("       DWF4: %+v\n", re.Key[DWFP4])
 			res += Cyan.Sprintf("   Field: \n")
 			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
 			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
 			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
 			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.FIXED, re.FIXED_MASK)
-			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.IPBM, re.IPBM_MASK)
+			res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", re.DWFP1, re.DWFP1_MASK)
+			res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", re.DWFP2, re.DWFP2_MASK)
+			res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", re.DWFP3, re.DWFP3_MASK)
+			res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", re.DWFP4, re.DWFP4_MASK)
 			res += Green.Sprintf("   Action: \n")
 			res += fmt.Sprintf("       %s\n", re.Policy)
 			res += fmt.Sprintf("}")
@@ -448,25 +617,36 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RuleEntry {
 	rule.Index = raw.Index
 	rule.Key = make(map[int][]TLV, 1)
 	if rdb.EntryToSliceMap[rule.Index]%2 == 0 { /* Even Slice Key */
-		rule.Key[FP1] = BCM56850ICAPFieldSelector_Even.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP1)]
-		rule.Key[FP2] = BCM56850ICAPFieldSelector_Even.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP2)]
-		rule.Key[FP3] = BCM56850ICAPFieldSelector_Even.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP3)]
-		rule.Key[FP4] = BCM56850ICAPFieldSelector_Even.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP4)]
-		rule.Key[FIXED] = BCM56850ICAPFieldSelector_Even.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].PAIRING_FIXED)]
+		rule.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP1)]
+		rule.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP2)]
+		rule.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP3)]
+		rule.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP4)]
+		rule.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].PAIRING_FIXED)]
 	} else { /* Odd Slice Key */
-		rule.Key[FP1] = BCM56850ICAPFieldSelector_Odd.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP1)]
-		rule.Key[FP2] = BCM56850ICAPFieldSelector_Odd.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP2)]
-		rule.Key[FP3] = BCM56850ICAPFieldSelector_Odd.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP3)]
-		rule.Key[FP4] = BCM56850ICAPFieldSelector_Odd.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP4)]
-		rule.Key[FIXED] = BCM56850ICAPFieldSelector_Odd.PAIRING_FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].PAIRING_FIXED)]
-		rule.Key[IPBM] = BCM56850ICAPFieldSelector_Odd.PAIRING_IPBM_F0[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].PAIRING_IPBM_F0)]
+		rule.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP0)]
+		rule.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP1)]
+		rule.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP2)]
+		rule.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP3)]
+		rule.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP4)]
 	}
 
-	/* Get F2, F4, FIXED from FP_TCAM */
+	/* Get F1, F2, F3, F4 from FP_TCAM */
+	f1match := FPTCAMEntryF1Reg.FindStringSubmatch(raw.FP_TCAM)
+	if len(f1match) > 1 {
+		rule.FP1 = f1match[2]
+		rule.FP1_MASK = f1match[1]
+	}
+
 	f2match := FPTCAMEntryF2Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(f2match) > 1 {
 		rule.FP2 = f2match[2]
 		rule.FP2_MASK = f2match[1]
+	}
+
+	f3match := FPTCAMEntryF3Reg.FindStringSubmatch(raw.FP_TCAM)
+	if len(f3match) > 1 {
+		rule.FP3 = f3match[2]
+		rule.FP3_MASK = f3match[1]
 	}
 
 	f4match := FPTCAMEntryF4Reg.FindStringSubmatch(raw.FP_TCAM)
@@ -475,23 +655,41 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RuleEntry {
 		rule.FP4_MASK = f4match[1]
 	}
 
-	fixedmatch := FPTCAMEntryFIXEDReg.FindStringSubmatch(raw.FP_TCAM)
+	df1match := FPTCAMEntryDWF1Reg.FindStringSubmatch(raw.FP_TCAM)
+	if len(df1match) > 1 {
+		rule.DWFP1 = df1match[2]
+		rule.DWFP1_MASK = df1match[1]
+	}
+
+	df2match := FPTCAMEntryDWF2Reg.FindStringSubmatch(raw.FP_TCAM)
+	if len(df2match) > 1 {
+		rule.DWFP2 = df1match[2]
+		rule.DWFP2_MASK = df1match[1]
+	}
+
+	df3match := FPTCAMEntryDWF3Reg.FindStringSubmatch(raw.FP_TCAM)
+	if len(df3match) > 1 {
+		rule.DWFP3 = df1match[2]
+		rule.DWFP3_MASK = df1match[1]
+	}
+
+	df4match := FPTCAMEntryDWF4Reg.FindStringSubmatch(raw.FP_TCAM)
+	if len(df4match) > 1 {
+		rule.DWFP4 = df1match[2]
+		rule.DWFP4_MASK = df1match[1]
+	}
+
+	/* Get F0, Fixed, IPBM from FP_GLOBAL_MASK_TCAM */
+	fixedmatch := FPGlobalMaskTCAMFIXEDReg.FindStringSubmatch(raw.FP_TCAM)
 	if len(fixedmatch) > 1 {
 		rule.FIXED = fixedmatch[2]
 		rule.FIXED_MASK = fixedmatch[1]
 	}
-	/* Get F1, F3, IPBM from FP_GLOBAL_MASK_TCAM */
 
-	f1match := FPGlobalMaskTCAMF1Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(f1match) > 1 {
-		rule.FP1 = f1match[2]
-		rule.FP1_MASK = f1match[1]
-	}
-
-	f3match := FPGlobalMaskTCAMF3Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(f3match) > 1 {
-		rule.FP3 = f3match[2]
-		rule.FP3_MASK = f3match[1]
+	f0match := FPGlobalMaskTCAMDoubleWideF0Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
+	if len(f0match) > 1 {
+		rule.FP0 = f0match[2]
+		rule.FP0_MASK = f0match[1]
 	}
 
 	ipbmmatch := FPGlobalMaskTCAMIPBMReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
@@ -547,7 +745,7 @@ type ICAPFieldSelector struct {
 	PAIRING_FIXED   map[int][]TLV
 }
 
-var BCM56540ICAPFieldSelector_single = ICAPFieldSelector{
+var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 	FP1: map[int][]TLV{
 		0: []TLV{
 			TLV{Name: "SVP_L3_IIF", Size: 16, Offset: 24},
@@ -838,7 +1036,7 @@ var BCM56540ICAPFieldSelector_single = ICAPFieldSelector{
 	},
 }
 
-var BCM56540ICAPFieldSelector_Double = ICAPFieldSelector{
+var BCM56540ICAPFieldSelector_TCAMB = ICAPFieldSelector{
 	FP0: map[int][]TLV{
 		0: []TLV{
 			TLV{Name: "IP_FRAG_INFO", Size: 2, Offset: 35},
@@ -1682,12 +1880,11 @@ var BCM56850ICAPFieldSelector_Odd = ICAPFieldSelector{
 
 var CTX = context.Background()
 
-var IP = flag.String("ip", "10.71.20.191", "IP address of the remote device")
-var Host = flag.String("hostname", "V8500_2", "Host name of the remote device")
+var IP = flag.String("ip", "10.71.20.10", "IP address of the remote device")
+var Host = flag.String("hostname", "SWITCH", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
-var Password = flag.String("password", "", "Passwrod of the remote device")
+var Password = flag.String("password", "Dasan123456", "Passwrod of the remote device")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
-var SFU = flag.String("sfu", "A", "SFU (A/B)")
 
 func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
@@ -1703,11 +1900,9 @@ func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
+		&command.Command{Mode: "config-policy", CMD: " interface binding ingress port 2"},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 	})
 
 	return err
@@ -1727,11 +1922,9 @@ func AddRulePort(dev *rut.RUT, name string, flow string, action string, port str
 		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
+		&command.Command{Mode: "config-policy", CMD: " interface binding ingress port " + port},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 	})
 
 	return err
@@ -1752,11 +1945,9 @@ func AddRulePortPriority(dev *rut.RUT, name, flow, action, port, priority string
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
 		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
+		&command.Command{Mode: "config-policy", CMD: " interface binding ingress port " + port},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 	})
 
 	return err
@@ -1764,9 +1955,6 @@ func AddRulePortPriority(dev *rut.RUT, name, flow, action, port, priority string
 
 func DelRule(dev *rut.RUT, name string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
-		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 		&command.Command{Mode: "config", CMD: " no policy " + name},
 		&command.Command{Mode: "config", CMD: " no policer " + name},
 		&command.Command{Mode: "config", CMD: " no flow " + name},
@@ -1777,9 +1965,6 @@ func DelRule(dev *rut.RUT, name string) error {
 
 func DelRulePort(dev *rut.RUT, name, port string) error {
 	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 		&command.Command{Mode: "config", CMD: " no policy " + name},
 		&command.Command{Mode: "config", CMD: " no policer " + name},
 		&command.Command{Mode: "config", CMD: " no flow " + name},
@@ -1832,20 +2017,24 @@ var SliceGroupMapReg = regexp.MustCompile(`VIRTUAL_SLICE_(?P<sliceidx>0*[xX]*[0-
 var VirtualSliceMapReg = regexp.MustCompile(`VIRTUAL_SLICE_(?P<sliceidx>0*[xX]*[0-9a-fA-F]+)_PHYSICAL_SLICE_NUMBER_ENTRY_0=(?P<physliceidx>0*[xX]*[0-9a-fA-F]+)`)
 
 type SliceFieldSelector struct {
-	raw                string
-	S_TYPE_SEL         int64
-	PAIRING_IPBM       int64
-	PAIRING_FIXED      int64
-	NORMALIZE_MAC_ADDR int64
-	NORMALIZE_IP_ADDR  int64
-	FIELDS             string
-	FP3                int64
-	FP4                int64
-	FP2                int64
-	FP1                int64
-	D_TYPE_SEL         int64
-	PAIRING_EVEN_SLICE int64
-	PAIRING_IPBM_F0    int64
+	raw                       string
+	S_TYPE_SEL                int64
+	PAIRING_IPBM              int64
+	PAIRING_FIXED             int64
+	NORMALIZE_MAC_ADDR        int64
+	NORMALIZE_IP_ADDR         int64
+	DOUBLE_WIDE_MODE          int64
+	DOUBLE_WIDE_F2_KEY_SELECT int64
+	FIELDS                    string
+	FP3                       int64
+	FP4                       int64
+	FP2                       int64
+	FP1                       int64
+	FP0                       int64
+	D_TYPE_SEL                int64
+	PAIRING_EVEN_SLICE        int64
+	PAIRING_IPBM_F0           int64
+	FIXED                     int64
 }
 
 func (sfs *SliceFieldSelector) String() string {
@@ -1853,8 +2042,8 @@ func (sfs *SliceFieldSelector) String() string {
 
 }
 
-var OddSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sv>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_IPBM_F0=(?P<pipbm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_FIXED=(?P<pf>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<nmac>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<nip>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<fields>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<dts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_%d_PAIRING=(?P<evp>[0]*[xX]*[0-9a-fA-F]+),"
-var EvenSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_IPBM_F0=(?P<pipm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_PAIRING_FIXED=(?P<pf>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<nmac>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<nip>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<fields>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<dts>[0]*[xX]*[0-9a-fA-F]+),"
+var OddSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<snma>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<snia>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<sfs>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<sf3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<sf2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<sf1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<sdts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_MODE=(?P<sdwm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_F2_KEY_SELECT=(?P<sdwf2ks>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_%d_PAIRING=(?P<sp>[0]*[xX]*[0-9a-fA-F]+)"
+var EvenSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_MODE=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_F2_KEY_SELECT=(?P<sts>[0]*[xX]*[0-9a-fA-F]+)"
 
 type PortFieldSelector struct {
 	Index               int64
@@ -1873,11 +2062,19 @@ func (pfs *PortFieldSelector) String() string {
 
 var PFSIndexReg = regexp.MustCompile(`FP_PORT_FIELD_SEL\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
 
+var FPTCAMEntryF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryF2Reg = regexp.MustCompile("F2_MASK=(?P<f2m>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryF3Reg = regexp.MustCompile("F2_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f3>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryF4Reg = regexp.MustCompile("F4_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),F4=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
-var FPTCAMEntryFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[0-9a-fA-F]+),FIXED=(?P<fi>[0]*[xX]*[0-9a-fA-F]+)")
-var FPGlobalMaskTCAMF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
-var FPGlobalMaskTCAMF3Reg = regexp.MustCompile("F3_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryDWF1Reg = regexp.MustCompile("DWF1_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DWF1=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryDWF2Reg = regexp.MustCompile("DWF2_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DWF2=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryDWF3Reg = regexp.MustCompile("DWF3_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DWF3=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryDWF4Reg = regexp.MustCompile("DWF4_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DWF4=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryDWDOUBLEWIDEMODEReg = regexp.MustCompile("DW_DOUBLE_WIDE_MODE_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DW_DOUBLE_WIDE_MODE=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
+
+//VALID=1,RESERVED_SINGLE_WIDE_MASK=0,RESERVED_SINGLE_WIDE=0,MASK=0x3c3ffe001fffffff,KEY=0x3ffe001fffffff,IPBM_MASK=0x3c3ffe001fffffff,IPBM=0x3ffe001fffffff,FIXED_MASK=0,FIXED_KEY=0,DOUBLE_WIDE_F0_MASK=0x3c3ffe001fffffff,DOUBLE_WIDE_F0=0x3ffe001fffffff
+var FPGlobalMaskTCAMFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[0-9a-fA-F]+),FIXED=(?P<fi>[0]*[xX]*[0-9a-fA-F]+)")
+var FPGlobalMaskTCAMDoubleWideF0Reg = regexp.MustCompile("DOUBLE_WIDE_F0_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),DOUBLE_WIDE_F0=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPGlobalMaskTCAMIPBMReg = regexp.MustCompile("IPBM_MASK=(?P<ipbmm>[0]*[xX]*[0-9a-fA-F]+),IPBM=(?P<ipbm>[0]*[xX]*[0-9a-fA-F]+)")
 
 func (rdb *RuleDB) ParseSliceInfo() {
@@ -1923,26 +2120,14 @@ func (rdb *RuleDB) ParseSliceInfo() {
 	}
 
 	for s := 0; s < rdb.SliceCount; s++ {
-		if s < 4 {
-			rdb.SliceEntryCountMap[int64(s)] = 512
-			rdb.EntryCount += 512
-			if s == 0 {
-				rdb.SliceStartIndexMap[int64(s)] = 0
-				rdb.SliceEndIndexMap[int64(s)] = 512
-			} else {
-				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
-				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
-			}
+		rdb.SliceEntryCountMap[int64(s)] = 256
+		rdb.EntryCount += 256
+		if s == 0 {
+			rdb.SliceStartIndexMap[int64(s)] = 0
+			rdb.SliceEndIndexMap[int64(s)] = 256
 		} else {
-			rdb.SliceEntryCountMap[int64(s)] = 256
-			rdb.EntryCount += 256
-			if s == 0 {
-				rdb.SliceStartIndexMap[int64(s)] = 0
-				rdb.SliceEndIndexMap[int64(s)] = 256
-			} else {
-				rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
-				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
-			}
+			rdb.SliceStartIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s-1)] + rdb.SliceEntryCountMap[int64(s-1)]
+			rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
 		}
 	}
 
@@ -1981,15 +2166,15 @@ func (rdb *RuleDB) ParseKeys() {
 					if len(match) != 0 {
 						fs.raw = match[0]
 						fs.S_TYPE_SEL, _ = strconv.ParseInt(match[1], 0, 32)
-						fs.PAIRING_IPBM_F0, _ = strconv.ParseInt(match[2], 0, 32)
-						fs.PAIRING_FIXED, _ = strconv.ParseInt(match[3], 0, 32)
-						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[4], 0, 32)
-						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[5], 0, 32)
-						fs.FIELDS = match[6]
-						fs.FP3, _ = strconv.ParseInt(match[7], 0, 32)
-						fs.FP2, _ = strconv.ParseInt(match[8], 0, 32)
-						fs.FP1, _ = strconv.ParseInt(match[9], 0, 32)
-						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[10], 0, 32)
+						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[2], 0, 32)
+						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[3], 0, 32)
+						fs.FIELDS = match[4]
+						fs.FP3, _ = strconv.ParseInt(match[5], 0, 32)
+						fs.FP2, _ = strconv.ParseInt(match[6], 0, 32)
+						fs.FP1, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[8], 0, 32)
+						fs.DOUBLE_WIDE_MODE, _ = strconv.ParseInt(match[9], 0, 32)
+						fs.DOUBLE_WIDE_F2_KEY_SELECT, _ = strconv.ParseInt(match[10], 0, 32)
 
 					}
 				} else {
@@ -1997,15 +2182,15 @@ func (rdb *RuleDB) ParseKeys() {
 					if len(match) != 0 {
 						fs.raw = match[0]
 						fs.S_TYPE_SEL, _ = strconv.ParseInt(match[1], 0, 32)
-						fs.PAIRING_IPBM, _ = strconv.ParseInt(match[2], 0, 32)
-						fs.PAIRING_FIXED, _ = strconv.ParseInt(match[3], 0, 32)
-						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[4], 0, 32)
-						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[5], 0, 32)
-						fs.FIELDS = match[6]
-						fs.FP3, _ = strconv.ParseInt(match[7], 0, 32)
-						fs.FP2, _ = strconv.ParseInt(match[8], 0, 32)
-						fs.FP1, _ = strconv.ParseInt(match[9], 0, 32)
-						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[10], 0, 32)
+						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[2], 0, 32)
+						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[3], 0, 32)
+						fs.FIELDS = match[4]
+						fs.FP3, _ = strconv.ParseInt(match[5], 0, 32)
+						fs.FP2, _ = strconv.ParseInt(match[6], 0, 32)
+						fs.FP1, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[8], 0, 32)
+						fs.DOUBLE_WIDE_MODE, _ = strconv.ParseInt(match[9], 0, 32)
+						fs.DOUBLE_WIDE_F2_KEY_SELECT, _ = strconv.ParseInt(match[10], 0, 32)
 						fs.PAIRING_EVEN_SLICE, _ = strconv.ParseInt(match[11], 0, 32)
 					}
 				}
@@ -2334,20 +2519,14 @@ func main() {
 		return
 	}
 
-	if *SFU != "A" && *SFU != "B" {
-		fmt.Printf("Invalid SFU: %s\n", *SFU)
-		return
-	}
-
 	dev, err := rut.New(&rut.RUT{
-		Name:     "V8500_SFU",
-		Device:   "V8",
+		Name:     "SWITCH",
+		Device:   "V5",
 		IP:       *IP,
 		Port:     "23",
 		Username: *User,
 		Hostname: *Host,
 		Password: *Password,
-		SFU:      *SFU,
 	})
 
 	if err != nil {

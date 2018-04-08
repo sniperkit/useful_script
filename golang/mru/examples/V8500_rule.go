@@ -1924,7 +1924,7 @@ func (rdb *RuleDB) ParseSliceInfo() {
 
 	for s := 0; s < rdb.SliceCount; s++ {
 		if s < 4 {
-			rdb.SliceEntryCountMap[int64(s)] = 512
+			rdb.SliceEntryCountMap[int64(s)] = 0
 			rdb.EntryCount += 512
 			if s == 0 {
 				rdb.SliceStartIndexMap[int64(s)] = 512
@@ -1934,7 +1934,7 @@ func (rdb *RuleDB) ParseSliceInfo() {
 				rdb.SliceEndIndexMap[int64(s)] = rdb.SliceStartIndexMap[int64(s)] + rdb.SliceEntryCountMap[int64(s)] - 1
 			}
 		} else {
-			rdb.SliceEntryCountMap[int64(s)] = 256
+			rdb.SliceEntryCountMap[int64(s)] = 0
 			rdb.EntryCount += 256
 			if s == 0 {
 				rdb.SliceStartIndexMap[int64(s)] = 256
@@ -2397,19 +2397,22 @@ func main() {
 		DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
 	*/
 	/*
-		DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_50", "ipv6 2001:db8::1000 2001:db8::2000 50", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_51", "ipv6 2001:db8::1000 2001:db8::2000 51", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_52", "ipv6 2001:db8::1000 2001:db8::2000 52", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_53", "ipv6 2001:db8::1000 2001:db8::2000 53", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_54", "ipv6 2001:db8::1000 2001:db8::2000 54", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 tcp 100 200", "copy-to-cpu", "gigabitethernet 8/2", "high")
-		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_300_400", "ipv6 2001:db8::1000 2001:db8::2000 tcp 300 400", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_nh_50", "ipv6 2001:db8::1000 2001:db8::2000 50", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_nh_51", "ipv6 2001:db8::1000 2001:db8::2000 51", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_nh_52", "ipv6 2001:db8::1000 2001:db8::2000 52", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_nh_53", "ipv6 2001:db8::1000 2001:db8::2000 53", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_nh_54", "ipv6 2001:db8::1000 2001:db8::2000 54", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 tcp 100 200", "copy-to-cpu", "gigabitethernet 8/2", "high")
+			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_300_400", "ipv6 2001:db8::1000 2001:db8::2000 tcp 300 400", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_udp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 udp 100-200 3004-400", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500-700 600", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600-800", "copy-to-cpu", "gigabitethernet 8/2", "high")
 	*/
-	DB.AnalysisRule(dev, "ipv6_1000_2000_udp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 udp 100-200 3004-400", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500-700 600", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600-800", "copy-to-cpu", "gigabitethernet 8/2", "high")
-	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high")
+	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_s500", "ipv6 any any tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high")
+	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high")
+	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_s500hm", "ipv6 any any tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
+	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500hm", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
 	DB.Dump(dev, "after.txt")
 	StartServer()
 }
