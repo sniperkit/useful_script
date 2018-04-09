@@ -495,6 +495,7 @@ func (re *RuleEntry) String() string {
 			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
 			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
 			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
 			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
 		} else if DB.Mode == FP_INTRA_SLICE_PAIRING_MODE || DB.Mode == FP_QUAD_MODE {
 			if p.Index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
@@ -510,6 +511,7 @@ func (re *RuleEntry) String() string {
 				res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
 				res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
 				res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
+				res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
 				res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
 			} else {
 				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
@@ -525,8 +527,6 @@ func (re *RuleEntry) String() string {
 				res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", p.DWFP2, p.DWFP2_MASK)
 				res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", p.DWFP3, p.DWFP3_MASK)
 				res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", p.DWFP4, p.DWFP4_MASK)
-				res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
-				res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
 				res += Green.Sprintf("       Action: \n")
 				res += fmt.Sprintf("       %s\n", p.Policy)
 			}
@@ -722,7 +722,6 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
 		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
 		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
 	} else if rdb.Mode == FP_QUAD_MODE {
-		fmt.Println(part.Index, rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2)
 		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
 			//TCAM A
 			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
@@ -2674,16 +2673,24 @@ func main() {
 	}
 
 	DB.Dump(dev, "before.txt")
-	DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "2", "high")
-	DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
+	DB.AnalysisRule(dev, "ethtype_8844", "ethtype 0x8844", "deny", "2", "high")
+	DB.AnalysisRule(dev, "cos_6", "cos 6", "deny", "2", "high")
+	DB.AnalysisRule(dev, "tag_type_untag", "tag-type untag", "deny", "2", "high")
+	DB.AnalysisRule(dev, "length_1000", "length 1000", "deny", "2", "high")
+	DB.AnalysisRule(dev, "mac_44_33", "mac 44:44:44:44:44:44 33:33:33:33:33:33", "deny", "2", "high")
+	DB.AnalysisRule(dev, "traffic_class_100", "traffic-class 100", "deny", "2", "high")
 	/*
+		DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "2", "high")
+		DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
 		DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
 		DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "2", "high-middle")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_port_3", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "3", "high-middle")
 		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600", "copy-to-cpu", "2", "high-middle")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500 600", "copy-to-cpu", "2", "high-middle")
 		DB.Dump(dev, "after.txt")
-	*/
 
-	//StartServer()
+		//StartServer()
+	*/
 }
 
 func StartServer() {
