@@ -21,6 +21,58 @@ import (
 	"util"
 )
 
+/*
+ V5624G use Quad mode. (Intra slice + Inter Slice)
+ N, N+128, N+256, N+384
+
+ 一条完整的flow是由FP_TCAM和FP_GLOBAL_MASK_TCAM两张表获取的
+
+ 模式的控制（single/double/quad）是由FP_PORT_FIELD_SEL来控制的.
+ Intra-slice Pairing : SLICE(X)_DOUBLE_WIDE_MODE=1
+ Inter-slice Pairing : SLICE(X)_(X-1)_PAIRING=1
+
+ Intra-slice Double Wide Mode时，TCAM A的F1， F2， F3， F4是由FP_PORT_FIELD_SEL中相应的值控制的。
+ Intra-slice Double Wide Mode时，TCAM B的F1， F2， F3， F4是由:
+			F1 ---> FP_DOUBLE_WIDE_SELECT.SLICE_X_F1 控制
+			F2 ---> FP_PORT_FIELD_SEL.SLICEx_DOUBLE_WIDE_F2_KEY_SELECT 控制。
+			F4 ---> FP_DOUBLE_WIDE_SELECT.SLICE_x_F4控制
+*/
+
+var FP_DOUBLE_WIDE_SELECT = map[string]int64{
+	"SLICE_9_F4":   0,
+	"SLICE_9_F1":   0,
+	"SLICE_8_F4":   0,
+	"SLICE_8_F1":   0,
+	"SLICE_7_F4":   0,
+	"SLICE_7_F1":   0,
+	"SLICE_6_F4":   0,
+	"SLICE_6_F1":   0,
+	"SLICE_5_F4":   0,
+	"SLICE_5_F1":   0,
+	"SLICE_4_F4":   0,
+	"SLICE_4_F1":   0,
+	"SLICE_3_F4":   0,
+	"SLICE_3_F1":   0,
+	"SLICE_2_F4":   0,
+	"SLICE_2_F1":   0,
+	"SLICE_1_F4":   0,
+	"SLICE_1_F1":   0,
+	"SLICE_15_F4":  0,
+	"SLICE_15_F1":  0,
+	"SLICE_14_F4":  0,
+	"SLICE_14_F1":  0,
+	"SLICE_13_F4":  0,
+	"SLICE_13_F1":  0,
+	"SLICE_12_F4":  0,
+	"SLICE_12_F1":  0,
+	"SLICE_11_F4":  0,
+	"SLICE_11_F1":  0,
+	"SLICE_10,_F4": 0,
+	"SLICE_10,_F1": 0,
+	"SLICE_0,_F4":  0,
+	"SLICE_0,_F1":  0,
+}
+
 type TLV struct {
 	Name   string
 	Size   int
@@ -35,11 +87,20 @@ type RuleField struct {
 }
 
 const (
+	FP_SINGLE_MODE = iota
+	FP_INTRA_SLICE_PAIRING_MODE
+	FP_INTER_SLICE_PAIRING_MODE
+	FP_QUAD_MODE
+	FP_AUTO_MODE
+)
+
+const (
 	FP0 = iota
 	FP1
 	FP2
 	FP3
 	FP4
+	DWFP0
 	DWFP1
 	DWFP2
 	DWFP3
@@ -51,7 +112,12 @@ const (
 //FP_TCAM.*[1]: <VALID=3,MASK=0x1fffe000000000000000000,KEY=0x10dba000000000000000000,F4_MASK=0,F4=0,F3_MASK=0,F3=0,F2_MASK=0xffff0000,F2=0x86dd0000,F1_MASK=0,F1=0,DW_DOUBLE_WIDE_MODE_MASK=0,DW_DOUBLE_WIDE_MODE=0,DWF4_MASK=0,DWF4=0,DWF3_MASK=0,DWF3=0,DWF2_MASK=0x01fffe00000000,DWF2=0x010dba00000000,DWF1_MASK=0,DWF1=0,DOUBLE_WIDE_MODE_MASK=0,DOUBLE_WIDE_MODE=0,DATA_MASK=0xffff000000000000000000,DATA_KEY=0x86dd000000000000000000>
 //FP_GLOBAL_MASK_TCAM.*[1]: <VALID=1,RESERVED_SINGLE_WIDE_MASK=0,RESERVED_SINGLE_WIDE=0,MASK=0x3c3ffe001fffffff,KEY=0x3ffe001fffffff,IPBM_MASK=0x3c3ffe001fffffff,IPBM=0x3ffe001fffffff,FIXED_MASK=0,FIXED_KEY=0,DOUBLE_WIDE_F0_MASK=0x3c3ffe001fffffff,DOUBLE_WIDE_F0=0x3ffe001fffffff>
 
-type RuleEntry struct {
+//RulePart stand for particular combined FP_TCAM and FP_GLOBAL mask entry.
+//Each rule entry may contains multiple Parts.
+//   1. Single Wide: 1
+//   2. Double Wide: 2
+//   3. Quad Wide:   4
+type RulePart struct {
 	Key                      map[int][]TLV
 	Index                    int64
 	FP0                      string
@@ -82,8 +148,12 @@ type RuleEntry struct {
 	FIXED_MASK               string
 	IPBM                     string
 	IPBM_MASK                string
-	PairedEntry              *RuleEntry
 	Policy                   *PolicyEntry
+}
+
+type RuleEntry struct {
+	Index int64
+	Parts []*RulePart
 }
 
 type RuleEntrySlice []*RuleEntry
@@ -405,92 +475,64 @@ func (re *RuleEntry) String() string {
 	var Yellow = color.New(color.FgYellow)
 	var Cyan = color.New(color.FgCyan)
 	var Green = color.New(color.FgGreen)
-	if DB.EntryToSliceMap[re.Index]%2 == 0 {
-		res += fmt.Sprintf("{")
-		if DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[re.Index]+1].PAIRING_EVEN_SLICE != 0 {
-			res += Yellow.Sprintf("[%05d(%d)] + [%05d(%d)]:\n", re.Index, DB.EntryToSliceMap[re.Index], re.PairedEntry.Index, DB.EntryToSliceMap[re.PairedEntry.Index])
-			res += fmt.Sprintf("   Key: \n")
-			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
-			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
-			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
-			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-			res += fmt.Sprintf("       DWF1: %+v\n", re.Key[DWFP1])
-			res += fmt.Sprintf("       DWF2: %+v\n", re.Key[DWFP2])
-			res += fmt.Sprintf("       DWF3: %+v\n", re.Key[DWFP3])
-			res += fmt.Sprintf("       DWF4: %+v\n", re.Key[DWFP4])
-			res += Cyan.Sprintf("   Field: \n")
-			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
-			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
-			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
-			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-			res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", re.DWFP1, re.DWFP1_MASK)
-			res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", re.DWFP2, re.DWFP2_MASK)
-			res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", re.DWFP3, re.DWFP3_MASK)
-			res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", re.DWFP4, re.DWFP4_MASK)
-			res += Green.Sprintf("   Action: \n")
-			res += fmt.Sprintf("       %s\n", re.Policy)
-			res += fmt.Sprintf("   PairedEntryKey: \n")
-			res += fmt.Sprintf("       FP0: %+v\n", re.PairedEntry.Key[FP0])
-			res += fmt.Sprintf("       FIXED: %+v\n", re.PairedEntry.Key[FIXED])
-			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.IPBM, re.IPBM_MASK)
-			res += Cyan.Sprintf("   PairedEntryField: \n")
-			res += fmt.Sprintf("       FP0: %40s:  FP0_MASK: %40s\n", re.PairedEntry.FP0, re.PairedEntry.FP0_MASK)
-			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", re.PairedEntry.FIXED, re.PairedEntry.FIXED_MASK)
-			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", re.PairedEntry.IPBM, re.PairedEntry.IPBM_MASK)
-			res += Green.Sprintf("   PairedEntryAction: \n")
-			res += fmt.Sprintf("       %s\n", re.PairedEntry.Policy)
-		} else {
-			res += Yellow.Sprintf("[%05d(%d)] \n", re.Index, DB.EntryToSliceMap[re.Index])
-			res += fmt.Sprintf("   Key: \n")
-			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
-			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
-			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
-			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-			res += fmt.Sprintf("       DWF1: %+v\n", re.Key[DWFP1])
-			res += fmt.Sprintf("       DWF2: %+v\n", re.Key[DWFP2])
-			res += fmt.Sprintf("       DWF3: %+v\n", re.Key[DWFP3])
-			res += fmt.Sprintf("       DWF4: %+v\n", re.Key[DWFP4])
-			res += Cyan.Sprintf("   Field: \n")
-			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
-			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
-			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
-			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-			res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", re.DWFP1, re.DWFP1_MASK)
-			res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", re.DWFP2, re.DWFP2_MASK)
-			res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", re.DWFP3, re.DWFP3_MASK)
-			res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", re.DWFP4, re.DWFP4_MASK)
-			res += Green.Sprintf("   Action: \n")
-			res += fmt.Sprintf("       %s\n", re.Policy)
-		}
-		res += fmt.Sprintf("}")
-	} else {
-		if DB.PFS[0].SliceFieldSelectors[DB.EntryToSliceMap[re.Index]].PAIRING_EVEN_SLICE == 0 {
-			res += fmt.Sprintf("{")
-			res += Yellow.Sprintf("[%05d(%d)] \n", re.Index, DB.EntryToSliceMap[re.Index])
-			res += fmt.Sprintf("   Key: \n")
-			res += fmt.Sprintf("       FP1: %+v\n", re.Key[FP1])
-			res += fmt.Sprintf("       FP2: %+v\n", re.Key[FP2])
-			res += fmt.Sprintf("       FP3: %+v\n", re.Key[FP3])
-			res += fmt.Sprintf("       FP4: %+v\n", re.Key[FP4])
-			res += fmt.Sprintf("       DWF1: %+v\n", re.Key[DWFP1])
-			res += fmt.Sprintf("       DWF2: %+v\n", re.Key[DWFP2])
-			res += fmt.Sprintf("       DWF3: %+v\n", re.Key[DWFP3])
-			res += fmt.Sprintf("       DWF4: %+v\n", re.Key[DWFP4])
-			res += Cyan.Sprintf("   Field: \n")
-			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", re.FP1, re.FP1_MASK)
-			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", re.FP2, re.FP2_MASK)
-			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", re.FP3, re.FP3_MASK)
-			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", re.FP4, re.FP4_MASK)
-			res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", re.DWFP1, re.DWFP1_MASK)
-			res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", re.DWFP2, re.DWFP2_MASK)
-			res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", re.DWFP3, re.DWFP3_MASK)
-			res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", re.DWFP4, re.DWFP4_MASK)
-			res += Green.Sprintf("   Action: \n")
-			res += fmt.Sprintf("       %s\n", re.Policy)
-			res += fmt.Sprintf("}")
+	res += fmt.Sprintf("{[")
+	for _, p := range re.Parts {
+		res += Yellow.Sprintf("%05d(%d) ", p.Index, DB.EntryToSliceMap[p.Index])
+	}
+	res += fmt.Sprintf("\n")
+	for _, p := range re.Parts {
+		slice := DB.EntryToSliceMap[p.Index]
+		if DB.Mode == FP_SINGLE_MODE || DB.Mode == FP_INTER_SLICE_PAIRING_MODE {
+			res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
+			res += fmt.Sprintf("     Key: \n")
+			res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
+			res += Cyan.Sprintf("     Field: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", p.FP1, p.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
+			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
+		} else if DB.Mode == FP_INTRA_SLICE_PAIRING_MODE || DB.Mode == FP_QUAD_MODE {
+			if p.Index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
+				res += fmt.Sprintf("     Key: \n")
+				res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
+				res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
+				res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
+				res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
+				res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
+				res += Cyan.Sprintf("     Field: \n")
+				res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", p.FP1, p.FP1_MASK)
+				res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
+				res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
+				res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
+				res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
+			} else {
+				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
+				res += fmt.Sprintf("     Key: \n")
+				res += fmt.Sprintf("       FP0: %+v\n", p.Key[FP0])
+				res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
+				res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
+				res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
+				res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
+				res += Cyan.Sprintf("     Field: \n")
+				res += fmt.Sprintf("       FP0: %40s:  FP0_MASK: %40s\n", p.FP0, p.FP0_MASK)
+				res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", p.DWFP1, p.DWFP1_MASK)
+				res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", p.DWFP2, p.DWFP2_MASK)
+				res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", p.DWFP3, p.DWFP3_MASK)
+				res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", p.DWFP4, p.DWFP4_MASK)
+				res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
+				res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
+				res += Green.Sprintf("       Action: \n")
+				res += fmt.Sprintf("       %s\n", p.Policy)
+			}
 		}
 	}
-
+	res += fmt.Sprintf("}")
 	return res
 }
 
@@ -517,9 +559,11 @@ type RuleDB struct {
 	RuleEntriesOrdered RuleEntrySlice
 	RawEntries         map[int64]*RuleRawEntry
 	RawTables          map[string]string
+	Mode               int
 }
 
 func (rdb *RuleDB) Clear() {
+	rdb.Mode = FP_QUAD_MODE
 	rdb.SliceCount = 0
 	rdb.GroupCount = 0
 	rdb.EntryCount = 0
@@ -543,7 +587,6 @@ func (rdb *RuleDB) IsInitialized() bool {
 			}
 			return true
 		}
-
 	}
 
 	return false
@@ -589,6 +632,9 @@ func (rdb *RuleDB) GetRawEntries() error {
 	return nil
 }
 
+//Datasheet中的Double Wide Mode指的是intra-slice double wide mode.
+//此时TCAM-A使用single wide key, TCAM-B使用double wide key.
+//注意TCAMA和TCAMB是位于同一个slice中的
 func (rdb *RuleDB) ParseRawEntries() {
 	if !rdb.IsInitialized() {
 		panic("Cannot parse rule entries, DB not initilaized")
@@ -597,110 +643,179 @@ func (rdb *RuleDB) ParseRawEntries() {
 	rdb.RuleEntries = make(map[int64]*RuleEntry, 1)
 	rdb.RuleEntriesOrdered = make([]*RuleEntry, 0, 1)
 	for index, rr := range rdb.RawEntries {
-		rdb.RuleEntries[index] = rdb.ParseRawEntry(rr)
-		rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+		slice := DB.EntryToSliceMap[index]
+		if rdb.Mode == FP_SINGLE_MODE {
+			var entry RuleEntry
+			entry.Index = index
+			entry.Parts = make([]*RulePart, 0, 1)
+			entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+			rdb.RuleEntries[index] = &entry
+			rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+		} else if rdb.Mode == FP_INTRA_SLICE_PAIRING_MODE {
+			if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+				var entry RuleEntry
+				entry.Index = index
+				entry.Parts = make([]*RulePart, 0, 1)
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+				rdb.RuleEntries[index] = &entry
+				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+			}
+		} else if rdb.Mode == FP_INTER_SLICE_PAIRING_MODE {
+			if slice%2 == 0 {
+				var entry RuleEntry
+				entry.Index = index
+				entry.Parts = make([]*RulePart, 0, 1)
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
+				rdb.RuleEntries[index] = &entry
+				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+			}
+		} else if rdb.Mode == FP_QUAD_MODE {
+			if slice%2 == 0 && index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+				var entry RuleEntry
+				entry.Index = index
+				entry.Parts = make([]*RulePart, 0, 1)
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
+				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]+DB.SliceEntryCountMap[slice]/2]))
+				rdb.RuleEntries[index] = &entry
+				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+			}
+
+		}
 	}
 
 	sort.Sort(rdb.RuleEntriesOrdered)
-
-	for id, rule := range DB.RuleEntries {
-		slice := DB.EntryToSliceMap[id]
-		if slice%2 == 0 {
-			pindex := id + DB.SliceEntryCountMap[slice]
-			rule.PairedEntry = DB.RuleEntries[pindex]
-		}
-	}
 }
 
-func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RuleEntry {
-	var rule RuleEntry
-	rule.Index = raw.Index
-	rule.Key = make(map[int][]TLV, 1)
-	if rdb.EntryToSliceMap[rule.Index]%2 == 0 { /* Even Slice Key */
-		rule.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP1)]
-		rule.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP2)]
-		rule.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP3)]
-		rule.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP4)]
-		rule.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].PAIRING_FIXED)]
-	} else { /* Odd Slice Key */
-		rule.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP0)]
-		rule.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP1)]
-		rule.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP2)]
-		rule.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP3)]
-		rule.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[rule.Index]].FP4)]
+func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
+	var part RulePart
+	part.Index = raw.Index
+	part.Key = make(map[int][]TLV, 1)
+	if rdb.Mode == FP_SINGLE_MODE {
+		part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+		part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+		part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+	} else if rdb.Mode == FP_INTRA_SLICE_PAIRING_MODE {
+		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
+			//TCAM A
+			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+			part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+		} else { //TCAM B
+			part.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[0]
+			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
+			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
+			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[0]
+			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
+		}
+	} else if rdb.Mode == FP_INTER_SLICE_PAIRING_MODE {
+		part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+		part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+		part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+	} else if rdb.Mode == FP_QUAD_MODE {
+		fmt.Println(part.Index, rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2)
+		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
+			//TCAM A
+			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+			part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+		} else { //TCAM B
+			part.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[0]
+			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
+			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
+			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[0]
+			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
+		}
 	}
 
 	/* Get F1, F2, F3, F4 from FP_TCAM */
 	f1match := FPTCAMEntryF1Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(f1match) > 1 {
-		rule.FP1 = f1match[2]
-		rule.FP1_MASK = f1match[1]
+		part.FP1 = f1match[2]
+		part.FP1_MASK = f1match[1]
 	}
 
 	f2match := FPTCAMEntryF2Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(f2match) > 1 {
-		rule.FP2 = f2match[2]
-		rule.FP2_MASK = f2match[1]
+		part.FP2 = f2match[2]
+		part.FP2_MASK = f2match[1]
 	}
 
 	f3match := FPTCAMEntryF3Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(f3match) > 1 {
-		rule.FP3 = f3match[2]
-		rule.FP3_MASK = f3match[1]
+		part.FP3 = f3match[2]
+		part.FP3_MASK = f3match[1]
 	}
 
 	f4match := FPTCAMEntryF4Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(f4match) > 1 {
-		rule.FP4 = f4match[2]
-		rule.FP4_MASK = f4match[1]
+		part.FP4 = f4match[2]
+		part.FP4_MASK = f4match[1]
 	}
 
 	df1match := FPTCAMEntryDWF1Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df1match) > 1 {
-		rule.DWFP1 = df1match[2]
-		rule.DWFP1_MASK = df1match[1]
+		part.DWFP1 = df1match[2]
+		part.DWFP1_MASK = df1match[1]
 	}
 
 	df2match := FPTCAMEntryDWF2Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df2match) > 1 {
-		rule.DWFP2 = df2match[2]
-		rule.DWFP2_MASK = df2match[1]
+		part.DWFP2 = df2match[2]
+		part.DWFP2_MASK = df2match[1]
 	}
 
 	df3match := FPTCAMEntryDWF3Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df3match) > 1 {
-		rule.DWFP3 = df3match[2]
-		rule.DWFP3_MASK = df3match[1]
+		part.DWFP3 = df3match[2]
+		part.DWFP3_MASK = df3match[1]
 	}
 
 	df4match := FPTCAMEntryDWF4Reg.FindStringSubmatch(raw.FP_TCAM)
 	if len(df4match) > 1 {
-		rule.DWFP4 = df4match[2]
-		rule.DWFP4_MASK = df4match[1]
+		part.DWFP4 = df4match[2]
+		part.DWFP4_MASK = df4match[1]
+	}
+
+	dwmmatch := FPTCAMEntryDWDOUBLEWIDEMODEReg.FindStringSubmatch(raw.FP_TCAM)
+	if len(dwmmatch) > 1 {
+		part.DOUBLE_WIDE_MODE = dwmmatch[2]
+		part.DOUBLE_WIDE_MODE_MASK = dwmmatch[1]
 	}
 
 	/* Get F0, Fixed, IPBM from FP_GLOBAL_MASK_TCAM */
-	fixedmatch := FPGlobalMaskTCAMFIXEDReg.FindStringSubmatch(raw.FP_TCAM)
+	fixedmatch := FPGlobalMaskTCAMFIXEDReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
 	if len(fixedmatch) > 1 {
-		rule.FIXED = fixedmatch[2]
-		rule.FIXED_MASK = fixedmatch[1]
+		part.FIXED = fixedmatch[2]
+		part.FIXED_MASK = fixedmatch[1]
 	}
 
 	f0match := FPGlobalMaskTCAMDoubleWideF0Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
 	if len(f0match) > 1 {
-		rule.FP0 = f0match[2]
-		rule.FP0_MASK = f0match[1]
+		part.FP0 = f0match[2]
+		part.FP0_MASK = f0match[1]
 	}
 
 	ipbmmatch := FPGlobalMaskTCAMIPBMReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
 	if len(ipbmmatch) > 1 {
-		rule.IPBM = ipbmmatch[2]
-		rule.IPBM_MASK = ipbmmatch[1]
+		part.IPBM = ipbmmatch[2]
+		part.IPBM_MASK = ipbmmatch[1]
 	}
 
-	rule.Policy = rdb.parsePolicyEntry(raw.FP_POLICY_TABLE)
+	part.Policy = rdb.parsePolicyEntry(raw.FP_POLICY_TABLE)
 
-	return &rule
+	return &part
 }
 
 var FieldValueRegFmt = `=(?P<value>0*[xX]*[0-9a-fA-F]+)`
@@ -718,6 +833,7 @@ func (rdb *RuleDB) parsePolicyEntry(line string) *PolicyEntry {
 }
 
 var DB RuleDB = RuleDB{
+	Mode:               FP_QUAD_MODE,
 	VirtualSliceMap:    make(map[int64]int64, 1),
 	SliceGroupMap:      make(map[int64]int64, 1),
 	SliceEntryCountMap: make(map[int64]int64, 1),
@@ -743,6 +859,7 @@ type ICAPFieldSelector struct {
 	FIXED           map[int][]TLV
 	PAIRING_IPBM_F0 map[int][]TLV
 	PAIRING_FIXED   map[int][]TLV
+	IPBM            map[int][]TLV
 }
 
 var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
@@ -1032,6 +1149,13 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 	FP4: map[int][]TLV{
 		0: []TLV{
 			TLV{Name: "PORT_FIELD_SEL_TABLE.INDEX", Size: 7, Offset: 0},
+		},
+	},
+	IPBM: map[int][]TLV{
+		0: []TLV{
+			TLV{Name: "L4_SRC", Size: 16, Offset: 21},
+			TLV{Name: "L4_DST", Size: 16, Offset: 5},
+			TLV{Name: "TCP_FN_BIT_5_TO_1", Size: 5, Offset: 0},
 		},
 	},
 }
@@ -1900,7 +2024,7 @@ func AddRule(dev *rut.RUT, name string, flow string, action string) error {
 		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " interface binding ingress port 2"},
+		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress 2"},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
 	})
@@ -1922,7 +2046,7 @@ func AddRulePort(dev *rut.RUT, name string, flow string, action string, port str
 		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " interface binding ingress port " + port},
+		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress " + port},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
 	})
@@ -1945,7 +2069,7 @@ func AddRulePortPriority(dev *rut.RUT, name, flow, action, port, priority string
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
 		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
-		&command.Command{Mode: "config-policy", CMD: " interface binding ingress port " + port},
+		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress " + port},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
 	})
@@ -2064,7 +2188,7 @@ var PFSIndexReg = regexp.MustCompile(`FP_PORT_FIELD_SEL\.\*\[(?P<index>[0]*[xX]*
 
 var FPTCAMEntryF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryF2Reg = regexp.MustCompile("F2_MASK=(?P<f2m>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+)")
-var FPTCAMEntryF3Reg = regexp.MustCompile("F2_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f3>[0]*[xX]*[0-9a-fA-F]+)")
+var FPTCAMEntryF3Reg = regexp.MustCompile("F3_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryF4Reg = regexp.MustCompile("F4_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),F4=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryDWF1Reg = regexp.MustCompile("DWF1_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DWF1=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryDWF2Reg = regexp.MustCompile("DWF2_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DWF2=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
@@ -2073,7 +2197,7 @@ var FPTCAMEntryDWF4Reg = regexp.MustCompile("DWF4_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA
 var FPTCAMEntryDWDOUBLEWIDEMODEReg = regexp.MustCompile("DW_DOUBLE_WIDE_MODE_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),DW_DOUBLE_WIDE_MODE=(?P<f4>[0]*[xX]*[0-9a-fA-F]+)")
 
 //VALID=1,RESERVED_SINGLE_WIDE_MASK=0,RESERVED_SINGLE_WIDE=0,MASK=0x3c3ffe001fffffff,KEY=0x3ffe001fffffff,IPBM_MASK=0x3c3ffe001fffffff,IPBM=0x3ffe001fffffff,FIXED_MASK=0,FIXED_KEY=0,DOUBLE_WIDE_F0_MASK=0x3c3ffe001fffffff,DOUBLE_WIDE_F0=0x3ffe001fffffff
-var FPGlobalMaskTCAMFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[0-9a-fA-F]+),FIXED=(?P<fi>[0]*[xX]*[0-9a-fA-F]+)")
+var FPGlobalMaskTCAMFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[0-9a-fA-F]+),FIXED_KEY=(?P<fi>[0]*[xX]*[0-9a-fA-F]+)")
 var FPGlobalMaskTCAMDoubleWideF0Reg = regexp.MustCompile("DOUBLE_WIDE_F0_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),DOUBLE_WIDE_F0=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPGlobalMaskTCAMIPBMReg = regexp.MustCompile("IPBM_MASK=(?P<ipbmm>[0]*[xX]*[0-9a-fA-F]+),IPBM=(?P<ipbm>[0]*[xX]*[0-9a-fA-F]+)")
 
@@ -2481,19 +2605,14 @@ func (rdb *RuleDB) RuleAdd(dev *rut.RUT, name, flow, action, port, priority stri
 		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
 		&command.Command{Mode: "config-policy", CMD: " action match " + action},
 		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
+		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress " + port},
 		&command.Command{Mode: "config-policy", CMD: " apply"},
 		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 	})
 }
 
 func (rdb *RuleDB) RuleDel(dev *rut.RUT, name, flow, action, port, priority string) {
 	dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
 		&command.Command{Mode: "config", CMD: " no policy " + name},
 		&command.Command{Mode: "config", CMD: " no policer " + name},
 		&command.Command{Mode: "config", CMD: " no flow " + name},
@@ -2554,7 +2673,16 @@ func main() {
 		fmt.Println(err)
 	}
 
-	DB.Dump(dev, "realtime")
+	DB.Dump(dev, "before.txt")
+	DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "2", "high")
+	DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
+	/*
+		DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "2", "high-middle")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600", "copy-to-cpu", "2", "high-middle")
+		DB.Dump(dev, "after.txt")
+	*/
+
 	//StartServer()
 }
 
