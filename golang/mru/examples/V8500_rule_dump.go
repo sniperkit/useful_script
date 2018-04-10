@@ -48,25 +48,28 @@ const (
 	FP4
 	FIXED
 	IPBM
+	PAIRING_IPBM_F0
 )
 
 type RulePart struct {
-	Key         map[int][]TLV
-	Index       int64
-	FP1         string
-	FP1_MASK    string
-	FP2         string
-	FP2_MASK    string
-	FP3         string
-	FP3_MASK    string
-	FP4         string
-	FP4_MASK    string
-	FIXED       string
-	FIXED_MASK  string
-	IPBM        string
-	IPBM_MASK   string
-	PairedEntry *RuleEntry
-	Policy      *PolicyEntry
+	Key                  map[int][]TLV
+	Index                int64
+	FP1                  string
+	FP1_MASK             string
+	FP2                  string
+	FP2_MASK             string
+	FP3                  string
+	FP3_MASK             string
+	FP4                  string
+	FP4_MASK             string
+	FIXED                string
+	FIXED_MASK           string
+	IPBM                 string
+	IPBM_MASK            string
+	PAIRING_IPBM_F0      string
+	PAIRING_IPBM_F0_MASK string
+	PairedEntry          *RuleEntry
+	Policy               *PolicyEntry
 }
 
 type RuleEntry struct {
@@ -248,9 +251,13 @@ func (pe *PolicyEntry) String() string {
 
 //Flow 配置的内容是由FP_GLOBAL_MASK_TCAM 和FP_TCAM两张表决定的, 所以Rule Entry的内容需要解析这两张表.
 // F2, F4, FIXED 从FP_TCAM中获取，
-// F1, F3, IPBM 从FP_GLOBAL_MASK_TCAM中获取
-/* FP_GLOBAL_MASK_TCAM.*[1]: <VALID=3,SPARE_MASK=0,SPARE=0,MASK=0x807fffffffffffffffffffffffc000000000000000000000000,KEY=0x7fffffffffffffffffffffffc000000000000000000000000,IPBM_MASK=0x201ffffffffffffffffffffffff,IPBM=0x1ffffffffffffffffffffffff,F3_MASK=0,F3=0,F1_MASK=0,F1=0>
- */
+// F1, F3, IPBM 从FP_GLOBAL_MASK_TCAM中获取(这里注意，56850多了一张表FP_GM_FIELDS,该表的内容和FP_GLOBAL_MASK是一样的)
+//      我们从FP_GLOBAM_MASK_TCAM中获取偶数(even) slice 的F1， F3， IPBM。
+//      我们从FP_GM_FIELDS获取奇数（Odd) slice 的F1， F3， IPBM。
+/*
+FP_GLOBAL_MASK_TCAM.*[1]: <VALID=3,SPARE_MASK=0,SPARE=0,MASK=0x807fffffffffffffffffffffffc000000000000000000000000,KEY=0x7fffffffffffffffffffffffc000000000000000000000000,IPBM_MASK=0x201ffffffffffffffffffffffff,IPBM=0x1ffffffffffffffffffffffff,F3_MASK=0,F3=0,F1_MASK=0,F1=0>
+FP_GM_FIELDS.*[3842]: <VALID=3,SPARE_MASK=0,SPARE=0,PAIRING_IPBM_F0_MASK=0x3fffc00000,PAIRING_IPBM_F0=0x11000000,MASK_X=0xffff000000000000000000000000000000,MASK=0xffff000000000000000000000000000000,KEY_X=0x44000000000000000000000000000000,KEY=0x44000000000000000000000000000000,F3_MASK=0,F3=0,F1_MASK=0,F1=0>
+*/
 
 func (re *RuleEntry) String() string {
 	var res string
@@ -264,24 +271,43 @@ func (re *RuleEntry) String() string {
 	res += fmt.Sprintf("\n")
 	for _, p := range re.Parts {
 		res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
-		res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
-		res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
-		res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
-		res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
-		res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
-		res += Cyan.Sprintf("   Field: \n")
-		res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", p.FP1, p.FP1_MASK)
-		res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
-		res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
-		res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
-		res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
-		res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
-		res += Green.Sprintf("   Action: \n")
-		res += fmt.Sprintf("       %s\n", p.Policy)
+
+		if DB.EntryToSliceMap[p.Index]%2 == 0 { /* Even Slice Key */
+			res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
+			res += Cyan.Sprintf("   Field: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", p.FP1, p.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
+			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
+			res += Green.Sprintf("   Action: \n")
+			res += fmt.Sprintf("       %s\n", p.Policy)
+
+		} else {
+			res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
+			res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
+			res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
+			res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
+			res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
+			res += fmt.Sprintf("       PAIRING_IPMB_F0: %+v\n", p.Key[PAIRING_IPBM_F0])
+			res += Cyan.Sprintf("   Field: \n")
+			res += fmt.Sprintf("       FP1: %40s:  FP1_MASK: %40s\n", p.FP1, p.FP1_MASK)
+			res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
+			res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
+			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
+			res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
+			res += fmt.Sprintf("       PAIRING_IPBM_F0: %28s:  PAIRING_IPBM_F0_MASK: %28s\n", p.PAIRING_IPBM_F0, p.PAIRING_IPBM_F0_MASK)
+			res += Green.Sprintf("   Action: \n")
+			res += fmt.Sprintf("       %s\n", p.Policy)
+		}
 	}
 	res += fmt.Sprintf("}")
 	return res
-
 }
 
 type RuleRawEntry struct {
@@ -289,6 +315,7 @@ type RuleRawEntry struct {
 	FP_TCAM             string
 	FP_GLOBAL_MASK_TCAM string
 	FP_POLICY_TABLE     string
+	FP_GM_FIELDS        string
 }
 
 type RuleDB struct {
@@ -311,7 +338,7 @@ type RuleDB struct {
 }
 
 func (rdb *RuleDB) Clear() {
-	rdb.Mode = FP_QUAD_MODE
+	rdb.Mode = FP_INTER_SLICE_PAIRING_MODE
 	rdb.SliceCount = 0
 	rdb.GroupCount = 0
 	rdb.EntryCount = 0
@@ -344,6 +371,7 @@ func (rdb *RuleDB) IsInitialized() bool {
 var FPTCAMIndexReg = regexp.MustCompile(`FP_TCAM\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
 
 var FPGlobalMaskTCAMEntryRegFmt = `FP_GLOBAL_MASK_TCAM\.\*\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]]+>`
+var FPGMFieldsEntryRegFmt = `FP_GM_FIELDS\.\*\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]]+>`
 var FPPolicyTableEntryRegFmt = `FP_POLICY_TABLE\.\*\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]+]+>`
 
 func (rdb *RuleDB) GetRawEntries() error {
@@ -357,6 +385,7 @@ func (rdb *RuleDB) GetRawEntries() error {
 	ft := rdb.RawTables["FP_TCAM"]
 	fgmt := rdb.RawTables["FP_GLOBAL_MASK_TCAM"]
 	fpt := rdb.RawTables["FP_POLICY_TABLE"]
+	fgmft := rdb.RawTables["FP_GM_FIELDS"]
 
 	lines := strings.Split(string(ft), "\r\n")
 	for _, line := range lines {
@@ -374,6 +403,10 @@ func (rdb *RuleDB) GetRawEntries() error {
 			fptEntry := fptEntryReg.FindStringSubmatch(string(fpt))
 			rule.FP_POLICY_TABLE = fptEntry[0]
 
+			fgmftEntryReg := regexp.MustCompile(fmt.Sprintf(FPGMFieldsEntryRegFmt, rule.Index))
+			fgmftEntry := fgmftEntryReg.FindStringSubmatch(string(fgmft))
+			rule.FP_GM_FIELDS = fgmftEntry[0]
+
 			rdb.RawEntries[rule.Index] = &rule
 		}
 	}
@@ -389,6 +422,7 @@ func (rdb *RuleDB) GetRawEntries() error {
 //而Inter-slice pairing mode一般两个slice 的key大致上是一致的。
 //也就是说inter-slice pairing mode的两条entry使用的key基本上是一样的。
 //而intra-slice pairing mode对TCAMA和TCAMB的key却一般不同。
+//In Slice-Pairing mode choices for FP1-4 are same as in Single-Wide Key.(注意这里)
 func (rdb *RuleDB) ParseRawEntries() {
 	if !rdb.IsInitialized() {
 		panic("Cannot parse rule entries, DB not initilaized")
@@ -460,7 +494,7 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
 		part.Key[FP3] = BCM56850ICAPFieldSelector_Odd.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
 		part.Key[FP4] = BCM56850ICAPFieldSelector_Odd.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
 		part.Key[FIXED] = BCM56850ICAPFieldSelector_Odd.PAIRING_FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
-		part.Key[IPBM] = BCM56850ICAPFieldSelector_Odd.PAIRING_IPBM_F0[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_IPBM_F0)]
+		part.Key[PAIRING_IPBM_F0] = BCM56850ICAPFieldSelector_Odd.PAIRING_IPBM_F0[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_IPBM_F0)]
 	}
 
 	/* Get F2, F4, FIXED from FP_TCAM */
@@ -483,22 +517,41 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
 	}
 	/* Get F1, F3, IPBM from FP_GLOBAL_MASK_TCAM */
 
-	f1match := FPGlobalMaskTCAMF1Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(f1match) > 1 {
-		part.FP1 = f1match[2]
-		part.FP1_MASK = f1match[1]
-	}
+	if rdb.EntryToSliceMap[part.Index]%2 == 0 { /* Even Slice Key */
+		f1match := FPGlobalMaskTCAMF1Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
+		if len(f1match) > 1 {
+			part.FP1 = f1match[2]
+			part.FP1_MASK = f1match[1]
+		}
 
-	f3match := FPGlobalMaskTCAMF3Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(f3match) > 1 {
-		part.FP3 = f3match[2]
-		part.FP3_MASK = f3match[1]
-	}
+		f3match := FPGlobalMaskTCAMF3Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
+		if len(f3match) > 1 {
+			part.FP3 = f3match[2]
+			part.FP3_MASK = f3match[1]
+		}
 
-	ipbmmatch := FPGlobalMaskTCAMIPBMReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(ipbmmatch) > 1 {
-		part.IPBM = ipbmmatch[2]
-		part.IPBM_MASK = ipbmmatch[1]
+		ipbmmatch := FPGlobalMaskTCAMIPBMReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
+		if len(ipbmmatch) > 1 {
+			part.IPBM = ipbmmatch[2]
+			part.IPBM_MASK = ipbmmatch[1]
+		}
+	} else {
+		f1match := FPGlobalMaskTCAMF1Reg.FindStringSubmatch(raw.FP_GM_FIELDS)
+		if len(f1match) > 1 {
+			part.FP1 = f1match[2]
+			part.FP1_MASK = f1match[1]
+		}
+
+		f3match := FPGlobalMaskTCAMF3Reg.FindStringSubmatch(raw.FP_GM_FIELDS)
+		if len(f3match) > 1 {
+			part.FP3 = f3match[2]
+			part.FP3_MASK = f3match[1]
+		}
+		ipbmmatch := FPGGMFieldsIPBMF0Reg.FindStringSubmatch(raw.FP_GM_FIELDS)
+		if len(ipbmmatch) > 1 {
+			part.PAIRING_IPBM_F0 = ipbmmatch[2]
+			part.PAIRING_IPBM_F0_MASK = ipbmmatch[1]
+		}
 	}
 
 	part.Policy = rdb.parsePolicyEntry(raw.FP_POLICY_TABLE)
@@ -1881,6 +1934,7 @@ var FPTCAMEntryFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[0-9a-
 var FPGlobalMaskTCAMF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPGlobalMaskTCAMF3Reg = regexp.MustCompile("F3_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+)")
 var FPGlobalMaskTCAMIPBMReg = regexp.MustCompile("IPBM_MASK=(?P<ipbmm>[0]*[xX]*[0-9a-fA-F]+),IPBM=(?P<ipbm>[0]*[xX]*[0-9a-fA-F]+)")
+var FPGGMFieldsIPBMF0Reg = regexp.MustCompile("PAIRING_IPBM_F0_MASK=(?P<ipbmm>[0]*[xX]*[0-9a-fA-F]+),PAIRING_IPBM_F0=(?P<ipbm>[0]*[xX]*[0-9a-fA-F]+)")
 
 func (rdb *RuleDB) ParseSliceInfo() {
 	if !rdb.IsInitialized() {
@@ -2057,6 +2111,11 @@ func (rdb *RuleDB) DumpTables(dev *rut.RUT, version string) {
 		panic(err)
 	}
 
+	err = os.Remove(FP_GM_FIELDS_FILE(version))
+	if err != nil && !os.IsNotExist(err) {
+		panic(err)
+	}
+
 	err = os.Remove(FP_PORT_FIELD_SEL_FILE(version))
 	if err != nil && !os.IsNotExist(err) {
 		panic(err)
@@ -2129,6 +2188,17 @@ func (rdb *RuleDB) DumpTables(dev *rut.RUT, version string) {
 	rdb.RawTables["FP_GLOBAL_MASK_TCAM"] = string(data)
 
 	util.SaveToFile(FP_GLOBAL_MASK_TCAM_FILE(version), []byte(data))
+
+	data, err = dev.RunCommand(CTX, &command.Command{
+		Mode: "shell",
+		CMD:  " scontrol -f /proc/switch/ASIC/ctrl dump table 0 FP_GM_FIELDS 0 4095",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+	rdb.RawTables["FP_GM_FIELDS"] = string(data)
+
+	util.SaveToFile(FP_GM_FIELDS_FILE(version), []byte(data))
 
 	data, err = dev.RunCommand(CTX, &command.Command{
 		Mode: "shell",
@@ -2223,6 +2293,7 @@ func (rdb *RuleDB) AnalysisRule(dev *rut.RUT, name, flow, action, port, priority
 func (rdb *RuleDB) CompareTables(version1, version2 string) {
 	util.DiffFile(FP_TCAM_FILE(version1), FP_TCAM_FILE(version2))
 	util.DiffFile(FP_GLOBAL_MASK_TCAM_FILE(version1), FP_GLOBAL_MASK_TCAM_FILE(version2))
+	util.DiffFile(FP_GM_FIELDS_FILE(version1), FP_GM_FIELDS_FILE(version2))
 	util.DiffFile(FP_POLICY_TABLE_FILE(version1), FP_POLICY_TABLE_FILE(version2))
 	util.DiffFile(FP_UDF_OFFSET_FILE(version1), FP_UDF_OFFSET_FILE(version2))
 	util.DiffFile(FP_UDF_TCAM_FILE(version1), FP_UDF_TCAM_FILE(version2))
@@ -2259,6 +2330,10 @@ func FP_SLICE_INDEX_CONTROL_FILE(version string) string {
 
 func FP_GLOBAL_MASK_TCAM_FILE(version string) string {
 	return "FP_GLOBAL_MASK_TCAM_FILE." + version + ".txt"
+}
+
+func FP_GM_FIELDS_FILE(version string) string {
+	return "FP_GM_FIELDS_FILE." + version + ".txt"
 }
 
 func FP_RANGE_CHECK_FILE(version string) string {
