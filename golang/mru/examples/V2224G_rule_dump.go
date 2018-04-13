@@ -36,6 +36,9 @@ import (
 			F1 ---> FP_DOUBLE_WIDE_SELECT.SLICE_X_F1 控制
 			F2 ---> FP_PORT_FIELD_SEL.SLICEx_DOUBLE_WIDE_F2_KEY_SELECT 控制。
 			F4 ---> FP_DOUBLE_WIDE_SELECT.SLICE_x_F4控制
+
+Slice 之间是并行查找的，也就是说同一条流可以匹配位于不同slice的多条rule.
+Slice 内部是串行查找的，也就是说同一slice内部，使用最先匹配的entry，其后的entry将不再检查。
 */
 
 var FP_DOUBLE_WIDE_SELECT = map[string]int64{
@@ -162,6 +165,75 @@ func (res RuleEntrySlice) Len() int           { return len(res) }
 func (res RuleEntrySlice) Swap(i, j int)      { res[i], res[j] = res[j], res[i] }
 func (res RuleEntrySlice) Less(i, j int) bool { return res[i].Index < res[j].Index }
 
+var PolicyEntryFields = []string{
+	"IM0_MTP_INDEX",
+	"MTP_INDEX0",
+	"EM0_MTP_INDEX",
+	"MTP_INDEX2",
+	"INGRESS_MIRROR",
+	"MIRROR",
+	"EGRESS_MIRROR",
+	"R_NEW_PKT_PRI",
+	"Y_NEW_PKT_PRI",
+	"G_NEW_PKT_PRI",
+	"R_COS_INT_PRI",
+	"Y_COS_INT_PRI",
+	"G_COS_INT_PRI",
+	"CPU_COS",
+	"REDIRECTION_PROFILE_INDEX",
+	"REPLACE_PBM_BC_TYPE",
+	"REDIRECTION_DGLP",
+	"REDIRECTION_NHI",
+	"REDIRECTION_TYPE",
+	"REDIRECTION",
+	"REDIRECTION_NH",
+	"MATCHED_RULE",
+	"PPD1_CLASS_TAG",
+	"NEXT_HOP_INDEX",
+	"ECMP_NH_INFO",
+	"Y_NEW_DSCP",
+	"R_NEW_DSCP",
+	"G_NEW_DSCP_TOS",
+	"METER_SHARING_MODE",
+	"METER_SHARING_MODE_MODIFIER",
+	"METER_PAIR_MODE",
+	"METER_PAIR_MODE_MODIFIER",
+	"SHARED_METER_PAIR_INDEX",
+	"METER_PAIR_INDEX",
+	"COUNTER_MODE",
+	"COUNTER_INDEX",
+	"DO_NOT_CHANGE_TTL",
+	"MIRROR_OVERRIDE",
+	"GREEN_TO_PID",
+	"CHANGE_CPU_COS",
+	"R_CHANGE_DSCP",
+	"R_COPY_TO_CPU",
+	"R_DROP_PRECEDENCE",
+	"R_DROP",
+	"R_CHANGE_ECN",
+	"R_CHANGE_COS_OR_INT_PRI",
+	"R_CHANGE_PKT_PRI",
+	"Y_CHANGE_DSCP",
+	"Y_COPY_TO_CPU",
+	"Y_DROP_PRECEDENCE",
+	"Y_DROP",
+	"Y_CHANGE_ECN",
+	"Y_CHANGE_COS_OR_INT_PRI",
+	"Y_CHANGE_PKT_PRI",
+	"G_DROP_PRECEDENCE",
+	"G_CHANGE_ECN",
+	"G_L3SW_CHANGE_L2_FIELDS",
+	"G_L3SW_CHANGE_MACDA_OR_VLAN",
+	"G_DROP",
+	"G_PACKET_REDIRECTION",
+	"G_COPY_TO_CPU",
+	"G_CHANGE_DSCP_TOS",
+	"G_CHANGE_COS_OR_INT_PRI",
+	"G_CHANGE_PKT_PRI",
+	"EVEN_PARITY",
+}
+
+/*
 var PolicyEntryFields = []string{
 	"Y_NEW_PKT_PRI",
 	"Y_NEW_ECN",
@@ -301,7 +373,6 @@ var PolicyEntryFields = []string{
 	"CHANGE_CPU_COS",
 }
 
-/*
 var PolicyEntryFields = []string{
 	"Y_NEW_PKT_PRI",
 	"Y_NEW_ECN",
@@ -482,7 +553,7 @@ func (re *RuleEntry) String() string {
 	res += fmt.Sprintf("\n")
 	for _, p := range re.Parts {
 		slice := DB.EntryToSliceMap[p.Index]
-		if DB.Mode == FP_SINGLE_MODE || DB.Mode == FP_INTER_SLICE_PAIRING_MODE {
+		if DB.PFS[0].SliceFieldSelectors[slice].DOUBLE_WIDE_MODE == 0 { //!Intra slice pairing
 			res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
 			res += fmt.Sprintf("     Key: \n")
 			res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
@@ -497,7 +568,9 @@ func (re *RuleEntry) String() string {
 			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
 			res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
 			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
-		} else if DB.Mode == FP_INTRA_SLICE_PAIRING_MODE || DB.Mode == FP_QUAD_MODE {
+			res += Green.Sprintf("   Action: \n")
+			res += fmt.Sprintf("       %s\n", p.Policy)
+		} else {
 			if p.Index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
 				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
 				res += fmt.Sprintf("     Key: \n")
@@ -511,23 +584,24 @@ func (re *RuleEntry) String() string {
 				res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
 				res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
 				res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
-				res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
+				res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
 				res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
+				res += Green.Sprintf("   Action: \n")
+				res += fmt.Sprintf("       %s\n", p.Policy)
+
 			} else {
 				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
 				res += fmt.Sprintf("     Key: \n")
-				res += fmt.Sprintf("       FP0: %+v\n", p.Key[FP0])
 				res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
 				res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
 				res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
 				res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
 				res += Cyan.Sprintf("     Field: \n")
-				res += fmt.Sprintf("       FP0: %40s:  FP0_MASK: %40s\n", p.FP0, p.FP0_MASK)
 				res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", p.DWFP1, p.DWFP1_MASK)
 				res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", p.DWFP2, p.DWFP2_MASK)
 				res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", p.DWFP3, p.DWFP3_MASK)
 				res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", p.DWFP4, p.DWFP4_MASK)
-				res += Green.Sprintf("       Action: \n")
+				res += Green.Sprintf("   Action: \n")
 				res += fmt.Sprintf("       %s\n", p.Policy)
 			}
 		}
@@ -644,46 +718,70 @@ func (rdb *RuleDB) ParseRawEntries() {
 	rdb.RuleEntriesOrdered = make([]*RuleEntry, 0, 1)
 	for index, rr := range rdb.RawEntries {
 		slice := DB.EntryToSliceMap[index]
-		if rdb.Mode == FP_SINGLE_MODE {
-			var entry RuleEntry
-			entry.Index = index
-			entry.Parts = make([]*RulePart, 0, 1)
-			entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-			rdb.RuleEntries[index] = &entry
-			rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
-		} else if rdb.Mode == FP_INTRA_SLICE_PAIRING_MODE {
-			if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
-				var entry RuleEntry
-				entry.Index = index
-				entry.Parts = make([]*RulePart, 0, 1)
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
-				rdb.RuleEntries[index] = &entry
-				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+		if slice%2 == 0 { //Even slice
+			if rdb.PFS[0].SliceFieldSelectors[slice].DOUBLE_WIDE_MODE == 0 { //!Intra slice pairing
+				if rdb.PFS[0].SliceFieldSelectors[slice+1].PAIRING_EVEN_SLICE == 0 {
+					var entry RuleEntry
+					entry.Index = index
+					entry.Parts = make([]*RulePart, 0, 1)
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+					rdb.RuleEntries[index] = &entry
+					rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+				} else { //Inter slice pairing
+					var entry RuleEntry
+					entry.Index = index
+					entry.Parts = make([]*RulePart, 0, 1)
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
+					rdb.RuleEntries[index] = &entry
+					rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+				}
+			} else {
+				if rdb.PFS[0].SliceFieldSelectors[slice+1].PAIRING_EVEN_SLICE == 0 {
+					if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+						var entry RuleEntry
+						entry.Index = index
+						entry.Parts = make([]*RulePart, 0, 1)
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+						rdb.RuleEntries[index] = &entry
+						rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+					}
+				} else {
+					if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+						var entry RuleEntry
+						entry.Index = index
+						entry.Parts = make([]*RulePart, 0, 1)
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]+DB.SliceEntryCountMap[slice]/2]))
+						rdb.RuleEntries[index] = &entry
+						rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+					}
+				}
 			}
-		} else if rdb.Mode == FP_INTER_SLICE_PAIRING_MODE {
-			if slice%2 == 0 {
-				var entry RuleEntry
-				entry.Index = index
-				entry.Parts = make([]*RulePart, 0, 1)
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
-				rdb.RuleEntries[index] = &entry
-				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+		} else {
+			if rdb.PFS[0].SliceFieldSelectors[slice].PAIRING_EVEN_SLICE == 0 {
+				if rdb.PFS[0].SliceFieldSelectors[slice].DOUBLE_WIDE_MODE == 0 {
+					var entry RuleEntry
+					entry.Index = index
+					entry.Parts = make([]*RulePart, 0, 1)
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+					rdb.RuleEntries[index] = &entry
+					rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+				} else {
+					if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+						var entry RuleEntry
+						entry.Index = index
+						entry.Parts = make([]*RulePart, 0, 1)
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+						rdb.RuleEntries[index] = &entry
+						rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+					}
+				}
 			}
-		} else if rdb.Mode == FP_QUAD_MODE {
-			if slice%2 == 0 && index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
-				var entry RuleEntry
-				entry.Index = index
-				entry.Parts = make([]*RulePart, 0, 1)
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]+DB.SliceEntryCountMap[slice]/2]))
-				rdb.RuleEntries[index] = &entry
-				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
-			}
-
 		}
 	}
 
@@ -694,123 +792,67 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
 	var part RulePart
 	part.Index = raw.Index
 	part.Key = make(map[int][]TLV, 1)
-	if rdb.Mode == FP_SINGLE_MODE {
-		part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-		part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-		part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
-	} else if rdb.Mode == FP_INTRA_SLICE_PAIRING_MODE {
-		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
-			//TCAM A
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-			part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
-		} else { //TCAM B
-			part.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[0]
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[0]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
-		}
-	} else if rdb.Mode == FP_INTER_SLICE_PAIRING_MODE {
-		part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-		part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-		part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
-	} else if rdb.Mode == FP_QUAD_MODE {
-		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
-			//TCAM A
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-			part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
-		} else { //TCAM B
-			part.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[0]
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[0]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
+	//For Inter-slice pairing, Even slice and odd slice use the same key.
+	//For Intra-slice pairing, TCAM-A and TCAM-B use different key.
+	//For V2224G TCAM-B key is selected by FP_PORT_FIELD_SEL.DOUBLE_WIDE_KEY_SELECT field
+	if rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_MODE == 0 { //!Intra slice pairing
+		part.Key[FP1] = BCM56140ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+		part.Key[FP2] = BCM56140ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+		part.Key[FP3] = BCM56140ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+		part.Key[FP4] = BCM56140ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+		part.Key[FIXED] = BCM56140ICAPFieldSelector_TCAMA.FIXED[0]
+	} else { //Intra slice pairing
+		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 { //TCAM-A
+			part.Key[FP1] = BCM56140ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+			part.Key[FP2] = BCM56140ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+			part.Key[FP3] = BCM56140ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+			part.Key[FP4] = BCM56140ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+			part.Key[FIXED] = BCM56140ICAPFieldSelector_TCAMA.FIXED[0]
+		} else { //TCAM-B
+			part.Key[FP1] = BCM56140ICAPFieldSelector_TCAMB.FP1[0]
+			part.Key[FP2] = BCM56140ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_KEY_SELECT)]
+			part.Key[FP3] = BCM56140ICAPFieldSelector_TCAMB.FP3[0]
+			part.Key[FP4] = BCM56140ICAPFieldSelector_TCAMB.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_KEY_SELECT)]
 		}
 	}
 
-	/* Get F1, F2, F3, F4 from FP_TCAM */
-	f1match := FPTCAMEntryF1Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(f1match) > 1 {
-		part.FP1 = f1match[2]
-		part.FP1_MASK = f1match[1]
-	}
+	match1 := FPTCAMEntryReg.FindStringSubmatch(raw.FP_TCAM)
+	match2 := FPGLOBALMASKTCAMEntryReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
 
-	f2match := FPTCAMEntryF2Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(f2match) > 1 {
-		part.FP2 = f2match[2]
-		part.FP2_MASK = f2match[1]
-	}
+	part.FP1 = match1[12]
+	part.FP1_MASK = match1[26]
 
-	f3match := FPTCAMEntryF3Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(f3match) > 1 {
-		part.FP3 = f3match[2]
-		part.FP3_MASK = f3match[1]
-	}
+	part.FP2 = match1[10]
+	part.FP2_MASK = match1[24]
 
-	f4match := FPTCAMEntryF4Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(f4match) > 1 {
-		part.FP4 = f4match[2]
-		part.FP4_MASK = f4match[1]
-	}
+	part.FP3 = match1[8]
+	part.FP3_MASK = match1[22]
 
-	df1match := FPTCAMEntryDWF1Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(df1match) > 1 {
-		part.DWFP1 = df1match[2]
-		part.DWFP1_MASK = df1match[1]
-	}
+	part.FP4 = match1[5]
+	part.FP4_MASK = match1[19]
 
-	df2match := FPTCAMEntryDWF2Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(df2match) > 1 {
-		part.DWFP2 = df2match[2]
-		part.DWFP2_MASK = df2match[1]
-	}
+	part.DWFP1 = match1[15]
+	part.DWFP1_MASK = match1[28]
 
-	df3match := FPTCAMEntryDWF3Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(df3match) > 1 {
-		part.DWFP3 = df3match[2]
-		part.DWFP3_MASK = df3match[1]
-	}
+	part.DWFP2 = match1[9]
+	part.DWFP2_MASK = match1[23]
 
-	df4match := FPTCAMEntryDWF4Reg.FindStringSubmatch(raw.FP_TCAM)
-	if len(df4match) > 1 {
-		part.DWFP4 = df4match[2]
-		part.DWFP4_MASK = df4match[1]
-	}
+	part.DWFP3 = match1[7]
+	part.DWFP3_MASK = match1[21]
 
-	dwmmatch := FPTCAMEntryDWDOUBLEWIDEMODEReg.FindStringSubmatch(raw.FP_TCAM)
-	if len(dwmmatch) > 1 {
-		part.DOUBLE_WIDE_MODE = dwmmatch[2]
-		part.DOUBLE_WIDE_MODE_MASK = dwmmatch[1]
-	}
+	part.DWFP4 = match1[4]
+	part.DWFP4_MASK = match1[18]
 
-	/* Get F0, Fixed, IPBM from FP_GLOBAL_MASK_TCAM */
-	fixedmatch := FPGlobalMaskTCAMFIXEDReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(fixedmatch) > 1 {
-		part.FIXED = fixedmatch[2]
-		part.FIXED_MASK = fixedmatch[1]
-	}
+	part.DOUBLE_WIDE_MODE = match1[2]
+	part.DW_DOUBLE_WIDE_MODE = match1[3]
+	part.DOUBLE_WIDE_MODE_MASK = match1[16]
+	part.DW_DOUBLE_WIDE_MODE_MASK = match1[17]
 
-	f0match := FPGlobalMaskTCAMDoubleWideF0Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(f0match) > 1 {
-		part.FP0 = f0match[2]
-		part.FP0_MASK = f0match[1]
-	}
+	part.FIXED = match1[6]
+	part.FIXED_MASK = match1[20]
 
-	ipbmmatch := FPGlobalMaskTCAMIPBMReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(ipbmmatch) > 1 {
-		part.IPBM = ipbmmatch[2]
-		part.IPBM_MASK = ipbmmatch[1]
-	}
+	part.IPBM = match2[3]
+	part.IPBM_MASK = match2[8]
 
 	part.Policy = rdb.parsePolicyEntry(raw.FP_POLICY_TABLE)
 
@@ -861,7 +903,7 @@ type ICAPFieldSelector struct {
 	IPBM            map[int][]TLV
 }
 
-var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
+var BCM56140ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 	FP1: map[int][]TLV{
 		0: []TLV{
 			TLV{Name: "RESERVED", Size: 13, Offset: 24},
@@ -1111,7 +1153,7 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 	},
 }
 
-var BCM56540ICAPFieldSelector_TCAMB = ICAPFieldSelector{
+var BCM56140ICAPFieldSelector_TCAMB = ICAPFieldSelector{
 	FP1: map[int][]TLV{
 		0: []TLV{
 			TLV{Name: "D_TYPE", Size: 3, Offset: 56},
@@ -2140,6 +2182,9 @@ var FPGlobalMaskTCAMFIXEDReg = regexp.MustCompile("FIXED_MASK=(?P<fim>[0]*[xX]*[
 var FPGlobalMaskTCAMDoubleWideF0Reg = regexp.MustCompile("DOUBLE_WIDE_F0_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),DOUBLE_WIDE_F0=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPGlobalMaskTCAMIPBMReg = regexp.MustCompile("IPBM_MASK=(?P<ipbmm>[0]*[xX]*[0-9a-fA-F]+),IPBM=(?P<ipbm>[0]*[xX]*[0-9a-fA-F]+)")
 
+var FPTCAMEntryReg = regexp.MustCompile("VALID=(?P<valid>[0]*[xX]*[0-9a-fA-F]+),DOUBLE_WIDE_MODE=(?P<dwm>[0]*[xX]*[0-9a-fA-F]+),DW_DOUBLE_WIDE_MODE=(?P<ddwm>[0]*[xX]*[0-9a-fA-F]+),DWF4=(?P<dwf4>[0]*[xX]*[0-9a-fA-F]+),F4=(?P<f4>[0]*[xX]*[0-9a-fA-F]+),FIXED=(?P<fixed>[0]*[xX]*[0-9a-fA-F]+),DWF3=(?P<dwf3>[0]*[xX]*[0-9a-fA-F]+),F3=(?P<f3>[0]*[xX]*[0-9a-fA-F]+),DWF2=(?P<dwf2>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+),KEY=(?P<key>[0]*[xX]*[0-9a-fA-F]+),F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+),DATA=(?P<data>[0]*[xX]*[0-9a-fA-F]+),DATA_KEY=(?P<data_key>[0]*[xX]*[0-9a-fA-F]+),DWF1=(?P<dwf1>[0]*[xX]*[0-9a-fA-F]+),DOUBLE_WIDE_MODE_MASK=(?P<dwmm>[0]*[xX]*[0-9a-fA-F]+),DW_DOUBLE_WIDE_MODE_MASK=(?P<ddwmm>[0]*[xX]*[0-9a-fA-F]+),DWF4_MASK=(?P<dwf4m>[0]*[xX]*[0-9a-fA-F]+),F4_MASK=(?P<f4m>[0]*[xX]*[0-9a-fA-F]+),FIXED_MASK=(?P<fixedm>[0]*[xX]*[0-9a-fA-F]+),DWF3_MASK=(?P<dwf3m>[0]*[xX]*[0-9a-fA-F]+),F3_MASK=(?P<f3m>[0]*[xX]*[0-9a-fA-F]+),DWF2_MASK=(?P<dwf2m>[0]*[xX]*[0-9a-fA-F]+),F2_MASK=(?P<f2m>[0]*[xX]*[0-9a-fA-F]+),MASK=(?P<m>[0]*[xX]*[0-9a-fA-F]+),F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),DATA_MASK=(?P<dm>[0]*[xX]*[0-9a-fA-F]+),DWF1_MASK=(?P<dwf1m>[0]*[xX]*[0-9a-fA-F]+)")
+var FPGLOBALMASKTCAMEntryReg = regexp.MustCompile("DGLP=(?P<dglp>[0]*[xX]*[0-9a-fA-F]+),S_FIELD=(?P<sf>[0]*[xX]*[0-9a-fA-F]+),IPBM=(?P<ipbm>[0]*[xX]*[0-9a-fA-F]+),SPARE=(?P<sp>[0]*[xX]*[0-9a-fA-F]+),FULL_KEY=(?P<fk>[0]*[xX]*[0-9a-fA-F]+),DGLP_MASK=(?P<dglpm>[0]*[xX]*[0-9a-fA-F]+),S_FIELD_MASK=(?P<sfm>[0]*[xX]*[0-9a-fA-F]+),IPBM_MASK=(?P<ipbmm>[0]*[xX]*[0-9a-fA-F]+),SPARE_MASK=(?P<spm>[0]*[xX]*[0-9a-fA-F]+),FULL_MASK=(?P<fm>[0]*[xX]*[0-9a-fA-F]+)")
+
 func (rdb *RuleDB) ParseSliceInfo() {
 	if !rdb.IsInitialized() {
 		panic("Cannot parse slice info: not initialized!")
@@ -2275,7 +2320,7 @@ func (rdb *RuleDB) Analysis() {
 	rdb.ParseSliceInfo()
 	rdb.ParseKeys()
 	rdb.GetRawEntries()
-	//rdb.ParseRawEntries()
+	rdb.ParseRawEntries()
 }
 
 func (rdb *RuleDB) Dump(dev *rut.RUT, file string) {
@@ -2606,7 +2651,6 @@ func main() {
 
 	DB.Dump(dev, "before.txt")
 	/*
-		DB.AnalysisRule(dev, "ethtype_8844", "ethtype 0x8844", "deny", "2", "high")
 		DB.AnalysisRule(dev, "cos_6", "cos 6", "deny", "2", "high")
 		DB.AnalysisRule(dev, "tag_type_untag", "tag-type untag", "deny", "2", "high")
 		DB.AnalysisRule(dev, "length_1000", "length 1000", "deny", "2", "high")

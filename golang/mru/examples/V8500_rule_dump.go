@@ -21,6 +21,12 @@ import (
 	"util"
 )
 
+/*
+Slice 之间是并行查找的，也就是说同一条流可以匹配位于不同slice的多条rule.
+Slice 内部是串行查找的，也就是说同一slice内部，使用最先匹配的entry，其后的entry将不再检查。
+
+*/
+
 type TLV struct {
 	Name   string
 	Size   int
