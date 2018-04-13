@@ -17,19 +17,11 @@ const (
 )
 
 const (
-	cmdEOF   = 236
-	cmdABORT = 238
-	cmdEOR   = 239
-	cmdSE    = 240
-	cmdNOP   = 241
-	cmdData  = 242
+	cmdSE   = 240
+	cmdNOP  = 241
+	cmdData = 242
 
 	cmdBreak = 243
-	cmdIP    = 244
-	cmdAO    = 245
-	cmdAYT   = 246
-	cmdEC    = 247
-	cmdEL    = 248
 	cmdGA    = 249
 	cmdSB    = 250
 
@@ -38,20 +30,14 @@ const (
 	cmdDo   = 253
 	cmdDont = 254
 
-	cmdIAC = 255 //Interpret as Command
+	cmdIAC = 255
 )
 
 const (
 	optEcho            = 1
 	optSuppressGoAhead = 3
-	optState           = 5
-	optClockMark       = 6
-	optTerminalType    = 24
-	optNAWS            = 31
-	optTerminalSpeed   = 32
-	optFlowControl     = 33
-	optLineMode        = 34
-	optEnv             = 36
+	//	optTerminalType    = 24
+	optNAWS = 31
 )
 
 // Client implements net.Conn interface for Telnet protocol plus some set of
@@ -114,7 +100,7 @@ func (c *Client) sub(opt byte, data ...byte) error {
 	if _, err := c.Conn.Write([]byte{cmdIAC, cmdSB, opt}); err != nil {
 		return err
 	}
-	if _, err := c.Write(data); err != nil {
+	if _, err := c.Conn.Write(data); err != nil {
 		return err
 	}
 	_, err := c.Conn.Write([]byte{cmdIAC, cmdSE})
@@ -179,9 +165,15 @@ func (c *Client) cmd(cmd byte) error {
 				err = c.wont(o)
 			}
 		case cmdWill:
-			err = c.do(o)
+			if !c.cliEcho {
+				c.cliEcho = true
+				err = c.do(o)
+			}
 		case cmdWont:
-			err = c.dont(o)
+			if c.cliEcho {
+				c.cliEcho = false
+				err = c.dont(o)
+			}
 		}
 	case optSuppressGoAhead:
 		// We don't use GA so can allways accept every configuration
@@ -197,10 +189,15 @@ func (c *Client) cmd(cmd byte) error {
 				err = c.wont(o)
 			}
 		case cmdWill:
-			err = c.do(o)
+			if !c.cliSuppressGoAhead {
+				c.cliSuppressGoAhead = true
+				err = c.do(o)
+			}
 		case cmdWont:
-			err = c.dont(o)
-
+			if c.cliSuppressGoAhead {
+				c.cliSuppressGoAhead = false
+				err = c.dont(o)
+			}
 		}
 	case optNAWS:
 		if cmd != cmdDo {
@@ -289,16 +286,17 @@ loop:
 func (c *Client) Read(buf []byte) (int, error) {
 	var n int
 	for n < len(buf) {
-		b, err := c.ReadByte()
+		b, retry, err := c.tryReadByte()
 		if err != nil {
 			return n, err
 		}
-		//log.Printf("char: %d %q", b, b)
-		buf[n] = b
-		n++
-		if c.r.Buffered() == 0 {
-			// Try don't block if can return some data
-			break
+		if !retry {
+			buf[n] = b
+			n++
+		}
+		if n > 0 && c.r.Buffered() == 0 {
+			// Don't block if can't return more data.
+			return n, err
 		}
 	}
 	return n, nil
@@ -360,7 +358,6 @@ func (c *Client) readUntil(read bool, delims ...string) ([]byte, int, error) {
 		if read {
 			line = append(line, b)
 		}
-		//log.Println(string(line))
 		for i, s := range p {
 			if s[0] == b {
 				if len(s) == 1 {
@@ -393,14 +390,12 @@ func (c *Client) ReadUntil(delims ...string) ([]byte, error) {
 // SkipUntilIndex works like ReadUntilIndex but skips all read data.
 func (c *Client) SkipUntilIndex(delims ...string) (int, error) {
 	_, i, err := c.readUntil(false, delims...)
-	//log.Println(string(line))
 	return i, err
 }
 
 // SkipUntil works like ReadUntil but skips all read data.
 func (c *Client) SkipUntil(delims ...string) error {
 	_, _, err := c.readUntil(false, delims...)
-	//log.Println(string(line))
 	return err
 }
 
