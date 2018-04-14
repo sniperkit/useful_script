@@ -164,6 +164,110 @@ func (res RuleEntrySlice) Less(i, j int) bool { return res[i].Index < res[j].Ind
 
 var PolicyEntryFields = []string{
 	"Y_NEW_PKT_PRI",
+	"Y_NEW_DSCP",
+	"Y_DROP_PRECEDENCE",
+	"Y_DROP",
+	"Y_COS_INT_PRI",
+	"Y_COPY_TO_CPU",
+	"Y_CHANGE_PKT_PRI",
+	"Y_CHANGE_ECN",
+	"Y_CHANGE_DSCP",
+	"Y_CHANGE_COS_OR_INT_PRI",
+	"USE_SVC_METER_COLOR",
+	"TC_PROFILE_INDEX",
+	"SHARED_METER_PAIR_INDEX",
+	"R_NEW_PKT_PRI",
+	"R_NEW_DSCP",
+	"R_DROP_PRECEDENCE",
+	"R_DROP",
+	"R_COS_INT_PRI",
+	"R_COPY_TO_CPU",
+	"R_CHANGE_PKT_PRI",
+	"R_CHANGE_ECN",
+	"R_CHANGE_DSCP",
+	"R_CHANGE_COS_OR_INT_PRI",
+	"RESERVED_193",
+	"RESERVED_143",
+	"RESERVED_0",
+	"REDIRECTION_TYPE",
+	"REDIRECTION_PROFILE_INDEX",
+	"REDIRECTION_NHI",
+	"REDIRECTION_NH",
+	"REDIRECTION_DGLP",
+	"REDIRECTION",
+	"PROTECTION_SWITCHING_DROP_OVERIDE",
+	"PPD1_CLASS_TAG",
+	"OLP_HDR_TYPE_COMPRESSED",
+	"OLP_HDR_ADD",
+	"OAM_UP_MEP",
+	"OAM_TX",
+	"OAM_TUNNEL_CONTROL",
+	"OAM_TAG_STATUS_CHECK_CONTROL",
+	"OAM_SESSION_ID",
+	"OAM_SERVICE_PRI_MAPPING_PTR",
+	"OAM_LM_EN",
+	"OAM_LM_BASE_PTR",
+	"OAM_LMEP_MDL",
+	"OAM_LMEP_EN",
+	"OAM_ENABLE_LM_DM_SAMPLE",
+	"OAM_DM_TYPE",
+	"OAM_DM_EN",
+	"NHI_GROUP_EN",
+	"NEXT_HOP_INDEX",
+	"MTP_INDEX3",
+	"MTP_INDEX2",
+	"MTP_INDEX1",
+	"MTP_INDEX0",
+	"MIRROR_OVERRIDE",
+	"MIRROR",
+	"METER_SHARING_MODE_MODIFIER",
+	"METER_SHARING_MODE",
+	"METER_PAIR_MODE_MODIFIER",
+	"METER_PAIR_MODE",
+	"METER_PAIR_INDEX",
+	"MATCHED_RULE",
+	"IM1_MTP_INDEX",
+	"IM0_MTP_INDEX",
+	"I2E_CLASSID_SEL",
+	"I2E_CLASSID",
+	"HG_CLASSID_SEL",
+	"G_PACKET_REDIRECTION",
+	"G_NEW_PKT_PRI",
+	"G_NEW_DSCP_TOS",
+	"G_L3SW_CHANGE_MACDA_OR_VLAN",
+	"G_L3SW_CHANGE_L2_FIELDS",
+	"G_DROP_PRECEDENCE",
+	"G_DROP",
+	"G_COS_INT_PRI",
+	"G_COPY_TO_CPU",
+	"G_CHANGE_PKT_PRI",
+	"G_CHANGE_ECN",
+	"G_CHANGE_DSCP_TOS",
+	"G_CHANGE_COS_OR_INT_PRI",
+	"GREEN_TO_PID",
+	"EVEN_PARITY_1_DOMAIN",
+	"EVEN_PARITY_1",
+	"EVEN_PARITY_0_DOMAIN",
+	"EVEN_PARITY_0",
+	"EM1_MTP_INDEX",
+	"EM0_MTP_INDEX",
+	"EH_TAG_TYPE",
+	"EH_QUEUE_TAG",
+	"ECMP_PTR",
+	"ECMP_NH_INFO",
+	"ECMP_HASH_SEL",
+	"ECMP",
+	"DO_NOT_URPF",
+	"DO_NOT_CHANGE_TTL",
+	"CPU_COS",
+	"COUNTER_MODE",
+	"COUNTER_INDEX",
+	"CHANGE_CPU_COS",
+}
+
+/*
+var PolicyEntryFields = []string{
+	"Y_NEW_PKT_PRI",
 	"Y_NEW_ECN",
 	"Y_NEW_DSCP",
 	"Y_DROP_PRECEDENCE",
@@ -301,7 +405,7 @@ var PolicyEntryFields = []string{
 	"CHANGE_CPU_COS",
 }
 
-/*
+
 var PolicyEntryFields = []string{
 	"Y_NEW_PKT_PRI",
 	"Y_NEW_ECN",
@@ -482,7 +586,7 @@ func (re *RuleEntry) String() string {
 	res += fmt.Sprintf("\n")
 	for _, p := range re.Parts {
 		slice := DB.EntryToSliceMap[p.Index]
-		if DB.Mode == FP_SINGLE_MODE || DB.Mode == FP_INTER_SLICE_PAIRING_MODE {
+		if DB.PFS[0].SliceFieldSelectors[slice].DOUBLE_WIDE_MODE == 0 { //!Intra slice pairing
 			res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
 			res += fmt.Sprintf("     Key: \n")
 			res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
@@ -497,7 +601,9 @@ func (re *RuleEntry) String() string {
 			res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
 			res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
 			res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
-		} else if DB.Mode == FP_INTRA_SLICE_PAIRING_MODE || DB.Mode == FP_QUAD_MODE {
+			res += Green.Sprintf("   Action: \n")
+			res += fmt.Sprintf("       %s\n", p.Policy)
+		} else {
 			if p.Index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
 				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
 				res += fmt.Sprintf("     Key: \n")
@@ -511,28 +617,30 @@ func (re *RuleEntry) String() string {
 				res += fmt.Sprintf("       FP2: %40s:  FP2_MASK: %40s\n", p.FP2, p.FP2_MASK)
 				res += fmt.Sprintf("       FP3: %40s:  FP3_MASK: %40s\n", p.FP3, p.FP3_MASK)
 				res += fmt.Sprintf("       FP4: %40s:  FP4_MASK: %40s\n", p.FP4, p.FP4_MASK)
-				res += fmt.Sprintf("       FIXED: %38s:  FIXED_MASK: %38s\n", p.FIXED, p.FIXED_MASK)
+				res += fmt.Sprintf("       FIXED: %+v\n", p.Key[FIXED])
 				res += fmt.Sprintf("       IPBM: %39s:  IPBM_MASK: %39s\n", p.IPBM, p.IPBM_MASK)
+				res += Green.Sprintf("   Action: \n")
+				res += fmt.Sprintf("       %s\n", p.Policy)
+
 			} else {
 				res += Yellow.Sprintf("  [%05d(%d)]:\n", p.Index, DB.EntryToSliceMap[p.Index])
 				res += fmt.Sprintf("     Key: \n")
-				res += fmt.Sprintf("       FP0: %+v\n", p.Key[FP0])
 				res += fmt.Sprintf("       FP1: %+v\n", p.Key[FP1])
 				res += fmt.Sprintf("       FP2: %+v\n", p.Key[FP2])
 				res += fmt.Sprintf("       FP3: %+v\n", p.Key[FP3])
 				res += fmt.Sprintf("       FP4: %+v\n", p.Key[FP4])
 				res += Cyan.Sprintf("     Field: \n")
-				res += fmt.Sprintf("       FP0: %40s:  FP0_MASK: %40s\n", p.FP0, p.FP0_MASK)
 				res += fmt.Sprintf("       DWFP1: %38s:  DWFP1_MASK: %38s\n", p.DWFP1, p.DWFP1_MASK)
 				res += fmt.Sprintf("       DWFP2: %38s:  DWFP2_MASK: %38s\n", p.DWFP2, p.DWFP2_MASK)
 				res += fmt.Sprintf("       DWFP3: %38s:  DWFP3_MASK: %38s\n", p.DWFP3, p.DWFP3_MASK)
 				res += fmt.Sprintf("       DWFP4: %38s:  DWFP4_MASK: %38s\n", p.DWFP4, p.DWFP4_MASK)
-				res += Green.Sprintf("       Action: \n")
+				res += Green.Sprintf("   Action: \n")
 				res += fmt.Sprintf("       %s\n", p.Policy)
 			}
 		}
 	}
 	res += fmt.Sprintf("}")
+
 	return res
 }
 
@@ -592,10 +700,10 @@ func (rdb *RuleDB) IsInitialized() bool {
 	return false
 }
 
-var FPTCAMIndexReg = regexp.MustCompile(`FP_TCAM\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
+var FPTCAMIndexReg = regexp.MustCompile(`FP_TCAM\.ipipe0\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
 
-var FPGlobalMaskTCAMEntryRegFmt = `FP_GLOBAL_MASK_TCAM\.\*\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]]+>`
-var FPPolicyTableEntryRegFmt = `FP_POLICY_TABLE\.\*\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]+]+>`
+var FPGlobalMaskTCAMEntryRegFmt = `FP_GLOBAL_MASK_TCAM\.ipipe0\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]]+>`
+var FPPolicyTableEntryRegFmt = `FP_POLICY_TABLE\.ipipe0\[%d\]:[[:space:]]*<[a-zA-Z0-9,=_[:space:]+]+>`
 
 func (rdb *RuleDB) GetRawEntries() error {
 	if !rdb.IsInitialized() {
@@ -644,46 +752,70 @@ func (rdb *RuleDB) ParseRawEntries() {
 	rdb.RuleEntriesOrdered = make([]*RuleEntry, 0, 1)
 	for index, rr := range rdb.RawEntries {
 		slice := DB.EntryToSliceMap[index]
-		if rdb.Mode == FP_SINGLE_MODE {
-			var entry RuleEntry
-			entry.Index = index
-			entry.Parts = make([]*RulePart, 0, 1)
-			entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-			rdb.RuleEntries[index] = &entry
-			rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
-		} else if rdb.Mode == FP_INTRA_SLICE_PAIRING_MODE {
-			if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
-				var entry RuleEntry
-				entry.Index = index
-				entry.Parts = make([]*RulePart, 0, 1)
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
-				rdb.RuleEntries[index] = &entry
-				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+		if slice%2 == 0 { //Even slice
+			if rdb.PFS[0].SliceFieldSelectors[slice].DOUBLE_WIDE_MODE == 0 { //!Intra slice pairing
+				if rdb.PFS[0].SliceFieldSelectors[slice+1].PAIRING_EVEN_SLICE == 0 {
+					var entry RuleEntry
+					entry.Index = index
+					entry.Parts = make([]*RulePart, 0, 1)
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+					rdb.RuleEntries[index] = &entry
+					rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+				} else { //Inter slice pairing
+					var entry RuleEntry
+					entry.Index = index
+					entry.Parts = make([]*RulePart, 0, 1)
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
+					rdb.RuleEntries[index] = &entry
+					rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+				}
+			} else {
+				if rdb.PFS[0].SliceFieldSelectors[slice+1].PAIRING_EVEN_SLICE == 0 {
+					if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+						var entry RuleEntry
+						entry.Index = index
+						entry.Parts = make([]*RulePart, 0, 1)
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+						rdb.RuleEntries[index] = &entry
+						rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+					}
+				} else {
+					if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+						var entry RuleEntry
+						entry.Index = index
+						entry.Parts = make([]*RulePart, 0, 1)
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]+DB.SliceEntryCountMap[slice]/2]))
+						rdb.RuleEntries[index] = &entry
+						rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+					}
+				}
 			}
-		} else if rdb.Mode == FP_INTER_SLICE_PAIRING_MODE {
-			if slice%2 == 0 {
-				var entry RuleEntry
-				entry.Index = index
-				entry.Parts = make([]*RulePart, 0, 1)
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
-				rdb.RuleEntries[index] = &entry
-				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+		} else {
+			if rdb.PFS[0].SliceFieldSelectors[slice].PAIRING_EVEN_SLICE == 0 {
+				if rdb.PFS[0].SliceFieldSelectors[slice].DOUBLE_WIDE_MODE == 0 {
+					var entry RuleEntry
+					entry.Index = index
+					entry.Parts = make([]*RulePart, 0, 1)
+					entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+					rdb.RuleEntries[index] = &entry
+					rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+				} else {
+					if index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
+						var entry RuleEntry
+						entry.Index = index
+						entry.Parts = make([]*RulePart, 0, 1)
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
+						entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
+						rdb.RuleEntries[index] = &entry
+						rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
+					}
+				}
 			}
-		} else if rdb.Mode == FP_QUAD_MODE {
-			if slice%2 == 0 && index < DB.SliceStartIndexMap[slice]+DB.SliceEntryCountMap[slice]/2 {
-				var entry RuleEntry
-				entry.Index = index
-				entry.Parts = make([]*RulePart, 0, 1)
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(rr))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]/2]))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]]))
-				entry.Parts = append(entry.Parts, rdb.ParseRawEntry(DB.RawEntries[index+DB.SliceEntryCountMap[slice]+DB.SliceEntryCountMap[slice]/2]))
-				rdb.RuleEntries[index] = &entry
-				rdb.RuleEntriesOrdered = append(rdb.RuleEntriesOrdered, rdb.RuleEntries[index])
-			}
-
 		}
 	}
 
@@ -695,46 +827,46 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
 	part.Index = raw.Index
 	part.Key = make(map[int][]TLV, 1)
 	if rdb.Mode == FP_SINGLE_MODE {
-		part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-		part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-		part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+		part.Key[FP1] = BCM56450ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+		part.Key[FP2] = BCM56450ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+		part.Key[FP3] = BCM56450ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+		part.Key[FP4] = BCM56450ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+		part.Key[FIXED] = BCM56450ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
 	} else if rdb.Mode == FP_INTRA_SLICE_PAIRING_MODE {
 		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
 			//TCAM A
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-			part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+			part.Key[FP1] = BCM56450ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+			part.Key[FP2] = BCM56450ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+			part.Key[FP3] = BCM56450ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+			part.Key[FP4] = BCM56450ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+			part.Key[FIXED] = BCM56450ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
 		} else { //TCAM B
-			part.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[0]
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[0]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
+			part.Key[FP0] = BCM56450ICAPFieldSelector_TCAMB.FP0[0]
+			part.Key[FP1] = BCM56450ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
+			part.Key[FP2] = BCM56450ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
+			part.Key[FP3] = BCM56450ICAPFieldSelector_TCAMB.FP3[0]
+			part.Key[FP4] = BCM56450ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
 		}
 	} else if rdb.Mode == FP_INTER_SLICE_PAIRING_MODE {
-		part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-		part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-		part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-		part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-		part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+		part.Key[FP1] = BCM56450ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+		part.Key[FP2] = BCM56450ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+		part.Key[FP3] = BCM56450ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+		part.Key[FP4] = BCM56450ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+		part.Key[FIXED] = BCM56450ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
 	} else if rdb.Mode == FP_QUAD_MODE {
 		if part.Index < rdb.SliceStartIndexMap[rdb.EntryToSliceMap[part.Index]]+rdb.SliceEntryCountMap[rdb.EntryToSliceMap[part.Index]]/2 {
 			//TCAM A
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
-			part.Key[FIXED] = BCM56540ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
+			part.Key[FP1] = BCM56450ICAPFieldSelector_TCAMA.FP1[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP1)]
+			part.Key[FP2] = BCM56450ICAPFieldSelector_TCAMA.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP2)]
+			part.Key[FP3] = BCM56450ICAPFieldSelector_TCAMA.FP3[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP3)]
+			part.Key[FP4] = BCM56450ICAPFieldSelector_TCAMA.FP4[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].FP4)]
+			part.Key[FIXED] = BCM56450ICAPFieldSelector_TCAMA.FIXED[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].PAIRING_FIXED)]
 		} else { //TCAM B
-			part.Key[FP0] = BCM56540ICAPFieldSelector_TCAMB.FP0[0]
-			part.Key[FP1] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
-			part.Key[FP2] = BCM56540ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
-			part.Key[FP3] = BCM56540ICAPFieldSelector_TCAMB.FP3[0]
-			part.Key[FP4] = BCM56540ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
+			part.Key[FP0] = BCM56450ICAPFieldSelector_TCAMB.FP0[0]
+			part.Key[FP1] = BCM56450ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F1", part.Index)])]
+			part.Key[FP2] = BCM56450ICAPFieldSelector_TCAMB.FP2[int(rdb.PFS[0].SliceFieldSelectors[rdb.EntryToSliceMap[part.Index]].DOUBLE_WIDE_F2_KEY_SELECT)]
+			part.Key[FP3] = BCM56450ICAPFieldSelector_TCAMB.FP3[0]
+			part.Key[FP4] = BCM56450ICAPFieldSelector_TCAMB.FP1[int(FP_DOUBLE_WIDE_SELECT[fmt.Sprintf("SLICE%d_F4", part.Index)])]
 		}
 	}
 
@@ -800,12 +932,6 @@ func (rdb *RuleDB) ParseRawEntry(raw *RuleRawEntry) *RulePart {
 		part.FIXED_MASK = fixedmatch[1]
 	}
 
-	f0match := FPGlobalMaskTCAMDoubleWideF0Reg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
-	if len(f0match) > 1 {
-		part.FP0 = f0match[2]
-		part.FP0_MASK = f0match[1]
-	}
-
 	ipbmmatch := FPGlobalMaskTCAMIPBMReg.FindStringSubmatch(raw.FP_GLOBAL_MASK_TCAM)
 	if len(ipbmmatch) > 1 {
 		part.IPBM = ipbmmatch[2]
@@ -861,14 +987,16 @@ type ICAPFieldSelector struct {
 	IPBM            map[int][]TLV
 }
 
-var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
+var BCM56450ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 	FP1: map[int][]TLV{
 		0: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "SVP_L3_IIF", Size: 16, Offset: 24},
 			TLV{Name: "FORWARDING_FIELD", Size: 14, Offset: 10},
-			TLV{Name: "SRC_DEST_CLASSID", Size: 10, Offset: 0},
+			TLV{Name: "CLASSIDS", Size: 10, Offset: 0},
 		},
 		1: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "MH_OPCODE", Size: 3, Offset: 38},
 			TLV{Name: "SVP_VALID", Size: 1, Offset: 37},
 			TLV{Name: "S_FIELD", Size: 16, Offset: 21},
@@ -876,81 +1004,85 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 			TLV{Name: "D_FIELD", Size: 18, Offset: 0},
 		},
 		2: []TLV{
-			TLV{Name: "SRC_CLASSID", Size: 10, Offset: 34},
-			TLV{Name: "DEST_CLASSID", Size: 10, Offset: 24},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
+			TLV{Name: "CLASSIDS", Size: 10, Offset: 34},
 			TLV{Name: "MH_OPCODE", Size: 3, Offset: 21},
 			TLV{Name: "D_TYPE", Size: 3, Offset: 18},
 			TLV{Name: "D_FIELD", Size: 18, Offset: 0},
 		},
 		3: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "OUTER_TPID_ENCODE", Size: 2, Offset: 32},
-			TLV{Name: "ITAG", Size: 16, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "INNER_VLAN_TAG", Size: 16, Offset: 16},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 		4: []TLV{
-			TLV{Name: "FC_HDR_ENCODE_2", Size: 3, Offset: 35},
-			TLV{Name: "FC_HDR_ENCODE_1", Size: 3, Offset: 32},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "ETHERTYPE", Size: 16, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 		5: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "INNER_TPID_ENCODE", Size: 2, Offset: 42},
-			TLV{Name: "ITAG", Size: 16, Offset: 26},
-			TLV{Name: "PKT_RES", Size: 6, Offset: 20},
+			TLV{Name: "INNER_VLAN_TAG", Size: 16, Offset: 26},
 			TLV{Name: "LOOKUP_STATUS", Size: 20, Offset: 0},
 		},
 		6: []TLV{
-			TLV{Name: "FC_HDR_ENCODE_2", Size: 3, Offset: 37},
-			TLV{Name: "FC_HDR_ENCODE_1", Size: 3, Offset: 34},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "IP_INFO", Size: 3, Offset: 31},
-			TLV{Name: "PKT_RES", Size: 6, Offset: 25},
+			TLV{Name: "PKT_RESOLUTION", Size: 6, Offset: 25},
 			TLV{Name: "MH_OPCODE", Size: 3, Offset: 22},
-			TLV{Name: "TAG_STATUS", Size: 2, Offset: 20},
-			TLV{Name: "PKT_FORMAT", Size: 4, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "SWITCH_TAG_STATUS", Size: 2, Offset: 20},
+			TLV{Name: "PACKET_FORMAT", Size: 4, Offset: 16},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 		7: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "RAL_GAL", Size: 2, Offset: 40},
+			TLV{Name: "MPLS_INFO", Size: 2, Offset: 40},
 			TLV{Name: "FORWARDING_FIELD", Size: 14, Offset: 26},
-			TLV{Name: "SRC_CLASSID", Size: 10, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "CLASSIDS_11_6", Size: 10, Offset: 16},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 		8: []TLV{
-			TLV{Name: "MACSA_MACDA_NORMALIZED", Size: 1, Offset: 42},
-			TLV{Name: "SIP_DIP_NORMALIZED", Size: 1, Offset: 41},
-			TLV{Name: "DEST_IS_LOCAL", Size: 1, Offset: 40},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "FORWARDING_FIELD", Size: 14, Offset: 26},
-			TLV{Name: "SRC_CLASSID", Size: 10, Offset: 16},
+			TLV{Name: "CLASSIDS_11_6", Size: 10, Offset: 16},
 			TLV{Name: "TOS_FN", Size: 8, Offset: 8},
 			TLV{Name: "IP_PROTOCOL/LAST_NH", Size: 8, Offset: 0},
 		},
 		9: []TLV{
-			TLV{Name: "UDF1_VALID", Size: 2, Offset: 34},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "RAL_GAL", Size: 2, Offset: 32},
-			TLV{Name: "UDF1", Size: 32, Offset: 0},
+			TLV{Name: "UDF1_CHUNK_VALID_1_0", Size: 2, Offset: 34},
+			TLV{Name: "MPLS_INFO", Size: 2, Offset: 32},
+			TLV{Name: "UDF1_31_0", Size: 32, Offset: 0},
 		},
 		10: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "DGLP", Size: 16, Offset: 21},
 			TLV{Name: "D_TYPE", Size: 3, Offset: 18},
 			TLV{Name: "D_FIELD", Size: 18, Offset: 0},
 		},
 		11: []TLV{
-			TLV{Name: "CNG", Size: 2, Offset: 37},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "INT_PRI", Size: 4, Offset: 33},
+			TLV{Name: "CNG", Size: 4, Offset: 33},
 			TLV{Name: "SVP_VALID", Size: 1, Offset: 32},
 			TLV{Name: "SVP", Size: 16, Offset: 16},
 			TLV{Name: "SGLP", Size: 16, Offset: 0},
 		},
 		12: []TLV{
-			TLV{Name: "DEST_CLASSID", Size: 10, Offset: 38},
+			TLV{Name: "LABEL_ACTION", Size: 16, Offset: 24},
 			TLV{Name: "SVP", Size: 16, Offset: 22},
-			TLV{Name: "SRC_CLASSID", Size: 10, Offset: 12},
-			TLV{Name: "OVID", Size: 12, Offset: 0},
+			TLV{Name: "CLASSIDS", Size: 10, Offset: 12},
+			TLV{Name: "OUTER_VLAN_ID", Size: 12, Offset: 0},
 		},
 		13: []TLV{
-			TLV{Name: "SW_VALID", Size: 1, Offset: 36},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "LABEL_ACTION", Size: 3, Offset: 33},
-			TLV{Name: "AUX_TAG_VALID_1", Size: 1, Offset: 32},
+			TLV{Name: "CW_VALID", Size: 1, Offset: 32},
+			TLV{Name: "AUX_TAG_VALID_1", Size: 32, Offset: 0},
 			TLV{Name: "AUX_TAG_1", Size: 32, Offset: 0},
 		},
 	},
@@ -962,7 +1094,7 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 			TLV{Name: "L4_SRC", Size: 16, Offset: 40},
 			TLV{Name: "L4_DEST", Size: 16, Offset: 24},
 			TLV{Name: "TOS_FN", Size: 8, Offset: 16},
-			TLV{Name: "IP_FRAG_INFO", Size: 2, Offset: 14},
+			TLV{Name: "IPFLAG", Size: 2, Offset: 14},
 			TLV{Name: "TCP_FN", Size: 6, Offset: 8},
 			TLV{Name: "TTL_FN", Size: 8, Offset: 0},
 		},
@@ -978,38 +1110,40 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 			TLV{Name: "TTL_FN", Size: 8, Offset: 0},
 		},
 		2: []TLV{
-			TLV{Name: "IPV6_SIP", Size: 128, Offset: 0},
+			TLV{Name: "SIP", Size: 128, Offset: 0},
 		},
 		3: []TLV{
-			TLV{Name: "IPV6_DIP", Size: 128, Offset: 0},
+			TLV{Name: "DIP", Size: 128, Offset: 0},
 		},
 		4: []TLV{
-			TLV{Name: "IPV6_DIP_UPPER64", Size: 64, Offset: 64},
-			TLV{Name: "IP_PROTOCOL/LAST_NH", Size: 8, Offset: 42},
+			TLV{Name: "DIP_127_64", Size: 64, Offset: 64},
+			TLV{Name: "SPARE", Size: 8, Offset: 34},
+			TLV{Name: "LAST_NH", Size: 8, Offset: 42},
 			TLV{Name: "TOS_FN", Size: 8, Offset: 34},
-			TLV{Name: "FL", Size: 20, Offset: 14},
+			TLV{Name: "IPV6_FL", Size: 20, Offset: 14},
 			TLV{Name: "TCP_FN", Size: 6, Offset: 8},
 			TLV{Name: "TTL_FN", Size: 8, Offset: 0},
 		},
 		5: []TLV{
-			TLV{Name: "MACDA", Size: 48, Offset: 80},
-			TLV{Name: "MACSA", Size: 48, Offset: 32},
+			TLV{Name: "DA", Size: 48, Offset: 80},
+			TLV{Name: "SA", Size: 48, Offset: 32},
 			TLV{Name: "ETHERTYPE", Size: 16, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 		6: []TLV{
+			TLV{Name: "SPARE", Size: 32, Offset: 80},
 			TLV{Name: "SIP", Size: 32, Offset: 80},
-			TLV{Name: "MACSA", Size: 48, Offset: 32},
+			TLV{Name: "SA", Size: 48, Offset: 32},
 			TLV{Name: "ETHERTYPE", Size: 16, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 		7: []TLV{
-			TLV{Name: "MACDA", Size: 48, Offset: 80},
+			TLV{Name: "DA", Size: 48, Offset: 80},
 			TLV{Name: "DIP", Size: 32, Offset: 48},
 			TLV{Name: "IP_PROTOCOL/LAST_NH", Size: 8, Offset: 40},
 			TLV{Name: "TTL_FN", Size: 8, Offset: 32},
 			TLV{Name: "ETHERTYPE", Size: 16, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 
 		8: []TLV{
@@ -1021,29 +1155,31 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 		},
 
 		10: []TLV{
-			TLV{Name: "IPV6_DIP_UPPER64", Size: 64, Offset: 64},
-			TLV{Name: "IPV6_SIP_UPPER64", Size: 64, Offset: 0},
+			TLV{Name: "DIP_127_64", Size: 64, Offset: 64},
+			TLV{Name: "SIP_127_64", Size: 64, Offset: 0},
 		},
 
 		11: []TLV{
-			TLV{Name: "MACDA", Size: 48, Offset: 80},
-			TLV{Name: "MACSA", Size: 48, Offset: 32},
-			TLV{Name: "DIPV6_DIP_UPPER32", Size: 32, Offset: 0},
+			TLV{Name: "DA", Size: 48, Offset: 80},
+			TLV{Name: "SA", Size: 48, Offset: 32},
+			TLV{Name: "DIP_127_96", Size: 32, Offset: 0},
 		},
 	},
 	FP3: map[int][]TLV{
 		0: []TLV{
-			TLV{Name: "L3_IIF", Size: 16, Offset: 24},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
+			TLV{Name: "L3_IIF_OVERLY", Size: 16, Offset: 24},
 			TLV{Name: "FORWARDING_FIELD", Size: 14, Offset: 10},
-			TLV{Name: "SRC_DEST_CLASSID", Size: 10, Offset: 0},
+			TLV{Name: "CLASSIDS", Size: 10, Offset: 0},
 		},
 		1: []TLV{
-			TLV{Name: "DEST_CLASSID", Size: 10, Offset: 36},
-			TLV{Name: "OVID", Size: 12, Offset: 24},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
+			TLV{Name: "OUTER_VLAN_ID", Size: 12, Offset: 24},
 			TLV{Name: "FORWARDING_FIELD", Size: 14, Offset: 10},
-			TLV{Name: "SRC_CLASSID", Size: 10, Offset: 0},
+			TLV{Name: "CLASSIDS", Size: 10, Offset: 0},
 		},
 		2: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "MH_OPCODE", Size: 3, Offset: 38},
 			TLV{Name: "SVP_VALID", Size: 1, Offset: 37},
 			TLV{Name: "S_FIELD", Size: 16, Offset: 21},
@@ -1051,91 +1187,94 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 			TLV{Name: "D_FIELD", Size: 18, Offset: 0},
 		},
 		3: []TLV{
-			TLV{Name: "FC_HDR_ENCODE_2", Size: 3, Offset: 37},
-			TLV{Name: "FC_HDR_ENCODE_1", Size: 3, Offset: 34},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "IP_INFO", Size: 3, Offset: 31},
-			TLV{Name: "PKT_RES", Size: 6, Offset: 25},
+			TLV{Name: "PKT_RESOLUTION", Size: 6, Offset: 25},
 			TLV{Name: "MH_OPCODE", Size: 3, Offset: 22},
-			TLV{Name: "TAG_STATUS", Size: 2, Offset: 20},
-			TLV{Name: "PKT_FORMAT", Size: 4, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "SWITCHING_TAG_STATUS", Size: 2, Offset: 20},
+			TLV{Name: "PACKET_FORMAT", Size: 4, Offset: 16},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 
 		4: []TLV{
-			TLV{Name: "DEST_IS_LOCAL", Size: 1, Offset: 38},
-			TLV{Name: "CNG", Size: 2, Offset: 36},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "INT_PRI", Size: 4, Offset: 32},
-			TLV{Name: "ITAG", Size: 16, Offset: 16},
-			TLV{Name: "OTAG", Size: 16, Offset: 0},
+			TLV{Name: "CNG", Size: 2, Offset: 36},
+			TLV{Name: "INNER_VLAN_TAG", Size: 16, Offset: 16},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 
 		5: []TLV{
-			TLV{Name: "FC_HDR_ENCODE_2", Size: 3, Offset: 35},
-			TLV{Name: "FC_HDR_ENCODE_1", Size: 3, Offset: 32},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "EHTERTYPE", Size: 16, Offset: 16},
-			TLV{Name: "OVID", Size: 16, Offset: 0},
+			TLV{Name: "OUTER_VLAN_TAG", Size: 16, Offset: 0},
 		},
 
 		6: []TLV{
-			TLV{Name: "ITAG", Size: 16, Offset: 26},
-			TLV{Name: "PKT_RES", Size: 6, Offset: 20},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
+			TLV{Name: "INNER_VLAN_TAG", Size: 16, Offset: 26},
 			TLV{Name: "LOOKUP_STATUS", Size: 20, Offset: 0},
 		},
 
 		7: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "INTERFACE_CLASSID", Size: 12, Offset: 24},
 			TLV{Name: "RANGE_CHECK_RESULT", Size: 24, Offset: 0},
 		},
 
 		8: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "OUTER_TPID_ENCODE", Size: 2, Offset: 28},
 			TLV{Name: "INNER_TPID_ENCODE", Size: 2, Offset: 26},
-			TLV{Name: "TAG_STATUS", Size: 2, Offset: 24},
-			TLV{Name: "PKT_FORMAT", Size: 4, Offset: 20},
+			TLV{Name: "SWITCHING_TAG_STATUS", Size: 2, Offset: 24},
+			TLV{Name: "PACKET_FORMAT", Size: 4, Offset: 20},
 			TLV{Name: "IPV6_FL", Size: 20, Offset: 0},
 		},
 
 		9: []TLV{
-			TLV{Name: "UDF_CHUNK_VALID_5_4", Size: 2, Offset: 34},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "RAL_GAL", Size: 2, Offset: 32},
+			TLV{Name: "UDF_CHUNK_VALID_5_4", Size: 2, Offset: 34},
+			TLV{Name: "MPLS_INFO", Size: 2, Offset: 32},
 			TLV{Name: "UDF1_95_64", Size: 32, Offset: 0},
 		},
 
 		10: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "DGLP", Size: 16, Offset: 21},
 			TLV{Name: "D_TYPE", Size: 3, Offset: 18},
 			TLV{Name: "D_FIELD", Size: 18, Offset: 0},
 		},
 
 		11: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "SVP_VALID", Size: 1, Offset: 32},
 			TLV{Name: "SVP", Size: 16, Offset: 16},
 			TLV{Name: "SGLP", Size: 18, Offset: 0},
 		},
 
 		12: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
 			TLV{Name: "CW_VALID", Size: 1, Offset: 36},
-			TLV{Name: "LABEL_ACTION", Size: 3, Offset: 33},
 			TLV{Name: "AUX_TAG_VALID_2", Size: 1, Offset: 32},
 			TLV{Name: "AUX_TAG_2", Size: 32, Offset: 0},
 		},
 
 		13: []TLV{
-			TLV{Name: "MACSA_MACDA_NORMALIZED", Size: 1, Offset: 34},
-			TLV{Name: "SIP_DIP_NORMALIZED", Size: 1, Offset: 33},
-			TLV{Name: "DEST_IS_LOCAL", Size: 1, Offset: 32},
-			TLV{Name: "IP_FIRST_PROTOCOL", Size: 8, Offset: 24},
-			TLV{Name: "IPV6_FIRST_SUB_CODE", Size: 8, Offset: 16},
-			TLV{Name: "IPV6_SECOND_NH", Size: 8, Offset: 8},
+			TLV{Name: "SPARE", Size: 16, Offset: 24},
+			TLV{Name: "IP_FIRST_NH", Size: 8, Offset: 24},
+			TLV{Name: "FIRST_SUB_CODE", Size: 8, Offset: 16},
+			TLV{Name: "IP_SECOND_NH", Size: 8, Offset: 8},
 			TLV{Name: "TOS_FN", Size: 8, Offset: 0},
 		},
 	},
 	FIXED: map[int][]TLV{
 		0: []TLV{
+			TLV{Name: "SAT_DN_SAMP_RX", Size: 1, Offset: 20},
 			TLV{Name: "MY_STATION_HIT", Size: 1, Offset: 20},
 			TLV{Name: "MIRROR_ONLY", Size: 1, Offset: 19},
 			TLV{Name: "DROP", Size: 2, Offset: 17},
-			TLV{Name: "TUNNEL_TYPE", Size: 5, Offset: 12},
+			TLV{Name: "TUNNEL_TYPE_LOOPBACK_TYPE", Size: 5, Offset: 12},
 			TLV{Name: "L3_ROUTABLE", Size: 1, Offset: 11},
 			TLV{Name: "L4_VALID", Size: 1, Offset: 10},
 			TLV{Name: "L3_TYPES", Size: 4, Offset: 5},
@@ -1152,37 +1291,26 @@ var BCM56540ICAPFieldSelector_TCAMA = ICAPFieldSelector{
 	},
 	IPBM: map[int][]TLV{
 		0: []TLV{
-			TLV{Name: "L4_SRC", Size: 16, Offset: 21},
-			TLV{Name: "L4_DST", Size: 16, Offset: 5},
-			TLV{Name: "TCP_FN_BIT_5_TO_1", Size: 5, Offset: 0},
+			TLV{Name: "IPBM", Size: 16, Offset: 21},
 		},
 	},
 }
 
-var BCM56540ICAPFieldSelector_TCAMB = ICAPFieldSelector{
-	FP0: map[int][]TLV{
-		0: []TLV{
-			TLV{Name: "IP_FRAG_INFO", Size: 2, Offset: 35},
-			TLV{Name: "CNG", Size: 2, Offset: 33},
-			TLV{Name: "SVP_VALID", Size: 1, Offset: 32},
-			TLV{Name: "S_FIELD", Size: 16, Offset: 16},
-			TLV{Name: "DGLP", Size: 16, Offset: 0},
-		},
-	},
-
+var BCM56450ICAPFieldSelector_TCAMB = ICAPFieldSelector{
 	FP1: map[int][]TLV{
 		0: []TLV{
-			TLV{Name: "INT_PRI", Size: 4, Offset: 61},
+			TLV{Name: "SPARE", Size: 4, Offset: 61},
 			TLV{Name: "D_TYPE", Size: 3, Offset: 58},
 			TLV{Name: "D_FIELD", Size: 18, Offset: 40},
 			TLV{Name: "L4_SRC", Size: 16, Offset: 24},
 			TLV{Name: "L4_DST", Size: 16, Offset: 8},
+			TLV{Name: "IP_FRAG_INFO", Size: 8, Offset: 0},
 			TLV{Name: "TTL_FN1", Size: 8, Offset: 0},
 		},
 		1: []TLV{
-			TLV{Name: "INT_PRI", Size: 4, Offset: 56},
+			TLV{Name: "SPARE", Size: 4, Offset: 61},
 			TLV{Name: "CW_VALID", Size: 1, Offset: 55},
-			TLV{Name: "CW", Size: 30, Offset: 23},
+			TLV{Name: "CONTROL_WORD", Size: 30, Offset: 23},
 			TLV{Name: "LABEL_ACTION", Size: 3, Offset: 20},
 			TLV{Name: "LABEL_ID", Size: 20, Offset: 0},
 		},
@@ -1190,13 +1318,12 @@ var BCM56540ICAPFieldSelector_TCAMB = ICAPFieldSelector{
 
 	FP2: map[int][]TLV{
 		0: []TLV{
-			TLV{Name: "IPV4_SIP", Size: 32, Offset: 96},
-			TLV{Name: "IPV4_DIP", Size: 32, Offset: 64},
+			TLV{Name: "SIP", Size: 32, Offset: 96},
+			TLV{Name: "DIP", Size: 32, Offset: 64},
 			TLV{Name: "INTERFACE_CLASSID", Size: 12, Offset: 52},
 			TLV{Name: "RANGE_CHECK_RESULT", Size: 24, Offset: 28},
-			TLV{Name: "PKT_RES", Size: 6, Offset: 22},
 			TLV{Name: "LOOKUP_STATUS", Size: 20, Offset: 2},
-			TLV{Name: "ZEROS", Size: 2, Offset: 0},
+			TLV{Name: "SPARE", Size: 2, Offset: 0},
 		},
 		1: []TLV{
 			TLV{Name: "IPV6_SIP", Size: 128, Offset: 0},
@@ -1224,7 +1351,17 @@ var BCM56540ICAPFieldSelector_TCAMB = ICAPFieldSelector{
 			TLV{Name: "PORT_FIELD_SEL_TABLE.INDEX", Size: 7, Offset: 0},
 		},
 		1: []TLV{
+			TLV{Name: "SPARE", Size: 6, Offset: 0},
 			TLV{Name: "TCP_FN", Size: 6, Offset: 0},
+		},
+	},
+
+	IPBM: map[int][]TLV{
+		0: []TLV{
+			TLV{Name: "SPARE", Size: 16, Offset: 21},
+			TLV{Name: "SVP_VALID", Size: 16, Offset: 21},
+			TLV{Name: "S_FIELD", Size: 16, Offset: 21},
+			TLV{Name: "DGLP", Size: 16, Offset: 21},
 		},
 	},
 }
@@ -2009,93 +2146,6 @@ var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
 
-func AddRule(dev *rut.RUT, name string, flow string, action string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress 2"},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-	})
-
-	return err
-}
-
-func AddRulePort(dev *rut.RUT, name string, flow string, action string, port string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress " + port},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-	})
-
-	return err
-}
-
-func AddRulePortPriority(dev *rut.RUT, name, flow, action, port, priority string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
-		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress " + port},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-	})
-
-	return err
-}
-
-func DelRule(dev *rut.RUT, name string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " no policy " + name},
-		&command.Command{Mode: "config", CMD: " no policer " + name},
-		&command.Command{Mode: "config", CMD: " no flow " + name},
-	})
-
-	return err
-}
-
-func DelRulePort(dev *rut.RUT, name, port string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " no policy " + name},
-		&command.Command{Mode: "config", CMD: " no policer " + name},
-		&command.Command{Mode: "config", CMD: " no flow " + name},
-	})
-
-	return err
-}
-
 func dumpTableAndSaveToFile(dev *rut.RUT, name, start, end, file string) error {
 	err := os.Remove(file)
 	if err != nil && !os.IsNotExist(err) {
@@ -2148,6 +2198,7 @@ type SliceFieldSelector struct {
 	NORMALIZE_IP_ADDR         int64
 	DOUBLE_WIDE_MODE          int64
 	DOUBLE_WIDE_F2_KEY_SELECT int64
+	DOUBLE_WIDE_KEY_SELECT    int64
 	FIELDS                    string
 	FP3                       int64
 	FP4                       int64
@@ -2161,12 +2212,13 @@ type SliceFieldSelector struct {
 }
 
 func (sfs *SliceFieldSelector) String() string {
-	return fmt.Sprintf("S_TYPE_SEL: %d, PAIRING_IPBB: %d, PAIRING_FIXED: %d, NORMALIZE_MAC_ADDR: %d, NORMALIZE_IP_ADDR: %d, FIELDS: %s, FP3: %d, FP2: %d, FP1: %d, D_TYPE_SEL: %d, PAIRING_EVEN_SLICE: %d, PAIRING_IPBM_F0: %d", sfs.S_TYPE_SEL, sfs.PAIRING_IPBM, sfs.PAIRING_FIXED, sfs.NORMALIZE_MAC_ADDR, sfs.NORMALIZE_IP_ADDR, sfs.FIELDS, sfs.FP3, sfs.FP2, sfs.FP1, sfs.D_TYPE_SEL, sfs.PAIRING_EVEN_SLICE, sfs.PAIRING_IPBM_F0)
+	return fmt.Sprintf("S_TYPE_SEL: %d, PAIRING_IPBB: %d, PAIRING_FIXED: %d, NORMALIZE_MAC_ADDR: %d, NORMALIZE_IP_ADDR: %d, FIELDS: %s, FP3: %d, FP2: %d, FP1: %d, D_TYPE_SEL: %d, PAIRING_EVEN_SLICE: %d, PAIRING_IPBM_F0: %d, DOUBLE_WIDE_KEY_SELECT: %d, DOUBLE_WIDE_MODE: %d", sfs.S_TYPE_SEL, sfs.PAIRING_IPBM, sfs.PAIRING_FIXED, sfs.NORMALIZE_MAC_ADDR, sfs.NORMALIZE_IP_ADDR, sfs.FIELDS, sfs.FP3, sfs.FP2, sfs.FP1, sfs.D_TYPE_SEL, sfs.PAIRING_EVEN_SLICE, sfs.PAIRING_IPBM_F0, sfs.DOUBLE_WIDE_KEY_SELECT, sfs.DOUBLE_WIDE_MODE)
 
 }
 
-var OddSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<snma>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<snia>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<sfs>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<sf3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<sf2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<sf1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<sdts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_MODE=(?P<sdwm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_F2_KEY_SELECT=(?P<sdwf2ks>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_%d_PAIRING=(?P<sp>[0]*[xX]*[0-9a-fA-F]+)"
-var EvenSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_MAC_ADDR=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_NORMALIZE_IP_ADDR=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_FIELDS=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_MODE=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_F2_KEY_SELECT=(?P<sts>[0]*[xX]*[0-9a-fA-F]+)"
+var OddSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<sts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<sf3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<sf2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<sf1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<sdts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_MODE=(?P<sdwm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_KEY_SELECT=(?P<sdwks>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_%d_PAIRING=(?P<sevenp>[0]*[xX]*[0-9a-fA-F]+)"
+
+var EvenSliceMatchFormat = "SLICE%d_S_TYPE_SEL=(?P<ssts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F3=(?P<sf3>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F2=(?P<sf2>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_F1=(?P<sf1>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_D_TYPE_SEL=(?P<sdts>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_MODE=(?P<sdwm>[0]*[xX]*[0-9a-fA-F]+),SLICE%d_DOUBLE_WIDE_KEY_SELECT=(?P<sdwks>[0]*[xX]*[0-9a-fA-F]+)"
 
 type PortFieldSelector struct {
 	Index               int64
@@ -2183,7 +2235,7 @@ func (pfs *PortFieldSelector) String() string {
 	return res
 }
 
-var PFSIndexReg = regexp.MustCompile(`FP_PORT_FIELD_SEL\.\*\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
+var PFSIndexReg = regexp.MustCompile(`FP_PORT_FIELD_SEL\.ipipe0\[(?P<index>[0]*[xX]*[0-9a-fA-F]+)\]:`)
 
 var FPTCAMEntryF1Reg = regexp.MustCompile("F1_MASK=(?P<f1m>[0]*[xX]*[0-9a-fA-F]+),F1=(?P<f1>[0]*[xX]*[0-9a-fA-F]+)")
 var FPTCAMEntryF2Reg = regexp.MustCompile("F2_MASK=(?P<f2m>[0]*[xX]*[0-9a-fA-F]+),F2=(?P<f2>[0]*[xX]*[0-9a-fA-F]+)")
@@ -2280,8 +2332,8 @@ func (rdb *RuleDB) ParseKeys() {
 			pfs.Index = index
 			pfs.SliceFieldSelectors = make(map[int64]*SliceFieldSelector, 1)
 			for i := 0; i < DB.SliceCount; i++ {
-				var OddSliceReg = regexp.MustCompile(fmt.Sprintf(OddSliceMatchFormat, i, i, i, i, i, i, i, i, i, i, i, i-1))
-				var EvenSliceReg = regexp.MustCompile(fmt.Sprintf(EvenSliceMatchFormat, i, i, i, i, i, i, i, i, i, i))
+				var OddSliceReg = regexp.MustCompile(fmt.Sprintf(OddSliceMatchFormat, i, i, i, i, i, i, i, i, i-1))
+				var EvenSliceReg = regexp.MustCompile(fmt.Sprintf(EvenSliceMatchFormat, i, i, i, i, i, i, i))
 				var fs SliceFieldSelector
 
 				if i%2 == 0 {
@@ -2289,32 +2341,25 @@ func (rdb *RuleDB) ParseKeys() {
 					if len(match) != 0 {
 						fs.raw = match[0]
 						fs.S_TYPE_SEL, _ = strconv.ParseInt(match[1], 0, 32)
-						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[2], 0, 32)
-						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[3], 0, 32)
-						fs.FIELDS = match[4]
-						fs.FP3, _ = strconv.ParseInt(match[5], 0, 32)
-						fs.FP2, _ = strconv.ParseInt(match[6], 0, 32)
-						fs.FP1, _ = strconv.ParseInt(match[7], 0, 32)
-						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[8], 0, 32)
-						fs.DOUBLE_WIDE_MODE, _ = strconv.ParseInt(match[9], 0, 32)
-						fs.DOUBLE_WIDE_F2_KEY_SELECT, _ = strconv.ParseInt(match[10], 0, 32)
-
+						fs.FP3, _ = strconv.ParseInt(match[2], 0, 32)
+						fs.FP2, _ = strconv.ParseInt(match[3], 0, 32)
+						fs.FP1, _ = strconv.ParseInt(match[4], 0, 32)
+						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[5], 0, 32)
+						fs.DOUBLE_WIDE_MODE, _ = strconv.ParseInt(match[6], 0, 32)
+						fs.DOUBLE_WIDE_KEY_SELECT, _ = strconv.ParseInt(match[7], 0, 32)
 					}
 				} else {
 					match := OddSliceReg.FindStringSubmatch(line)
 					if len(match) != 0 {
 						fs.raw = match[0]
 						fs.S_TYPE_SEL, _ = strconv.ParseInt(match[1], 0, 32)
-						fs.NORMALIZE_MAC_ADDR, _ = strconv.ParseInt(match[2], 0, 32)
-						fs.NORMALIZE_IP_ADDR, _ = strconv.ParseInt(match[3], 0, 32)
-						fs.FIELDS = match[4]
-						fs.FP3, _ = strconv.ParseInt(match[5], 0, 32)
-						fs.FP2, _ = strconv.ParseInt(match[6], 0, 32)
-						fs.FP1, _ = strconv.ParseInt(match[7], 0, 32)
-						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[8], 0, 32)
-						fs.DOUBLE_WIDE_MODE, _ = strconv.ParseInt(match[9], 0, 32)
-						fs.DOUBLE_WIDE_F2_KEY_SELECT, _ = strconv.ParseInt(match[10], 0, 32)
-						fs.PAIRING_EVEN_SLICE, _ = strconv.ParseInt(match[11], 0, 32)
+						fs.FP3, _ = strconv.ParseInt(match[2], 0, 32)
+						fs.FP2, _ = strconv.ParseInt(match[3], 0, 32)
+						fs.FP1, _ = strconv.ParseInt(match[4], 0, 32)
+						fs.D_TYPE_SEL, _ = strconv.ParseInt(match[5], 0, 32)
+						fs.DOUBLE_WIDE_MODE, _ = strconv.ParseInt(match[6], 0, 32)
+						fs.DOUBLE_WIDE_KEY_SELECT, _ = strconv.ParseInt(match[7], 0, 32)
+						fs.PAIRING_EVEN_SLICE, _ = strconv.ParseInt(match[8], 0, 32)
 					}
 				}
 				pfs.SliceFieldSelectors[int64(i)] = &fs
@@ -2512,7 +2557,7 @@ func (rdb *RuleDB) DumpTables(dev *rut.RUT, version string) {
 	}
 }
 
-func (rdb *RuleDB) AnalysisRule(dev *rut.RUT, name, flow, action, port, priority string) {
+func (rdb *RuleDB) AnalysisRule(dev *rut.RUT, name string, flow []string, action, port, priority string) {
 	rdb.Device = dev
 	//First Remove if already exist.
 	rdb.RuleDel(dev, name, flow, action, port, priority)
@@ -2589,32 +2634,33 @@ var RulePriorityMap = map[int]string{
 	PriorityHighest: "highest",
 }
 
-func (rdb *RuleDB) RuleAdd(dev *rut.RUT, name, flow, action, port, priority string) {
-	dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
-		&command.Command{Mode: "config-policy", CMD: " interface-binding port ingress " + port},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-	})
+func (rdb *RuleDB) RuleAdd(dev *rut.RUT, name string, flow []string, action, port, priority string) {
+	commands := make([]*command.Command, 0, 1)
+
+	commands = append(commands, &command.Command{Mode: "config", CMD: " class-map type qos " + name})
+	for _, f := range flow {
+		commands = append(commands, &command.Command{Mode: "config-cmap-qos", CMD: " match " + f})
+	}
+	commands = append(commands, &command.Command{Mode: "config-cmap-qos", CMD: " exit "})
+	commands = append(commands, &command.Command{Mode: "config", CMD: " policy-map type qos " + name})
+	commands = append(commands, &command.Command{Mode: "config-pmap-qos", CMD: " class type qos " + name})
+	commands = append(commands, &command.Command{Mode: "config-pmap-c-qos", CMD: " set " + action})
+	commands = append(commands, &command.Command{Mode: "config-pmap-c-qos", CMD: " set priority " + priority})
+	commands = append(commands, &command.Command{Mode: "config-pmap-c-qos", CMD: " exit "})
+	commands = append(commands, &command.Command{Mode: "config-pmap-qos", CMD: " exit "})
+	commands = append(commands, &command.Command{Mode: "config", CMD: " interface " + port})
+	commands = append(commands, &command.Command{Mode: "config-if", CMD: " service-policy type qos input " + name})
+	commands = append(commands, &command.Command{Mode: "config-if", CMD: " exit "})
+	dev.RunCommands(CTX, commands)
 }
 
-func (rdb *RuleDB) RuleDel(dev *rut.RUT, name, flow, action, port, priority string) {
+func (rdb *RuleDB) RuleDel(dev *rut.RUT, name string, flow []string, action, port, priority string) {
 	dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " no policy " + name},
-		&command.Command{Mode: "config", CMD: " no policer " + name},
-		&command.Command{Mode: "config", CMD: " no flow " + name},
+		&command.Command{Mode: "config", CMD: " interface " + port},
+		&command.Command{Mode: "config-if", CMD: " no service-policy type qos input " + name},
+		&command.Command{Mode: "config-if", CMD: " exit"},
+		&command.Command{Mode: "config", CMD: " no policy-map type qos " + name},
+		&command.Command{Mode: "config", CMD: " no class-map type qos " + name},
 	})
 }
 
@@ -2673,24 +2719,12 @@ func main() {
 	}
 
 	DB.Dump(dev, "before.txt")
-	/*
-		DB.AnalysisRule(dev, "ethtype_8844", "ethtype 0x8844", "deny", "2", "high")
-		DB.AnalysisRule(dev, "cos_6", "cos 6", "deny", "2", "high")
-		DB.AnalysisRule(dev, "tag_type_untag", "tag-type untag", "deny", "2", "high")
-		DB.AnalysisRule(dev, "length_1000", "length 1000", "deny", "2", "high")
-		DB.AnalysisRule(dev, "mac_44_33", "mac 44:44:44:44:44:44 33:33:33:33:33:33", "deny", "2", "high")
-		DB.AnalysisRule(dev, "traffic_class_100", "traffic-class 100", "deny", "2", "high")
-			DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "2", "high")
-			DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
-			DB.AnalysisRule(dev, "ip_50_40_udp_500_600", "ip 50.50.50.50 40.40.40.40 udp 500 600", "deny", "2", "high")
-			DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "2", "high-middle")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_port_3", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "3", "high-middle")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600", "copy-to-cpu", "2", "high-middle")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500 600", "copy-to-cpu", "2", "high-middle")
-			DB.Dump(dev, "after.txt")
+	DB.AnalysisRule(dev, "ip_50_40", []string{"ip 50.50.50.50 40.40.40.40"}, "deny", "gigabitethernet 1/3", "high")
+	DB.AnalysisRule(dev, "ip_50_40_tcp_80_90", []string{"ip 50.50.50.50 40.40.40.40", "layer4 tcp destination-port 90", "layer4 tcp source-port 80"}, "deny", "gigabitethernet 1/3", "high")
+	DB.AnalysisRule(dev, "ipv6_1000_2000", []string{"ipv6 2001:db8:1000::1000 2001:db8:2000::2000"}, "deny", "gigabitethernet 1/3", "high")
+	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_80_90", []string{"ipv6 2001:db8:1000::1000 2001:db8:2000::2000", "layer4 tcp destination-port 90", "layer4 tcp source-port 80"}, "deny", "gigabitethernet 1/3", "high")
 
-			//StartServer()
-	*/
+	//StartServer()
 }
 
 func StartServer() {

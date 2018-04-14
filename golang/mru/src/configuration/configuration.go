@@ -54,6 +54,9 @@ var Modes = []string{
 	"config-flow",
 	"config-policer",
 	"config-policy",
+	"config-cmap-qos",
+	"config-pmap-qos",
+	"config-pmap-c-qos",
 	"bridge",
 	"shell",
 	"bcmshell",
@@ -104,6 +107,12 @@ func BuildModeDBFromHostNameAndBasePrompt(host, base string) map[string]string {
 			db[m] = base + "(config-flow"
 		} else if m == "config-policer" {
 			db[m] = base + "(config-policer"
+		} else if m == "config-cmap-qos" {
+			db[m] = base + "(config-cmap-qos"
+		} else if m == "config-pmap-qos" {
+			db[m] = base + "(config-pmap-qos"
+		} else if m == "config-pmap-c-qos" {
+			db[m] = base + "(config-pmap-c-qos"
 		} else if m == "config-policy" {
 			db[m] = base + "(config-policy"
 		} else if m == "bridge" {
