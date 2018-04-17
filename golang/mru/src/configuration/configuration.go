@@ -6,6 +6,7 @@ import (
 
 type Configuration struct {
 	Device         string
+	Protocol       string
 	IP             string
 	Port           string
 	Username       string

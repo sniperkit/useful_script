@@ -1,10 +1,11 @@
 // Package telnet provides simple interface for interacting with Telnet
 // connection.
-package telnetclient
+package telnet
 
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -40,9 +41,9 @@ const (
 	optNAWS = 31
 )
 
-// Client implements net.Conn interface for Telnet protocol plus some set of
+// Session implements net.Conn interface for Telnet protocol plus some set of
 // Telnet specific methods.
-type Client struct {
+type Session struct {
 	net.Conn
 	r *bufio.Reader
 
@@ -52,14 +53,14 @@ type Client struct {
 	cliEcho            bool
 }
 
-func NewClient(addr string) (*Client, error) {
+func newSession(addr string) (*Session, error) {
 	log.Printf("Connect to %s !\n", addr)
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
 		return nil, err
 	}
 
-	c := Client{
+	c := Session{
 		Conn: conn,
 		r:    bufio.NewReaderSize(conn, 256),
 	}
@@ -68,63 +69,63 @@ func NewClient(addr string) (*Client, error) {
 
 // SetUnixWriteMode sets flag that applies only to the Write method.
 // If set, Write converts any '\n' (LF) to '\r\n' (CR LF).
-func (c *Client) SetUnixWriteMode(uwm bool) {
-	c.unixWriteMode = uwm
+func (s *Session) SetUnixWriteMode(uwm bool) {
+	s.unixWriteMode = uwm
 }
 
-func (c *Client) do(option byte) error {
+func (s *Session) do(option byte) error {
 	//log.Println("do:", option)
-	_, err := c.Conn.Write([]byte{cmdIAC, cmdDo, option})
+	_, err := s.Conn.Write([]byte{cmdIAC, cmdDo, option})
 	return err
 }
 
-func (c *Client) dont(option byte) error {
+func (s *Session) dont(option byte) error {
 	//log.Println("dont:", option)
-	_, err := c.Conn.Write([]byte{cmdIAC, cmdDont, option})
+	_, err := s.Conn.Write([]byte{cmdIAC, cmdDont, option})
 	return err
 }
 
-func (c *Client) will(option byte) error {
+func (s *Session) will(option byte) error {
 	//log.Println("will:", option)
-	_, err := c.Conn.Write([]byte{cmdIAC, cmdWill, option})
+	_, err := s.Conn.Write([]byte{cmdIAC, cmdWill, option})
 	return err
 }
 
-func (c *Client) wont(option byte) error {
+func (s *Session) wont(option byte) error {
 	//log.Println("wont:", option)
-	_, err := c.Conn.Write([]byte{cmdIAC, cmdWont, option})
+	_, err := s.Conn.Write([]byte{cmdIAC, cmdWont, option})
 	return err
 }
 
-func (c *Client) sub(opt byte, data ...byte) error {
-	if _, err := c.Conn.Write([]byte{cmdIAC, cmdSB, opt}); err != nil {
+func (s *Session) sub(opt byte, data ...byte) error {
+	if _, err := s.Conn.Write([]byte{cmdIAC, cmdSB, opt}); err != nil {
 		return err
 	}
-	if _, err := c.Conn.Write(data); err != nil {
+	if _, err := s.Conn.Write(data); err != nil {
 		return err
 	}
-	_, err := c.Conn.Write([]byte{cmdIAC, cmdSE})
+	_, err := s.Conn.Write([]byte{cmdIAC, cmdSE})
 	return err
 }
 
-func (c *Client) deny(cmd, opt byte) (err error) {
+func (s *Session) deny(cmd, opt byte) (err error) {
 	switch cmd {
 	case cmdDo:
-		err = c.wont(opt)
+		err = s.wont(opt)
 	case cmdDont:
 		// nop
 	case cmdWill, cmdWont:
-		err = c.dont(opt)
+		err = s.dont(opt)
 	}
 	return
 }
 
-func (c *Client) skipSubneg() error {
+func (s *Session) skipSubneg() error {
 	for {
-		if b, err := c.r.ReadByte(); err != nil {
+		if b, err := s.r.ReadByte(); err != nil {
 			return err
 		} else if b == cmdIAC {
-			if b, err = c.r.ReadByte(); err != nil {
+			if b, err = s.r.ReadByte(); err != nil {
 				return err
 			} else if b == cmdSE {
 				return nil
@@ -133,19 +134,19 @@ func (c *Client) skipSubneg() error {
 	}
 }
 
-func (c *Client) cmd(cmd byte) error {
+func (s *Session) cmd(cmd byte) error {
 	switch cmd {
 	case cmdGA:
 		return nil
 	case cmdDo, cmdDont, cmdWill, cmdWont:
 		// Process cmd after this switch.
 	case cmdSB:
-		return c.skipSubneg()
+		return s.skipSubneg()
 	default:
 		return fmt.Errorf("unknown command: %d", cmd)
 	}
 	// Read an option
-	o, err := c.r.ReadByte()
+	o, err := s.r.ReadByte()
 	if err != nil {
 		return err
 	}
@@ -155,78 +156,78 @@ func (c *Client) cmd(cmd byte) error {
 		// Accept any echo configuration.
 		switch cmd {
 		case cmdDo:
-			if !c.cliEcho {
-				c.cliEcho = true
-				err = c.will(o)
+			if !s.cliEcho {
+				s.cliEcho = true
+				err = s.will(o)
 			}
 		case cmdDont:
-			if c.cliEcho {
-				c.cliEcho = false
-				err = c.wont(o)
+			if s.cliEcho {
+				s.cliEcho = false
+				err = s.wont(o)
 			}
 		case cmdWill:
-			if !c.cliEcho {
-				c.cliEcho = true
-				err = c.do(o)
+			if !s.cliEcho {
+				s.cliEcho = true
+				err = s.do(o)
 			}
 		case cmdWont:
-			if c.cliEcho {
-				c.cliEcho = false
-				err = c.dont(o)
+			if s.cliEcho {
+				s.cliEcho = false
+				err = s.dont(o)
 			}
 		}
 	case optSuppressGoAhead:
 		// We don't use GA so can allways accept every configuration
 		switch cmd {
 		case cmdDo:
-			if !c.cliSuppressGoAhead {
-				c.cliSuppressGoAhead = true
-				err = c.will(o)
+			if !s.cliSuppressGoAhead {
+				s.cliSuppressGoAhead = true
+				err = s.will(o)
 			}
 		case cmdDont:
-			if c.cliSuppressGoAhead {
-				c.cliSuppressGoAhead = false
-				err = c.wont(o)
+			if s.cliSuppressGoAhead {
+				s.cliSuppressGoAhead = false
+				err = s.wont(o)
 			}
 		case cmdWill:
-			if !c.cliSuppressGoAhead {
-				c.cliSuppressGoAhead = true
-				err = c.do(o)
+			if !s.cliSuppressGoAhead {
+				s.cliSuppressGoAhead = true
+				err = s.do(o)
 			}
 		case cmdWont:
-			if c.cliSuppressGoAhead {
-				c.cliSuppressGoAhead = false
-				err = c.dont(o)
+			if s.cliSuppressGoAhead {
+				s.cliSuppressGoAhead = false
+				err = s.dont(o)
 			}
 		}
 	case optNAWS:
 		if cmd != cmdDo {
-			err = c.deny(cmd, o)
+			err = s.deny(cmd, o)
 			break
 		}
-		if err = c.will(o); err != nil {
+		if err = s.will(o); err != nil {
 			break
 		}
 		// Reply with max window size: 65535x65535
-		err = c.sub(o, 255, 255, 255, 255)
+		err = s.sub(o, 255, 255, 255, 255)
 	default:
 		// Deny any other option
-		err = c.deny(cmd, o)
+		err = s.deny(cmd, o)
 	}
 	return err
 }
 
-func (c *Client) tryReadByte() (b byte, retry bool, err error) {
-	b, err = c.r.ReadByte()
+func (s *Session) tryReadByte() (b byte, retry bool, err error) {
+	b, err = s.r.ReadByte()
 	if err != nil || b != cmdIAC {
 		return
 	}
-	b, err = c.r.ReadByte()
+	b, err = s.r.ReadByte()
 	if err != nil {
 		return
 	}
 	if b != cmdIAC {
-		err = c.cmd(b)
+		err = s.cmd(b)
 		if err != nil {
 			return
 		}
@@ -237,26 +238,26 @@ func (c *Client) tryReadByte() (b byte, retry bool, err error) {
 
 // SetEcho tries to enable/disable echo on server side. Typically telnet
 // servers doesn't support this.
-func (c *Client) SetEcho(echo bool) error {
+func (s *Session) SetEcho(echo bool) error {
 	if echo {
-		return c.do(optEcho)
+		return s.do(optEcho)
 	}
-	return c.dont(optEcho)
+	return s.dont(optEcho)
 }
 
 // ReadByte works like bufio.ReadByte
-func (c *Client) ReadByte() (b byte, err error) {
+func (s *Session) ReadByte() (b byte, err error) {
 	retry := true
 	for retry && err == nil {
-		b, retry, err = c.tryReadByte()
+		b, retry, err = s.tryReadByte()
 	}
 	return
 }
 
 // ReadRune works like bufio.ReadRune
-func (c *Client) ReadRune() (r rune, size int, err error) {
+func (s *Session) ReadRune() (r rune, size int, err error) {
 loop:
-	r, size, err = c.r.ReadRune()
+	r, size, err = s.r.ReadRune()
 	if err != nil {
 		return
 	}
@@ -265,12 +266,12 @@ loop:
 		return
 	}
 	// Bad rune
-	err = c.r.UnreadRune()
+	err = s.r.UnreadRune()
 	if err != nil {
 		return
 	}
 	// Read telnet command or escaped IAC
-	_, retry, err := c.tryReadByte()
+	_, retry, err := s.tryReadByte()
 	if err != nil {
 		return
 	}
@@ -283,10 +284,10 @@ loop:
 }
 
 // Read is for implement an io.Reader interface
-func (c *Client) Read(buf []byte) (int, error) {
+func (s *Session) Read(buf []byte) (int, error) {
 	var n int
 	for n < len(buf) {
-		b, retry, err := c.tryReadByte()
+		b, retry, err := s.tryReadByte()
 		if err != nil {
 			return n, err
 		}
@@ -294,7 +295,7 @@ func (c *Client) Read(buf []byte) (int, error) {
 			buf[n] = b
 			n++
 		}
-		if n > 0 && c.r.Buffered() == 0 {
+		if n > 0 && s.r.Buffered() == 0 {
 			// Don't block if can't return more data.
 			return n, err
 		}
@@ -303,10 +304,10 @@ func (c *Client) Read(buf []byte) (int, error) {
 }
 
 // ReadBytes works like bufio.ReadBytes
-func (c *Client) ReadBytes(delim byte) ([]byte, error) {
+func (s *Session) ReadBytes(delim byte) ([]byte, error) {
 	var line []byte
 	for {
-		b, err := c.ReadByte()
+		b, err := s.ReadByte()
 		if err != nil {
 			return nil, err
 		}
@@ -319,9 +320,9 @@ func (c *Client) ReadBytes(delim byte) ([]byte, error) {
 }
 
 // SkipBytes works like ReadBytes but skips all read data.
-func (c *Client) SkipBytes(delim byte) error {
+func (s *Session) SkipBytes(delim byte) error {
 	for {
-		b, err := c.ReadByte()
+		b, err := s.ReadByte()
 		if err != nil {
 			return err
 		}
@@ -333,12 +334,12 @@ func (c *Client) SkipBytes(delim byte) error {
 }
 
 // ReadString works like bufio.ReadString
-func (c *Client) ReadString(delim byte) (string, error) {
-	bytes, err := c.ReadBytes(delim)
+func (s *Session) ReadString(delim byte) (string, error) {
+	bytes, err := s.ReadBytes(delim)
 	return string(bytes), err
 }
 
-func (c *Client) readUntil(read bool, delims ...string) ([]byte, int, error) {
+func (s *Session) readUntil(read bool, delims ...string) ([]byte, int, error) {
 	if len(delims) == 0 {
 		return nil, 0, nil
 	}
@@ -351,7 +352,7 @@ func (c *Client) readUntil(read bool, delims ...string) ([]byte, int, error) {
 	}
 	var line []byte
 	for {
-		b, err := c.ReadByte()
+		b, err := s.ReadByte()
 		if err != nil {
 			return nil, 0, err
 		}
@@ -374,35 +375,35 @@ func (c *Client) readUntil(read bool, delims ...string) ([]byte, int, error) {
 
 // ReadUntilIndex reads from connection until one of delimiters occurs. Returns
 // read data and an index of delimiter or error.
-func (c *Client) ReadUntilIndex(delims ...string) ([]byte, int, error) {
-	line, n, err := c.readUntil(true, delims...)
+func (s *Session) ReadUntilIndex(delims ...string) ([]byte, int, error) {
+	line, n, err := s.readUntil(true, delims...)
 	//log.Println(string(line))
 	return line, n, err
 }
 
 // ReadUntil works like ReadUntilIndex but don't return a delimiter index.
-func (c *Client) ReadUntil(delims ...string) ([]byte, error) {
-	line, _, err := c.readUntil(true, delims...)
+func (s *Session) ReadUntil(delims ...string) ([]byte, error) {
+	line, _, err := s.readUntil(true, delims...)
 	//log.Println(string(line))
 	return line, err
 }
 
 // SkipUntilIndex works like ReadUntilIndex but skips all read data.
-func (c *Client) SkipUntilIndex(delims ...string) (int, error) {
-	_, i, err := c.readUntil(false, delims...)
+func (s *Session) SkipUntilIndex(delims ...string) (int, error) {
+	_, i, err := s.readUntil(false, delims...)
 	return i, err
 }
 
 // SkipUntil works like ReadUntil but skips all read data.
-func (c *Client) SkipUntil(delims ...string) error {
-	_, _, err := c.readUntil(false, delims...)
+func (s *Session) SkipUntil(delims ...string) error {
+	_, _, err := s.readUntil(false, delims...)
 	return err
 }
 
 // Write is for implement an io.Writer interface
-func (c *Client) Write(buf []byte) (int, error) {
+func (s *Session) Write(buf []byte) (int, error) {
 	search := "\xff"
-	if c.unixWriteMode {
+	if s.unixWriteMode {
 		search = "\xff\n"
 	}
 	var (
@@ -413,20 +414,20 @@ func (c *Client) Write(buf []byte) (int, error) {
 		var k int
 		i := bytes.IndexAny(buf, search)
 		if i == -1 {
-			k, err = c.Conn.Write(buf)
+			k, err = s.Conn.Write(buf)
 			n += k
 			break
 		}
-		k, err = c.Conn.Write(buf[:i])
+		k, err = s.Conn.Write(buf[:i])
 		n += k
 		if err != nil {
 			break
 		}
 		switch buf[i] {
 		case LF:
-			k, err = c.Conn.Write([]byte{CR, LF})
+			k, err = s.Conn.Write([]byte{CR, LF})
 		case cmdIAC:
-			k, err = c.Conn.Write([]byte{cmdIAC, cmdIAC})
+			k, err = s.Conn.Write([]byte{cmdIAC, cmdIAC})
 		}
 		n += k
 		if err != nil {
@@ -437,10 +438,42 @@ func (c *Client) Write(buf []byte) (int, error) {
 	return n, err
 }
 
-func (c *Client) WriteString(str string) (int, error) {
-	return c.Write([]byte(str))
+func (s *Session) WriteString(str string) (int, error) {
+	return s.Write([]byte(str))
 }
 
-func (c *Client) WriteLine(str string) (int, error) {
-	return c.WriteString(str + "\n")
+func (s *Session) WriteLine(str string) (int, error) {
+	return s.WriteString(str + "\n")
+}
+
+func New(user, pass, ip, port string) (*Session, error) {
+	s, err := newSession(ip + ":" + port)
+	if err != nil {
+		log.Println("error happend when connect to: ", ip, " with: ", err.Error())
+		return nil, errors.New("Cannot connect to host")
+	}
+
+	s.WriteLine("\n") //For serial server
+	s.SetUnixWriteMode(true)
+	_, err = s.ReadUntil("ogin:")
+	if err != nil {
+		fmt.Println("Error happend when get login: ", err.Error())
+		return nil, err
+	}
+
+	s.WriteLine(user)
+	_, err = s.ReadUntil("assword:")
+	if err != nil {
+		fmt.Println("Error happend when get login prompt: ", err.Error())
+		return nil, err
+	}
+
+	s.WriteLine(pass)
+	_, err = s.ReadUntil(">")
+	if err != nil {
+		fmt.Println("Error happend when login: ", err.Error())
+		return nil, err
+	}
+
+	return s, nil
 }

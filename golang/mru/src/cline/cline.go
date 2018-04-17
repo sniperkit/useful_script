@@ -1,6 +1,7 @@
 package cline
 
 import (
+	"client"
 	"command"
 	"configuration"
 	"errors"
@@ -9,12 +10,11 @@ import (
 	"os"
 	"strings"
 	"sync"
-	"telnetclient"
 	"util"
 )
 
 type Cli struct {
-	client       *telnetclient.Client
+	client       client.Client
 	conf         *configuration.Configuration
 	currentMode  string
 	modeToPrompt map[string]string
@@ -208,11 +208,13 @@ func (c *Cli) GoConfigMode() ([]byte, error) {
 }
 
 func NewCli(conf *configuration.Configuration) (c *Cli, err error) {
-	tc, err := telnetclient.NewClient(conf.IP + ":" + conf.Port)
+	tc, err := client.New(conf.Username, conf.Password, conf.Protocol, conf.IP, conf.Port)
 	if err != nil {
 		log.Println("error happend when connect to: ", conf.IP, " with: ", err.Error())
 		return nil, errors.New("Cannot connect to host")
 	}
+
+	os.Remove("command_log.txt")
 
 	return &Cli{
 		client:       tc,
@@ -270,14 +272,8 @@ func (c *Cli) Init() error {
 		}
 	}
 
-	err := c.login()
-	if err != nil {
-		log.Println("Error happened when login: ", err.Error())
-		return err
-	}
-
 	c.client.WriteLine("enable")
-	_, err = c.client.ReadUntil(c.conf.Prompt)
+	_, err := c.client.ReadUntil(c.conf.Prompt)
 	//data, err := c.client.ReadUntil(c.conf.Prompt)
 	if err != nil {
 		fmt.Println("Error happend when goto enable mode: ", err.Error())
@@ -292,34 +288,6 @@ func (c *Cli) Init() error {
 	}
 	c.currentMode = "normal"
 	//fmt.Println(string(data))
-
-	return nil
-}
-
-func (c *Cli) login() error {
-	c.client.WriteLine("\n") //For serial server
-	c.client.SetUnixWriteMode(true)
-	_, err := c.client.ReadUntil(c.conf.LoginPrompt)
-	if err != nil {
-		fmt.Println("Error happend when get login: ", err.Error())
-		return err
-	}
-
-	c.client.WriteLine(c.conf.Username)
-	_, err = c.client.ReadUntil(c.conf.PasswordPrompt)
-	if err != nil {
-		fmt.Println("Error happend when get login prompt: ", err.Error())
-		return err
-	}
-
-	c.client.WriteLine(c.conf.Password)
-	_, err = c.client.ReadUntil(c.conf.EnablePrompt)
-	if err != nil {
-		fmt.Println("Error happend when login: ", err.Error())
-		return err
-	}
-
-	os.Remove("command_log.txt")
 
 	return nil
 }

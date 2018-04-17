@@ -23,6 +23,7 @@ type RUT struct {
 	Device     string //Device name
 	Username   string
 	Password   string
+	Protocol   string
 	IP         string
 	Port       string
 	BasePrompt string
@@ -34,6 +35,7 @@ type RUT struct {
 type Config struct {
 	Index      int    `json:"index"`
 	Device     string `json:"device"`
+	Protocol   string `json:"protocol"`
 	IP         string `json:"ip"`
 	Port       string `json:"port"`
 	Username   string `json:"username"`
@@ -76,6 +78,11 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.BasePrompt = r.BasePrompt
 	conf.IP = r.IP
 	conf.Port = r.Port
+	if conf.Protocol == "" {
+		conf.Protocol = "telnet"
+	} else {
+		conf.Protocol = r.Protocol
+	}
 
 	conf.EnablePrompt = configuration.DefaultEnablePrompt
 	conf.LoginPrompt = configuration.DefaultLoginPrompt
