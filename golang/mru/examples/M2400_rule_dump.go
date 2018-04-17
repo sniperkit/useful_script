@@ -2141,9 +2141,11 @@ var BCM56850ICAPFieldSelector_Odd = ICAPFieldSelector{
 var CTX = context.Background()
 
 var IP = flag.String("ip", "10.71.20.102", "IP address of the remote device")
+var Port = flag.String("port", "22", "IP address of the remote device")
 var Host = flag.String("hostname", "SWITCH", "Host name of the remote device")
-var User = flag.String("username", "admin", "Username of the remote device")
-var Password = flag.String("password", "", "Passwrod of the remote device")
+var User = flag.String("username", "liwei", "Username of the remote device")
+var Protocol = flag.String("login protocol", "ssh", "Username of the remote device")
+var Password = flag.String("password", "Lee123!@#", "Passwrod of the remote device")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
 
 func dumpTableAndSaveToFile(dev *rut.RUT, name, start, end, file string) error {
@@ -2687,7 +2689,8 @@ func main() {
 		Name:     "SWITCH",
 		Device:   "V5",
 		IP:       *IP,
-		Port:     "23",
+		Protocol: *Protocol,
+		Port:     *Port,
 		Username: *User,
 		Hostname: *Host,
 		Password: *Password,

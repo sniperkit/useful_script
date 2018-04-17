@@ -23,6 +23,8 @@ var IP = flag.String("ip", "10.71.20.10", "IP address of the remote device")
 var Host = flag.String("hostname", "SWITCH", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "Dasan123456", "Passwrod of the remote device")
+var Protocol = flag.String("protocol", "ssh", "Passwrod of the remote device")
+var Port = flag.String("port", "22", "Passwrod of the remote device")
 var Start = flag.String("start", "", "start index")
 var End = flag.String("end", "", "end index")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
@@ -242,9 +244,10 @@ func main() {
 		Name:     "SWITCH",
 		Device:   "V5",
 		IP:       *IP,
-		Port:     "23",
+		Port:     *Port,
 		Username: *User,
 		Hostname: *Host,
+		Protocol: *Protocol,
 		Password: *Password,
 	})
 

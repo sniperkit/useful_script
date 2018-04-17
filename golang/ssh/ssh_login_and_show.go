@@ -176,7 +176,7 @@ func main() {
 	cmds = append(cmds, "show running-config")
 	cmds = append(cmds, "show system")
 
-	sess, err := NewSSHSession("liwei", "Lee123!@#", "10.71.20.102:22")
+	sess, err := NewSSHSession("test", "Lee123!@#", "10.71.20.191:22")
 	if err != nil {
 		panic(err)
 	}

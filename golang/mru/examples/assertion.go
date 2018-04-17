@@ -10,11 +10,11 @@ import (
 func main() {
 	dev, err := rut.New(&rut.RUT{
 		Name:     "DUT1",
-		Device:   "V8",
-		IP:       "10.71.20.198",
+		Device:   "V5",
+		IP:       "10.71.20.102",
 		Port:     "23",
 		Username: "admin",
-		Hostname: "V8500",
+		Hostname: "SWITCH",
 		Password: "",
 	})
 

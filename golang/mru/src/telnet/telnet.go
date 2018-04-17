@@ -54,7 +54,6 @@ type Session struct {
 }
 
 func newSession(addr string) (*Session, error) {
-	log.Printf("Connect to %s !\n", addr)
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
 		return nil, err

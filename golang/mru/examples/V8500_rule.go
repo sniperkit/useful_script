@@ -1745,107 +1745,10 @@ var IP = flag.String("ip", "10.71.20.191", "IP address of the remote device")
 var Host = flag.String("hostname", "V8500_2", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
+var Protocol = flag.String("protocol(telnet/ssh)", "telnet", "Passwrod of the remote device")
+var Port = flag.String("port", "23", "Passwrod of the remote device")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
 var SFU = flag.String("sfu", "A", "SFU (A/B)")
-
-func AddRule(dev *rut.RUT, name string, flow string, action string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
-	})
-
-	return err
-}
-
-func AddRulePort(dev *rut.RUT, name string, flow string, action string, port string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
-	})
-
-	return err
-}
-
-func AddRulePortPriority(dev *rut.RUT, name, flow, action, port, priority string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " flow " + name + " create"},
-		&command.Command{Mode: "config-flow", CMD: flow},
-		&command.Command{Mode: "config-flow", CMD: " apply"},
-		&command.Command{Mode: "config-flow", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policer " + name + " create"},
-		&command.Command{Mode: "config-policer", CMD: " counter"},
-		&command.Command{Mode: "config-policer", CMD: " apply"},
-		&command.Command{Mode: "config-policer", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " policy " + name + " create"},
-		&command.Command{Mode: "config-policy", CMD: " include-flow " + name},
-		&command.Command{Mode: "config-policy", CMD: " include-policer " + name},
-		&command.Command{Mode: "config-policy", CMD: " action match " + action},
-		&command.Command{Mode: "config-policy", CMD: " priority " + priority},
-		&command.Command{Mode: "config-policy", CMD: " apply"},
-		&command.Command{Mode: "config-policy", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
-	})
-
-	return err
-}
-
-func DelRule(dev *rut.RUT, name string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " interface gigabitethernet 8/2"},
-		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " no policy " + name},
-		&command.Command{Mode: "config", CMD: " no policer " + name},
-		&command.Command{Mode: "config", CMD: " no flow " + name},
-	})
-
-	return err
-}
-
-func DelRulePort(dev *rut.RUT, name, port string) error {
-	_, err := dev.RunCommands(CTX, []*command.Command{
-		&command.Command{Mode: "config", CMD: " interface " + port},
-		&command.Command{Mode: "config-if", CMD: " no service-policy input " + name},
-		&command.Command{Mode: "config-if", CMD: " exit"},
-		&command.Command{Mode: "config", CMD: " no policy " + name},
-		&command.Command{Mode: "config", CMD: " no policer " + name},
-		&command.Command{Mode: "config", CMD: " no flow " + name},
-	})
-
-	return err
-}
 
 func dumpTableAndSaveToFile(dev *rut.RUT, name, start, end, file string) error {
 	err := os.Remove(file)
@@ -2424,10 +2327,11 @@ func main() {
 		Name:     "V8500_SFU",
 		Device:   "V8",
 		IP:       *IP,
-		Port:     "23",
+		Port:     *Port,
 		Username: *User,
 		Hostname: *Host,
 		Password: *Password,
+		Protocol: *Protocol,
 		SFU:      *SFU,
 	})
 
@@ -2458,16 +2362,17 @@ func main() {
 
 	DB.Dump(dev, "before.txt")
 	/*
-			DB.AnalysisRule(dev, "ether_any", "ethtype any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "ether_8765", "ethtype 0x8765", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "length_1234", "length 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "inner_vid_2345", "inner-vid 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "outer_vid_2345", "outer-vid 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "cos_6", "cos 6", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "mac_any_any", "mac any any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "mac_08_07", "mac 08:08:08:08:08:08 07:07:07:07:07:07", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "ip_any_any", "ip any any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ether_any", "ethtype any", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ether_8765", "ethtype 0x8765", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "length_1234", "length 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "inner_vid_2345", "inner-vid 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "outer_vid_2345", "outer-vid 1234", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "cos_6", "cos 6", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "mac_any_any", "mac any any", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "mac_08_07", "mac 08:08:08:08:08:08 07:07:07:07:07:07", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ip_any_any", "ip any any", "copy-to-cpu", "gigabitethernet 8/2", "high")
+
 		DB.AnalysisRule(dev, "ip_50_40_proto_123", "ip 50.50.50.50 40.40.40.40 123", "deny", "gigabitethernet 8/2", "high")
 		DB.AnalysisRule(dev, "ip_50_40_tcp_100_200", "ip 50.50.50.50 40.40.40.40 tcp 100 200", "deny", "gigabitethernet 8/2", "high")
 		DB.AnalysisRule(dev, "ip_50_40_udp_400_200", "ip 50.50.50.50 40.40.40.40 udp 400 200", "deny", "gigabitethernet 8/2", "high")
@@ -2476,26 +2381,26 @@ func main() {
 		DB.AnalysisRule(dev, "ip_50_40_udp_800_700", "ip 50.50.50.50 40.40.40.40 udp 800 700", "deny", "gigabitethernet 8/2", "high")
 		DB.AnalysisRule(dev, "ip_50_40_udp_900_20", "ip 50.50.50.50 40.40.40.40 udp 900 20", "deny", "gigabitethernet 8/2", "high")
 		DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
-	*/
-	/*
-					DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_nh_50", "ipv6 2001:db8::1000 2001:db8::2000 50", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_nh_51", "ipv6 2001:db8::1000 2001:db8::2000 51", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_nh_52", "ipv6 2001:db8::1000 2001:db8::2000 52", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_nh_53", "ipv6 2001:db8::1000 2001:db8::2000 53", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_nh_54", "ipv6 2001:db8::1000 2001:db8::2000 54", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 tcp 100 200", "copy-to-cpu", "gigabitethernet 8/2", "high")
-					DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_300_400", "ipv6 2001:db8::1000 2001:db8::2000 tcp 300 400", "copy-to-cpu", "gigabitethernet 8/2", "high")
-				DB.AnalysisRule(dev, "ipv6_1000_2000_udp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 udp 100-200 3004-400", "copy-to-cpu", "gigabitethernet 8/2", "high")
-				DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500-700 600", "copy-to-cpu", "gigabitethernet 8/2", "high")
-				DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600-800", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_s500", "ipv6 any any tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_s500hm", "ipv6 any any tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
-			DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500hm", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
+		DB.AnalysisRule(dev, "ipv6_1000_2000", "ipv6 2001:db8::1000 2001:db8::2000", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_50", "ipv6 2001:db8::1000 2001:db8::2000 50", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_51", "ipv6 2001:db8::1000 2001:db8::2000 51", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_52", "ipv6 2001:db8::1000 2001:db8::2000 52", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_53", "ipv6 2001:db8::1000 2001:db8::2000 53", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_nh_54", "ipv6 2001:db8::1000 2001:db8::2000 54", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 tcp 100 200", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_300_400", "ipv6 2001:db8::1000 2001:db8::2000 tcp 300 400", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_udp_100_200", "ipv6 2001:db8::1000 2001:db8::2000 udp 100-200 3004-400", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_udp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 udp 500-700 600", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_500_600", "ipv6 2001:db8::1000 2001:db8::2000 tcp 500 600-800", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_s500", "ipv6 any any tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_s500hm", "ipv6 any any tcp 500 any", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500hm", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
 		DB.Dump(dev, "after.txt")
+		DB.AnalysisRule(dev, "multicast_224", "ip any 224.0.0.251", "cancel-copy-to-cpu", "gigabitethernet 8/1", "high")
+		DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_d500hm", "ipv6 any any tcp any 500", "copy-to-cpu", "gigabitethernet 8/2", "high-middle")
 	*/
-	DB.AnalysisRule(dev, "multicast_224", "ip any 224.0.0.251", "cancel-copy-to-cpu", "gigabitethernet 8/1", "high")
+	DB.AnalysisRule(dev, "ip_50_40", "ip 50.50.50.50 40.40.40.40", "deny", "gigabitethernet 8/2", "high")
 	StartServer()
 }
 

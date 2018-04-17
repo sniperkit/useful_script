@@ -29,11 +29,10 @@ func New(user, password, ip, port string) (*Session, error) {
 		return nil, err
 	}
 
-	res, err := sess.ReadUntil(">")
+	_, err := sess.ReadUntil(">")
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(res)
 
 	return sess, nil
 }

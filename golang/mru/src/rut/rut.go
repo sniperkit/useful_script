@@ -78,7 +78,7 @@ func buildDefaultConfiguration(r *RUT) *configuration.Configuration {
 	conf.BasePrompt = r.BasePrompt
 	conf.IP = r.IP
 	conf.Port = r.Port
-	if conf.Protocol == "" {
+	if r.Protocol == "" {
 		conf.Protocol = "telnet"
 	} else {
 		conf.Protocol = r.Protocol
