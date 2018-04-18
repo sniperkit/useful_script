@@ -6,6 +6,7 @@ import (
 	"golang.org/x/crypto/ssh"
 	"io"
 	"net"
+	"os"
 	"time"
 )
 
@@ -88,6 +89,7 @@ func (s *Session) muxShell() error {
 	if err != nil {
 		return err
 	}
+	s.session.Stderr = os.Stderr
 	s.r = bufio.NewReader(r)
 	return nil
 }
@@ -116,16 +118,20 @@ func (s *Session) RunCommand(cmd string) (string, error) {
 	return "", nil
 }
 
+func (s *Session) Clear() {
+	s.r.ReadLine()
+}
+
 func (s *Session) readUntil(read bool, delims ...string) ([]byte, int, error) {
 	if len(delims) == 0 {
 		return nil, 0, nil
 	}
 	p := make([]string, len(delims))
-	for i, s := range delims {
-		if len(s) == 0 {
+	for i, d := range delims {
+		if len(d) == 0 {
 			return nil, 0, nil
 		}
-		p[i] = s
+		p[i] = d
 	}
 	var line []byte
 	for {
@@ -136,12 +142,12 @@ func (s *Session) readUntil(read bool, delims ...string) ([]byte, int, error) {
 		if read {
 			line = append(line, b)
 		}
-		for i, s := range p {
-			if s[0] == b {
-				if len(s) == 1 {
+		for i, d := range p {
+			if d[0] == b {
+				if len(d) == 1 {
 					return line, i, nil
 				}
-				p[i] = s[1:]
+				p[i] = d[1:]
 			} else {
 				p[i] = delims[i]
 			}
