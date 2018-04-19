@@ -3407,6 +3407,14 @@ RFC 2328                     OSPF Version 2                   April 1998
             interface address.[4]
 
         Waiting
+            (@liwei: Waiting state存在的意义是用来发现网络上的现有的DR/BDR，
+             如果可以确认网络上DR/BDR的存在状态，则就应该退出Waiting状态了.
+             在退出Waiting状态之前是不允许进行DR/BDR选举的，但是要明确一点：
+             退出Waiting state也不意味着一定会进行DR/BDR选举。
+             也就是说DR/BDR的选举只是在必要的时候才会进行:
+                1. DR存在但BDR不存在。
+                2. DR/BDR都不存在。
+             )
             In this state, the router is trying to determine the
             identity of the (Backup) Designated Router for the network.
             To do this, the router monitors the Hello Packets it
