@@ -3408,12 +3408,14 @@ RFC 2328                     OSPF Version 2                   April 1998
 
         Waiting
             (@liwei: Waiting state存在的意义是用来发现网络上的现有的DR/BDR，
-             如果可以确认网络上DR/BDR的存在状态，则就应该退出Waiting状态了.
-             在退出Waiting状态之前是不允许进行DR/BDR选举的，但是要明确一点：
-             退出Waiting state也不意味着一定会进行DR/BDR选举。
-             也就是说DR/BDR的选举只是在必要的时候才会进行:
-                1. DR存在但BDR不存在。
-                2. DR/BDR都不存在。
+             如果可以确认网络上DR/BDR的存在状态，则就应该退出Waiting状态了,
+             也就是说如果确认的当前网络上的DR/BDR状态，则本地路由器就没有必要呆在
+             Waiting State了.
+             在退出Waiting状态之前是不允许进行DR/BDR选举的.
+             同时注意，在退出Waiting以后，我们队DR/BDR的选举是建立在当前网络上已有
+             DR/BDR的状态的基础上的：
+                1. 如果不存在则重新选举.
+                2. 如果存在则不抢占现有的DR/BDR。
              )
             In this state, the router is trying to determine the
             identity of the (Backup) Designated Router for the network.
@@ -4371,6 +4373,7 @@ RFC 2328                     OSPF Version 2                   April 1998
             Exchange process has completed.
 
         AdjOK?
+            (@liwei: 并不是所有的邻居之间都要形成邻接关系的).
             A decision must be made as to whether an adjacency should be
             established/maintained with the neighbor.  This event will
             start some adjacencies forming, and destroy others.
