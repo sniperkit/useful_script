@@ -128,7 +128,7 @@ func (c *Cli) GoNormalMode() ([]byte, error) {
 	return nil, nil
 }
 
-func (c *Cli) GoShelllMode() ([]byte, error) {
+func (c *Cli) GoShellMode() ([]byte, error) {
 	if c.currentMode == "config" ||
 		c.currentMode == "config-vlan" ||
 		c.currentMode == "config-if" ||
@@ -145,6 +145,11 @@ func (c *Cli) GoShelllMode() ([]byte, error) {
 			return res, err
 		}
 	} else if c.currentMode == "bcmshell" {
+		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
+		if err != nil {
+			return res, err
+		}
+	} else if c.currentMode == "rtkshell" {
 		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})
 		if err != nil {
 			return res, err
@@ -184,6 +189,9 @@ func (c *Cli) GoConfigMode() ([]byte, error) {
 	if c.currentMode == "config-vlan" ||
 		c.currentMode == "config-if" ||
 		c.currentMode == "config-dhcp" ||
+		c.currentMode == "config-flow" ||
+		c.currentMode == "config-policer" ||
+		c.currentMode == "config-policy" ||
 		c.currentMode == "bridge" ||
 		c.currentMode == "config-router" {
 		res, err := c.RunCommand(&command.Command{Mode: c.CurrentMode(), CMD: "exit", End: "#"})

@@ -293,6 +293,10 @@ func (d *RUT) IsAlive(ctx context.Context) bool {
 	return false
 }
 
+func (d RUT) GoShellMode() ([]byte, error) {
+	return d.cli.GoShellMode()
+}
+
 func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	if !filepath.IsAbs(local) {
 		return fmt.Errorf("local file must use absoluted path")
@@ -373,6 +377,65 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 		return err
 	}
 	log.Println(string(data))
+
+	return nil
+}
+
+func (d *RUT) TCPDUMP(intf, filter, file, count string) error {
+	if d.cli.CurrentMode() != "shell" {
+		_, err := d.GoShellMode()
+		if err != nil {
+			return fmt.Errorf("tcpdump should working under shell mode, current: %s", d.cli.CurrentMode())
+		}
+	}
+
+	if file == "" || !strings.HasSuffix(file, ".pcap") {
+		return fmt.Errorf("Invalid file name: ", file)
+	}
+
+	dump := "tcpdump "
+	if intf != "" {
+		dump += " -i " + intf
+	}
+
+	if count != "" {
+		dump += " -c " + count
+	}
+
+	if filter != "" {
+		dump += " " + filter
+	}
+
+	dump += " -w " + file
+
+	if count != "" {
+		_, err := d.WriteLine(dump)
+		if err != nil {
+			return err
+		}
+		_, err = d.Expect("#")
+		if err != nil {
+			return err
+		}
+	} else {
+		_, err := d.WriteLine(dump + "&")
+		if err != nil {
+			return err
+		}
+		_, err = d.Expect("#")
+		if err != nil {
+			return err
+		}
+		time.Sleep(time.Second * 10)
+		_, err = d.WriteLine("killall tcpdump")
+		if err != nil {
+			return err
+		}
+		_, err = d.Expect("#")
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
