@@ -4,9 +4,16 @@ import (
 	"command"
 	"context"
 	"fmt"
+	"github.com/google/gopacket"
+	"github.com/google/gopacket/pcap"
+	"log"
 	"os"
 	"rut"
-	"time"
+)
+
+var (
+	handle *pcap.Handle
+	err    error
 )
 
 var CTX = context.Background()
@@ -55,51 +62,27 @@ func main() {
 		fmt.Println(err)
 	}
 
-	data, err := dev.RunCommand(CTX, &command.Command{
-		Mode: "config",
-		CMD:  "do q sh -l",
-	})
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(data))
-
-	data, err = dev.RunCommand(CTX, &command.Command{
-		Mode: "shell",
-		CMD:  " tcpdump -w 2224g.pcap&",
-	})
-
-	time.Sleep(time.Second * 5)
-
-	data, err = dev.RunCommand(CTX, &command.Command{
-		Mode: "shell",
-		CMD:  " killall tcpdump",
-	})
-
-	time.Sleep(time.Second * 5)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(data))
-
 	pwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	if err = dev.FTP("/etc/.config/L2_default.CFG", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
+	dev.TCPDUMP("eth05", "", "2.pcap", "")
+	fmt.Println("Dump finished")
+
+	if err = dev.FTP("/etc/2.pcap", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
 		panic(err)
 	}
 
-	if err = dev.SCP("/etc/login.conf", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
-		panic(err)
+	handle, err = pcap.OpenOffline("2.pcap")
+	if err != nil {
+		log.Fatal(err)
 	}
+	defer handle.Close()
 
-	dev.TCPDUMP("eth05", "", "1.pcap", "")
-
-	if err = dev.SCP("/etc/1.pcap", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
-		panic(err)
+	// Loop through packets in file
+	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
+	for packet := range packetSource.Packets() {
+		fmt.Println(packet)
 	}
 }
