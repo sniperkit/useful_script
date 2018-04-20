@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"logger"
+	"path/filepath"
 	"result"
 	"script"
 	"strconv"
@@ -151,6 +152,14 @@ func (d *RUT) RunCommands(ctx context.Context, cmds []*command.Command) (string,
 	return "", nil
 }
 
+func (d *RUT) WriteLine(line string) (int, error) {
+	return d.cli.WriteLine(line)
+}
+
+func (d *RUT) Expect(delims ...string) ([]byte, error) {
+	return d.cli.Expect(delims...)
+}
+
 func (d RUT) runCommand(cmd *command.Command) (string, error) {
 	if cmd.Delay != 0 {
 		<-time.After(time.Second * time.Duration(cmd.Delay))
@@ -282,6 +291,130 @@ func (d *RUT) IsAlive(ctx context.Context) bool {
 		return true
 	}
 	return false
+}
+
+func (d *RUT) FTP(local, ip, user, pass, dir string) error {
+	if !filepath.IsAbs(local) {
+		return fmt.Errorf("local file must use absoluted path")
+	}
+
+	ldir := filepath.Dir(local)
+	file := filepath.Base(local)
+
+	_, err := d.WriteLine("ftp " + ip)
+	if err != nil {
+		return err
+	}
+
+	data, err := d.Expect("):")
+	log.Println(string(data))
+	_, err = d.WriteLine(user)
+	if err != nil {
+		return err
+	}
+	data, err = d.Expect("Password:")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	_, err = d.WriteLine(pass)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	_, err = d.WriteLine("lcd " + ldir)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	_, err = d.WriteLine("cd " + dir)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	_, err = d.WriteLine("put " + file)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	_, err = d.WriteLine("exit")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	data, err = d.Expect("#")
+	if err != nil {
+		return err
+	}
+	log.Println(string(data))
+
+	return nil
+}
+
+func (d *RUT) SCP(local, ip, user, pass, dir string) error {
+	if !filepath.IsAbs(local) {
+		return fmt.Errorf("local file must use absoluted path")
+	}
+
+	file := filepath.Base(local)
+
+	_, err := d.WriteLine("scp " + local + " " + user + "@" + ip + ":" + dir + "/" + file)
+	if err != nil {
+		return err
+	}
+
+	known, err := d.Expect("(yes/no)?", "password:")
+	fmt.Println(string(known))
+	if strings.Contains(string(known), "(yes/no)?") {
+		d.WriteLine("yes")
+		_, err := d.Expect("password:")
+		if err != nil {
+			return err
+		}
+	}
+
+	_, err = d.WriteLine(pass)
+	if err != nil {
+		return err
+	}
+
+	data, err := d.Expect("#")
+	if err != nil {
+		return err
+	}
+
+	if !strings.Contains(string(data), "100%") {
+		return fmt.Errorf("Upload file with error: %s", string(data))
+	}
+	log.Println(string(data))
+
+	return nil
 }
 
 func GetRUTByConfig(c *Config) (*RUT, error) {

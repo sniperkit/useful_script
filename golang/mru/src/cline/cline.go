@@ -86,6 +86,14 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	return data, nil
 }
 
+func (c *Cli) WriteLine(line string) (int, error) {
+	return c.client.WriteLine(line)
+}
+
+func (c *Cli) Expect(delims ...string) ([]byte, error) {
+	return c.client.ReadUntil(delims...)
+}
+
 func (c *Cli) IsModeSwitchMustBeOccured(cmd *command.Command) bool {
 	cmdstr := strings.TrimSpace(cmd.CMD)
 	if strings.HasPrefix(cmdstr, "interface ") || strings.HasPrefix(cmdstr, "router ") ||
