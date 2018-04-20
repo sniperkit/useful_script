@@ -222,6 +222,7 @@ func (server *OSPFServer) initDefaultIntfConf(key IntfConfKey, ipIntfProp IPIntf
 				txEntry.SendMutex = &sync.Mutex{}
 				server.updateIntfTxMap(txEntry, key)
 			} */
+		//@liwei: Packet receive handler is created here.
 		rxEntry, exist := server.IntfRxMap[key]
 		if !exist {
 			recvHdl, err := pcap.OpenLive(ent.IfName, snapshot_len, promiscuous, timeout_pcap)
@@ -233,6 +234,7 @@ func (server *OSPFServer) initDefaultIntfConf(key IntfConfKey, ipIntfProp IPIntf
 			filter := fmt.Sprintln("proto ospf and not src host", ipIntfProp.IpAddr.String())
 			server.logger.Info(fmt.Sprintln("Filter is : ", filter))
 			// Setting Pcap filter for Ospf Pkt
+			//@liwei: Use BFP fileter to capture OSPF packet.
 			err = recvHdl.SetBPFFilter(filter)
 			if err != nil {
 				server.logger.Err(fmt.Sprintln("Unable to set filter on", ent.IfName))
@@ -479,6 +481,7 @@ func (server *OSPFServer) processIntfConfig(ifConf config.InterfaceConf) error {
 
 		ent, _ = server.IntfConfMap[intfConfKey]
 		if server.isOspfIfEnabled(intfConfKey, ipKey) {
+			//@liwei: Start receive and send OSPF packet on this interface.
 			server.StartSendRecvPkts(intfConfKey)
 		}
 	}
@@ -662,6 +665,8 @@ func (server *OSPFServer) StopSendRecvPkts(intfConfKey IntfConfKey) {
 
 func (server *OSPFServer) StartSendRecvPkts(intfConfKey IntfConfKey) {
 	ent, _ := server.IntfConfMap[intfConfKey]
+	//@liwei: Send packet should be drived by OSPF FSM and packet received.
+	// So here only create the send channel.
 	server.updateIntfTxMap(intfConfKey, config.Intf_Up, ent.IfName)
 	helloInterval := time.Duration(ent.IfHelloInterval) * time.Second
 	ent.HelloIntervalTicker = time.NewTicker(helloInterval)
@@ -679,8 +684,10 @@ func (server *OSPFServer) StartSendRecvPkts(intfConfKey IntfConfKey) {
 	}
 	server.IntfConfMap[intfConfKey] = ent
 	server.logger.Info("Start Sending Hello Pkt")
+	//@liwei: Start OSPF interface FSM.
 	go server.StartOspfIntfFSM(intfConfKey)
 	server.logger.Info("Start Receiving Hello Pkt")
+	//@liwei: Start receive OSPF packet.
 	go server.StartOspfRecvPkts(intfConfKey)
 }
 
@@ -748,12 +755,14 @@ func (server *OSPFServer) updateIntfTxMap(key IntfConfKey, status config.Status,
 }
 
 func (server *OSPFServer) ProcessIntfConfChange(ifMsg config.InterfaceRpcMsg) {
+	//@liwei: OSPF interface create
 	if ifMsg.Op == config.CREATE {
 		err := server.processIntfConfig(ifMsg.IntfConf)
 		if err == nil {
 			//Handle Intf Configuration
 		}
 	}
+	//@liwei: OSPF interface Update
 	if ifMsg.Op == config.UPDATE {
 		err := server.processIntfConfigUpdate(ifMsg.IntfConf)
 		if err != nil {
@@ -761,6 +770,7 @@ func (server *OSPFServer) ProcessIntfConfChange(ifMsg config.InterfaceRpcMsg) {
 		}
 	}
 
+	//@liwei: OSPF interface delete
 	if ifMsg.Op == config.DELETE {
 		err := server.processIntfConfigDelete(ifMsg.IntfConf)
 		if err != nil {

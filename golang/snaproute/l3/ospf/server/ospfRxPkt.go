@@ -172,6 +172,7 @@ func (server *OSPFServer) ProcessOspfRecvPkt(key IntfConfKey, pkt gopacket.Packe
 	}
 
 	ipHdrMd := NewIpHdrMetadata()
+	//@liwei: Do IP layer validation check.
 	err := server.processIPv4Layer(ipLayer, ent.IfIpAddr, ipHdrMd)
 	if err != nil {
 		server.logger.Err(fmt.Sprintln("Dropped because of IPv4 layer processing", err))
@@ -182,6 +183,7 @@ func (server *OSPFServer) ProcessOspfRecvPkt(key IntfConfKey, pkt gopacket.Packe
 
 	ospfHdrMd := NewOspfHdrMetadata()
 	ospfPkt := ipLayer.LayerPayload()
+	//@liwei: Do OSPF header validation check.
 	err = server.processOspfHeader(ospfPkt, key, ospfHdrMd)
 	if err != nil {
 		server.logger.Err(fmt.Sprintln("Dropped because of Ospf Header processing", err))
@@ -190,6 +192,7 @@ func (server *OSPFServer) ProcessOspfRecvPkt(key IntfConfKey, pkt gopacket.Packe
 		//server.logger.Info("Ospfv2 Header is processed successfully")
 	}
 
+	//@liwei: Realy handle the packet.
 	ospfData := ospfPkt[OSPF_HEADER_SIZE:]
 	err = server.processOspfData(ospfData, ethHdrMd, ipHdrMd, ospfHdrMd, key)
 	if err != nil {
@@ -214,6 +217,7 @@ func (server *OSPFServer) processOspfData(data []byte, ethHdrMd *EthHdrMetadata,
 	if !exist {
 		server.logger.Info(fmt.Sprintln("PACKET: neighbor doesnt exist..", NeighborIP, key.IntfIdx))
 	}
+	//@liwei: Handle different packet by type.
 	switch ospfHdrMd.pktType {
 	case HelloType:
 		err = server.processRxHelloPkt(data, ospfHdrMd, ipHdrMd, ethHdrMd, key)
@@ -244,11 +248,13 @@ func (server *OSPFServer) StartOspfRecvPkts(key IntfConfKey) {
 	handle := ent.RecvPcapHdl
 	recv := gopacket.NewPacketSource(handle, layers.LayerTypeEthernet)
 	in := recv.Packets()
+	//@liwei: Start OSPF packet handle logic.
 	for {
 		select {
 		case packet, ok := <-in:
 			if ok {
 				//server.logger.Info("Got Some Ospf Packet on the Recv Thread")
+				//@liwei: OSPF packet handler
 				go server.ProcessOspfRecvPkt(key, packet)
 			}
 		case state := <-ent.PktRecvCh:

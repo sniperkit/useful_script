@@ -280,6 +280,7 @@ func (server *OSPFServer) processOspfHelloNeighbor(TwoWayStatus bool, ospfHelloD
 	//Todo: Find whether one way or two way
 	ent, _ := server.IntfConfMap[key]
 
+	//@liwei: Create New neighbor.
 	neighborEntry, exist := ent.NeighborMap[neighborKey]
 	if !exist {
 		var neighCreateMsg NeighCreateMsg
@@ -312,6 +313,9 @@ func (server *OSPFServer) processOspfHelloNeighbor(TwoWayStatus bool, ospfHelloD
 	server.CreateAndSendHelloRecvdMsg(routerId, ipHdrMd, ospfHdrMd, nbrDeadInterval,
 		ent.IfType, TwoWayStatus, ospfHelloData.rtrPrio, key)
 
+	//@liwei: In which case is BackupSeen ?
+	//  1. Send router claim itself as DR, and no BDR exist.
+	//  2. Send router claim itself as BDR.
 	var backupSeenMsg BackupSeenMsg
 	if TwoWayStatus == true && ent.IfFSMState == config.Waiting {
 		if bytesEqual(ipHdrMd.srcIP, ospfHelloData.designatedRtr) == true {
@@ -364,5 +368,6 @@ func (server *OSPFServer) CreateAndSendHelloRecvdMsg(routerId uint32,
 	msg.TwoWayStatus = TwoWayStatus
 
 	//	server.logger.Debug(fmt.Sprintln("Sending msg to Neighbor State Machine", msg))
+	//@liwei: Send Hello packet.
 	server.neighborHelloEventCh <- msg
 }

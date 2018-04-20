@@ -371,6 +371,7 @@ func (server *OSPFServer) StartServer(paramFile string) {
 				//Handle Area Configuration
 			}
 		//	server.AreaConfigRetCh <- err
+		//@liwei: 从该channel接收OSPF接口的配置信息。
 		case ifMsg := <-server.IntfConfigCh:
 			server.logger.Info(fmt.Sprintln("Received call for performing Intf Configuration", ifMsg))
 			server.ProcessIntfConfChange(ifMsg)
