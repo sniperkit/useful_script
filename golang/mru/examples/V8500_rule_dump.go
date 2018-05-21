@@ -1747,6 +1747,8 @@ var IP = flag.String("ip", "10.71.20.191", "IP address of the remote device")
 var Host = flag.String("hostname", "V8500_2", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
+var Port = flag.String("port", "23", "Passwrod of the remote device")
+var Protocol = flag.String("protocol", "telnet", "Passwrod of the remote device")
 var Phase = flag.String("p", "0", "rule stage(0/1)")
 var SFU = flag.String("sfu", "A", "SFU (A/B)")
 
@@ -2426,10 +2428,11 @@ func main() {
 		Name:     "V8500_SFU",
 		Device:   "V8",
 		IP:       *IP,
-		Port:     "23",
+		Port:     *Port,
 		Username: *User,
 		Hostname: *Host,
 		Password: *Password,
+		Protocol: *Protocol,
 		SFU:      *SFU,
 	})
 

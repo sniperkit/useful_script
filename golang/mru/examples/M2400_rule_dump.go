@@ -2724,6 +2724,7 @@ func main() {
 	DB.Dump(dev, "before.txt")
 	DB.AnalysisRule(dev, "ip_50_40", []string{"ip 50.50.50.50 40.40.40.40"}, "deny", "gigabitethernet 1/3", "high")
 	DB.AnalysisRule(dev, "ip_50_40_tcp_80_90", []string{"ip 50.50.50.50 40.40.40.40", "layer4 tcp destination-port 90", "layer4 tcp source-port 80"}, "deny", "gigabitethernet 1/3", "high")
+	DB.AnalysisRule(dev, "ip_50_40_udp_80_90", []string{"ip 50.50.50.50 40.40.40.40", "layer4 udp destination-port 90", "layer4 udp source-port 80"}, "deny", "gigabitethernet 1/3", "high")
 	DB.AnalysisRule(dev, "ipv6_1000_2000", []string{"ipv6 2001:db8:1000::1000 2001:db8:2000::2000"}, "deny", "gigabitethernet 1/3", "high")
 	DB.AnalysisRule(dev, "ipv6_1000_2000_tcp_80_90", []string{"ipv6 2001:db8:1000::1000 2001:db8:2000::2000", "layer4 tcp destination-port 90", "layer4 tcp source-port 80"}, "deny", "gigabitethernet 1/3", "high")
 

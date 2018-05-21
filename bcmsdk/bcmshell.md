@@ -15,6 +15,9 @@
     bcm dump sw vlan
     bcm dump sw ifp
     bcm fp show 
+    bcm show features
+    bcm show st
+    bcm show params
 2.  TechSupport
     The "techsupport" utility internally maintains the following sets of data on a per chip per feature basis:
 

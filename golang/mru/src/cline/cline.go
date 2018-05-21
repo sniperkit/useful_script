@@ -226,8 +226,7 @@ func (c *Cli) GoConfigMode() ([]byte, error) {
 func NewCli(conf *configuration.Configuration) (c *Cli, err error) {
 	tc, err := client.New(conf.Username, conf.Password, conf.Protocol, conf.IP, conf.Port)
 	if err != nil {
-		log.Println("error happend when connect to: ", conf.IP, " with: ", err.Error())
-		return nil, errors.New("Cannot connect to host")
+		return nil, fmt.Errorf("\n\r\tCannot connect to host: %s with error: \n\r\t\t%s!", conf.IP, err.Error())
 	}
 
 	os.Remove("command_log.txt")

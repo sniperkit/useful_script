@@ -13,13 +13,14 @@ func main() {
 
 	dev, err := rut.New(&rut.RUT{
 		Name:     "SWITCH",
-		Device:   "V5",
-		IP:       "10.71.20.102",
+		Device:   "V8",
+		IP:       "10.42.60.218",
 		Port:     "22",
-		Username: "liwei",
-		Protocol: "ssh",
-		Hostname: "SWITCH",
-		Password: "Lee123!@#",
+		Username: "admin",
+		Protocol: "telnet",
+		Hostname: "V8500",
+		SFU:      "A",
+		Password: "krcho",
 	})
 
 	if err != nil {
@@ -49,23 +50,76 @@ func main() {
 	}
 	fmt.Println(string(data))
 
-	data, err = dev.RunCommand(CTX, &command.Command{
-		Mode: "config",
-		CMD:  " policy mulitcast_225 create",
-	})
+	/*
+			data, err = dev.RunCommand(CTX, &command.Command{
+				Mode: "config",
+				CMD:  " policy mulitcast_225 modify",
+			})
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(data))
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(data))
 
-	data, err = dev.RunCommand(CTX, &command.Command{
-		Mode: "config-policy",
-		CMD:  " include flow multicast_225",
-	})
+			data, err = dev.RunCommand(CTX, &command.Command{
+				Mode: "config-policy",
+				CMD:  " include-flow multicast_224",
+			})
 
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(data))
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(data))
+
+			data, err = dev.RunCommand(CTX, &command.Command{
+				Mode: "config-policy",
+				CMD:  " include-flow multicast_225",
+			})
+
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(data))
+
+			data, err = dev.RunCommand(CTX, &command.Command{
+				Mode: "config-policy",
+				CMD:  "apply",
+			})
+
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(data))
+
+			data, err = dev.RunCommand(CTX, &command.Command{
+				Mode: "config-policy",
+				CMD:  " include-flow multicast_226",
+			})
+
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(data))
+
+		data, err = dev.RunCommand(CTX, &command.Command{
+			Mode: "config",
+			CMD:  "do q sh -l",
+		})
+
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(string(data))
+
+		data, err = dev.RunCommand(CTX, &command.Command{
+			Mode: "shell",
+			CMD:  "scontrol -f /proc/switch/ASIC/ctrl dump table 0 fp_tcam 0 1",
+		})
+
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(string(data))
+
+	*/
 }
