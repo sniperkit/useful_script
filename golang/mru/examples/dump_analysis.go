@@ -70,7 +70,7 @@ func main() {
 	dev.TCPDUMP("eth05", "", "2.pcap", "")
 	fmt.Println("Dump finished")
 
-	if err = dev.FTP("/etc/2.pcap", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
+	if err = dev.FTPPut("/etc/2.pcap", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
 		panic(err)
 	}
 

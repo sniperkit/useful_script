@@ -297,7 +297,13 @@ func (d RUT) GoShellMode() ([]byte, error) {
 	return d.cli.GoShellMode()
 }
 
-func (d *RUT) FTP(local, ip, user, pass, dir string) error {
+func (d *RUT) FTPPut(local, ip, user, pass, dir string) error {
+	if d.cli.CurrentMode() != "shell" {
+		_, err := d.GoShellMode()
+		if err != nil {
+			return fmt.Errorf("ftp working under shell mode, current: %s", d.cli.CurrentMode())
+		}
+	}
 	if !filepath.IsAbs(local) {
 		return fmt.Errorf("local file must use absoluted path")
 	}
@@ -311,7 +317,7 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	}
 
 	data, err := d.Expect("):")
-	log.Println(string(data))
+	//log.Println(string(data))
 	_, err = d.WriteLine(user)
 	if err != nil {
 		return err
@@ -320,7 +326,7 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+	//log.Println(string(data))
 
 	_, err = d.WriteLine(pass)
 	if err != nil {
@@ -331,7 +337,7 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+	//log.Println(string(data))
 
 	_, err = d.WriteLine("lcd " + ldir)
 	if err != nil {
@@ -342,7 +348,7 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+	//log.Println(string(data))
 
 	_, err = d.WriteLine("cd " + dir)
 	if err != nil {
@@ -353,7 +359,7 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+	//log.Println(string(data))
 
 	_, err = d.WriteLine("put " + file)
 	if err != nil {
@@ -364,19 +370,104 @@ func (d *RUT) FTP(local, ip, user, pass, dir string) error {
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+	fmt.Println(string(data))
 
 	_, err = d.WriteLine("exit")
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
 
 	data, err = d.Expect("#")
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+
+	return nil
+}
+
+func (d *RUT) FTPGet(local, ip, user, pass, dir, file string) error {
+	if d.cli.CurrentMode() != "shell" {
+		_, err := d.GoShellMode()
+		if err != nil {
+			return fmt.Errorf("ftp working under shell mode, current: %s", d.cli.CurrentMode())
+		}
+	}
+	if !filepath.IsAbs(local) {
+		return fmt.Errorf("local file must use absoluted path")
+	}
+
+	ldir := filepath.Dir(local)
+
+	_, err := d.WriteLine("ftp " + ip)
+	if err != nil {
+		return err
+	}
+
+	data, err := d.Expect("):")
+	//log.Println(string(data))
+	_, err = d.WriteLine(user)
+	if err != nil {
+		return err
+	}
+	data, err = d.Expect("Password:")
+	if err != nil {
+		return err
+	}
+	//log.Println(string(data))
+
+	_, err = d.WriteLine(pass)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	//log.Println(string(data))
+
+	_, err = d.WriteLine("lcd " + ldir)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	//log.Println(string(data))
+
+	_, err = d.WriteLine("cd " + dir)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	//log.Println(string(data))
+
+	_, err = d.WriteLine("get " + file)
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("ftps>")
+	if err != nil {
+		return err
+	}
+	fmt.Println(string(data))
+
+	_, err = d.WriteLine("exit")
+	if err != nil {
+		return err
+	}
+
+	data, err = d.Expect("#")
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -440,7 +531,13 @@ func (d *RUT) TCPDUMP(intf, filter, file, count string) error {
 	return nil
 }
 
-func (d *RUT) SCP(local, ip, user, pass, dir string) error {
+func (d *RUT) SCPPut(local, ip, user, pass, dir string) error {
+	if d.cli.CurrentMode() != "shell" {
+		_, err := d.GoShellMode()
+		if err != nil {
+			return fmt.Errorf("scp working under shell mode, current: %s", d.cli.CurrentMode())
+		}
+	}
 	if !filepath.IsAbs(local) {
 		return fmt.Errorf("local file must use absoluted path")
 	}
@@ -475,7 +572,52 @@ func (d *RUT) SCP(local, ip, user, pass, dir string) error {
 	if !strings.Contains(string(data), "100%") {
 		return fmt.Errorf("Upload file with error: %s", string(data))
 	}
-	log.Println(string(data))
+	fmt.Println(string(data))
+
+	return nil
+}
+
+func (d *RUT) SCPGet(local, ip, user, pass, dir, file string) error {
+	if d.cli.CurrentMode() != "shell" {
+		_, err := d.GoShellMode()
+		if err != nil {
+			return fmt.Errorf("scp working under shell mode, current: %s", d.cli.CurrentMode())
+		}
+	}
+
+	if !filepath.IsAbs(local) {
+		return fmt.Errorf("local file must use absoluted path")
+	}
+
+	_, err := d.WriteLine("scp " + user + "@" + ip + ":" + dir + "/" + file + " " + local)
+	if err != nil {
+		return err
+	}
+
+	known, err := d.Expect("(yes/no)?", "password:")
+	fmt.Println(string(known))
+	if strings.Contains(string(known), "(yes/no)?") {
+		d.WriteLine("yes")
+		_, err := d.Expect("password:")
+		if err != nil {
+			return err
+		}
+	}
+
+	_, err = d.WriteLine(pass)
+	if err != nil {
+		return err
+	}
+
+	data, err := d.Expect("#")
+	if err != nil {
+		return err
+	}
+
+	if !strings.Contains(string(data), "100%") {
+		return fmt.Errorf("Upload file with error: %s", string(data))
+	}
+	fmt.Println(string(data))
 
 	return nil
 }

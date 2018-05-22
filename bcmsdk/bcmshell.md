@@ -18,6 +18,7 @@
     bcm show features
     bcm show st
     bcm show params
+    bcm hash
 2.  TechSupport
     The "techsupport" utility internally maintains the following sets of data on a per chip per feature basis:
 

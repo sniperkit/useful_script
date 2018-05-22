@@ -99,7 +99,12 @@ func (c *Cli) IsModeSwitchMustBeOccured(cmd *command.Command) bool {
 	if strings.HasPrefix(cmdstr, "interface ") || strings.HasPrefix(cmdstr, "router ") ||
 		strings.HasPrefix(cmdstr, "configure terminal") || strings.HasPrefix(cmdstr, "vlan database") ||
 		strings.HasPrefix(cmdstr, "ip dhcp pool") || strings.HasPrefix(cmdstr, "route-map") ||
-		strings.HasPrefix(cmdstr, "ip access-list") {
+		strings.HasPrefix(cmdstr, "ip access-list") || strings.HasPrefix(cmdstr, "flow ") ||
+		strings.HasPrefix(cmdstr, "policer ") || strings.HasPrefix(cmdstr, "policy") ||
+		strings.HasPrefix(cmdstr, "do q sh") || strings.HasPrefix(cmdstr, "do quote sh") ||
+		strings.HasPrefix(cmdstr, "address-family") || strings.HasPrefix(cmdstr, "q sh") ||
+		strings.HasPrefix(cmdstr, "quote sh") || strings.HasPrefix(cmdstr, "exit") ||
+		strings.HasPrefix(cmdstr, "quit") {
 		return true
 	}
 

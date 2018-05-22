@@ -89,17 +89,17 @@ func main() {
 		panic(err)
 	}
 
-	if err = dev.FTP("/etc/.config/L2_default.CFG", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
+	if err = dev.FTPPut("/etc/.config/L2_default.CFG", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
 		panic(err)
 	}
 
-	if err = dev.SCP("/etc/login.conf", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
+	if err = dev.SCPPut("/etc/login.conf", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
 		panic(err)
 	}
 
 	dev.TCPDUMP("eth05", "", "1.pcap", "")
 
-	if err = dev.SCP("/etc/1.pcap", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
+	if err = dev.SCPPut("/etc/1.pcap", "10.71.1.161", "pi", "raspberry", pwd); err != nil {
 		panic(err)
 	}
 }
