@@ -8,10 +8,13 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 	"sync"
 	"util"
 )
+
+var hostReg = regexp.MustCompile("^(?P<host>.*)#")
 
 type Cli struct {
 	client       client.Client
@@ -53,6 +56,20 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	if err != nil {
 		fmt.Println(fmt.Sprintf("Connection to %s is broken\n", c.conf.IP))
 		return nil, err
+	}
+
+	for {
+		if strings.Contains(string(data), c.conf.BasePrompt) {
+			break
+		}
+
+		pending, err := c.client.ReadUntil(cmd.End)
+		if err != nil {
+			fmt.Println(fmt.Sprintf("Connection to %s is broken\n", c.conf.IP))
+			return nil, err
+		}
+
+		data = append(data, pending...)
 	}
 
 	util.AppendToFile("command_log.txt", []byte(fmt.Sprintf("Command: %s, Result: %s\n", cmd.CMD, string(data))))
@@ -233,6 +250,7 @@ func NewCli(conf *configuration.Configuration) (c *Cli, err error) {
 	if err != nil {
 		return nil, fmt.Errorf("\n\r\tCannot connect to host: %s with error: \n\r\t\t%s!", conf.IP, err.Error())
 	}
+	fmt.Printf("Connct to %s success\n", conf.IP)
 
 	os.Remove("command_log.txt")
 
@@ -292,22 +310,33 @@ func (c *Cli) Init() error {
 		}
 	}
 
+	//ToDo: Need to handle the enable password enabled case.
 	c.client.WriteLine("enable")
-	_, err := c.client.ReadUntil(c.conf.Prompt)
-	//data, err := c.client.ReadUntil(c.conf.Prompt)
+	data, err := c.client.ReadUntil(c.conf.Prompt)
 	if err != nil {
-		fmt.Println("Error happend when goto enable mode: ", err.Error())
-		return err
+		return fmt.Errorf("Cannot go to enable mode with error: %s", err.Error())
+	}
+
+	var rHostname string
+	lines := strings.Split(string(data), "\n")
+	for _, line := range lines {
+		matches := hostReg.FindStringSubmatch(line)
+		if len(matches) == 0 {
+			continue
+		}
+		rHostname = matches[1]
+	}
+
+	if rHostname == "" || rHostname != c.conf.Hostname {
+		return fmt.Errorf("Invalid hostname: %s, must be: %s", c.conf.Hostname, rHostname)
 	}
 
 	c.client.WriteLine("terminal length 0")
 	_, err = c.client.ReadUntil("#")
 	if err != nil {
-		fmt.Println("Error happend when SetTerminalLength: ", err.Error())
-		return err
+		return fmt.Errorf("Cannot set terminal length: %s", err.Error())
 	}
 	c.currentMode = "normal"
-	//fmt.Println(string(data))
 
 	return nil
 }
