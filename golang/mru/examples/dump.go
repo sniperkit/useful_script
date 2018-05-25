@@ -48,11 +48,15 @@ var TcpdumpCount = flag.String("count", "100", "Packet count to dump")
 var TcpdumpFile = flag.String("dfile", "any.pcap", "File name of tcpdump")
 var TcpdumpFilter = flag.String("filter", "", "tcpdump packet filter")
 var PCAPDecode = flag.String("pcapdecode", "", "Decode a pcap file.")
+var Check = flag.String("check", "register", "Check related registers/tables, Use option to assign the dump format(raw/all/chg)")
+var Name = flag.String("name", "", "Name of various things")
+var Option = flag.String("option", "", "Options for another command")
 
 func main() {
 	flag.Parse()
 
-	if *Table == "" && *Register == "" && *Command == "" && *Config == "" && *Shell == "" && *Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" {
+	if *Table == "" && *Register == "" && *Command == "" && *Config == "" && *Shell == "" &&
+		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && (*Check != "" && *Name == "") {
 		fmt.Println("You must give an operation to run(Dump table/Register, bcmshell command, shell command, config, upload/download, tcpdump")
 		return
 	}
@@ -105,6 +109,11 @@ func main() {
 			fmt.Println("Local/Remote file name should use absolute path.")
 			return
 		}
+	}
+
+	if *Check != "" && *Name == "" {
+		fmt.Println("Yout must give the register/table name to check")
+		return
 	}
 
 	dev, err := rut.New(&rut.RUT{
@@ -184,6 +193,63 @@ func main() {
 		err = dev.TCPDUMP(*Tcpdump, *TcpdumpFilter, *TcpdumpFile, *TcpdumpCount)
 		if err != nil {
 			fmt.Println(err.Error())
+			return
+		}
+	}
+
+	if *Check != "" {
+		if *Check == "register" {
+			regs := strings.Split(*Name, ",")
+			for _, reg := range regs {
+				data, err = dev.RunCommand(ctx, &command.Command{
+					Mode: "shell",
+					CMD:  fmt.Sprintf("bcm l %s", reg),
+				})
+
+				if strings.Contains(string(data), "No matching register found") ||
+					strings.Contains(string(data), "Unknown register address") {
+					fmt.Printf("No register find for name/address: %s\n", reg)
+					return
+				}
+			}
+			for _, reg := range regs {
+				CheckRegister(ctx, dev, reg)
+			}
+
+		} else if *Check == "table" {
+			if *Option != "raw" && *Option != "all" && *Option != "chg" && *Option != "" {
+				fmt.Printf("Invalid option: \"%s\"\n", *Option)
+				fmt.Println("\tThe valid option for table dump is raw/all/chg, by default is chg")
+				return
+			}
+
+			op := *Option
+			if op == "" {
+				op = "chg"
+			}
+
+			tbls := strings.Split(*Name, ",")
+			for _, tbl := range tbls {
+				data, err := dev.RunCommand(ctx, &command.Command{
+					Mode: "shell",
+					CMD:  fmt.Sprintf("bcm list %s", tbl),
+				})
+				if err != nil {
+					fmt.Println(err.Error())
+					return
+				}
+
+				if strings.Contains(string(data), "No memory found with the substring") {
+					fmt.Printf("No table find for: %s\n", tbl)
+					return
+				}
+			}
+
+			for _, tbl := range tbls {
+				CheckTable(ctx, dev, tbl, op)
+			}
+		} else {
+			fmt.Println("Currently only support register/table check")
 			return
 		}
 	}
@@ -285,6 +351,113 @@ func Configure(user, pass, ip, port, config string) error {
 	}
 
 	return nil
+}
+
+func CheckTable(ctx context.Context, dev *rut.RUT, name, op string) {
+	data, err := dev.RunCommand(ctx, &command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("bcm list %s", name),
+	})
+
+	if strings.Contains(string(data), "No memory found with the substring") {
+		fmt.Printf("No table find for: %s\n", name)
+		return
+	}
+	fmt.Println(string(data))
+	//Table name exact match
+	if strings.Contains(string(data), "Description:") {
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  fmt.Sprintf("bcm d %s %s", op, name),
+		})
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		fmt.Println(string(data))
+	} else { //Get a list of tabless with give name
+		result := strings.Split(string(data), "Entry/Copy Description")
+		tbls := result[1][:strings.Index(result[1], "Flags:")]
+		lines := strings.Split(tbls, "\r\x00\r\n")
+		for _, l := range lines {
+			if strings.TrimSpace(l) == "" {
+				continue
+			}
+			l = strings.Replace(l, "*", " ", -1)
+			fields := strings.Split(l, " ")
+			for _, field := range fields {
+				if !strings.Contains(strings.ToUpper(field), strings.ToUpper(name)) {
+					continue
+				}
+
+				//*Exact match is handled by exact match logic. If goes here, we must be not exact match.
+				//This is used to skip some table description.
+				if strings.TrimSpace(field) == name {
+					continue
+				}
+				data, err = dev.RunCommand(ctx, &command.Command{
+					Mode: "shell",
+					CMD:  fmt.Sprintf("bcm d %s %s", op, field),
+				})
+				if err != nil {
+					fmt.Println(err.Error())
+					break
+				}
+				fmt.Println(string(data))
+				//Each line only contains one table name.
+				break
+			}
+		}
+	}
+}
+
+func CheckRegister(ctx context.Context, dev *rut.RUT, name string) {
+	data, err := dev.RunCommand(ctx, &command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("bcm l %s", name),
+	})
+
+	if strings.Contains(string(data), "No matching register found") ||
+		strings.Contains(string(data), "Unknown register address") {
+		fmt.Printf("No register find for name/address: %s\n", name)
+		return
+	}
+	//Register name exact match
+	if strings.Contains(string(data), "Description:") {
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  fmt.Sprintf("bcm g %s", name),
+		})
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		fmt.Println(string(data))
+	} else { //Get a list of registers with give name
+		lines := strings.Split(string(data), "possible matches are:")
+		regs := lines[1][:strings.Index(lines[1], "BCM.")]
+		regs = strings.TrimSpace(regs)
+		regs = strings.Replace(regs, "\r\x00\r\n", "", -1)
+		regs = strings.Replace(regs, "\x00\r\n", "", -1)
+		regs = strings.Replace(regs, "\r\x00", "", -1)
+		fmt.Printf("%q", regs)
+		all := strings.Split(regs, " ")
+		for _, r := range all {
+			if strings.TrimSpace(r) == "" || strings.TrimSpace(r) == " " {
+				continue
+			}
+			data, err = dev.RunCommand(ctx, &command.Command{
+				Mode: "shell",
+				CMD:  fmt.Sprintf("bcm g %s", r),
+			})
+			if err != nil {
+				fmt.Println(err.Error())
+				continue
+			}
+			fmt.Println(string(data))
+		}
+
+	}
 }
 
 func filenameNormalize(command string) string {
