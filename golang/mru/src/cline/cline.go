@@ -59,7 +59,7 @@ func (c *Cli) RunCommand(cmd *command.Command) (result []byte, err error) {
 	}
 
 	for {
-		if strings.Contains(string(data), c.conf.BasePrompt) {
+		if strings.Contains(string(data), c.conf.Hostname) {
 			break
 		}
 
@@ -326,6 +326,8 @@ func (c *Cli) Init() error {
 		}
 		rHostname = matches[1]
 	}
+
+	rHostname = strings.Trim(rHostname, "["+c.conf.SFU+"]")
 
 	if rHostname == "" || rHostname != c.conf.Hostname {
 		return fmt.Errorf("Invalid hostname: %s, must be: %s", c.conf.Hostname, rHostname)
