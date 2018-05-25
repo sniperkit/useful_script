@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	c, err := telnet.New("admin", "", "10.71.20.191", "23")
+	c, err := telnet.New("admin", "Dasan123456", "10.55.192.213", "23")
 	if err != nil {
 		panic(err)
 	}

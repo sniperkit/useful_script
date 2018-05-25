@@ -25,16 +25,16 @@ var (
 */
 )
 
-var IP = flag.String("ip", "10.55.192.210", "IP address of the remote device")
+var IP = flag.String("ip", "", "IP address of the remote device")
 var Port = flag.String("port", "23", "Port to connect")
-var Host = flag.String("hostname", "M3000_210", "Host name of the remote device")
+var Host = flag.String("hostname", "SWITCH", "Host name of the remote device")
 var User = flag.String("username", "admin", "Username of the remote device")
 var Password = flag.String("password", "", "Passwrod of the remote device")
 var Table = flag.String("table", "", "Table name to dump")
 var Register = flag.String("register", "", "Register name to dump")
 var Command = flag.String("command", "", "Bcm shell command to run")
 var Shell = flag.String("shell", "", "shell command to run")
-var Config = flag.String("config", "", "Configure file name")
+var Config = flag.String("config", "", "Configure file name, your configuration should start from priviledge more")
 var Protocol = flag.String("protocol", "telnet", "Login protocol(ssh/telnet)")
 var Upload = flag.String("upload", "", "upload protocol (ftp/scp)")
 var Download = flag.String("download", "", "download protocol (ftp/scp)")
@@ -48,7 +48,7 @@ var TcpdumpCount = flag.String("count", "100", "Packet count to dump")
 var TcpdumpFile = flag.String("dfile", "any.pcap", "File name of tcpdump")
 var TcpdumpFilter = flag.String("filter", "", "tcpdump packet filter")
 var PCAPDecode = flag.String("pcapdecode", "", "Decode a pcap file.")
-var Check = flag.String("check", "register", "Check related registers/tables, Use option to assign the dump format(raw/all/chg)")
+var Check = flag.String("check", "", "Check related registers/tables, Use option to assign the dump format(raw/all/chg)")
 var Name = flag.String("name", "", "Name of various things")
 var Option = flag.String("option", "", "Options for another command")
 
@@ -58,6 +58,7 @@ func main() {
 	if *Table == "" && *Register == "" && *Command == "" && *Config == "" && *Shell == "" &&
 		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && (*Check != "" && *Name == "") {
 		fmt.Println("You must give an operation to run(Dump table/Register, bcmshell command, shell command, config, upload/download, tcpdump")
+		fmt.Println("\t Use -h to get help information")
 		return
 	}
 

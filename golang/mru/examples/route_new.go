@@ -2668,14 +2668,5 @@ func prepare(r *rut.RUT) (*rut.RUT, error) {
 		return nil, err
 	}
 
-	_, err = dev.RunCommand(CTX, &command.Command{
-		Mode: "shell",
-		CMD:  "ls -al",
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
 	return dev, nil
 }
