@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"net"
 	"path/filepath"
+	"regexp"
 	"rut"
 	"strings"
 	"telnet"
@@ -24,6 +25,8 @@ var (
 	err    error
 */
 )
+
+var UseLessFilter = regexp.MustCompile("unit[[:space:]]+[[:digit:]]+[[:space:]]+[a-zA-Z?]+[[:space:]]+registers")
 
 var IP = flag.String("ip", "", "IP address of the remote device")
 var Port = flag.String("port", "23", "Port to connect")
@@ -56,7 +59,7 @@ func main() {
 	flag.Parse()
 
 	if *Table == "" && *Register == "" && *Command == "" && *Config == "" && *Shell == "" &&
-		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && (*Check != "" && *Name == "") {
+		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && *Check == "" {
 		fmt.Println("You must give an operation to run(Dump table/Register, bcmshell command, shell command, config, upload/download, tcpdump")
 		fmt.Println("\t Use -h to get help information")
 		return
@@ -110,11 +113,6 @@ func main() {
 			fmt.Println("Local/Remote file name should use absolute path.")
 			return
 		}
-	}
-
-	if *Check != "" && *Name == "" {
-		fmt.Println("Yout must give the register/table name to check")
-		return
 	}
 
 	dev, err := rut.New(&rut.RUT{
@@ -200,23 +198,27 @@ func main() {
 
 	if *Check != "" {
 		if *Check == "register" {
-			regs := strings.Split(*Name, ",")
-			for _, reg := range regs {
-				data, err = dev.RunCommand(ctx, &command.Command{
-					Mode: "shell",
-					CMD:  fmt.Sprintf("bcm l %s", reg),
-				})
+			if *Name != "" {
+				regs := strings.Split(*Name, ",")
+				for _, reg := range regs {
+					data, err = dev.RunCommand(ctx, &command.Command{
+						Mode: "shell",
+						CMD:  fmt.Sprintf("bcm l %s", reg),
+					})
 
-				if strings.Contains(string(data), "No matching register found") ||
-					strings.Contains(string(data), "Unknown register address") {
-					fmt.Printf("No register find for name/address: %s\n", reg)
-					return
+					if strings.Contains(string(data), "No matching register found") ||
+						strings.Contains(string(data), "Unknown register address") {
+						fmt.Printf("No register find for name/address: %s\n", reg)
+						return
+					}
 				}
+				for _, reg := range regs {
+					CheckRegister(ctx, dev, reg)
+				}
+			} else {
+				//Dump all registers
+				CheckRegister(ctx, dev, "-t")
 			}
-			for _, reg := range regs {
-				CheckRegister(ctx, dev, reg)
-			}
-
 		} else if *Check == "table" {
 			if *Option != "raw" && *Option != "all" && *Option != "chg" && *Option != "" {
 				fmt.Printf("Invalid option: \"%s\"\n", *Option)
@@ -229,25 +231,30 @@ func main() {
 				op = "chg"
 			}
 
-			tbls := strings.Split(*Name, ",")
-			for _, tbl := range tbls {
-				data, err := dev.RunCommand(ctx, &command.Command{
-					Mode: "shell",
-					CMD:  fmt.Sprintf("bcm list %s", tbl),
-				})
-				if err != nil {
-					fmt.Println(err.Error())
-					return
+			if *Name != "" {
+				tbls := strings.Split(*Name, ",")
+				for _, tbl := range tbls {
+					data, err := dev.RunCommand(ctx, &command.Command{
+						Mode: "shell",
+						CMD:  fmt.Sprintf("bcm list %s", tbl),
+					})
+					if err != nil {
+						fmt.Println(err.Error())
+						return
+					}
+
+					if strings.Contains(string(data), "No memory found with the substring") {
+						fmt.Printf("No table find for: %s\n", tbl)
+						return
+					}
 				}
 
-				if strings.Contains(string(data), "No memory found with the substring") {
-					fmt.Printf("No table find for: %s\n", tbl)
-					return
+				for _, tbl := range tbls {
+					CheckTable(ctx, dev, tbl, op)
 				}
-			}
-
-			for _, tbl := range tbls {
-				CheckTable(ctx, dev, tbl, op)
+			} else {
+				//Dump all memory
+				CheckTable(ctx, dev, "", op)
 			}
 		} else {
 			fmt.Println("Currently only support register/table check")
@@ -396,6 +403,19 @@ func CheckTable(ctx context.Context, dev *rut.RUT, name, op string) {
 				if strings.TrimSpace(field) == name {
 					continue
 				}
+
+				if strings.TrimSpace(field) == "" {
+					continue
+				}
+
+				if strings.ToUpper(strings.TrimSpace(field)) != strings.TrimSpace(field) {
+					continue
+				}
+
+				if strings.Contains(field, "-") {
+					continue
+				}
+
 				data, err = dev.RunCommand(ctx, &command.Command{
 					Mode: "shell",
 					CMD:  fmt.Sprintf("bcm d %s %s", op, field),
@@ -435,13 +455,19 @@ func CheckRegister(ctx context.Context, dev *rut.RUT, name string) {
 		}
 		fmt.Println(string(data))
 	} else { //Get a list of registers with give name
-		lines := strings.Split(string(data), "possible matches are:")
-		regs := lines[1][:strings.Index(lines[1], "BCM.")]
+		var regs string
+		var lines []string
+		if name == "-t" {
+			data := UseLessFilter.ReplaceAllString(data, "")
+			lines = strings.Split(string(data), "cmd: l -t")
+		} else {
+			lines = strings.Split(string(data), "possible matches are:")
+		}
+		regs = lines[1][:strings.Index(lines[1], "BCM.")]
 		regs = strings.TrimSpace(regs)
 		regs = strings.Replace(regs, "\r\x00\r\n", "", -1)
 		regs = strings.Replace(regs, "\x00\r\n", "", -1)
 		regs = strings.Replace(regs, "\r\x00", "", -1)
-		fmt.Printf("%q", regs)
 		all := strings.Split(regs, " ")
 		for _, r := range all {
 			if strings.TrimSpace(r) == "" || strings.TrimSpace(r) == " " {
