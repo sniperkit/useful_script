@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	//"time"
 	"unicode"
 )
 
@@ -58,6 +59,8 @@ func newSession(addr string) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	//conn.SetReadDeadline(time.Now().Add(5 * time.Second))
 
 	c := Session{
 		Conn: conn,

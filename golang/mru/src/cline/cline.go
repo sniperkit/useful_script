@@ -250,7 +250,6 @@ func NewCli(conf *configuration.Configuration) (c *Cli, err error) {
 	if err != nil {
 		return nil, fmt.Errorf("\n\r\tCannot connect to host: %s with error: \n\r\t\t%s!", conf.IP, err.Error())
 	}
-	fmt.Printf("Connct to %s success\n", conf.IP)
 
 	os.Remove("command_log.txt")
 
