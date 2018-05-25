@@ -19,6 +19,13 @@
     bcm show st
     bcm show params
     bcm hash
+    bcm HashDestination
+    bcm pr
+    bcm pp
+    bcm rate
+    bcm knetctrl netif show 
+    bcm knetctrl filter show
+    bcm egress show
 2.  TechSupport
     The "techsupport" utility internally maintains the following sets of data on a per chip per feature basis:
 
