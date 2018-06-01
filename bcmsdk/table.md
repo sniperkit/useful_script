@@ -36,6 +36,7 @@
    BCM_XGS3_L3_DEFIP_TBL_SIZE(unit)
    BCM_XGS3_L3_ECMP_MAX_GROUPS(unit)
    BCM_XGS3_L3_TBL_SIZE(unit)
+   BCM_XGS3_L3_ECMP_IN_USE(unit)
 
 3. L3_ENTRY table supports two types of view for providing the associated data:
     Traditional view
