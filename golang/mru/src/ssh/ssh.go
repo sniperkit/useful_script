@@ -38,6 +38,26 @@ func New(user, password, ip, port string) (*Session, error) {
 	return sess, nil
 }
 
+func New2(user, password, ip, port, prompt string) (*Session, error) {
+	sess := new(Session)
+	if err := sess.createConnection(user, password, ip+":"+port); err != nil {
+		return nil, err
+	}
+	if err := sess.muxShell(); err != nil {
+		return nil, err
+	}
+	if err := sess.start(); err != nil {
+		return nil, err
+	}
+
+	_, err := sess.ReadUntil(prompt)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return sess, nil
+}
+
 func (s *Session) createConnection(user, password, ipPort string) error {
 	client, err := ssh.Dial("tcp", ipPort, &ssh.ClientConfig{
 		User: user,
@@ -193,6 +213,29 @@ func (s *Session) ReadUntil(delims ...string) ([]byte, error) {
 	line, _, err := s.readUntil(true, delims...)
 	//log.Println(string(line))
 	return line, err
+}
+
+func (s *Session) ReadUntilSkip(delims, sdelims []string) ([]byte, error) {
+	if len(sdelims) > 0 {
+		result := make([]byte, 0, 64)
+		for {
+		AGAIN:
+			line, err := s.ReadUntil(delims...)
+			if err != nil {
+				return result, err
+			}
+			result = append(result, line...)
+			for _, ed := range sdelims {
+				if strings.Contains(string(line), ed) {
+					goto AGAIN
+				}
+			}
+
+			return result, err
+		}
+	}
+
+	return s.ReadUntil(delims...)
 }
 
 // SkipUntilIndex works like ReadUntilIndex but skips all read data.

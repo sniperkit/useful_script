@@ -10,6 +10,7 @@ import (
 	"log"
 	"net"
 	//"time"
+	"strings"
 	"unicode"
 )
 
@@ -390,6 +391,29 @@ func (s *Session) ReadUntil(delims ...string) ([]byte, error) {
 	return line, err
 }
 
+func (s *Session) ReadUntilSkip(delims, sdelims []string) ([]byte, error) {
+	if len(sdelims) > 0 {
+		result := make([]byte, 0, 64)
+		for {
+		AGAIN:
+			line, err := s.ReadUntil(delims...)
+			if err != nil {
+				return result, err
+			}
+			result = append(result, line...)
+			for _, ed := range sdelims {
+				if strings.Contains(string(line), ed) {
+					goto AGAIN
+				}
+			}
+
+			return result, err
+		}
+	}
+
+	return s.ReadUntil(delims...)
+}
+
 // SkipUntilIndex works like ReadUntilIndex but skips all read data.
 func (s *Session) SkipUntilIndex(delims ...string) (int, error) {
 	_, i, err := s.readUntil(false, delims...)
@@ -472,6 +496,39 @@ func New(user, pass, ip, port string) (*Session, error) {
 
 	s.WriteLine(pass)
 	_, err = s.ReadUntil(">")
+	if err != nil {
+		fmt.Println("Error happend when login: ", err.Error())
+		return nil, err
+	}
+
+	return s, nil
+}
+
+/* New Telnet client with login prompt, password prompt and normal prompt */
+func New2(user, pass, ip, port, up, pp, np string) (*Session, error) {
+	s, err := newSession(ip + ":" + port)
+	if err != nil {
+		log.Println("error happend when connect to: ", ip, " with: ", err.Error())
+		return nil, errors.New("Cannot connect to host")
+	}
+
+	s.WriteLine("\n") //For serial server
+	s.SetUnixWriteMode(true)
+	_, err = s.ReadUntil(up)
+	if err != nil {
+		fmt.Println("Error happend when get login: ", err.Error())
+		return nil, err
+	}
+
+	s.WriteLine(user)
+	_, err = s.ReadUntil(pp)
+	if err != nil {
+		fmt.Println("Error happend when get login prompt: ", err.Error())
+		return nil, err
+	}
+
+	s.WriteLine(pass)
+	_, err = s.ReadUntil(np)
 	if err != nil {
 		fmt.Println("Error happend when login: ", err.Error())
 		return nil, err
