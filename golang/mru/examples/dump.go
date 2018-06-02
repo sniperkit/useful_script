@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"rut"
+	"strconv"
 	"strings"
 	"telnet"
 	"util"
@@ -25,6 +26,16 @@ var (
 	err    error
 */
 )
+
+type bcmTable struct {
+	Name   string
+	Size   int64
+	Fields []string
+}
+
+//Entries: 32768 with indices
+var tf = regexp.MustCompile("(?P<fname>[[:alnum:]_:]+)<")
+var ts = regexp.MustCompile("Entries:[[:space:]]+(?P<size>[[:alnum:]]+)[[:space:]]+with indices")
 
 var UseLessFilter = regexp.MustCompile("unit[[:space:]]+[[:digit:]]+[[:space:]]+[a-zA-Z?]+[[:space:]]+registers")
 
@@ -52,14 +63,18 @@ var TcpdumpFile = flag.String("dfile", "any.pcap", "File name of tcpdump")
 var TcpdumpFilter = flag.String("filter", "", "tcpdump packet filter")
 var PCAPDecode = flag.String("pcapdecode", "", "Decode a pcap file.")
 var Check = flag.String("check", "", "Check related registers/tables, Use option to assign the dump format(raw/all/chg)")
+var Set = flag.String("set", "", "Set related registers/tables of a given name")
 var Name = flag.String("name", "", "Name of various things")
 var Option = flag.String("option", "", "Options for another command")
+var Value = flag.String("value", "", "values set to register/tables")
+var Field = flag.String("field", "", "Field name of a table/register")
 
 func main() {
 	flag.Parse()
 
 	if *Table == "" && *Register == "" && *Command == "" && *Config == "" && *Shell == "" &&
-		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && *Check == "" {
+		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && *Check == "" &&
+		*Set == "" {
 		fmt.Println("You must give an operation to run(Dump table/Register, bcmshell command, shell command, config, upload/download, tcpdump")
 		fmt.Println("\t Use -h to get help information")
 		return
@@ -91,6 +106,11 @@ func main() {
 			fmt.Println("Server User/Password is necessary for ssh")
 			return
 		}
+	}
+
+	if *Set != "" && *Value == "" {
+		fmt.Println("You must give the value to set with value option")
+		return
 	}
 
 	if *Upload != "" || *Download != "" {
@@ -258,6 +278,66 @@ func main() {
 			}
 		} else {
 			fmt.Println("Currently only support register/table check")
+			return
+		}
+	}
+
+	if *Set != "" {
+		var fname string
+		if *Field == "" {
+			fname = "all"
+		}
+
+		if *Set == "register" {
+			if *Name != "" {
+				regs := strings.Split(*Name, ",")
+				for _, reg := range regs {
+					data, err = dev.RunCommand(ctx, &command.Command{
+						Mode: "shell",
+						CMD:  fmt.Sprintf("bcm l %s", reg),
+					})
+
+					if strings.Contains(string(data), "No matching register found") ||
+						strings.Contains(string(data), "Unknown register address") {
+						fmt.Printf("No register find for name/address: %s\n", reg)
+						return
+					}
+				}
+				for _, reg := range regs {
+					SetRegister(ctx, dev, reg, fname, *Value)
+				}
+			} else {
+				//Dump all registers
+				SetRegister(ctx, dev, "-t", fname, *Value)
+			}
+		} else if *Set == "table" {
+			if *Name != "" {
+				tbls := strings.Split(*Name, ",")
+				for _, tbl := range tbls {
+					data, err := dev.RunCommand(ctx, &command.Command{
+						Mode: "shell",
+						CMD:  fmt.Sprintf("bcm list %s", tbl),
+					})
+					if err != nil {
+						fmt.Println(err.Error())
+						return
+					}
+
+					if strings.Contains(string(data), "No memory found with the substring") {
+						fmt.Printf("No table find for: %s\n", tbl)
+						return
+					}
+				}
+
+				for _, tbl := range tbls {
+					SetTable(ctx, dev, tbl, fname, *Value)
+				}
+			} else {
+				//Dump all memory
+				SetTable(ctx, dev, "", fname, *Value)
+			}
+		} else {
+			fmt.Println("Currently only support register/table set")
 			return
 		}
 	}
@@ -432,6 +512,173 @@ func CheckTable(ctx context.Context, dev *rut.RUT, name, op string) {
 	}
 }
 
+func getTableInfo(ctx context.Context, dev *rut.RUT, name string) (*bcmTable, error) {
+	data, err := dev.RunCommand(ctx, &command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("bcm list %s", name),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if strings.Contains(string(data), "No memory found with the substring") {
+		fmt.Printf("No table find for: %s\n", name)
+		return nil, fmt.Errorf("No table find for: %s\n", name)
+	}
+
+	if !strings.Contains(string(data), "Description:") {
+		return nil, fmt.Errorf("Invalid dump result: %s\n", string(data))
+
+	}
+
+	var table bcmTable
+
+	table.Name = name
+	fields := make([]string, 0, 1)
+	lines := strings.Split(string(data), "\n")
+	for _, line := range lines {
+
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		line := strings.TrimSpace(line)
+		mt := tf.FindAllStringSubmatch(line, -1)
+		if len(mt) == 1 {
+			fields = append(fields, string(mt[0][1]))
+		}
+	}
+
+	table.Fields = fields
+
+	mt := ts.FindStringSubmatch(string(data))
+	if len(mt) == 2 {
+		size, err := strconv.ParseInt(mt[1], 10, 64)
+		if err != nil {
+			fmt.Println("Cannot get table size for: %s", name)
+			return nil, fmt.Errorf("Cannot get table size for: %s", name)
+		}
+		table.Size = size
+	}
+
+	return &table, nil
+}
+
+func SetTable(ctx context.Context, dev *rut.RUT, name, fname, value string) {
+	data, err := dev.RunCommand(ctx, &command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("bcm list %s", name),
+	})
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	if strings.Contains(string(data), "No memory found with the substring") {
+		fmt.Printf("No table find for: %s\n", name)
+		return
+	}
+	fmt.Println(string(data))
+	//Table name exact match
+	if strings.Contains(string(data), "Description:") {
+		table, err := getTableInfo(ctx, dev, name)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		if fname == "all" {
+			for _, f := range table.Fields {
+				data, err = dev.RunCommand(ctx, &command.Command{
+					Mode: "shell",
+					CMD:  fmt.Sprintf("bcm mod %s %d %d %s=%s", table.Name, 0, table.Size-1, f, value),
+				})
+				if err != nil {
+					fmt.Println(err.Error())
+					return
+				}
+				fmt.Println(string(data))
+			}
+		} else {
+			data, err = dev.RunCommand(ctx, &command.Command{
+				Mode: "shell",
+				CMD:  fmt.Sprintf("bcm mod %s %d %d %s=%s", table.Name, 0, table.Size-1, fname, value),
+			})
+			if err != nil {
+				fmt.Println(err.Error())
+				return
+			}
+			fmt.Println(string(data))
+		}
+	} else { //Get a list of tabless with give name
+		result := strings.Split(string(data), "Entry/Copy Description")
+		tbls := result[1][:strings.Index(result[1], "Flags:")]
+		lines := strings.Split(tbls, "\r\x00\r\n")
+		for _, l := range lines {
+			if strings.TrimSpace(l) == "" {
+				continue
+			}
+			l = strings.Replace(l, "*", " ", -1)
+			fields := strings.Split(l, " ")
+			for _, field := range fields {
+				if !strings.Contains(strings.ToUpper(field), strings.ToUpper(name)) {
+					continue
+				}
+
+				//*Exact match is handled by exact match logic. If goes here, we must be not exact match.
+				//This is used to skip some table description.
+				if strings.TrimSpace(field) == name {
+					continue
+				}
+
+				if strings.TrimSpace(field) == "" {
+					continue
+				}
+
+				if strings.ToUpper(strings.TrimSpace(field)) != strings.TrimSpace(field) {
+					continue
+				}
+
+				if strings.Contains(field, "-") {
+					continue
+				}
+
+				table, err := getTableInfo(ctx, dev, field)
+				if err != nil {
+					fmt.Println(err.Error())
+					return
+				}
+				fmt.Printf("%s=%q\n", fields, table)
+				if fname == "all" {
+					for _, f := range table.Fields {
+						data, err = dev.RunCommand(ctx, &command.Command{
+							Mode: "shell",
+							CMD:  fmt.Sprintf("bcm mod %s %d %d %s=%s", table.Name, 0, table.Size-1, f, value),
+						})
+						if err != nil {
+							fmt.Println(err.Error())
+							return
+						}
+						fmt.Println(string(data))
+					}
+				} else {
+					data, err = dev.RunCommand(ctx, &command.Command{
+						Mode: "shell",
+						CMD:  fmt.Sprintf("bcm mod %s %d %d %s=%s", table.Name, 0, table.Size-1, fname, value),
+					})
+					if err != nil {
+						fmt.Println(err.Error())
+						return
+					}
+					fmt.Println(string(data))
+				}
+
+				//Each line only contains one table name.
+				break
+			}
+		}
+	}
+}
+
 func CheckRegister(ctx context.Context, dev *rut.RUT, name string) {
 	data, err := dev.RunCommand(ctx, &command.Command{
 		Mode: "shell",
@@ -476,6 +723,75 @@ func CheckRegister(ctx context.Context, dev *rut.RUT, name string) {
 			data, err = dev.RunCommand(ctx, &command.Command{
 				Mode: "shell",
 				CMD:  fmt.Sprintf("bcm g %s", r),
+			})
+			if err != nil {
+				fmt.Println(err.Error())
+				continue
+			}
+			fmt.Println(string(data))
+		}
+
+	}
+}
+
+func SetRegister(ctx context.Context, dev *rut.RUT, name, fname, value string) {
+	data, err := dev.RunCommand(ctx, &command.Command{
+		Mode: "shell",
+		CMD:  fmt.Sprintf("bcm l %s", name),
+	})
+
+	if strings.Contains(string(data), "No matching register found") ||
+		strings.Contains(string(data), "Unknown register address") {
+		fmt.Printf("No register find for name/address: %s\n", name)
+		return
+	}
+
+	var cmd string
+	//Register name exact match
+	if strings.Contains(string(data), "Description:") {
+		if fname == "all" {
+			cmd = fmt.Sprintf("bcm s %s", name, value)
+		} else {
+			cmd = fmt.Sprintf("bcm m %s %s=%s", name, fname, value)
+		}
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  cmd,
+		})
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		fmt.Println(string(data))
+	} else { //Get a list of registers with give name
+		var regs string
+		var lines []string
+		if name == "-t" {
+			data := UseLessFilter.ReplaceAllString(data, "")
+			lines = strings.Split(string(data), "cmd: l -t")
+		} else {
+			lines = strings.Split(string(data), "possible matches are:")
+		}
+		regs = lines[1][:strings.Index(lines[1], "BCM.")]
+		regs = strings.TrimSpace(regs)
+		regs = strings.Replace(regs, "\r\x00\r\n", "", -1)
+		regs = strings.Replace(regs, "\x00\r\n", "", -1)
+		regs = strings.Replace(regs, "\r\x00", "", -1)
+		all := strings.Split(regs, " ")
+		for _, r := range all {
+			if strings.TrimSpace(r) == "" || strings.TrimSpace(r) == " " {
+				continue
+			}
+
+			if fname == "all" {
+				cmd = fmt.Sprintf("bcm s %s", r, value)
+			} else {
+				cmd = fmt.Sprintf("bcm m %s %s=%s", r, fname, value)
+			}
+
+			data, err = dev.RunCommand(ctx, &command.Command{
+				Mode: "shell",
+				CMD:  cmd,
 			})
 			if err != nil {
 				fmt.Println(err.Error())
