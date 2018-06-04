@@ -177,3 +177,56 @@ func DiffFileToHtml(after string, before string) {
 	diffs := dmp.DiffMain(string(content1), string(content2), false)
 	SaveToFile(after+".html", []byte(fmt.Sprintf("<html><head><title>%s</title></head><body>%s</body></html>", after, dmp.DiffPrettyHtml(diffs))))
 }
+
+func DiffToText(after, before string) {
+	dmp := diffmatchpatch.New()
+	diffs := dmp.DiffMain(after, before, false)
+	SaveToFile("diff.diff", []byte(dmp.DiffPrettyText(diffs)))
+}
+
+func DiffToHtml(after string, before string) {
+	dmp := diffmatchpatch.New()
+	diffs := dmp.DiffMain(after, before, false)
+	SaveToFile("diff.html", []byte(fmt.Sprintf("<html><head><title>%s</title></head><body>%s</body></html>", after, dmp.DiffPrettyHtml(diffs))))
+}
+
+func Diff(after, before string) {
+	dmp := diffmatchpatch.New()
+	diffs := dmp.DiffMain(after, before, false)
+
+	fmt.Println(dmp.DiffPrettyText(diffs))
+}
+
+func Diff2(after, before string) {
+	lines1 := strings.Split(string(after), "\n")
+	lines2 := strings.Split(string(before), "\n")
+
+	for i, line := range lines1 {
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		dmp := diffmatchpatch.New()
+
+		diffs := dmp.DiffMain(string(line), string(lines2[i]), false)
+
+		if len(diffs) == 1 {
+			continue
+		}
+
+		var buff bytes.Buffer
+		for _, d := range diffs {
+			if d.Type == diffmatchpatch.DiffInsert {
+				_, _ = buff.WriteString("\x1b[32m")
+				_, _ = buff.WriteString(d.Text)
+				_, _ = buff.WriteString("\x1b[0m")
+			} else if d.Type == diffmatchpatch.DiffDelete {
+				_, _ = buff.WriteString("\x1b[31m")
+				_, _ = buff.WriteString(d.Text)
+				_, _ = buff.WriteString("\x1b[0m")
+			} else if d.Type == diffmatchpatch.DiffEqual {
+				_, _ = buff.WriteString(d.Text)
+			}
+		}
+		fmt.Println(string(buff.Bytes()))
+	}
+}

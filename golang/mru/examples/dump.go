@@ -9,6 +9,7 @@ import (
 		"github.com/google/gopacket"
 		"github.com/google/gopacket/pcap"
 	*/
+	"github.com/fatih/color"
 	"io/ioutil"
 	"net"
 	"path/filepath"
@@ -16,7 +17,9 @@ import (
 	"rut"
 	"strconv"
 	"strings"
+	"sync"
 	"telnet"
+	"time"
 	"util"
 )
 
@@ -33,9 +36,132 @@ type bcmTable struct {
 	Fields []string
 }
 
+type Interface struct {
+	Name            string
+	VRF             string
+	Type            string
+	AdminStatus     string
+	OperationStatus string
+	Index           string
+	MTU             string
+	Bandwidth       string
+	Mode            string
+	Hardware        string
+	HardwareAddress string
+	Loopback        bool
+	Multicast       bool
+	Broadcast       bool
+	IP              []string
+	IP6             []string
+	RxPPS           string
+	RxBPS           string
+	TxPPS           string
+	TxBPS           string
+	RxUcastPacket   uint64
+	RxMcastPacket   uint64
+	RxBcastPacket   uint64
+	RxTotalPacket   uint64
+	RxTotalByte     uint64
+	TxUcastPacket   uint64
+	TxMcastPacket   uint64
+	TxBcastPacket   uint64
+	TxTotalPacket   uint64
+	TxTotalByte     uint64
+	RxDiscard       uint64
+	RxErrors        uint64
+	TxDiscard       uint64
+	TxErrors        uint64
+}
+
+func (ifp *Interface) String() string {
+	var ifs string
+	var Green = color.New(color.FgGreen)
+	if ifp.AdminStatus == "UP" && ifp.OperationStatus == "UP" {
+		ifs += Green.Sprintf("%12s: ", ifp.Name)
+		ifs += Green.Sprintf("%10s ", ifp.VRF)
+		ifs += Green.Sprintf("%6s ", ifp.Mode)
+		ifs += Green.Sprintf("%8s ", ifp.Index)
+		ifs += Green.Sprintf("%5s/%5s ", ifp.AdminStatus, ifp.OperationStatus)
+		ifs += Green.Sprintf("%5s ", ifp.MTU)
+		ifs += Green.Sprintf("%5s ", ifp.Bandwidth)
+		//ifs += Green.Sprintf("%5s ", ifp.Hardware)
+		ifs += Green.Sprintf("%15s ", ifp.HardwareAddress)
+		if *Monitor == "status" {
+			for _, ip := range ifp.IP {
+				ifs += Green.Sprintf(" %18s ", ip)
+			}
+
+			for _, ip6 := range ifp.IP6 {
+				ifs += Green.Sprintf(" %42s ", ip6)
+			}
+		} else if *Monitor == "statistics" {
+			ifs += Green.Sprintf("RXPPs(%5s) ", ifp.RxPPS)
+			ifs += Green.Sprintf("RXBPs(%5s) ", ifp.RxBPS)
+			//ifs += Green.Sprintf("RXUcast(%8d) ", ifp.RxUcastPacket)
+			ifs += Green.Sprintf("RXTotal(%5d) ", ifp.RxTotalPacket)
+			if ifp.RxDiscard != 0 {
+				ifs += Green.Sprintf("RXDiscard(%5d) ", ifp.RxDiscard)
+			}
+			if ifp.RxErrors != 0 {
+				ifs += Green.Sprintf("RXErrors(%5d) ", ifp.RxErrors)
+			}
+			ifs += Green.Sprintf("TXPPs(%5s) ", ifp.TxPPS)
+			ifs += Green.Sprintf("TXBPs(%5s) ", ifp.TxBPS)
+			//ifs += Green.Sprintf("TXUcast(%8d) ", ifp.TxUcastPacket)
+			ifs += Green.Sprintf("TXTotal(%5d) ", ifp.TxTotalPacket)
+			if ifp.TxDiscard != 0 {
+				ifs += Green.Sprintf("TXDiscard(%5d) ", ifp.TxDiscard)
+			}
+
+			if ifp.TxErrors != 0 {
+				ifs += Green.Sprintf("TXErrors(%5d) ", ifp.TxErrors)
+			}
+		}
+	} else {
+		ifs += fmt.Sprintf("%12s: ", ifp.Name)
+		ifs += fmt.Sprintf("%10s ", ifp.VRF)
+		ifs += fmt.Sprintf("%6s ", ifp.Mode)
+		ifs += fmt.Sprintf("%8s ", ifp.Index)
+		ifs += fmt.Sprintf("%5s/%5s ", ifp.AdminStatus, ifp.OperationStatus)
+		ifs += fmt.Sprintf("%5s ", ifp.MTU)
+		ifs += fmt.Sprintf("%5s ", ifp.Bandwidth)
+		//ifs += fmt.Sprintf("%5s ", ifp.Hardware)
+		ifs += fmt.Sprintf("%15s ", ifp.HardwareAddress)
+		if *Monitor == "status" {
+			for _, ip := range ifp.IP {
+				ifs += fmt.Sprintf(" %18s ", ip)
+			}
+
+			for _, ip6 := range ifp.IP6 {
+				ifs += fmt.Sprintf(" %42s ", ip6)
+			}
+		}
+	}
+
+	return ifs
+}
+
+var InterfaceList = make([]*Interface, 0, 10)
+var InterfaceLock sync.Mutex
+
 //Entries: 32768 with indices
 var tf = regexp.MustCompile("(?P<fname>[[:alnum:]_:]+)<")
 var ts = regexp.MustCompile("Entries:[[:space:]]+(?P<size>[[:alnum:]]+)[[:space:]]+with indices")
+var ifr = regexp.MustCompile("Interface[[:space:]]+(?P<ifname>[[:alnum:]/.]+)[[:space:]]+is")
+var ifstatus = regexp.MustCompile("(?P<status><[[:alnum:],]+>)")
+var ifhw = regexp.MustCompile("Hardware is (?P<hw>[[:alnum:]]+)[[:space:]]+Current HW addr: (?P<hwaddr>[[:alnum:].]+)")
+var ipr = regexp.MustCompile("inet[[:space:]](?P<ip>[[:alnum:]./]+)[[:space:]]+")
+var ip6r = regexp.MustCompile("inet[[:space:]](?P<ip>[[:alnum:]:/]+)[[:space:]]+")
+var ifindexr = regexp.MustCompile("index[[:space:]]+(?P<index>[[:digit:]]+)[[:space:]]")
+var ifmtur = regexp.MustCompile("mtu[[:space:]]+(?P<mtu>[[:digit:]]+)[[:space:]]")
+var ifbandwidthr = regexp.MustCompile("Bandwidth[[:space:]]+(?P<bw>[[:alnum:]]+)[[:space:]]")
+var ifvrfr = regexp.MustCompile("VRF Binding:[[:space:]]+Associated with[[:space:]]+(?P<vrf>[[:alnum:]_-]+)")
+var ifrater = regexp.MustCompile("5 sec :[[:space:]]+(?P<tpps>[[:alnum:]]+)[[:space:]]+(?P<tbps>[[:alnum:]]+)[[:space:]]+(?P<rpps>[[:alnum:]]+)[[:space:]]+(?P<rbps>[[:alnum:]]+)")
+var ifstatupr = regexp.MustCompile("IfInUcastPkts[[:space:]]+:[[:space:]]+(?P<rptk>[[:alnum:]]+)[[:space:]]+IfOutUcastPkts[[:space:]]+:[[:space:]]+(?P<tpkt>[[:alnum:]]+)")
+var ifstatmpr = regexp.MustCompile("IfInMcastPkts[[:space:]]+:[[:space:]]+(?P<rptk>[[:alnum:]]+)[[:space:]]+IfOutMcastPkts[[:space:]]+:[[:space:]]+(?P<tpkt>[[:alnum:]]+)")
+var ifstatbpr = regexp.MustCompile("IfInBcastPkts[[:space:]]+:[[:space:]]+(?P<rptk>[[:alnum:]]+)[[:space:]]+IfOutBcastPkts[[:space:]]+:[[:space:]]+(?P<tpkt>[[:alnum:]]+)")
+var ifstatDiscardr = regexp.MustCompile("IfInDiscards[[:space:]]+:[[:space:]]+(?P<rptk>[[:alnum:]]+)[[:space:]]+IfOutDiscards[[:space:]]+:[[:space:]]+(?P<tpkt>[[:alnum:]]+)")
+var ifstatErrorr = regexp.MustCompile("IfInErrors[[:space:]]+:[[:space:]]+(?P<rptk>[[:alnum:]]+)[[:space:]]+IfOutErrors[[:space:]]+:[[:space:]]+(?P<tpkt>[[:alnum:]]+)")
 
 var UseLessFilter = regexp.MustCompile("unit[[:space:]]+[[:digit:]]+[[:space:]]+[a-zA-Z?]+[[:space:]]+registers")
 
@@ -68,13 +194,14 @@ var Name = flag.String("name", "", "Name of various things")
 var Option = flag.String("option", "", "Options for another command")
 var Value = flag.String("value", "", "values set to register/tables")
 var Field = flag.String("field", "", "Field name of a table/register")
+var Monitor = flag.String("monitor", "", "Monitor the cpu/memory/status/statitics usage of device")
 
 func main() {
 	flag.Parse()
 
 	if *Table == "" && *Register == "" && *Command == "" && *Config == "" && *Shell == "" &&
 		*Upload == "" && *Download == "" && *Tcpdump == "" && *PCAPDecode == "" && *Check == "" &&
-		*Set == "" {
+		*Set == "" && *Monitor == "" {
 		fmt.Println("You must give an operation to run(Dump table/Register, bcmshell command, shell command, config, upload/download, tcpdump")
 		fmt.Println("\t Use -h to get help information")
 		return
@@ -339,6 +466,20 @@ func main() {
 		} else {
 			fmt.Println("Currently only support register/table set")
 			return
+		}
+	}
+
+	if *Monitor != "" {
+		if *Monitor == "memory" {
+			memoryMonitor(ctx, dev)
+		} else if *Monitor == "cpuload" {
+			cpuloadMonitor(ctx, dev)
+		} else if *Monitor == "status" {
+			statisticsMonitor(ctx, dev)
+		} else if *Monitor == "statistics" {
+			statisticsMonitor(ctx, dev)
+		} else if *Monitor == "cpustat" {
+			cpuStatisticsMonitor(ctx, dev)
 		}
 	}
 
@@ -805,4 +946,409 @@ func SetRegister(ctx context.Context, dev *rut.RUT, name, fname, value string) {
 
 func filenameNormalize(command string) string {
 	return strings.Replace(strings.Replace(strings.Replace(strings.Replace(strings.TrimSpace(command), "/", "", -1), " ", "", -1), ":", "", -1), ";", "", -1)
+}
+
+func memoryMonitor(ctx context.Context, dev *rut.RUT) {
+	//var pResult []byte
+	var iResult []byte
+	var cResult []byte
+	for range time.Tick(time.Duration(time.Second * 5)) {
+		/*Keep track to last time result */
+		/*
+			if cResult != nil {
+				pResult = cResult
+			}
+		*/
+
+		result := make([]byte, 0, 1024)
+		data, err := dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  "cat /proc/meminfo",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		result = append(result, data...)
+
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  "cat /proc/slabinfo",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		result = append(result, data...)
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  "ps aux",
+		})
+		if err != nil {
+			panic(err)
+		}
+		result = append(result, data...)
+
+		/*Keep track to the first time result*/
+		if iResult == nil {
+			iResult = result
+		}
+
+		cResult = result
+
+		if iResult != nil && cResult != nil {
+			util.Diff2(string(cResult), string(iResult))
+		}
+
+		util.SaveToFile("memory_monitor.txt", []byte(result))
+	}
+}
+
+func cpuloadMonitor(ctx context.Context, dev *rut.RUT) {
+	//var pResult []byte
+	var iResult []byte
+	var cResult []byte
+	for range time.Tick(time.Duration(time.Second * 5)) {
+		/*Keep track to last time result */
+		/*
+			if cResult != nil {
+				pResult = cResult
+			}
+		*/
+
+		data, err := dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  "ps aux",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		/*Keep track to the first time result*/
+		if iResult == nil {
+			iResult = []byte(data)
+		}
+
+		cResult = []byte(data)
+
+		if iResult != nil && cResult != nil {
+			util.Diff2(string(cResult), string(iResult))
+		}
+
+		util.SaveToFile("cpu_monitor.txt", []byte(cResult))
+	}
+}
+
+func statisticsMonitor(ctx context.Context, dev *rut.RUT) {
+	err := getAllInterface(ctx, dev)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(len(InterfaceList))
+	go updateInterfaceStatus(ctx, dev)
+	go updateInterfaceStatistics(ctx, dev)
+
+	for range time.Tick(time.Duration(time.Second * 5)) {
+		for _, ifp := range InterfaceList {
+			if *Monitor == "statistics" && ifp.Hardware == "ETH" && ifp.AdminStatus == "UP" && ifp.OperationStatus == "UP" {
+				fmt.Printf("%s\n", ifp)
+			} else {
+				fmt.Printf("%s\n", ifp)
+			}
+		}
+	}
+}
+
+func cpuStatisticsMonitor(ctx context.Context, dev *rut.RUT) {
+
+}
+
+func getAllInterface(ctx context.Context, dev *rut.RUT) error {
+	/* First go to command mode */
+	data, err := dev.RunCommand(ctx, &command.Command{
+		Mode: "shell",
+		CMD:  "exit",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	data, err = dev.RunCommand(ctx, &command.Command{
+		Mode: "normal",
+		CMD:  "show interface",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	InterfaceLock.Lock()
+	ifs := ifr.FindAllStringSubmatch(string(data), -1)
+	for _, ift := range ifs {
+		var newIf = Interface{Name: ift[1]}
+		InterfaceList = append(InterfaceList, &newIf)
+	}
+	InterfaceLock.Unlock()
+
+	/* Go back to shell mode */
+	data, err = dev.RunCommand(ctx, &command.Command{
+		Mode: "normal",
+		CMD:  "q sh -l",
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(data))
+	if len(InterfaceList) == 0 {
+		return fmt.Errorf("No interface found.")
+	}
+
+	return nil
+}
+
+func updateInterfaceStatus(ctx context.Context, dev *rut.RUT) {
+	var tick time.Duration
+	if len(InterfaceList) == 0 {
+		tick = time.Duration(time.Second)
+	} else {
+		tick = time.Duration(time.Second * 10)
+	}
+	for range time.Tick(tick) {
+		IfMap := make(map[string]*Interface, len(InterfaceList))
+		InterfaceLock.Lock()
+		for _, ifp := range InterfaceList {
+			IfMap[ifp.Name] = ifp
+		}
+		data, err := dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  "exit",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "normal",
+			CMD:  "show interface",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		ifns := ifr.FindAllStringSubmatch(string(data), -1)
+		ifis := ifr.Split(string(data), -1)
+		for i, ifn := range ifns {
+			if _, ok := IfMap[ifn[1]]; !ok {
+				var newIf = Interface{Name: ifn[1]}
+				InterfaceList = append(InterfaceList, &newIf)
+				IfMap[ifn[1]] = &newIf
+			}
+
+			ifp := IfMap[ifn[1]]
+			ifi := ifis[i+1]
+
+			//Get interface staus information
+			ifs := ifstatus.FindStringSubmatch(ifi)
+			if strings.Contains(ifs[1], "UP") {
+				ifp.AdminStatus = "UP"
+			} else {
+				ifp.AdminStatus = "Down"
+			}
+
+			if strings.Contains(ifs[1], "LOOPBACK") {
+				ifp.Loopback = true
+			} else {
+				ifp.Loopback = false
+			}
+
+			if strings.Contains(ifs[1], "RUNNING") {
+				ifp.OperationStatus = "UP"
+			} else {
+				ifp.OperationStatus = "DOWN"
+			}
+
+			if strings.Contains(ifs[1], "MULTICAST") {
+				ifp.Multicast = true
+			} else {
+				ifp.Multicast = false
+			}
+
+			if strings.Contains(ifs[1], "BROADCAST") {
+				ifp.Broadcast = true
+			} else {
+				ifp.Broadcast = false
+			}
+
+			if !ifp.Loopback {
+				ifh := ifhw.FindStringSubmatch(ifi)
+				ifp.Hardware = ifh[1]
+				ifp.HardwareAddress = ifh[2]
+			} else {
+				ifp.Hardware = "LB"
+			}
+
+			ifindex := ifindexr.FindStringSubmatch(ifi)
+			ifp.Index = ifindex[1]
+
+			ifmtu := ifmtur.FindStringSubmatch(ifi)
+			ifp.MTU = ifmtu[1]
+
+			ifbw := ifbandwidthr.FindStringSubmatch(ifi)
+			ifp.Bandwidth = ifbw[1]
+
+			if strings.Contains(ifi, "no switchport") {
+				ifp.Mode = "Router"
+			} else {
+				ifp.Mode = "Switch"
+			}
+
+			ips := ipr.FindAllStringSubmatch(ifi, -1)
+			if len(ips) > 0 {
+				ifp.IP = make([]string, 0, 1)
+				for _, ip := range ips {
+					ifp.IP = append(ifp.IP, ip[1])
+				}
+			}
+
+			ip6s := ip6r.FindAllStringSubmatch(ifi, -1)
+			if len(ip6s) > 0 {
+				ifp.IP6 = make([]string, 0, 1)
+				for _, ip6 := range ip6s {
+					ifp.IP6 = append(ifp.IP6, ip6[1])
+				}
+			}
+
+			if strings.Contains(ifi, "VRF Binding: Not bound") {
+				ifp.VRF = "Global"
+			} else {
+				ifvrf := ifvrfr.FindStringSubmatch(ifi)
+				ifp.VRF = ifvrf[1]
+			}
+		}
+
+		/* Go back to shell mode */
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "normal",
+			CMD:  "q sh -l",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		InterfaceLock.Unlock()
+	}
+}
+
+func updateInterfaceStatistics(ctx context.Context, dev *rut.RUT) {
+	for range time.Tick(time.Duration(time.Second * 4)) {
+		InterfaceLock.Lock()
+		data, err := dev.RunCommand(ctx, &command.Command{
+			Mode: "shell",
+			CMD:  "exit",
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		IfMap := make(map[string]*Interface, len(InterfaceList))
+
+		for _, ifp := range InterfaceList {
+			if ifp.AdminStatus == "UP" && ifp.OperationStatus == "UP" && ifp.Hardware == "ETH" {
+				IfMap[ifp.Name] = ifp
+			}
+		}
+
+		for _, ifp := range IfMap {
+			data, err = dev.RunCommand(ctx, &command.Command{
+				Mode: "normal",
+				CMD:  fmt.Sprintf("show interface statistics avg %s", ifp.Name),
+			})
+
+			if err != nil {
+				panic(err)
+			}
+			rates := ifrater.FindStringSubmatch(string(data))
+			ifp.RxPPS = rates[1]
+			ifp.RxBPS = rates[2]
+			ifp.TxPPS = rates[3]
+			ifp.TxBPS = rates[4]
+
+			data, err = dev.RunCommand(ctx, &command.Command{
+				Mode: "normal",
+				CMD:  fmt.Sprintf("show interface statistics interface %s", ifp.Name),
+			})
+
+			if err != nil {
+				panic(err)
+			}
+
+			upkts := ifstatupr.FindStringSubmatch(string(data))
+			ifp.RxUcastPacket, err = strconv.ParseUint(upkts[1], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			ifp.TxUcastPacket, err = strconv.ParseUint(upkts[2], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			mpkts := ifstatmpr.FindStringSubmatch(string(data))
+			ifp.RxMcastPacket, err = strconv.ParseUint(mpkts[1], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			ifp.TxMcastPacket, err = strconv.ParseUint(mpkts[2], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			bpkts := ifstatbpr.FindStringSubmatch(string(data))
+			ifp.RxBcastPacket, err = strconv.ParseUint(bpkts[1], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			ifp.TxBcastPacket, err = strconv.ParseUint(bpkts[2], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			ifp.RxTotalPacket = ifp.RxUcastPacket + ifp.RxBcastPacket + ifp.RxMcastPacket
+			ifp.TxTotalPacket = ifp.TxUcastPacket + ifp.TxBcastPacket + ifp.TxMcastPacket
+
+			dpkts := ifstatDiscardr.FindStringSubmatch(string(data))
+			ifp.RxDiscard, err = strconv.ParseUint(dpkts[1], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			ifp.TxDiscard, err = strconv.ParseUint(dpkts[2], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			epkts := ifstatErrorr.FindStringSubmatch(string(data))
+			ifp.RxErrors, err = strconv.ParseUint(epkts[1], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+
+			ifp.TxErrors, err = strconv.ParseUint(epkts[2], 10, 64)
+			if err != nil {
+				panic(err)
+			}
+		}
+
+		data, err = dev.RunCommand(ctx, &command.Command{
+			Mode: "normal",
+			CMD:  "q sh -l",
+		})
+		if err != nil {
+			panic(err)
+		}
+		InterfaceLock.Unlock()
+	}
 }
