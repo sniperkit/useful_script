@@ -536,3 +536,14 @@ func New2(user, pass, ip, port, up, pp, np string) (*Session, error) {
 
 	return s, nil
 }
+
+func New3(addr string) (*Session, error) {
+	s, err := newSession(addr)
+	if err != nil {
+		log.Println("error happend when connect to: ", addr, " with: ", err.Error())
+		return nil, errors.New("Cannot connect to host")
+	}
+	s.SetUnixWriteMode(true)
+
+	return s, nil
+}
