@@ -12,7 +12,7 @@ import (
 var DEFAULTSESSIONNAME = "ATSN2X"
 
 var ResultR = regexp.MustCompile("{(?P<result>[[:alnum:][:space:]]*)}")
-var BasicResultR = regexp.MustCompile("(?P<status>[[:alnum:]-]+)[[:space:]]+(?P<result>[[:alnum:][:space:]_-{}*\"]*)")
+var BasicResultR = regexp.MustCompile("(?P<status>[[:alnum:]-]+)[[:space:]]+(?P<result>[[:alnum:][:space:]_-{}*\".]*)")
 
 type N2X struct {
 	IP       string
@@ -20,15 +20,17 @@ type N2X struct {
 	Conn     *telnet.Session
 	APIs     map[string][]string
 	Sessions []*NSession
+	Ports    map[string]*Port
 }
 
 type APIs map[string][]string
 
 func New(ip, port string) (*N2X, error) {
 	n2x := &N2X{
-		IP:   ip,
-		Port: port,
-		APIs: make(map[string][]string, 10),
+		IP:    ip,
+		Port:  port,
+		APIs:  make(map[string][]string, 10),
+		Ports: make(map[string]*Port, 10),
 	}
 
 	sess, err := telnet.New3(fmt.Sprintf("%s:%s", ip, port))
@@ -94,7 +96,7 @@ func (n *N2X) OpenNewSession(ports ...string) (*NSession, error) {
 		return nil, err
 	}
 
-	nsess := &NSession{ID: res}
+	nsess := &NSession{ID: res, Ports: make(map[string]*Port, 10)}
 	nport, err := n.GetSessionPort(nsess.ID)
 	if err != nil {
 		return nil, err
@@ -132,6 +134,12 @@ func (n *N2X) ConnectToSessionByID(id string) (*NSession, error) {
 			if err != nil {
 				return nil, fmt.Errorf("Cannot connect to session %s(%d) : %s", sess.Label, sess.ID, err.Error())
 			}
+
+			_, err := sess.GetReservedPorts()
+			if err != nil {
+				return nil, err
+			}
+
 			return sess, nil
 		}
 	}
@@ -153,6 +161,10 @@ func (n *N2X) ConnectToSessionByName(name string) (*NSession, error) {
 			sess, err = n.ConnectToSessionByID(sess.ID)
 			if err != nil {
 				return nil, fmt.Errorf("Cannot connect to session %s(%d) : %s", sess.Label, sess.ID, err.Error())
+			}
+			_, err := sess.GetReservedPorts()
+			if err != nil {
+				return nil, err
 			}
 
 			return sess, nil
@@ -189,7 +201,7 @@ func (n *N2X) GetAllOpenSessions() ([]*NSession, error) {
 	if len(matches) == 2 {
 		sess := strings.Split(matches[1], " ")
 		for _, s := range sess {
-			nsess := &NSession{ID: s}
+			nsess := &NSession{ID: s, Ports: make(map[string]*Port, 10)}
 			sessions = append(sessions, nsess)
 		}
 	}

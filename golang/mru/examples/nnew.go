@@ -24,5 +24,23 @@ func main() {
 		}
 	}
 
+	for _, port := range sess.Ports {
+		ips, _ := port.LegacyGetSutIPAddresses()
+		fmt.Printf("%q ", ips)
+	}
+
+	ports, err := sess.GetReservedPorts()
+	fmt.Printf("%q ", ports)
+	modules, _ := sess.ListModules()
+	fmt.Printf("%q ", modules)
+	modules, _ = sess.ListAvailableModules()
+	fmt.Printf("%q ", modules)
+	modules, _ = sess.ListAvailablePorts()
+	fmt.Printf("%q ", modules)
+	modules, _ = sess.ListLockedPorts()
+	fmt.Printf("%q ", modules)
+	modules, _ = sess.ListPorts()
+	fmt.Printf("%q ", modules)
+
 	fmt.Printf("%q\n", sess)
 }
