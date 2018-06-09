@@ -111,6 +111,24 @@ func (ap *AddressPool) GetTesterIPAddresses() error {
 	return nil
 }
 
+//AgtEthernetIpv6AddressPool GetTesterAddresses
+func (ap *AddressPool) GetTesterIP6Addresses() error {
+	cmd := fmt.Sprintf("AgtEthernetIpv6AddressPool GetTesterAddresses %s", ap.Handler)
+	res, err := ap.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot get ipv6 address pool %s port: %s : %s", ap.Handler, ap.Port.Name, err.Error())
+	}
+
+	res = strings.Replace(res, "\"", "", -1)
+	fields := strings.Split(res, " ")
+	ap.First = strings.TrimSpace(fields[0])
+	ap.Plen = strings.TrimSpace(fields[1])
+	ap.Count = strings.TrimSpace(fields[2])
+	ap.Step = strings.TrimSpace(fields[3])
+
+	return nil
+}
+
 func (ap *AddressPool) SetVlan(vid string) error {
 	cmd := fmt.Sprintf("AgtEthernetAddressPool EnableVlan %s", ap.Handler)
 	_, err := ap.Invoke(cmd)

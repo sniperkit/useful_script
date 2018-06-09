@@ -17,6 +17,8 @@ type Port struct {
 	LegacyLinkSutMac string
 	LegacyLinkSutIP  map[string]string
 	AddressPools     map[string]*AddressPool
+	LegacyLinkSutIP6 map[string]string
+	AddressPools6    map[string]*AddressPool
 }
 
 const (
@@ -71,6 +73,49 @@ func (p *Port) LegacyLinkGetAllAddressPools() ([]*AddressPool, error) {
 			}
 			pools = append(pools, np)
 			p.AddressPools[field] = np
+		}
+	}
+
+	return pools, nil
+}
+
+func (p *Port) LegacyLinkGetAllIP6AddressPools() ([]*AddressPool, error) {
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 ListAddressPools %s", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get ipv6 address pools of port: %s : %s", p.Name, err.Error())
+	}
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+	res = strings.TrimSpace(res)
+	fields := strings.Split(res, " ")
+
+	/*Direct drop existed entries */
+	p.AddressPools6 = make(map[string]*AddressPool, 2)
+
+	pools := make([]*AddressPool, 0, 2)
+
+	for i, field := range fields {
+		if strings.TrimSpace(field) != "" {
+			np := &AddressPool{
+				Handler: field,
+				Family:  ADDRESS_FAMILY_IPV6,
+				Type:    ADDRESS_POOL_LEGACY,
+				Port:    p,
+			}
+			if i == 0 {
+				np.Default = true
+			} else {
+				np.Default = false
+			}
+
+			err := np.GetTesterIP6Addresses()
+			if err != nil {
+				return nil, fmt.Errorf("Cannot restore test IP6 address %s", err)
+			}
+			pools = append(pools, np)
+			p.AddressPools6[field] = np
 		}
 	}
 
@@ -268,6 +313,30 @@ func (p *Port) LegacyLinkGetSutIPAddresses() ([]string, error) {
 	for _, field := range fields {
 		ips = append(ips, strings.TrimSpace(field))
 		p.LegacyLinkSutIP[strings.TrimSpace(field)] = strings.TrimSpace(field)
+	}
+
+	return ips, nil
+}
+
+// AgtEthernetIpv6Addresses2 ListSutIpv6AddressesByVlan
+func (p *Port) LegacyLinkGetSutIP6Addresses() ([]string, error) {
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 ListSutIpv6AddressesByVlan %s 0", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get sup ip6 address : %s", err.Error())
+	}
+
+	/*If previous entries exist, drop it */
+	p.LegacyLinkSutIP6 = make(map[string]string, 1)
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+	fields := strings.Split(res, " ")
+
+	ips := make([]string, 0, 10)
+	for _, field := range fields {
+		ips = append(ips, strings.TrimSpace(field))
+		p.LegacyLinkSutIP6[strings.TrimSpace(field)] = strings.TrimSpace(field)
 	}
 
 	return ips, nil

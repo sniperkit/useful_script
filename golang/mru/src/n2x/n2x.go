@@ -12,7 +12,7 @@ import (
 var DEFAULTSESSIONNAME = "ATSN2X"
 
 var ResultR = regexp.MustCompile("{(?P<result>[[:alnum:][:space:]]*)}")
-var BasicResultR = regexp.MustCompile("(?P<status>[[:alnum:]-]+)[[:space:]]+(?P<result>[[:alnum:][:space:]_-{}*\".]*)")
+var BasicResultR = regexp.MustCompile("(?P<status>[[:alnum:]-]+)[[:space:]]+(?P<result>[[:alnum:][:space:]_-{}*\".:]*)")
 
 type N2X struct {
 	IP       string

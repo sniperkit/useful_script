@@ -59,6 +59,12 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
+		pools, err := port.LegacyLinkGetAllIP6AddressPools()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%q\n", pools)
 	}
 	sess.ListModules()
 	sess.ListAvailableModules()
