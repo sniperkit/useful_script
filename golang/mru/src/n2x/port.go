@@ -142,6 +142,26 @@ func (p *Port) LegacyLinkRemoveAllAddressPools() error {
 	return nil
 }
 
+func (p *Port) LegacyLinkRemoveAllIP6AddressPools() error {
+	pools, err := p.LegacyLinkGetAllIP6AddressPools()
+	if err != nil {
+		return fmt.Errorf("Cannot delete all ipv6 address pools on port: %s: %s", p.Name, err)
+	}
+
+	for _, pool := range pools {
+		if !pool.Default {
+			err := p.LegacyLinkRemoveIP6AddressPool(pool.Handler)
+			if err != nil {
+				return fmt.Errorf("Cannot delete ipv6 address pool: %s:%s with: %s", pool.Handler, pool.First, err)
+			}
+
+			delete(p.AddressPools6, pool.Handler)
+		}
+	}
+
+	return nil
+}
+
 func (p *Port) LegacyLinkSet(vid, testerip, tplen, testmac, sutip string) error {
 	err := p.LegacyLinkReset()
 	if err != nil {
@@ -187,6 +207,20 @@ func (p *Port) LegacyLinkGetDefaultAddressPool() (*AddressPool, error) {
 	return nil, fmt.Errorf("There is no default pool on port: %s", p.Name)
 }
 
+func (p *Port) LegacyLinkGetDefaultIP6AddressPool() (*AddressPool, error) {
+	if len(p.AddressPools6) == 0 {
+		return nil, fmt.Errorf("There is no ipv6 pool found on port: %s", p.Name)
+	}
+
+	for _, pool := range p.AddressPools6 {
+		if pool.Default {
+			return pool, nil
+		}
+	}
+
+	return nil, fmt.Errorf("There is no default ipv6 pool on port: %s", p.Name)
+}
+
 func (p *Port) LegacyLinkRemoveAllSutIPAddresses() error {
 	ips, err := p.LegacyLinkGetSutIPAddresses()
 	if err != nil {
@@ -217,7 +251,7 @@ func (p *Port) LegacyLinkAddAddressPool(ip, plen, count, step string) (string, e
 	cmd := fmt.Sprintf("AgtEthernetAddresses AddAddressPool %s %s %s %s %s", p.Handler, ip, plen, count, step)
 	res, err := p.Invoke(cmd)
 	if err != nil {
-		return "", fmt.Errorf("Cannot get ip address pools of port: %s : %s", p.Name, err.Error())
+		return "", fmt.Errorf("Cannot add ipv6 address pools of port: %s : %s", p.Name, err.Error())
 	}
 
 	np := &AddressPool{
@@ -241,11 +275,51 @@ func (p *Port) LegacyLinkAddAddressPool(ip, plen, count, step string) (string, e
 	return np.Handler, nil
 }
 
+//AgtEthernetIpv6Addresses2 AddAddressPool
+func (p *Port) LegacyLinkAddIP6AddressPool(ip, plen, count, step string) (string, error) {
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 AddAddressPool %s %s %s %s %s", p.Handler, ip, plen, count, step)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot add ipv6 address pools of port: %s : %s", p.Name, err.Error())
+	}
+
+	np := &AddressPool{
+		Handler: strings.TrimSpace(res),
+		Family:  ADDRESS_FAMILY_IPV6,
+		Type:    ADDRESS_POOL_LEGACY,
+		Port:    p,
+		First:   ip,
+		Plen:    plen,
+		Count:   count,
+		Step:    step,
+		Default: false,
+	}
+
+	if p.AddressPools6 == nil {
+		p.AddressPools6 = make(map[string]*AddressPool, 2)
+	}
+
+	p.AddressPools6[np.Handler] = np
+
+	return np.Handler, nil
+}
+
 func (p *Port) LegacyLinkRemoveAddressPool(handler string) error {
 	cmd := fmt.Sprintf("AgtEthernetAddresses RemoveAddressPool %s %s", p.Handler, handler)
 	_, err := p.Invoke(cmd)
 	if err != nil {
 		return fmt.Errorf("Cannot remove ip address pools of port: %s : %s", p.Name, err.Error())
+	}
+
+	return nil
+}
+
+//AgtEthernetIpv6Addresses2 RemoveAddressPool
+func (p *Port) LegacyLinkRemoveIP6AddressPool(handler string) error {
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 RemoveAddressPool %s %s", p.Handler, handler)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot remove ipv6 address pools of port: %s : %s", p.Name, err.Error())
 	}
 
 	return nil
@@ -264,13 +338,23 @@ func (p *Port) LegacyLinkRemoveAddressPoolByIP(ip string) error {
 		return fmt.Errorf("Cannot find address pool with: %s on port: %s", ip, p.Name)
 	}
 
-	cmd := fmt.Sprintf("AgtEthernetAddresses RemoveAddressPool %s %s", p.Handler, handler)
-	_, err := p.Invoke(cmd)
-	if err != nil {
-		return fmt.Errorf("Cannot remove ip address pools of port: %s : %s", p.Name, err.Error())
+	return p.LegacyLinkRemoveAddressPool(handler)
+}
+
+func (p *Port) LegacyLinkRemoveIP6AddressPoolByIP(ip string) error {
+	var handler string
+	for h, pool := range p.AddressPools6 {
+		if pool.First == strings.TrimSpace(ip) {
+			handler = h
+			break
+		}
 	}
 
-	return nil
+	if handler == "" {
+		return fmt.Errorf("Cannot find ipv6 address pool with: %s on port: %s", ip, p.Name)
+	}
+
+	return p.LegacyLinkRemoveIP6AddressPool(handler)
 }
 
 func (p *Port) LegacyLinkRemoveAddressPoolBySutIP(ip string) error {
@@ -286,13 +370,23 @@ func (p *Port) LegacyLinkRemoveAddressPoolBySutIP(ip string) error {
 		return fmt.Errorf("Cannot find address pool with sut: %s on port: %s", ip, p.Name)
 	}
 
-	cmd := fmt.Sprintf("AgtEthernetAddresses RemoveAddressPool %s %s", p.Handler, handler)
-	_, err := p.Invoke(cmd)
-	if err != nil {
-		return fmt.Errorf("Cannot remove ip address pools of port: %s : %s", p.Name, err.Error())
+	return p.LegacyLinkRemoveAddressPool(handler)
+}
+
+func (p *Port) LegacyLinkRemoveIP6AddressPoolBySutIP(ip string) error {
+	var handler string
+	for h, pool := range p.AddressPools6 {
+		if pool.Sut == strings.TrimSpace(ip) {
+			handler = h
+			break
+		}
 	}
 
-	return nil
+	if handler == "" {
+		return fmt.Errorf("Cannot find ipv6 address pool with sut: %s on port: %s", ip, p.Name)
+	}
+
+	return p.LegacyLinkRemoveIP6AddressPool(handler)
 }
 
 func (p *Port) LegacyLinkGetSutIPAddresses() ([]string, error) {
