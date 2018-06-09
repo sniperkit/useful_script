@@ -101,6 +101,12 @@ func (ns *NSession) GetCommandResult() (string, error) {
 			return "", fmt.Errorf("Cannot get result with error: %s", err.Error())
 		}
 		line = []byte(fmt.Sprintf("%c%s", b, line))
+	} else if b == 'm' {
+		line, err = ns.Conn.ReadUntil("brace")
+		if err != nil {
+			return "", fmt.Errorf("Cannot get result with error: %s", err.Error())
+		}
+		line = []byte(fmt.Sprintf("%c%s", b, line))
 	} else {
 		sline, err := ns.Conn.ReadString('\n')
 		if err != nil {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"n2x"
 )
 
@@ -25,22 +26,44 @@ func main() {
 	}
 
 	for _, port := range sess.Ports {
-		ips, _ := port.LegacyGetSutIPAddresses()
+		ips, _ := port.LegacyLinkGetSutIPAddresses()
 		fmt.Printf("%q ", ips)
 	}
 
 	ports, err := sess.GetReservedPorts()
 	fmt.Printf("%q ", ports)
-	modules, _ := sess.ListModules()
-	fmt.Printf("%q ", modules)
-	modules, _ = sess.ListAvailableModules()
-	fmt.Printf("%q ", modules)
-	modules, _ = sess.ListAvailablePorts()
-	fmt.Printf("%q ", modules)
-	modules, _ = sess.ListLockedPorts()
-	fmt.Printf("%q ", modules)
-	modules, _ = sess.ListPorts()
-	fmt.Printf("%q ", modules)
-
+	for i, port := range ports {
+		port.GetAvailableMediaTypes()
+		port.GetMediaType()
+		port.SetMediaType(n2x.RJ45)
+		port.GetMediaType()
+		port.LaserOn()
+		port.LaserOff()
+		port.LegacyLinkGetSutMacAddress()
+		port.LegacyLinkSetSutMacAddress("1.1.1.1", "00:01:00:01:00:02")
+		port.LegacyLinkGetSutMacAddress()
+		port.LegacyLinkAddSutIPAddress("123.1.1.1")
+		//port.LegacyLinkAddSutIPAddresses("120.1.1.5", "30", "1000", "1")
+		port.SendAllArpRequests()
+		port.SendAllNeighborSolicitations()
+		port.LegacyLinkGetAllAddressPools()
+		tip := fmt.Sprintf("12.%d.1.1", i)
+		sip := fmt.Sprintf("12.%d.1.2", i)
+		smac := fmt.Sprintf("00:%x:00:00:%x:00", i%32768, i%32768)
+		port.LegacyLinkAddSutIPAddress(sip)
+		err := port.LegacyLinkSet("10", tip, "30", smac, sip)
+		if err != nil {
+			panic(err)
+		}
+	}
+	sess.ListModules()
+	sess.ListAvailableModules()
+	sess.ListAvailablePorts()
+	sess.ListLockedPorts()
+	sess.ListPorts()
 	fmt.Printf("%q\n", sess)
+}
+
+func init() {
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
 }

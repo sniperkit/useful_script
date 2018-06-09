@@ -367,6 +367,12 @@ func (n *N2X) GetCommandResult() (string, error) {
 			return "", fmt.Errorf("Cannot get result with error: %s", err.Error())
 		}
 		line = []byte(fmt.Sprintf("%c%s", b, line))
+	} else if b == 'm' {
+		line, err = n.Conn.ReadUntil("brace")
+		if err != nil {
+			return "", fmt.Errorf("Cannot get result with error: %s", err.Error())
+		}
+		line = []byte(fmt.Sprintf("%c%s", b, line))
 	} else {
 		sline, err := n.Conn.ReadString('\n')
 		if err != nil {
