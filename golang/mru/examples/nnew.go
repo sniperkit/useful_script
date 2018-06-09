@@ -30,6 +30,10 @@ func main() {
 		fmt.Printf("%q ", ips)
 	}
 
+	err = sess.StopTest()
+	if err != nil {
+		panic(err)
+	}
 	ports, err := sess.GetReservedPorts()
 	fmt.Printf("%q ", ports)
 	for i, port := range ports {
@@ -61,6 +65,12 @@ func main() {
 	sess.ListAvailablePorts()
 	sess.ListLockedPorts()
 	sess.ListPorts()
+	sess.StopRoutingEngine()
+	sess.StartRoutingEngine()
+	err = sess.StartTest()
+	if err != nil {
+		panic(err)
+	}
 	fmt.Printf("%q\n", sess)
 }
 

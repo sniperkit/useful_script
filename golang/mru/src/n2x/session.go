@@ -239,3 +239,45 @@ func (ns *NSession) ListPorts() ([]string, error) {
 
 	return ports, nil
 }
+
+//Use this functio to start sending traffic
+func (ns *NSession) StartTest() error {
+	//invoke AgtTestController StartTest
+	_, err := ns.Invoke("AgtTestController StartTest")
+	if err != nil {
+		return fmt.Errorf("Cannot start test with: %s", err)
+	}
+
+	return nil
+}
+
+//Use this functio to stop sending traffic
+func (ns *NSession) StopTest() error {
+	//invoke AgtTestController StartTest
+	_, err := ns.Invoke("AgtTestController StopTest")
+	if err != nil {
+		return fmt.Errorf("Cannot stop test with: %s", err)
+	}
+
+	return nil
+}
+
+//Use this function to start routing engine
+func (ns *NSession) StartRoutingEngine() error {
+	_, err := ns.Invoke("AgtRoutingEngine Start")
+	if err != nil {
+		return fmt.Errorf("Cannot start routing engine with: %s", err)
+	}
+
+	return nil
+}
+
+//Use this function to stop routing engine
+func (ns *NSession) StopRoutingEngine() error {
+	_, err := ns.Invoke("AgtRoutingEngine Stop")
+	if err != nil {
+		return fmt.Errorf("Cannot stop routing engine with: %s", err)
+	}
+
+	return nil
+}
