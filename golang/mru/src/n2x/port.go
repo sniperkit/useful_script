@@ -1,10 +1,13 @@
 package n2x
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"strings"
 )
+
+var ErrorNoOSPFSession = errors.New("No OSPF Session exist")
 
 type PortMediaType int
 
@@ -22,6 +25,7 @@ type Port struct {
 	AddressPools6           map[string]*AddressPool
 	LegacyLinkDefaultSutIP6 string
 	LegacyLinkDefaultSutIP  string
+	OSPFs                   map[string]*OSPF
 }
 
 const (
@@ -747,6 +751,127 @@ func (p *Port) SendAllNeighborSolicitations() error {
 	_, err := p.Invoke(cmd)
 	if err != nil {
 		return fmt.Errorf("Cannot send ns on port %s : %s", p.Name, err.Error())
+	}
+
+	return nil
+}
+
+func (p *Port) AddOSPF(area, rid, srid, name string) (*OSPF, error) {
+	cmd := fmt.Sprintf("AgtTestTopology AddSession %s AGT_SESSION_OSPF", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot add ospf session on port %s : %s", p.Name, err.Error())
+	}
+
+	o := &OSPF{
+		Handler: strings.TrimSpace(res),
+		Version: "2",
+		AreaID:  area,
+		RID:     rid,
+		SutRID:  srid,
+		Port:    p,
+	}
+
+	err = o.Sync()
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create ospf with: %s", err.Error())
+	}
+
+	err = o.SetName(name)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create ospf with: %s", err.Error())
+	}
+
+	_, err = o.GetRouterHandler()
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create ospf with: %s", err.Error())
+	}
+
+	err = o.SetAreaID(area)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create ospf with: %s", err.Error())
+	}
+	err = o.SetRouterID(rid)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create ospf with: %s", err.Error())
+	}
+
+	err = o.SetSutRouterID(srid)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create ospf with: %s", err.Error())
+	}
+
+	return o, nil
+}
+
+func (p *Port) RemoveOSPF(o *OSPF) error {
+	cmd := fmt.Sprintf("AgtTestTopology RemoveSession %s", o.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot remove ospf session on port %s : %s", p.Name, err.Error())
+	}
+
+	fmt.Println(res)
+
+	return nil
+}
+
+//AgtTestTopology ListSessions
+func (p *Port) GetAllOSPFs() ([]*OSPF, error) {
+	cmd := fmt.Sprintf("AgtTestTopology ListSessions %s", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot remove ospf session on port %s : %s", p.Name, err.Error())
+	}
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+	res = strings.TrimSpace(res)
+
+	p.OSPFs = make(map[string]*OSPF, 1)
+	ospfs := make([]*OSPF, 0, 1)
+
+	fields := strings.Split(res, " ")
+	for _, field := range fields {
+		if strings.TrimSpace(field) == "" {
+			continue
+		}
+
+		nospf := &OSPF{
+			Handler: strings.TrimSpace(field),
+			Port:    p,
+		}
+
+		err := nospf.Sync()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot get all ospf with: %s", err)
+		}
+
+		ospfs = append(ospfs, nospf)
+		p.OSPFs[field] = nospf
+	}
+
+	if len(ospfs) == 0 {
+		return nil, ErrorNoOSPFSession
+	}
+
+	return ospfs, nil
+}
+
+func (p *Port) DeleteAllOSPFs() error {
+	ospfs, err := p.GetAllOSPFs()
+	if err != nil {
+		if err == ErrorNoOSPFSession {
+			return nil
+		}
+		return fmt.Errorf("Cannot Delete all ospfs with: %s", err)
+	}
+
+	for _, o := range ospfs {
+		err := p.RemoveOSPF(o)
+		if err != nil {
+			return fmt.Errorf("Cannot Delete all ospfs with: %s", err)
+		}
 	}
 
 	return nil

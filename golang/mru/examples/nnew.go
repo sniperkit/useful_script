@@ -71,6 +71,22 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
+		port.GetAllOSPFs()
+		err = port.DeleteAllOSPFs()
+		if err != nil {
+			panic(err)
+		}
+		port.GetAllOSPFs()
+		name := fmt.Sprintf("OSPF_EMULATION_%d", i)
+		rid := fmt.Sprintf("155.1.1.%d", i)
+		srid := fmt.Sprintf("154.1.1.%d", i)
+		_, err = port.AddOSPF(fmt.Sprintf("1%d.1%d.1%d.1%d", i, i, i, i), rid, srid, name)
+		if err != nil {
+			panic(err)
+		}
+		port.GetAllOSPFs()
+
 		fmt.Printf("%q\n", pools)
 	}
 	sess.ListModules()
