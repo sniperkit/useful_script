@@ -143,6 +143,11 @@ func (p *Port) LegacyLinkRemoveAllAddressPools() error {
 			}
 
 			delete(p.AddressPools, pool.Handler)
+		} else {
+			err := pool.SetTesterAddress("0", pool.Handler+".255.255.255", "30", "00:ff:ff:ff:ff:ff")
+			if err != nil {
+				return fmt.Errorf("Cannot reset tester address pool: %s:%s with: %s", pool.Handler, pool.First, err)
+			}
 		}
 	}
 
@@ -463,12 +468,16 @@ func (p *Port) LegacyLinkGetSutIPAddresses() ([]string, error) {
 	/*If previous entries exist, drop it */
 	p.LegacyLinkSutIP = make(map[string]string, 1)
 
+	fmt.Println(p.Name, res)
 	res = strings.Replace(res, "{", "", -1)
 	res = strings.Replace(res, "}", "", -1)
 	fields := strings.Split(res, " ")
 
 	ips := make([]string, 0, 10)
 	for _, field := range fields {
+		if strings.TrimSpace(field) == "" {
+			continue
+		}
 		ips = append(ips, strings.TrimSpace(field))
 		p.LegacyLinkSutIP[strings.TrimSpace(field)] = strings.TrimSpace(field)
 	}

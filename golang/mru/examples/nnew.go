@@ -41,23 +41,31 @@ func main() {
 	for i, port := range ports {
 		port.GetAvailableMediaTypes()
 		port.GetMediaType()
-		port.SetMediaType(n2x.RJ45)
+		port.SetMediaType(n2x.SFP)
 		port.GetMediaType()
-		port.LaserOn()
 		port.LaserOff()
+		port.LaserOn()
 		port.LegacyLinkGetSutMacAddress()
-		port.LegacyLinkSetSutMacAddress("1.1.1.1", "00:01:00:01:00:02")
-		port.LegacyLinkGetSutMacAddress()
-		port.LegacyLinkAddSutIPAddress("123.1.1.1")
 		//port.LegacyLinkAddSutIPAddresses("120.1.1.5", "30", "1000", "1")
 		port.SendAllArpRequests()
 		port.SendAllNeighborSolicitations()
 		port.LegacyLinkGetAllAddressPools()
-		tip := fmt.Sprintf("12.%d.1.1", i)
-		sip := fmt.Sprintf("12.%d.1.2", i)
+		var tip string
+		var sip string
+		if i == 0 {
+			tip = fmt.Sprintf("21.1.1.2")
+			sip = fmt.Sprintf("21.1.1.1")
+		} else {
+			tip = fmt.Sprintf("24.1.1.2")
+			sip = fmt.Sprintf("24.1.1.1")
+		}
 		smac := fmt.Sprintf("00:1%x:00:00:1%x:00", i%255, i%255)
+		err = port.LegacyLinkRemoveAllSutIPAddresses()
+		if err != nil {
+			panic(err)
+		}
 		port.LegacyLinkAddSutIPAddress(sip)
-		err := port.LegacyLinkSet("10", tip, "30", smac, sip)
+		err := port.LegacyLinkSet("0", tip, "24", smac, sip)
 		if err != nil {
 			panic(err)
 		}
@@ -85,9 +93,7 @@ func main() {
 		}
 		port.GetAllOSPFs()
 		name := fmt.Sprintf("OSPF_EMULATION_%d", i)
-		rid := fmt.Sprintf("155.1.1.%d", i)
-		srid := fmt.Sprintf("154.1.1.%d", i)
-		ospf, err := port.AddOSPF(fmt.Sprintf("1%d.1%d.1%d.1%d", i, i, i, i), rid, srid, name)
+		ospf, err := port.AddOSPF("0.0.0.0", " 21.1.1.25", " 21.1.1.24", name)
 		if err != nil {
 			panic(err)
 		}
@@ -108,7 +114,7 @@ func main() {
 	}
 
 	sess.StartRoutingEngine()
-	time.Sleep(time.Duration(time.Second * 10))
+	time.Sleep(time.Duration(time.Second * 40))
 	for i, port := range ports {
 		name := fmt.Sprintf("OSPF_EMULATION_%d", i)
 		//	port.GetAllOSPFs()

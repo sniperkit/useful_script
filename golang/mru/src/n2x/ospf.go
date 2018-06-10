@@ -556,6 +556,8 @@ func (o *OSPF) GetLSDB() (*LSDB, error) {
 		return nil, fmt.Errorf("Cannot get lsdb on port %s : %s", o.Name, err.Error())
 	}
 
+	fmt.Println(res)
+
 	handler := strings.TrimSpace(res)
 	if handler == "" {
 		return nil, fmt.Errorf("Cannot get lsdb on port %s : %s", o.Name, err.Error())
