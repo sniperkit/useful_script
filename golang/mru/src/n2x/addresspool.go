@@ -30,12 +30,10 @@ type AddressPool struct {
 
 func (ap *AddressPool) SetSutIPAddress(ip string) error {
 	cmd := fmt.Sprintf("AgtEthernetAddressPool SetTesterAndSutIpAddresses %s %s %s %s %s %s %s", ap.Handler, ap.First, ap.Plen, ap.Count, ap.Step, ip, ip)
-	res, err := ap.Invoke(cmd)
+	_, err := ap.Invoke(cmd)
 	if err != nil {
 		return fmt.Errorf("Cannot set sut ip address for pool %s port: %s : %s", ap.Handler, ap.Port.Name, err.Error())
 	}
-	fmt.Println(res)
-
 	return nil
 }
 

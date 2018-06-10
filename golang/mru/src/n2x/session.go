@@ -75,6 +75,7 @@ func (ns *NSession) Invoke(cmds ...string) (string, error) {
 		return "", fmt.Errorf("Cannot get result of: %s with error: %s", cmd, err.Error())
 	}
 
+	util.AppendToFile("n2x_log.txt", []byte("Result: "+line))
 	res := BasicResultR.FindStringSubmatch(line)
 	if len(res) != 3 {
 		return "", fmt.Errorf("Run %s with invalid result: %s", cmd, line)
@@ -119,24 +120,24 @@ func (ns *NSession) GetCommandResult() (string, error) {
 }
 
 func (ns *NSession) GetReservedPorts() ([]*Port, error) {
-	res, err := ns.Invoke("AgtPortSelector ListLockedPorts")
+	ps, err := ns.ListPorts()
 	if err != nil {
 		return nil, err
 	}
 
-	res = strings.Replace(res, "{", "", -1)
-	res = strings.Replace(res, "}", "", -1)
 	ports := make([]*Port, 0, 10)
 
-	fields := strings.Split(res, " ")
-	for i, field := range fields {
-		if i%2 == 0 {
-			ports = append(ports, &Port{
-				Name:     fmt.Sprintf("%s/%s", strings.TrimSpace(field), strings.TrimSpace(fields[i+1])),
-				Handler:  strings.TrimSpace(fields[i+1]),
-				NSession: ns,
-			})
+	for _, p := range ps {
+		pname, err := ns.GetPortName(p)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot get reserved port with: %s", err)
 		}
+
+		ports = append(ports, &Port{
+			Name:     pname,
+			Handler:  p,
+			NSession: ns,
+		})
 	}
 
 	if ns.Ports == nil {
@@ -238,6 +239,24 @@ func (ns *NSession) ListPorts() ([]string, error) {
 	}
 
 	return ports, nil
+}
+
+func (ns *NSession) GetPortName(handler string) (string, error) {
+	cmd := fmt.Sprintf("AgtPortSelector GetPortDetails %s", handler)
+	res, err := ns.Invoke(cmd)
+	if err != nil {
+		return "", err
+	}
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+
+	fields := strings.Split(res, " ")
+	if len(fields) != 2 {
+		return "", fmt.Errorf("Cannot get port detail with: %s", res)
+	}
+
+	return strings.TrimSpace(fields[0]) + "/" + strings.TrimSpace(fields[1]), nil
 }
 
 //Use this functio to start sending traffic

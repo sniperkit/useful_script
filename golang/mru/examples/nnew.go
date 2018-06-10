@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"n2x"
+	"time"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 
 	sess, err := n.GetSessionByName(n2x.DEFAULTSESSIONNAME)
 	if err != nil {
-		sess, err = n.OpenNewSession("101/1", "101/2")
+		sess, err = n.OpenNewSession("101/3", "101/4")
 		if err != nil {
 			panic(err)
 		}
@@ -34,6 +35,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	sess.StopRoutingEngine()
 	ports, err := sess.GetReservedPorts()
 	fmt.Printf("%q ", ports)
 	for i, port := range ports {
@@ -77,25 +79,63 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		err = port.DeleteAllOSPFs()
+		if err != nil {
+			panic(err)
+		}
 		port.GetAllOSPFs()
 		name := fmt.Sprintf("OSPF_EMULATION_%d", i)
 		rid := fmt.Sprintf("155.1.1.%d", i)
 		srid := fmt.Sprintf("154.1.1.%d", i)
-		_, err = port.AddOSPF(fmt.Sprintf("1%d.1%d.1%d.1%d", i, i, i, i), rid, srid, name)
+		ospf, err := port.AddOSPF(fmt.Sprintf("1%d.1%d.1%d.1%d", i, i, i, i), rid, srid, name)
 		if err != nil {
 			panic(err)
 		}
 		port.GetAllOSPFs()
 
+		lsdb, err := ospf.GetLSDB()
+		if err != nil {
+			panic(err)
+		}
+
+		lsas, err := lsdb.GetAllLSAs()
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Printf("%q\n", lsas)
 		fmt.Printf("%q\n", pools)
 	}
+
+	sess.StartRoutingEngine()
+	time.Sleep(time.Duration(time.Second * 10))
+	for i, port := range ports {
+		name := fmt.Sprintf("OSPF_EMULATION_%d", i)
+		//	port.GetAllOSPFs()
+
+		ospf, err := port.GetOSPFByName(name)
+		if err != nil {
+			panic(err)
+		}
+
+		lsdb, err := ospf.GetLSDB()
+		if err != nil {
+			panic(err)
+		}
+
+		lsas, err := lsdb.GetAllLSAs()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%q\n", lsas)
+
+	}
+	sess.StopRoutingEngine()
 	sess.ListModules()
 	sess.ListAvailableModules()
 	sess.ListAvailablePorts()
 	sess.ListLockedPorts()
 	sess.ListPorts()
-	sess.StopRoutingEngine()
-	sess.StartRoutingEngine()
 	err = sess.StartTest()
 	if err != nil {
 		panic(err)

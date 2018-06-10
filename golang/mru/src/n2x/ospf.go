@@ -21,6 +21,8 @@ type OSPF struct {
 	Priority      string
 	Cost          string
 	MTU           string
+	Pool          *RouterPool
+	LSDB          *LSDB
 	*Port
 }
 
@@ -30,6 +32,38 @@ type OSPFNeighbour struct {
 	RID     string
 	State   string
 	*Port
+}
+
+type RouterPool struct {
+	Handler string
+	*Port
+}
+
+type LSDB struct {
+	Handler string
+	*Port
+	RouterLSAs         map[string]*LSA
+	NetworkLSAs        map[string]*LSA
+	NetworkSummaryLSAs map[string]*LSA
+	ASBRSummaryLSAs    map[string]*LSA
+	ASExternalLSAs     map[string]*LSA
+	NSSAExternalLSAs   map[string]*LSA
+}
+
+type LSA struct {
+	Handler string
+	*Port
+}
+
+//AgtOspfLsaDatabase ListLsas
+func (lsdb *LSDB) GetAllLSAs() ([]*LSA, error) {
+	cmd := fmt.Sprintf("AgtOspfLsaDatabase ListLsas %s", lsdb.Handler)
+	_, err := lsdb.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get ospf neighbor rid %s : %s", lsdb.Handler, err.Error())
+	}
+
+	return nil, nil
 }
 
 func (on *OSPFNeighbour) Sync() error {
@@ -69,12 +103,10 @@ func (on *OSPFNeighbour) GetRouterID() (string, error) {
 func (on *OSPFNeighbour) SetRouterID(rid string) error {
 	//AgtOspfNeighbor SetRouterId
 	cmd := fmt.Sprintf("AgtOspfNeighbor SetRouterId %s %s", on.Handler, rid)
-	res, err := on.Invoke(cmd)
+	_, err := on.Invoke(cmd)
 	if err != nil {
 		return fmt.Errorf("Cannot set ospf neighbor rid %s : %s", on.Handler, err.Error())
 	}
-
-	fmt.Println(res)
 
 	return nil
 }
@@ -161,6 +193,8 @@ func (o *OSPF) GetName() (string, error) {
 		return "", fmt.Errorf("Cannot get ospf session name for %s : %s", o.Handler, err.Error())
 	}
 
+	res = strings.Replace(res, "\"", "", -1)
+
 	o.Name = strings.TrimSpace(res)
 
 	return o.Name, nil
@@ -219,7 +253,6 @@ func (o *OSPF) GetRouterID() (string, error) {
 	}
 
 	o.RID = strings.TrimSpace(res)
-	fmt.Println(res)
 
 	return o.RID, nil
 }
@@ -244,7 +277,6 @@ func (o *OSPF) GetAreaID() (string, error) {
 	}
 
 	o.AreaID = strings.TrimSpace(res)
-	fmt.Println(res)
 
 	return o.RID, nil
 }
@@ -318,7 +350,6 @@ func (o *OSPF) SetSutRouterID(rid string) error {
 		return fmt.Errorf("No neighbor exist for: %s", o.Handler)
 	}
 
-	fmt.Println("Setting: ", rid)
 	return o.Neighbour.SetRouterID(rid)
 }
 
@@ -504,4 +535,38 @@ func (o *OSPF) GetInterfaceCost() (string, error) {
 	o.Cost = strings.TrimSpace(res)
 
 	return o.Cost, nil
+}
+
+//invoke AgtTestTopology AddSession 1 ospfv2RouterPoolDevice
+func (o *OSPF) AddRouterPool() (*RouterPool, error) {
+	cmd := fmt.Sprintf("AgtTestTopology AddSession %s ospfv2RouterPoolDevice", o.Port.Handler)
+	_, err := o.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot create router pool on port %s : %s", o.Name, err.Error())
+	}
+
+	return nil, nil
+}
+
+func (o *OSPF) GetLSDB() (*LSDB, error) {
+	//    AgtOspfSession GetLsaDatabase
+	cmd := fmt.Sprintf("AgtOspfSession GetLsaDatabase %s", o.Handler)
+	res, err := o.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get lsdb on port %s : %s", o.Name, err.Error())
+	}
+
+	handler := strings.TrimSpace(res)
+	if handler == "" {
+		return nil, fmt.Errorf("Cannot get lsdb on port %s : %s", o.Name, err.Error())
+	}
+
+	lsdb := &LSDB{
+		Handler: handler,
+		Port:    o.Port,
+	}
+
+	o.LSDB = lsdb
+
+	return o.LSDB, nil
 }

@@ -804,14 +804,23 @@ func (p *Port) AddOSPF(area, rid, srid, name string) (*OSPF, error) {
 	return o, nil
 }
 
+func (p *Port) GetOSPFByName(name string) (*OSPF, error) {
+	name = strings.TrimSpace(name)
+	for _, ospf := range p.OSPFs {
+		if ospf.Name == name {
+			return ospf, nil
+		}
+	}
+
+	return nil, fmt.Errorf("Cannot find ospf session by name: %s", name)
+}
+
 func (p *Port) RemoveOSPF(o *OSPF) error {
 	cmd := fmt.Sprintf("AgtTestTopology RemoveSession %s", o.Handler)
-	res, err := p.Invoke(cmd)
+	_, err := p.Invoke(cmd)
 	if err != nil {
 		return fmt.Errorf("Cannot remove ospf session on port %s : %s", p.Name, err.Error())
 	}
-
-	fmt.Println(res)
 
 	return nil
 }
@@ -877,6 +886,45 @@ func (p *Port) DeleteAllOSPFs() error {
 	return nil
 }
 
+func (p *Port) GetEmulationState(handler string) (string, error) {
+	cmd := fmt.Sprintf("AgtTestTopology GetEmulationState %s", handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get emulation state session on port %s : %s", p.Name, err.Error())
+	}
+
+	return strings.TrimSpace(res), nil
+}
+
+func (p *Port) ResetSession(handler string) error {
+	cmd := fmt.Sprintf("AgtTestTopology ResetSession %s", handler)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot reset sesssion on port %s : %s", p.Name, err.Error())
+	}
+
+	return nil
+}
+
+func (p *Port) RemoveSession(handler string) error {
+	cmd := fmt.Sprintf("AgtTestTopology RemoveSession %s", handler)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot remove sesssion on port %s : %s", p.Name, err.Error())
+	}
+
+	return nil
+}
+
+func (p *Port) GetSessionType(handler string) (string, error) {
+	cmd := fmt.Sprintf("AgtTestTopology GetSessionType %s", handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get session type on port %s : %s", p.Name, err.Error())
+	}
+
+	return strings.TrimSpace(res), nil
+}
 func init() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 }

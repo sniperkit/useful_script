@@ -1,6 +1,7 @@
 package n2x
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
@@ -13,6 +14,8 @@ var DEFAULTSESSIONNAME = "ATSN2X"
 
 var ResultR = regexp.MustCompile("{(?P<result>[[:alnum:][:space:]]*)}")
 var BasicResultR = regexp.MustCompile("(?P<status>[[:alnum:]-]+)[[:space:]]+(?P<result>[[:alnum:][:space:]_-{}*\".:]*)")
+
+var ErrorNoOpenSession = errors.New("There is no open session")
 
 type N2X struct {
 	IP       string
@@ -48,6 +51,10 @@ func New(ip, port string) (*N2X, error) {
 func (n *N2X) KillAllSessions() error {
 	sesss, err := n.GetAllOpenSessions()
 	if err != nil {
+		if err == ErrorNoOpenSession {
+			return nil
+		}
+
 		return fmt.Errorf("Cannot kill all session: %s", err.Error())
 	}
 
@@ -74,6 +81,9 @@ func (n *N2X) KillSession(id string) error {
 func (n *N2X) KillSessionByName(name string) error {
 	sesss, err := n.GetAllOpenSessions()
 	if err != nil {
+		if err == ErrorNoOpenSession {
+			return nil
+		}
 		return fmt.Errorf("Cannot kill all session: %s", err.Error())
 	}
 
@@ -160,7 +170,7 @@ func (n *N2X) ConnectToSessionByName(name string) (*NSession, error) {
 		if sess.Label == name {
 			sess, err = n.ConnectToSessionByID(sess.ID)
 			if err != nil {
-				return nil, fmt.Errorf("Cannot connect to session %s(%d) : %s", sess.Label, sess.ID, err.Error())
+				return nil, fmt.Errorf("Cannot connect to session with: %s", err.Error())
 			}
 			_, err := sess.GetReservedPorts()
 			if err != nil {
@@ -201,9 +211,16 @@ func (n *N2X) GetAllOpenSessions() ([]*NSession, error) {
 	if len(matches) == 2 {
 		sess := strings.Split(matches[1], " ")
 		for _, s := range sess {
+			if strings.TrimSpace(s) == "" {
+				continue
+			}
 			nsess := &NSession{ID: s, Ports: make(map[string]*Port, 10)}
 			sessions = append(sessions, nsess)
 		}
+	}
+
+	if len(sessions) == 0 {
+		return nil, ErrorNoOpenSession
 	}
 
 	for _, sess := range sessions {
@@ -296,6 +313,7 @@ func (n *N2X) Invoke(cmds ...string) (string, error) {
 		return "", fmt.Errorf("Cannot get result of: %s with error: %s", cmd, err.Error())
 	}
 
+	util.AppendToFile("n2x_log.txt", []byte("Result: "+line))
 	res := BasicResultR.FindStringSubmatch(line)
 	if len(res) != 3 {
 		return "", fmt.Errorf("Run %s with invalid result: %s", cmd, line)
