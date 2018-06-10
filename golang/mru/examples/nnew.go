@@ -53,9 +53,16 @@ func main() {
 		port.LegacyLinkGetAllAddressPools()
 		tip := fmt.Sprintf("12.%d.1.1", i)
 		sip := fmt.Sprintf("12.%d.1.2", i)
-		smac := fmt.Sprintf("00:%x:00:00:%x:00", i%32768, i%32768)
+		smac := fmt.Sprintf("00:1%x:00:00:1%x:00", i%255, i%255)
 		port.LegacyLinkAddSutIPAddress(sip)
 		err := port.LegacyLinkSet("10", tip, "30", smac, sip)
+		if err != nil {
+			panic(err)
+		}
+		tip6 := fmt.Sprintf("200%d:1%d::11", i, i)
+		sip6 := fmt.Sprintf("200%d:1%d::12", i, i)
+
+		err = port.LegacyLinkSet6("10", tip6, "64", smac, sip6)
 		if err != nil {
 			panic(err)
 		}

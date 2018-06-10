@@ -12,13 +12,16 @@ type Port struct {
 	Name    string
 	Handler string
 	*NSession
-	MediaTypes       map[PortMediaType]string
-	MediaType        PortMediaType
-	LegacyLinkSutMac string
-	LegacyLinkSutIP  map[string]string
-	AddressPools     map[string]*AddressPool
-	LegacyLinkSutIP6 map[string]string
-	AddressPools6    map[string]*AddressPool
+	MediaTypes              map[PortMediaType]string
+	MediaType               PortMediaType
+	LegacyLinkSutMac        string
+	LegacyLinkSutMac6       string
+	LegacyLinkSutIP         map[string]string
+	AddressPools            map[string]*AddressPool
+	LegacyLinkSutIP6        map[string]string
+	AddressPools6           map[string]*AddressPool
+	LegacyLinkDefaultSutIP6 string
+	LegacyLinkDefaultSutIP  string
 }
 
 const (
@@ -193,6 +196,37 @@ func (p *Port) LegacyLinkSet(vid, testerip, tplen, testmac, sutip string) error 
 	return nil
 }
 
+func (p *Port) LegacyLinkSet6(vid, testerip, tplen, testmac, sutip string) error {
+	err := p.LegacyLinkReset6()
+	if err != nil {
+		return fmt.Errorf("Cannot clear the previous configuration on port: %s: %s", p.Name, err)
+	}
+
+	//Use the default pool, no need to create a new one.
+	/*
+		handler, err := p.LegacyLinkAddAddressPool(testerip, tplen, "1", "1")
+		if err != nil {
+			return fmt.Errorf("Cannot set test ip address for port %s with: %s", p.Name, err)
+		}
+	*/
+	err = p.LegacyLinkAddSutIP6Address(sutip)
+	if err != nil {
+		return fmt.Errorf("Cannot set sut ipv6 address for port %s with: %s", p.Name, err)
+	}
+
+	pool, err := p.LegacyLinkGetDefaultIP6AddressPool()
+	if err != nil {
+		return fmt.Errorf("Cannot set sut ipv6 address for port %s with: %s", p.Name, err)
+	}
+
+	err = pool.SetTesterAddress6(vid, testerip, tplen, testmac)
+	if err != nil {
+		return fmt.Errorf("Cannot set tester ip address for port %s with: %s", p.Name, err)
+	}
+
+	return nil
+}
+
 func (p *Port) LegacyLinkGetDefaultAddressPool() (*AddressPool, error) {
 	if len(p.AddressPools) == 0 {
 		return nil, fmt.Errorf("There is no pool found on port: %s", p.Name)
@@ -239,12 +273,38 @@ func (p *Port) LegacyLinkRemoveAllSutIPAddresses() error {
 	return nil
 }
 
+func (p *Port) LegacyLinkRemoveAllSutIP6Addresses() error {
+	ips, err := p.LegacyLinkGetSutIP6Addresses()
+	if err != nil {
+		return fmt.Errorf("Cannot reset sut ipv6 on port: %s %s", p.Name, err)
+	}
+
+	for _, ip := range ips {
+		err = p.LegacyLinkRemoveSutIP6Address(ip)
+		if err != nil {
+			return fmt.Errorf("Cannot delet sut ipv6 %s on port: %s %s", ip, p.Name, err)
+		}
+
+		delete(p.LegacyLinkSutIP6, ip)
+	}
+
+	return nil
+}
+
 func (p *Port) LegacyLinkReset() error {
 	err := p.LegacyLinkRemoveAllSutIPAddresses()
 	if err != nil {
 		return err
 	}
 	return p.LegacyLinkRemoveAllAddressPools()
+}
+
+func (p *Port) LegacyLinkReset6() error {
+	err := p.LegacyLinkRemoveAllSutIP6Addresses()
+	if err != nil {
+		return err
+	}
+	return p.LegacyLinkRemoveAllIP6AddressPools()
 }
 
 func (p *Port) LegacyLinkAddAddressPool(ip, plen, count, step string) (string, error) {
@@ -453,6 +513,23 @@ func (p *Port) LegacyLinkAddSutIPAddress(ip string) error {
 	return nil
 }
 
+func (p *Port) LegacyLinkAddSutIP6Address(ip string) error {
+	//AgtEthernetAddresses AddSutIpAddress
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 AddSutIpv6Address %s 0 %s", p.Handler, ip)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set Add SUT ipv6 %s to port %s : %s", ip, p.Name, err.Error())
+	}
+
+	if p.LegacyLinkSutIP6 == nil {
+		p.LegacyLinkSutIP6 = make(map[string]string, 1)
+	}
+
+	p.LegacyLinkSutIP6[strings.TrimSpace(ip)] = strings.TrimSpace(ip)
+
+	return nil
+}
+
 func (p *Port) LegacyLinkRemoveSutIPAddress(ip string) error {
 	//AgtEthernetAddresses AddSutIpAddress
 	cmd := fmt.Sprintf("AgtEthernetAddresses RemoveSutIpAddress %s %s", p.Handler, ip)
@@ -467,6 +544,25 @@ func (p *Port) LegacyLinkRemoveSutIPAddress(ip string) error {
 
 	if _, ok := p.LegacyLinkSutIP[strings.TrimSpace(ip)]; ok {
 		delete(p.LegacyLinkSutIP, strings.TrimSpace(ip))
+	}
+
+	return nil
+}
+
+func (p *Port) LegacyLinkRemoveSutIP6Address(ip string) error {
+	//AgtEthernetAddresses AddSutIpAddress
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 RemoveSutIpv6Address %s 0 %s", p.Handler, ip)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot remove SUT ipv6 %s from port %s : %s", ip, p.Name, err.Error())
+	}
+
+	if p.LegacyLinkSutIP6 == nil {
+		p.LegacyLinkSutIP6 = make(map[string]string, 1)
+	}
+
+	if _, ok := p.LegacyLinkSutIP6[strings.TrimSpace(ip)]; ok {
+		delete(p.LegacyLinkSutIP6, strings.TrimSpace(ip))
 	}
 
 	return nil
@@ -490,6 +586,22 @@ func (p *Port) LegacyLinkAddSutIPAddresses(start, plen, count, step string) erro
 	return nil
 }
 
+func (p *Port) LegacyLinkAddSutIP6Addresses(start, plen, count, step string) error {
+	//AgtEthernetAddresses AddSutIpAddress
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 AddSutIpv6Addresses %s %s %s %s %s %s", p.Handler, start, count, step, "0", "0")
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot Add SUT ips to port %s : %s", p.Name, err.Error())
+	}
+
+	_, err = p.LegacyLinkGetSutIP6Addresses()
+	if err != nil {
+		return fmt.Errorf("Cannot get SUT ips on port %s : %s", p.Name, err.Error())
+	}
+
+	return nil
+}
+
 //SUT's mac address is resoved by arp. Anyway we can also configure
 func (p *Port) LegacyLinkGetSutMacAddress() (string, error) {
 	cmd := fmt.Sprintf("AgtEthernetAddresses GetSutMacAddress %s", p.Handler)
@@ -503,6 +615,18 @@ func (p *Port) LegacyLinkGetSutMacAddress() (string, error) {
 	return strings.TrimSpace(res), nil
 }
 
+func (p *Port) LegacyLinkGetSutMacAddress6() (string, error) {
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 GetSutMacAddress %s 0 %s", p.Handler, p.LegacyLinkDefaultSutIP6)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get SUT mac for port %s address: %s: %s", p.Name, p.LegacyLinkDefaultSutIP6, err.Error())
+	}
+
+	p.LegacyLinkSutMac6 = strings.TrimSpace(res)
+
+	return strings.TrimSpace(res), nil
+}
+
 func (p *Port) LegacyLinkSetSutMacAddress(ip, mac string) (string, error) {
 	cmd := fmt.Sprintf("AgtEthernetAddresses SetSutMacAddress %s %s %s", p.Handler, ip, mac)
 	_, err := p.Invoke(cmd)
@@ -511,6 +635,19 @@ func (p *Port) LegacyLinkSetSutMacAddress(ip, mac string) (string, error) {
 	}
 
 	p.LegacyLinkSutMac = strings.TrimSpace(mac)
+
+	return strings.TrimSpace(mac), nil
+}
+
+//AgtEthernetIpv6Addresses2 SetSutMacAddress
+func (p *Port) LegacyLinkSetSutMacAddress6(ip, mac string) (string, error) {
+	cmd := fmt.Sprintf("AgtEthernetIpv6Addresses2 SetSutMacAddress %s 0 %s %s", p.Handler, ip, mac)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot set SUT mac %s for port %s address: %s: %s", mac, p.Name, ip, err.Error())
+	}
+
+	p.LegacyLinkSutMac6 = strings.TrimSpace(mac)
 
 	return strings.TrimSpace(mac), nil
 }

@@ -98,7 +98,7 @@ func (ap *AddressPool) SetTesterIP6Address(ip, plen string) error {
 		return fmt.Errorf("Cannot set tester ip6 address for pool %s port: %s : %s", ap.Handler, ap.Port.Name, err.Error())
 	}
 
-	return ap.GetTesterIPAddresses()
+	return ap.GetTesterIP6Addresses()
 }
 
 func (ap *AddressPool) SetTesterMacAddress(mac string) error {
