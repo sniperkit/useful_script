@@ -136,7 +136,6 @@ func main() {
 		fmt.Printf("%q\n", lsas)
 
 	}
-	sess.StopRoutingEngine()
 	sess.ListModules()
 	sess.ListAvailableModules()
 	sess.ListAvailablePorts()

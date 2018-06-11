@@ -814,6 +814,13 @@ func (p *Port) AddOSPF(area, rid, srid, name string) (*OSPF, error) {
 }
 
 func (p *Port) GetOSPFByName(name string) (*OSPF, error) {
+	if len(p.OSPFs) == 0 {
+		_, err := p.GetAllOSPFs()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot find ospf by name: %s with: %s", name, err)
+		}
+	}
+
 	name = strings.TrimSpace(name)
 	for _, ospf := range p.OSPFs {
 		if ospf.Name == name {
@@ -934,6 +941,7 @@ func (p *Port) GetSessionType(handler string) (string, error) {
 
 	return strings.TrimSpace(res), nil
 }
+
 func init() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 }
