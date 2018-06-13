@@ -8,6 +8,7 @@ import (
 )
 
 var ErrorNoOSPFSession = errors.New("No OSPF Session exist")
+var ErrorNoBGPSession = errors.New("No BGP Session exist")
 
 type PortMediaType int
 
@@ -26,6 +27,7 @@ type Port struct {
 	LegacyLinkDefaultSutIP6 string
 	LegacyLinkDefaultSutIP  string
 	OSPFs                   map[string]*OSPF
+	BGPs                    map[string]*BGP
 }
 
 const (
@@ -468,7 +470,6 @@ func (p *Port) LegacyLinkGetSutIPAddresses() ([]string, error) {
 	/*If previous entries exist, drop it */
 	p.LegacyLinkSutIP = make(map[string]string, 1)
 
-	fmt.Println(p.Name, res)
 	res = strings.Replace(res, "{", "", -1)
 	res = strings.Replace(res, "}", "", -1)
 	fields := strings.Split(res, " ")
@@ -817,6 +818,9 @@ func (p *Port) GetOSPFByName(name string) (*OSPF, error) {
 	if len(p.OSPFs) == 0 {
 		_, err := p.GetAllOSPFs()
 		if err != nil {
+			if err == ErrorNoOSPFSession {
+				return nil, err
+			}
 			return nil, fmt.Errorf("Cannot find ospf by name: %s with: %s", name, err)
 		}
 	}
@@ -862,12 +866,17 @@ func (p *Port) GetAllOSPFs() ([]*OSPF, error) {
 			continue
 		}
 
+		typ, err := p.GetSessionType(field)
+		if typ != "AGT_SESSION_OSPF" {
+			continue
+		}
+
 		nospf := &OSPF{
 			Handler: strings.TrimSpace(field),
 			Port:    p,
 		}
 
-		err := nospf.Sync()
+		err = nospf.Sync()
 		if err != nil {
 			return nil, fmt.Errorf("Cannot get all ospf with: %s", err)
 		}
@@ -939,7 +948,270 @@ func (p *Port) GetSessionType(handler string) (string, error) {
 		return "", fmt.Errorf("Cannot get session type on port %s : %s", p.Name, err.Error())
 	}
 
+	res = strings.Replace(res, "\"", "", -1)
+
 	return strings.TrimSpace(res), nil
+}
+
+func (p *Port) AddBGP(typ int, as, ras, name string) (*BGP, error) {
+	tname, ok := BGPTypeNameMap[typ]
+	if !ok {
+		return nil, fmt.Errorf("Unknown BGP type: %d", typ)
+	}
+
+	cmd := fmt.Sprintf("AgtTestTopology AddSession %s %s", p.Handler, tname)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot Add BGP type on port %s : %s", p.Name, err.Error())
+	}
+
+	session := BGPTypeSessionMap[typ]
+
+	res = strings.TrimSpace(res)
+	if res == "" {
+		return nil, fmt.Errorf("Cannot Add BGP with empty return value %s", res)
+	}
+
+	bgp := &BGP{
+		Name:            name,
+		Handler:         res,
+		Object:          session,
+		ASN:             as,
+		RASN:            ras,
+		Port:            p,
+		PeerPoolObject:  BGPTypePeerPoolMap[typ],
+		PeerPoolHandler: res,
+		Type:            typ,
+	}
+
+	err = bgp.Sync()
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get bgp instance infor with: %s", err)
+	}
+
+	err = bgp.SetSutAsNumber(ras)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot add bgp with %s", err)
+	}
+
+	err = bgp.SetTesterAsNumber(as)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot add bgp with %s", err)
+	}
+
+	return bgp, nil
+}
+
+func (p *Port) RemoveBGP(b *BGP) error {
+	cmd := fmt.Sprintf("AgtTestTopology RemoveSession %s", b.Handler)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot remove bgp session on port %s : %s", p.Name, err.Error())
+	}
+
+	return nil
+}
+
+func (p *Port) GetAllBGPs() ([]*BGP, error) {
+	cmd := fmt.Sprintf("AgtTestTopology ListSessions %s", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get all session on port %s : %s", p.Name, err.Error())
+	}
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+	res = strings.TrimSpace(res)
+
+	p.BGPs = make(map[string]*BGP, 1)
+	bgps := make([]*BGP, 0, 1)
+
+	fields := strings.Split(res, " ")
+	for _, field := range fields {
+		if strings.TrimSpace(field) == "" {
+			continue
+		}
+
+		typ, err := p.GetSessionType(field)
+		if typ != "AGT_SESSION_BGP4_E_BGP" && typ != "AGT_SESSION_BGP4_I_BGP" &&
+			typ != "AGT_SESSION_BGP4_I_BGP_IPV6" && typ != "AGT_SESSION_BGP4_E_BGP_IPV6" {
+			continue
+		}
+		ityp := BGPSessionTypeTypeMap[typ]
+
+		nbgp := &BGP{
+			Handler:         strings.TrimSpace(field),
+			Object:          BGPTypeSessionMap[ityp],
+			PeerPoolObject:  BGPTypePeerPoolMap[ityp],
+			PeerPoolHandler: strings.TrimSpace(field),
+			Port:            p,
+		}
+
+		err = nbgp.Sync()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot get all bgp with: %s", err)
+		}
+
+		bgps = append(bgps, nbgp)
+		p.BGPs[field] = nbgp
+	}
+
+	if len(bgps) == 0 {
+		return nil, ErrorNoBGPSession
+	}
+
+	return bgps, nil
+}
+
+func (p *Port) GetAllBGPsByType(typ int) ([]*BGP, error) {
+	if typ != IPV4_EBGP && typ != IPV4_IBGP &&
+		typ != IPV6_EBGP && typ != IPV6_IBGP {
+		return nil, fmt.Errorf("Unknown bgp type: %d", typ)
+	}
+
+	cmd := fmt.Sprintf("AgtTestTopology ListSessions %s", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get all session on port %s : %s", p.Name, err.Error())
+	}
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+	res = strings.TrimSpace(res)
+
+	if p.BGPs == nil {
+		p.BGPs = make(map[string]*BGP, 1)
+	}
+	bgps := make([]*BGP, 0, 1)
+
+	fields := strings.Split(res, " ")
+	for _, field := range fields {
+		if strings.TrimSpace(field) == "" {
+			continue
+		}
+
+		typs, err := p.GetSessionType(field)
+		if typs != BGPTypeNameMap[typ] {
+			continue
+		}
+
+		nbgp := &BGP{
+			Object:          BGPTypeNameMap[typ],
+			Handler:         strings.TrimSpace(field),
+			PeerPoolObject:  BGPTypePeerPoolMap[typ],
+			PeerPoolHandler: strings.TrimSpace(field),
+			Port:            p,
+		}
+
+		err = nbgp.Sync()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot get all bgp with: %s", err)
+		}
+
+		bgps = append(bgps, nbgp)
+		p.BGPs[field] = nbgp
+	}
+
+	if len(bgps) == 0 {
+		return nil, ErrorNoBGPSession
+	}
+
+	return bgps, nil
+}
+
+func (p *Port) RemoveAllBGPs() error {
+	bgps, err := p.GetAllBGPs()
+	if err != nil {
+		if err == ErrorNoBGPSession {
+			return nil
+		}
+		return fmt.Errorf("Cannot Delete all bgps with: %s", err)
+	}
+
+	for _, o := range bgps {
+		err := p.RemoveBGP(o)
+		if err != nil {
+			return fmt.Errorf("Cannot Delete all bgps with: %s", err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Port) RemoveAllIPv4EBGPs() error {
+	bgps, err := p.GetAllBGPsByType(IPV4_EBGP)
+	if err != nil {
+		if err == ErrorNoBGPSession {
+			return nil
+		}
+		return fmt.Errorf("Cannot remove all ipv4 ebgp with: %s", err)
+	}
+
+	for _, bgp := range bgps {
+		err = p.RemoveBGP(bgp)
+		if err != nil {
+			return fmt.Errorf("Cannot remove bgp %s with %s", bgp.Handler, err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Port) RemoveAllIPv4IBGPs() error {
+	bgps, err := p.GetAllBGPsByType(IPV4_IBGP)
+	if err != nil {
+		if err == ErrorNoBGPSession {
+			return nil
+		}
+		return fmt.Errorf("Cannot remove all ipv4 ibgp with: %s", err)
+	}
+
+	for _, bgp := range bgps {
+		err = p.RemoveBGP(bgp)
+		if err != nil {
+			return fmt.Errorf("Cannot remove bgp %s with %s", bgp.Handler, err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Port) RemoveAllIPv6EBGPs() error {
+	bgps, err := p.GetAllBGPsByType(IPV6_EBGP)
+	if err != nil {
+		if err == ErrorNoBGPSession {
+			return nil
+		}
+		return fmt.Errorf("Cannot remove all ipv6 ebgp with: %s", err)
+	}
+
+	for _, bgp := range bgps {
+		err = p.RemoveBGP(bgp)
+		if err != nil {
+			return fmt.Errorf("Cannot remove bgp %s with %s", bgp.Handler, err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Port) RemoveAllIPv6IBGPs() error {
+	bgps, err := p.GetAllBGPsByType(IPV6_IBGP)
+	if err != nil {
+		if err == ErrorNoBGPSession {
+			return nil
+		}
+		return fmt.Errorf("Cannot remove all ipv6 ibgp with: %s", err)
+	}
+
+	for _, bgp := range bgps {
+		err = p.RemoveBGP(bgp)
+		if err != nil {
+			return fmt.Errorf("Cannot remove bgp %s with %s", bgp.Handler, err)
+		}
+	}
+
+	return nil
 }
 
 func init() {

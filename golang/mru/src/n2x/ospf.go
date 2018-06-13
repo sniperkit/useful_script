@@ -442,10 +442,16 @@ func (o *OSPF) Sync() error {
 		return fmt.Errorf("Cannot sync ospf with: %s", err)
 	}
 
+	lsdb, err := o.GetLSDB()
+	if err != nil {
+		return fmt.Errorf("Cannot sync ospf with: %s", err)
+	}
+
 	o.Name = name
 	o.AreaID = area
 	o.RID = rid
 	o.Neighbour = n
+	o.LSDB = lsdb
 
 	return nil
 }
@@ -651,13 +657,39 @@ func (o *OSPF) SetSutRouterID(rid string) error {
 //AGT_OSPF_RESTART_MODE
 
 func (o *OSPF) SetPriority(pri string) error {
-	cmd := fmt.Sprintf("AgtOspfSession SetInterfaceParameter %s AGT_OSPF_ROUTER_PRIORITY %s", o.Handler, pri)
+	cmd := fmt.Sprintf("AgtOspfSession EnableNeighborDiscovery %s", o.Handler)
 	_, err := o.Invoke(cmd)
 	if err != nil {
 		return fmt.Errorf("Cannot set priorty for %s : %s", o.Handler, err.Error())
 	}
 
+	cmd = fmt.Sprintf("AgtOspfSession SetInterfaceParameter %s AGT_OSPF_ROUTER_PRIORITY %s", o.Handler, pri)
+	_, err = o.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set priorty for %s : %s", o.Handler, err.Error())
+	}
+
 	o.Priority = strings.TrimSpace(pri)
+
+	return nil
+}
+
+func (o *OSPF) EnableNeighrorDiscovery() error {
+	cmd := fmt.Sprintf("AgtOspfSession EnableNeighborDiscovery %s", o.Handler)
+	_, err := o.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot enable ospf neighbor discovery for %s : %s", o.Handler, err.Error())
+	}
+
+	return nil
+}
+
+func (o *OSPF) DisableNeighrorDiscovery() error {
+	cmd := fmt.Sprintf("AgtOspfSession DisableNeighborDiscovery %s", o.Handler)
+	_, err := o.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot disable ospf neighbor discovery for %s : %s", o.Handler, err.Error())
+	}
 
 	return nil
 }
@@ -866,7 +898,7 @@ AGT_OSPFV3_INTER_AREA_PREFIX_ROUTEPOOL: a pool of OSPFv3 inter area prefix LSA, 
 AGT_OSPFV3_EXTERNAL_ROUTEPOOL: a pool of external route addresses
 */
 func (o *OSPF) AddRouter() (*Router, error) {
-	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_ROUTER", o.Handler)
+	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_ROUTER", o.LSDB.Handler)
 	res, err := o.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot add ospf router to %s with: %s", o.Handler, err)
@@ -876,7 +908,7 @@ func (o *OSPF) AddRouter() (*Router, error) {
 }
 
 func (o *OSPF) AddNetwork() (*Network, error) {
-	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_NETWORK", o.Handler)
+	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_NETWORK", o.LSDB.Handler)
 	res, err := o.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot add ospf network to %s with: %s", o.Handler, err)
@@ -886,7 +918,7 @@ func (o *OSPF) AddNetwork() (*Network, error) {
 }
 
 func (o *OSPF) AddSummaryRoutePool() (*RoutePool, error) {
-	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_SUMMARY_ROUTEPOOL", o.Handler)
+	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_SUMMARY_ROUTEPOOL", o.LSDB.Handler)
 	res, err := o.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot add ospf summary route pool to %s with: %s", o.Handler, err)
@@ -1051,7 +1083,7 @@ func (o *OSPF) WithdrawAllExternalPrefixes() error {
 }
 
 func (o *OSPF) AddExternalRoutePool() (*RoutePool, error) {
-	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_EXTERNAL_ROUTEPOOL", o.Handler)
+	cmd := fmt.Sprintf("AgtOspfTopology Add %s AGT_OSPF_EXTERNAL_ROUTEPOOL", o.LSDB.Handler)
 	res, err := o.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot add ospf external route pool to %s with: %s", o.Handler, err)
@@ -1200,17 +1232,12 @@ func (o *OSPF) RemoveExternalRoutePoolByIP(ip string) error {
 }
 
 func (o *OSPF) GetAllExternalRoutePools() ([]*RoutePool, error) {
-	cmd := fmt.Sprintf("AgtOspfTopology ListHandlesByType %s AGT_OSPF_EXTERNAL_ROUTEPOOL", o.Handler)
+	cmd := fmt.Sprintf("AgtOspfTopology ListHandlesByType %s AGT_OSPF_EXTERNAL_ROUTEPOOL", o.LSDB.Handler)
 	res, err := o.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot get all ospf external route pool of:%s with: %s", o.Handler, err)
 	}
 
-	fmt.Println(res)
-	fmt.Println(res)
-	fmt.Println(res)
-	fmt.Println(res)
-	fmt.Println(res)
 	res = strings.Replace(res, "{", "", -1)
 	res = strings.Replace(res, "}", "", -1)
 	res = strings.Replace(res, "\"", "", -1)
@@ -1280,17 +1307,12 @@ func (o *OSPF) RemoveAllExternalRoutePools() error {
 
 func (o *OSPF) RemoveAllPools() error {
 	//AgtOspfTopology ListHandles
-	cmd := fmt.Sprintf("AgtOspfTopology ListHandles %s", o.Handler)
+	cmd := fmt.Sprintf("AgtOspfTopology ListHandles %s", o.LSDB.Handler)
 	res, err := o.Invoke(cmd)
 	if err != nil {
-		return fmt.Errorf("Cannot get all  route pool of:%s with: %s", o.Handler, err)
+		return fmt.Errorf("Cannot get all route pool of:%s with: %s", o.Handler, err)
 	}
 
-	fmt.Println(res)
-	fmt.Println(res)
-	fmt.Println(res)
-	fmt.Println(res)
-	fmt.Println(res)
 	res = strings.Replace(res, "{", "", -1)
 	res = strings.Replace(res, "}", "", -1)
 	res = strings.Replace(res, "\"", "", -1)

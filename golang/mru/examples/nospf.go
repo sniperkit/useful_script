@@ -29,7 +29,7 @@ func main() {
 	}
 
 	ports, err := sess.GetReservedPorts()
-	fmt.Printf("%q ", ports)
+	fmt.Printf("%q\n", ports)
 	sess.StopRoutingEngine()
 	//	time.Sleep(time.Duration(time.Second * 40))
 	for i, port := range ports {
@@ -38,8 +38,20 @@ func main() {
 
 		ospf, err := port.GetOSPFByName(name)
 		if err != nil {
-			panic(err)
+			if err == n2x.ErrorNoOSPFSession {
+				name := fmt.Sprintf("OSPF_EMULATION_%d", i)
+				ospf, err = port.AddOSPF("0.0.0.0", " 21.1.1.25", " 21.1.1.24", name)
+				if err != nil {
+					panic(err)
+				}
+			} else {
+				panic(err)
+			}
 		}
+
+		fmt.Printf("%+v\n", ospf)
+		//port.GetAllOSPFs()
+
 		err = ospf.RemoveAllExternalRoutePools()
 		if err != nil {
 			panic(err)
@@ -74,6 +86,11 @@ func main() {
 			panic(err)
 		}
 
+		err = ospf.SetPriority("10")
+		if err != nil {
+			panic(err)
+		}
+
 		err = ep.SetRoutes("123.1.1.0", "32", "10000", "1")
 		if err != nil {
 			panic(err)
@@ -104,12 +121,10 @@ func main() {
 			panic(err)
 		}
 
-		/*
-			err = ospf.AdvertiseAllExternalPrefixes()
-			if err != nil {
-				panic(err)
-			}
-		*/
+		err = ospf.AdvertiseAllExternalPrefixes()
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	sess.StartRoutingEngine()
