@@ -6,7 +6,7 @@ type EthernetOamLinkTrace struct {
 
 func(np *EthernetOamLinkTrace) SetStandard () error {
  //parameters: SessionPoolHandle EthOamStandard
- //AgtEthernetOamLinkTrace SetStandard, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetStandard
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *EthernetOamLinkTrace) GetStandard ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetTargetMacAddress () error {
  //parameters: SessionPoolHandle MacAddress
- //AgtEthernetOamLinkTrace SetTargetMacAddress, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetTargetMacAddress
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *EthernetOamLinkTrace) GetTargetMacAddress ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetStartTtl () error {
  //parameters: SessionPoolHandle StartTtl
- //AgtEthernetOamLinkTrace SetStartTtl, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetStartTtl
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *EthernetOamLinkTrace) GetStartTtl ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetMdLevel () error {
  //parameters: SessionPoolHandle Level
- //AgtEthernetOamLinkTrace SetMdLevel, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetMdLevel
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *EthernetOamLinkTrace) GetMdLevel ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetMegLevel () error {
  //parameters: SessionPoolHandle Level
- //AgtEthernetOamLinkTrace SetMegLevel, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetMegLevel
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *EthernetOamLinkTrace) GetMegLevel ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetTransactionIdentifier () error {
  //parameters: SessionPoolHandle TransId
- //AgtEthernetOamLinkTrace SetTransactionIdentifier, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetTransactionIdentifier
  return nil
 }
 
@@ -78,25 +78,25 @@ func(np *EthernetOamLinkTrace) GetTransactionIdentifier ()(string, error) {
 
 func(np *EthernetOamLinkTrace) EnableSenderIdTlv () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace EnableSenderIdTlv, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace EnableSenderIdTlv
  return nil
 }
 
 func(np *EthernetOamLinkTrace) DisableSenderIdTlv () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace DisableSenderIdTlv, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace DisableSenderIdTlv
  return nil
 }
 
 func(np *EthernetOamLinkTrace) IsSenderIdTlvEnabled () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace IsSenderIdTlvEnabled, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace IsSenderIdTlvEnabled
  return nil
 }
 
 func(np *EthernetOamLinkTrace) SetSenderIdTlv () error {
  //parameters: SessionPoolHandle ChassisIdLength ChassisIdSubType ChassisID MgmtAddressDomain MgmtAddressDomainLength MgmtAddress MgmtAddresslength
- //AgtEthernetOamLinkTrace SetSenderIdTlv, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetSenderIdTlv
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *EthernetOamLinkTrace) GetSenderIdTlv ()(string, error) {
 
 func(np *EthernetOamLinkTrace) EnableOrganizationSpecificTlv () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace EnableOrganizationSpecificTlv, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace EnableOrganizationSpecificTlv
  return nil
 }
 
 func(np *EthernetOamLinkTrace) DisableOrganizationSpecificTlv () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace DisableOrganizationSpecificTlv, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace DisableOrganizationSpecificTlv
  return nil
 }
 
 func(np *EthernetOamLinkTrace) IsOrganizationSpecificTlvEnabled () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace IsOrganizationSpecificTlvEnabled, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace IsOrganizationSpecificTlvEnabled
  return nil
 }
 
 func(np *EthernetOamLinkTrace) SetOrganizationSpecificTlv () error {
  //parameters: SessionPoolHandle OrgSpecTlvLen OrgUniqId OrgSpecSubType OrgSpecTlvValue
- //AgtEthernetOamLinkTrace SetOrganizationSpecificTlv, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetOrganizationSpecificTlv
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *EthernetOamLinkTrace) GetOrganizationSpecificTlv ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetBurstSize () error {
  //parameters: SessionPoolHandle BurstSize
- //AgtEthernetOamLinkTrace SetBurstSize, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetBurstSize
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *EthernetOamLinkTrace) GetBurstSize ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetBurstDelay () error {
  //parameters: SessionPoolHandle BurstDelay
- //AgtEthernetOamLinkTrace SetBurstDelay, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetBurstDelay
  return nil
 }
 
@@ -162,25 +162,25 @@ func(np *EthernetOamLinkTrace) GetBurstDelay ()(string, error) {
 
 func(np *EthernetOamLinkTrace) EnableRenew () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace EnableRenew, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace EnableRenew
  return nil
 }
 
 func(np *EthernetOamLinkTrace) DisableRenew () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace DisableRenew, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace DisableRenew
  return nil
 }
 
 func(np *EthernetOamLinkTrace) IsRenewEnabled () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace IsRenewEnabled, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace IsRenewEnabled
  return nil
 }
 
 func(np *EthernetOamLinkTrace) SetRenewTimeout () error {
  //parameters: SessionPoolHandle RenewTimeout
- //AgtEthernetOamLinkTrace SetRenewTimeout, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetRenewTimeout
  return nil
 }
 
@@ -192,7 +192,7 @@ func(np *EthernetOamLinkTrace) GetRenewTimeout ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetResponseTimeout () error {
  //parameters: SessionPoolHandle ResponseTimeout
- //AgtEthernetOamLinkTrace SetResponseTimeout, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetResponseTimeout
  return nil
 }
 
@@ -204,19 +204,19 @@ func(np *EthernetOamLinkTrace) GetResponseTimeout ()(string, error) {
 
 func(np *EthernetOamLinkTrace) Start () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace Start, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace Start
  return nil
 }
 
 func(np *EthernetOamLinkTrace) ForceRenew () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamLinkTrace ForceRenew, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace ForceRenew
  return nil
 }
 
 func(np *EthernetOamLinkTrace) SetIncrementingParameter () error {
  //parameters: SessionPoolHandle IncrementingParameter Value Repeat Increment
- //AgtEthernetOamLinkTrace SetIncrementingParameter, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetIncrementingParameter
  return nil
 }
 
@@ -234,7 +234,7 @@ func(np *EthernetOamLinkTrace) GetVlanPriority ()(string, error) {
 
 func(np *EthernetOamLinkTrace) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtEthernetOamLinkTrace SetVlanPriority, m.Object, m.Name);
+ //AgtEthernetOamLinkTrace SetVlanPriority
  return nil
 }
 

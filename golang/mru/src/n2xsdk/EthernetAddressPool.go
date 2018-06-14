@@ -6,7 +6,7 @@ type EthernetAddressPool struct {
 
 func(np *EthernetAddressPool) SetTesterIpAddresses () error {
  //parameters: hAddressPool FirstIpAddress PrefixLength NumAddresses Modifier
- //AgtEthernetAddressPool SetTesterIpAddresses, m.Object, m.Name);
+ //AgtEthernetAddressPool SetTesterIpAddresses
  return nil
 }
 
@@ -24,19 +24,19 @@ func(np *EthernetAddressPool) GetNthTesterIpAddress ()(string, error) {
 
 func(np *EthernetAddressPool) SetTesterAndSutIpAddresses () error {
  //parameters: hAddressPool FirstIpAddress PrefixLength NumAddresses Modifier OldSutIpAddress NewSutIpAddress
- //AgtEthernetAddressPool SetTesterAndSutIpAddresses, m.Object, m.Name);
+ //AgtEthernetAddressPool SetTesterAndSutIpAddresses
  return nil
 }
 
 func(np *EthernetAddressPool) SetVlanId () error {
  //parameters: hAddressPool VlanId
- //AgtEthernetAddressPool SetVlanId, m.Object, m.Name);
+ //AgtEthernetAddressPool SetVlanId
  return nil
 }
 
 func(np *EthernetAddressPool) SetVlanIds () error {
  //parameters: hAddressPool VlanNum psaVlanIds
- //AgtEthernetAddressPool SetVlanIds, m.Object, m.Name);
+ //AgtEthernetAddressPool SetVlanIds
  return nil
 }
 
@@ -54,55 +54,55 @@ func(np *EthernetAddressPool) GetVlanIds ()(string, error) {
 
 func(np *EthernetAddressPool) EnableVlan () error {
  //parameters: hAddressPool
- //AgtEthernetAddressPool EnableVlan, m.Object, m.Name);
+ //AgtEthernetAddressPool EnableVlan
  return nil
 }
 
 func(np *EthernetAddressPool) DisableVlan () error {
  //parameters: hAddressPool
- //AgtEthernetAddressPool DisableVlan, m.Object, m.Name);
+ //AgtEthernetAddressPool DisableVlan
  return nil
 }
 
 func(np *EthernetAddressPool) IsVlanEnabled () error {
  //parameters: hAddressPool
- //AgtEthernetAddressPool IsVlanEnabled, m.Object, m.Name);
+ //AgtEthernetAddressPool IsVlanEnabled
  return nil
 }
 
 func(np *EthernetAddressPool) EnableTrafficDestinations () error {
  //parameters: hAddressPool
- //AgtEthernetAddressPool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtEthernetAddressPool EnableTrafficDestinations
  return nil
 }
 
 func(np *EthernetAddressPool) EnableTrafficDestinationsByPort () error {
  //parameters: PortHandle
- //AgtEthernetAddressPool EnableTrafficDestinationsByPort, m.Object, m.Name);
+ //AgtEthernetAddressPool EnableTrafficDestinationsByPort
  return nil
 }
 
 func(np *EthernetAddressPool) DisableTrafficDestinations () error {
  //parameters: hAddressPool
- //AgtEthernetAddressPool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtEthernetAddressPool DisableTrafficDestinations
  return nil
 }
 
 func(np *EthernetAddressPool) DisableTrafficDestinationsByPort () error {
  //parameters: PortHandle
- //AgtEthernetAddressPool DisableTrafficDestinationsByPort, m.Object, m.Name);
+ //AgtEthernetAddressPool DisableTrafficDestinationsByPort
  return nil
 }
 
 func(np *EthernetAddressPool) IsTrafficDestinationEnabled () error {
  //parameters: hAddressPool
- //AgtEthernetAddressPool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtEthernetAddressPool IsTrafficDestinationEnabled
  return nil
 }
 
 func(np *EthernetAddressPool) SetTesterMacAddressUniqueFlag () error {
  //parameters: hAddressPool UniqueMacAddressFlag
- //AgtEthernetAddressPool SetTesterMacAddressUniqueFlag, m.Object, m.Name);
+ //AgtEthernetAddressPool SetTesterMacAddressUniqueFlag
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *EthernetAddressPool) GetTesterMacAddressUniqueFlag ()(string, error) {
 
 func(np *EthernetAddressPool) SetTesterMacAddresses () error {
  //parameters: hAddressPool FirstMacAddress UniqueMacAddressFlag
- //AgtEthernetAddressPool SetTesterMacAddresses, m.Object, m.Name);
+ //AgtEthernetAddressPool SetTesterMacAddresses
  return nil
 }
 

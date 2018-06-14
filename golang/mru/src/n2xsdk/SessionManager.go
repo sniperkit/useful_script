@@ -24,19 +24,19 @@ func(np *SessionManager) GetInterfaceDetails ()(string, error) {
 
 func(np *SessionManager) OpenSession () error {
  //parameters: SessionType SessionMode
- //AgtSessionManager OpenSession, m.Object, m.Name);
+ //AgtSessionManager OpenSession
  return nil
 }
 
 func(np *SessionManager) OpenSessionByVersion () error {
  //parameters: SessionType Version SessionMode
- //AgtSessionManager OpenSessionByVersion, m.Object, m.Name);
+ //AgtSessionManager OpenSessionByVersion
  return nil
 }
 
 func(np *SessionManager) CloseSession () error {
  //parameters: SessionHandle
- //AgtSessionManager CloseSession, m.Object, m.Name);
+ //AgtSessionManager CloseSession
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *SessionManager) GetSessionContext ()(string, error) {
 
 func(np *SessionManager) SetSessionLabel () error {
  //parameters: SessionHandle SessionLabel
- //AgtSessionManager SetSessionLabel, m.Object, m.Name);
+ //AgtSessionManager SetSessionLabel
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *SessionManager) GetMaxGuiConnectionsByVersion ()(string, error) {
 
 func(np *SessionManager) SetMaxGuiConnectionsByVersion () error {
  //parameters: SessionType Version GuiType MaxGuiSessions
- //AgtSessionManager SetMaxGuiConnectionsByVersion, m.Object, m.Name);
+ //AgtSessionManager SetMaxGuiConnectionsByVersion
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *SessionManager) GetMaxGuiConnections ()(string, error) {
 
 func(np *SessionManager) SetMaxGuiConnections () error {
  //parameters: SessionType GuiType MaxGuiSessions
- //AgtSessionManager SetMaxGuiConnections, m.Object, m.Name);
+ //AgtSessionManager SetMaxGuiConnections
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *SessionManager) GetDefaultSessionVersion ()(string, error) {
 
 func(np *SessionManager) IsMaxGuiConnectionsUpdateable () error {
  //parameters: 
- //AgtSessionManager IsMaxGuiConnectionsUpdateable, m.Object, m.Name);
+ //AgtSessionManager IsMaxGuiConnectionsUpdateable
  return nil
 }
 

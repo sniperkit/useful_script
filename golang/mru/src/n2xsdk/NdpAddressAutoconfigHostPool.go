@@ -6,37 +6,37 @@ type NdpAddressAutoconfigHostPool struct {
 
 func(np *NdpAddressAutoconfigHostPool) EnableAutoSendRouterSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool EnableAutoSendRouterSolicitations, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool EnableAutoSendRouterSolicitations
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) DisableAutoSendRouterSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool DisableAutoSendRouterSolicitations, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool DisableAutoSendRouterSolicitations
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) IsAutoSendRouterSolicitationsEnabled () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool IsAutoSendRouterSolicitationsEnabled, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool IsAutoSendRouterSolicitationsEnabled
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) SendRouterSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool SendRouterSolicitations, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SendRouterSolicitations
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) Reset () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool Reset, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool Reset
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) CancelRouterSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool CancelRouterSolicitations, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool CancelRouterSolicitations
  return nil
 }
 
@@ -48,25 +48,25 @@ func(np *NdpAddressAutoconfigHostPool) GetCustomState ()(string, error) {
 
 func(np *NdpAddressAutoconfigHostPool) EnableStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool EnableStatelessTransmit, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool EnableStatelessTransmit
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) DisableStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool DisableStatelessTransmit, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool DisableStatelessTransmit
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) IsStatelessTransmitEnabled () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool IsStatelessTransmitEnabled, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool IsStatelessTransmitEnabled
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitPacketType () error {
  //parameters: DevicePoolHandle PacketType
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitPacketType, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitPacketType
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitPacketType ()(string,
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitPacket () error {
  //parameters: DeviceHandle Packet
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitPacket, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitPacket
  return nil
 }
 
@@ -90,19 +90,19 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitPacket ()(string, err
 
 func(np *NdpAddressAutoconfigHostPool) StartStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool StartStatelessTransmit, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool StartStatelessTransmit
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) StopStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostPool StopStatelessTransmit, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool StopStatelessTransmit
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitStartEventState () error {
  //parameters: DeviceHandle StartEventState
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStartEventState, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStartEventState
  return nil
 }
 
@@ -114,43 +114,43 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitStartEventState ()(st
 
 func(np *NdpAddressAutoconfigHostPool) SendRouterSolicitationsByPort () error {
  //parameters: PortHandle
- //AgtNdpAddressAutoconfigHostPool SendRouterSolicitationsByPort, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SendRouterSolicitationsByPort
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) ResetByPort () error {
  //parameters: PortHandle
- //AgtNdpAddressAutoconfigHostPool ResetByPort, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool ResetByPort
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) CancelRouterSolicitationsByPort () error {
  //parameters: PortHandle
- //AgtNdpAddressAutoconfigHostPool CancelRouterSolicitationsByPort, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool CancelRouterSolicitationsByPort
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) SendAllRouterSolicitations () error {
  //parameters: 
- //AgtNdpAddressAutoconfigHostPool SendAllRouterSolicitations, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SendAllRouterSolicitations
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) ResetAll () error {
  //parameters: 
- //AgtNdpAddressAutoconfigHostPool ResetAll, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool ResetAll
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) CancelAllRouterSolicitations () error {
  //parameters: 
- //AgtNdpAddressAutoconfigHostPool CancelAllRouterSolicitations, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool CancelAllRouterSolicitations
  return nil
 }
 
 func(np *NdpAddressAutoconfigHostPool) SetRateControl () error {
  //parameters: PortHandle RateControlMode
- //AgtNdpAddressAutoconfigHostPool SetRateControl, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetRateControl
  return nil
 }
 
@@ -162,7 +162,7 @@ func(np *NdpAddressAutoconfigHostPool) GetRateControl ()(string, error) {
 
 func(np *NdpAddressAutoconfigHostPool) SetFixedRateProfile () error {
  //parameters: PortHandle FixedRate MaxBurstSize
- //AgtNdpAddressAutoconfigHostPool SetFixedRateProfile, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetFixedRateProfile
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *NdpAddressAutoconfigHostPool) GetFixedRateProfile ()(string, error) {
 
 func(np *NdpAddressAutoconfigHostPool) SetSelfPacedProfile () error {
  //parameters: PortHandle MaxPackets MaxRetries RetryTimeout
- //AgtNdpAddressAutoconfigHostPool SetSelfPacedProfile, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetSelfPacedProfile
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *NdpAddressAutoconfigHostPool) GetSelfPacedProfile ()(string, error) {
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitStartEvent () error {
  //parameters: DeviceHandle StartEvent
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStartEvent, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStartEvent
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitStartEvent ()(string,
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitStopEvent () error {
  //parameters: DeviceHandle StopEvent
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStopEvent, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStopEvent
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitStopEvent ()(string, 
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitStopEventCount () error {
  //parameters: DeviceHandle StopEventCount
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStopEventCount, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStopEventCount
  return nil
 }
 
@@ -222,7 +222,7 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitStopEventCount ()(str
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitStopEventTime () error {
  //parameters: DeviceHandle TimeUnits Time
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStopEventTime, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitStopEventTime
  return nil
 }
 
@@ -234,7 +234,7 @@ func(np *NdpAddressAutoconfigHostPool) GetStatelessTransmitStopEventTime ()(stri
 
 func(np *NdpAddressAutoconfigHostPool) SetStatelessTransmitRate () error {
  //parameters: DeviceHandle BurstSize PeriodUnits Period
- //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitRate, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostPool SetStatelessTransmitRate
  return nil
 }
 

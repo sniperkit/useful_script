@@ -24,43 +24,43 @@ func(np *nalysisFilter) GetLockCount ()(string, error) {
 
 func(np *nalysisFilter) ClearFilter () error {
  //parameters: FilterHandle
- //AgtAnalysisFilter ClearFilter, m.Object, m.Name);
+ //AgtAnalysisFilter ClearFilter
  return nil
 }
 
 func(np *nalysisFilter) AddPatternCriterion () error {
  //parameters: FilterHandle PatternHandle
- //AgtAnalysisFilter AddPatternCriterion, m.Object, m.Name);
+ //AgtAnalysisFilter AddPatternCriterion
  return nil
 }
 
 func(np *nalysisFilter) RemovePatternCriterion () error {
  //parameters: FilterHandle PatternHandle
- //AgtAnalysisFilter RemovePatternCriterion, m.Object, m.Name);
+ //AgtAnalysisFilter RemovePatternCriterion
  return nil
 }
 
 func(np *nalysisFilter) AddValueCriterion () error {
  //parameters: FilterHandle ValueCriterion Value
- //AgtAnalysisFilter AddValueCriterion, m.Object, m.Name);
+ //AgtAnalysisFilter AddValueCriterion
  return nil
 }
 
 func(np *nalysisFilter) RemoveValueCriterion () error {
  //parameters: FilterHandle ValueCriterion
- //AgtAnalysisFilter RemoveValueCriterion, m.Object, m.Name);
+ //AgtAnalysisFilter RemoveValueCriterion
  return nil
 }
 
 func(np *nalysisFilter) AddStatusCriterion () error {
  //parameters: FilterHandle StatusCriterion IsSet
- //AgtAnalysisFilter AddStatusCriterion, m.Object, m.Name);
+ //AgtAnalysisFilter AddStatusCriterion
  return nil
 }
 
 func(np *nalysisFilter) RemoveStatusCriterion () error {
  //parameters: FilterHandle StatusCriterion
- //AgtAnalysisFilter RemoveStatusCriterion, m.Object, m.Name);
+ //AgtAnalysisFilter RemoveStatusCriterion
  return nil
 }
 

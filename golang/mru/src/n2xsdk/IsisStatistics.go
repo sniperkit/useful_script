@@ -12,13 +12,13 @@ func(np *IsisStatistics) ListSelectedSessions ()(string, error) {
 
 func(np *IsisStatistics) SelectSessions () error {
  //parameters: Count psaSessions
- //AgtIsisStatistics SelectSessions, m.Object, m.Name);
+ //AgtIsisStatistics SelectSessions
  return nil
 }
 
 func(np *IsisStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtIsisStatistics DeselectSession, m.Object, m.Name);
+ //AgtIsisStatistics DeselectSession
  return nil
 }
 

@@ -24,25 +24,25 @@ func(np *LdpMesh) GetLockCount ()(string, error) {
 
 func(np *LdpMesh) Enable () error {
  //parameters: MeshHandle
- //AgtLdpMesh Enable, m.Object, m.Name);
+ //AgtLdpMesh Enable
  return nil
 }
 
 func(np *LdpMesh) Disable () error {
  //parameters: MeshHandle
- //AgtLdpMesh Disable, m.Object, m.Name);
+ //AgtLdpMesh Disable
  return nil
 }
 
 func(np *LdpMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtLdpMesh IsEnabled, m.Object, m.Name);
+ //AgtLdpMesh IsEnabled
  return nil
 }
 
 func(np *LdpMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtLdpMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtLdpMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *LdpMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *LdpMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtLdpMesh SetLengthMode, m.Object, m.Name);
+ //AgtLdpMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *LdpMesh) GetLengthMode ()(string, error) {
 
 func(np *LdpMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtLdpMesh SetLength, m.Object, m.Name);
+ //AgtLdpMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *LdpMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *LdpMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtLdpMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtLdpMesh EnableStreamGeneration
  return nil
 }
 
 func(np *LdpMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtLdpMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtLdpMesh DisableStreamGeneration
  return nil
 }
 
 func(np *LdpMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtLdpMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtLdpMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *LdpMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtLdpMesh SetAverageLoad, m.Object, m.Name);
+ //AgtLdpMesh SetAverageLoad
  return nil
 }
 
@@ -138,19 +138,19 @@ func(np *LdpMesh) GetAverageLoad ()(string, error) {
 
 func(np *LdpMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtLdpMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtLdpMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *LdpMesh) AddLspAddressPool () error {
  //parameters: MeshHandle SourceLdpSessionHandle DestinationPort DestinationFirstIpAddress DestinationPrefixLength DestinationNumAddresses DestinationAddressModifier
- //AgtLdpMesh AddLspAddressPool, m.Object, m.Name);
+ //AgtLdpMesh AddLspAddressPool
  return nil
 }
 
 func(np *LdpMesh) RemoveLspAddressPool () error {
  //parameters: MeshHandle AddressPoolHandle
- //AgtLdpMesh RemoveLspAddressPool, m.Object, m.Name);
+ //AgtLdpMesh RemoveLspAddressPool
  return nil
 }
 

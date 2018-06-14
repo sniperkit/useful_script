@@ -6,31 +6,31 @@ type AnalysisFilterList struct {
 
 func(np *nalysisFilterLis) Add () error {
  //parameters: Type
- //AgtAnalysisFilterList Add, m.Object, m.Name);
+ //AgtAnalysisFilterList Add
  return nil
 }
 
 func(np *nalysisFilterLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtAnalysisFilterList AddItems, m.Object, m.Name);
+ //AgtAnalysisFilterList AddItems
  return nil
 }
 
 func(np *nalysisFilterLis) Remove () error {
  //parameters: Handle
- //AgtAnalysisFilterList Remove, m.Object, m.Name);
+ //AgtAnalysisFilterList Remove
  return nil
 }
 
 func(np *nalysisFilterLis) Copy () error {
  //parameters: Handle
- //AgtAnalysisFilterList Copy, m.Object, m.Name);
+ //AgtAnalysisFilterList Copy
  return nil
 }
 
 func(np *nalysisFilterLis) SetName () error {
  //parameters: Handle Name
- //AgtAnalysisFilterList SetName, m.Object, m.Name);
+ //AgtAnalysisFilterList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *nalysisFilterLis) GetType ()(string, error) {
 
 func(np *nalysisFilterLis) LockItem () error {
  //parameters: Handle
- //AgtAnalysisFilterList LockItem, m.Object, m.Name);
+ //AgtAnalysisFilterList LockItem
  return nil
 }
 
 func(np *nalysisFilterLis) UnlockItem () error {
  //parameters: Handle
- //AgtAnalysisFilterList UnlockItem, m.Object, m.Name);
+ //AgtAnalysisFilterList UnlockItem
  return nil
 }
 

@@ -6,13 +6,13 @@ type Bgp4MplsVpnList struct {
 
 func(np *Bgp4MplsVpnLis) AddVpns () error {
  //parameters: TypeCount psaTypes AdminCount psaAdministrators NumberCount psaAssignedNumbers
- //AgtBgp4MplsVpnList AddVpns, m.Object, m.Name);
+ //AgtBgp4MplsVpnList AddVpns
  return nil
 }
 
 func(np *Bgp4MplsVpnLis) AddVpnRange () error {
  //parameters: NumVpns Type FirstAdministrator AdministratorModifier FirstAssignedNumber AssignedNumberModifier
- //AgtBgp4MplsVpnList AddVpnRange, m.Object, m.Name);
+ //AgtBgp4MplsVpnList AddVpnRange
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *Bgp4MplsVpnLis) ListVpns ()(string, error) {
 
 func(np *Bgp4MplsVpnLis) RemoveVpns () error {
  //parameters: Count psaVpnHandles
- //AgtBgp4MplsVpnList RemoveVpns, m.Object, m.Name);
+ //AgtBgp4MplsVpnList RemoveVpns
  return nil
 }
 
 func(np *Bgp4MplsVpnLis) ClearVpns () error {
  //parameters: 
- //AgtBgp4MplsVpnList ClearVpns, m.Object, m.Name);
+ //AgtBgp4MplsVpnList ClearVpns
  return nil
 }
 

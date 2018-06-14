@@ -6,7 +6,7 @@ type RsvpExtensionObject struct {
 
 func(np *RsvpExtensionObjec) SetPduHandle () error {
  //parameters: ObjectHandle PduHandle
- //AgtRsvpExtensionObject SetPduHandle, m.Object, m.Name);
+ //AgtRsvpExtensionObject SetPduHandle
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *RsvpExtensionObjec) GetPduHandle ()(string, error) {
 
 func(np *RsvpExtensionObjec) IsGeneric () error {
  //parameters: ObjectHandle
- //AgtRsvpExtensionObject IsGeneric, m.Object, m.Name);
+ //AgtRsvpExtensionObject IsGeneric
  return nil
 }
 

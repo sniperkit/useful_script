@@ -6,13 +6,13 @@ type FrameRelayAddresses struct {
 
 func(np *FrameRelayAddresses) AddPvcPool () error {
  //parameters: PortHandle NumPvcs FirstDlci DlciIncrement Encapsulation
- //AgtFrameRelayAddresses AddPvcPool, m.Object, m.Name);
+ //AgtFrameRelayAddresses AddPvcPool
  return nil
 }
 
 func(np *FrameRelayAddresses) RemovePvcPools () error {
  //parameters: PortHandle Count psaPvcPoolHandles
- //AgtFrameRelayAddresses RemovePvcPools, m.Object, m.Name);
+ //AgtFrameRelayAddresses RemovePvcPools
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *FrameRelayAddresses) ListPvcPools ()(string, error) {
 
 func(np *FrameRelayAddresses) AddPvcs () error {
  //parameters: PortHandle NumPvcs FirstDlci DlciIncrement Encapsulation FirstTesterIpAddress FirstSutIpAddress PrefixLength IpAddressModifier
- //AgtFrameRelayAddresses AddPvcs, m.Object, m.Name);
+ //AgtFrameRelayAddresses AddPvcs
  return nil
 }
 
 func(np *FrameRelayAddresses) RemovePvcs () error {
  //parameters: PortHandle Count psaPvcs
- //AgtFrameRelayAddresses RemovePvcs, m.Object, m.Name);
+ //AgtFrameRelayAddresses RemovePvcs
  return nil
 }
 

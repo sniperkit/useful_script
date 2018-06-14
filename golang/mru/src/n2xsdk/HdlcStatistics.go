@@ -30,7 +30,7 @@ func(np *HdlcStatistics) ListSelectedPorts ()(string, error) {
 
 func(np *HdlcStatistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts PortHandles
- //AgtHdlcStatistics SelectPorts, m.Object, m.Name);
+ //AgtHdlcStatistics SelectPorts
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *HdlcStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *HdlcStatistics) LockItem () error {
  //parameters: StatisticsHandle
- //AgtHdlcStatistics LockItem, m.Object, m.Name);
+ //AgtHdlcStatistics LockItem
  return nil
 }
 
 func(np *HdlcStatistics) UnlockItem () error {
  //parameters: StatisticsHandle
- //AgtHdlcStatistics UnlockItem, m.Object, m.Name);
+ //AgtHdlcStatistics UnlockItem
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *HdlcStatistics) ListSelectedStatistics ()(string, error) {
 
 func(np *HdlcStatistics) SelectStatistics () error {
  //parameters: Handle NumStatistics Statistics
- //AgtHdlcStatistics SelectStatistics, m.Object, m.Name);
+ //AgtHdlcStatistics SelectStatistics
  return nil
 }
 

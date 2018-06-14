@@ -30,7 +30,7 @@ func(np *ConstantProfile) GetSourcePort ()(string, error) {
 
 func(np *ConstantProfile) SetProfileType () error {
  //parameters: ProfileHandle ProfileType
- //AgtConstantProfile SetProfileType, m.Object, m.Name);
+ //AgtConstantProfile SetProfileType
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *ConstantProfile) GetProfileType ()(string, error) {
 
 func(np *ConstantProfile) SetAverageLoad () error {
  //parameters: ProfileHandle AverageLoad Units
- //AgtConstantProfile SetAverageLoad, m.Object, m.Name);
+ //AgtConstantProfile SetAverageLoad
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *ConstantProfile) GetAverageLoad ()(string, error) {
 
 func(np *ConstantProfile) SetMode () error {
  //parameters: ProfileHandle Mode
- //AgtConstantProfile SetMode, m.Object, m.Name);
+ //AgtConstantProfile SetMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *ConstantProfile) GetMode ()(string, error) {
 
 func(np *ConstantProfile) SetNumberOfPacketsToInject () error {
  //parameters: ProfileHandle NumberOfPackets
- //AgtConstantProfile SetNumberOfPacketsToInject, m.Object, m.Name);
+ //AgtConstantProfile SetNumberOfPacketsToInject
  return nil
 }
 
@@ -78,13 +78,13 @@ func(np *ConstantProfile) GetNumberOfPacketsToInject ()(string, error) {
 
 func(np *ConstantProfile) SendSingleInjection () error {
  //parameters: ProfileHandle
- //AgtConstantProfile SendSingleInjection, m.Object, m.Name);
+ //AgtConstantProfile SendSingleInjection
  return nil
 }
 
 func(np *ConstantProfile) IsSendSingleInjectionInProgress () error {
  //parameters: ProfileHandle
- //AgtConstantProfile IsSendSingleInjectionInProgress, m.Object, m.Name);
+ //AgtConstantProfile IsSendSingleInjectionInProgress
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *ConstantProfile) ListStreamGroups ()(string, error) {
 
 func(np *ConstantProfile) AddStreamGroups () error {
  //parameters: ProfileHandle Count psaStreamGroupHandles
- //AgtConstantProfile AddStreamGroups, m.Object, m.Name);
+ //AgtConstantProfile AddStreamGroups
  return nil
 }
 
@@ -120,19 +120,19 @@ func(np *ConstantProfile) GetInterdepartureValueResolution ()(string, error) {
 
 func(np *ConstantProfile) Enable () error {
  //parameters: ProfileHandle
- //AgtConstantProfile Enable, m.Object, m.Name);
+ //AgtConstantProfile Enable
  return nil
 }
 
 func(np *ConstantProfile) Disable () error {
  //parameters: ProfileHandle
- //AgtConstantProfile Disable, m.Object, m.Name);
+ //AgtConstantProfile Disable
  return nil
 }
 
 func(np *ConstantProfile) IsEnabled () error {
  //parameters: ProfileHandle
- //AgtConstantProfile IsEnabled, m.Object, m.Name);
+ //AgtConstantProfile IsEnabled
  return nil
 }
 

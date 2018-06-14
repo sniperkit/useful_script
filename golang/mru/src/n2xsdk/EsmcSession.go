@@ -6,7 +6,7 @@ type EsmcSession struct {
 
 func(np *EsmcSession) SetClockQuality () error {
  //parameters: SessionHandle SsmQuality
- //AgtEsmcSession SetClockQuality, m.Object, m.Name);
+ //AgtEsmcSession SetClockQuality
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *EsmcSession) GetClockQuality ()(string, error) {
 
 func(np *EsmcSession) SetMessageRate () error {
  //parameters: SessionHandle MessageRate
- //AgtEsmcSession SetMessageRate, m.Object, m.Name);
+ //AgtEsmcSession SetMessageRate
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *EsmcSession) GetMessageRate ()(string, error) {
 
 func(np *EsmcSession) SetEventMode () error {
  //parameters: SessionHandle EventMode
- //AgtEsmcSession SetEventMode, m.Object, m.Name);
+ //AgtEsmcSession SetEventMode
  return nil
 }
 

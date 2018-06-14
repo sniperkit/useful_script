@@ -6,25 +6,25 @@ type HttpIpv6ClientL4RedirectSettings struct {
 
 func(np *HttpIpv6ClientL4RedirectSettings) EnableL4RedirectionSettings () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv6ClientL4RedirectSettings EnableL4RedirectionSettings, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings EnableL4RedirectionSettings
  return nil
 }
 
 func(np *HttpIpv6ClientL4RedirectSettings) DisableL4RedirectionSettings () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv6ClientL4RedirectSettings DisableL4RedirectionSettings, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings DisableL4RedirectionSettings
  return nil
 }
 
 func(np *HttpIpv6ClientL4RedirectSettings) IsL4RedirectionSettingsEnabled () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv6ClientL4RedirectSettings IsL4RedirectionSettingsEnabled, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings IsL4RedirectionSettingsEnabled
  return nil
 }
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetAuthenticationLevel () error {
  //parameters: SessionPoolHandle AuthenticationLevel
- //AgtHttpIpv6ClientL4RedirectSettings SetAuthenticationLevel, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetAuthenticationLevel
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetAuthenticationLevel ()(string, err
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetFirstCredentialNameValue () error {
  //parameters: SessionPoolHandle CredentialFieldName CredentialFieldValue
- //AgtHttpIpv6ClientL4RedirectSettings SetFirstCredentialNameValue, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetFirstCredentialNameValue
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetFirstCredentialFieldValue ()(strin
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetFirstCredentialValueModifierIncrementor () error {
  //parameters: SessionPoolHandle FieldValueModifier IncrementingRange Repeat
- //AgtHttpIpv6ClientL4RedirectSettings SetFirstCredentialValueModifierIncrementor, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetFirstCredentialValueModifierIncrementor
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetFirstCredentialValueModifierIncrem
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetSecondCredentialNameValue () error {
  //parameters: SessionPoolHandle CredentialFieldName CredentialFieldValue
- //AgtHttpIpv6ClientL4RedirectSettings SetSecondCredentialNameValue, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetSecondCredentialNameValue
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetSecondCredentialFieldValue ()(stri
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetSecondCredentialValueModifierIncrementor () error {
  //parameters: SessionPoolHandle FieldValueModifier IncrementingRange Repeat
- //AgtHttpIpv6ClientL4RedirectSettings SetSecondCredentialValueModifierIncrementor, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetSecondCredentialValueModifierIncrementor
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetSecondCredentialValueModifierIncre
 
 func(np *HttpIpv6ClientL4RedirectSettings) AddAuthenticationParameter () error {
  //parameters: SessionPoolHandle RowIndex
- //AgtHttpIpv6ClientL4RedirectSettings AddAuthenticationParameter, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings AddAuthenticationParameter
  return nil
 }
 
@@ -114,19 +114,19 @@ func(np *HttpIpv6ClientL4RedirectSettings) ListAuthenticationParameters ()(strin
 
 func(np *HttpIpv6ClientL4RedirectSettings) RemoveAuthenticationParameter () error {
  //parameters: SessionPoolHandle RowIndex
- //AgtHttpIpv6ClientL4RedirectSettings RemoveAuthenticationParameter, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings RemoveAuthenticationParameter
  return nil
 }
 
 func(np *HttpIpv6ClientL4RedirectSettings) RemoveAllAuthenticationParameters () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv6ClientL4RedirectSettings RemoveAllAuthenticationParameters, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings RemoveAllAuthenticationParameters
  return nil
 }
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetAuthenticationParameterValue () error {
  //parameters: SessionPoolHandle RowIndex AuthenticationParameterValue
- //AgtHttpIpv6ClientL4RedirectSettings SetAuthenticationParameterValue, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetAuthenticationParameterValue
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetAuthenticationParameterValue ()(st
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetSuccessIndicatorType () error {
  //parameters: SessionPoolHandle SuccessIndicatorType
- //AgtHttpIpv6ClientL4RedirectSettings SetSuccessIndicatorType, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetSuccessIndicatorType
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *HttpIpv6ClientL4RedirectSettings) GetSuccessIndicatorType ()(string, er
 
 func(np *HttpIpv6ClientL4RedirectSettings) SetSuccessIndicatorValue () error {
  //parameters: SessionPoolHandle SuccessIndicatorValue
- //AgtHttpIpv6ClientL4RedirectSettings SetSuccessIndicatorValue, m.Object, m.Name);
+ //AgtHttpIpv6ClientL4RedirectSettings SetSuccessIndicatorValue
  return nil
 }
 

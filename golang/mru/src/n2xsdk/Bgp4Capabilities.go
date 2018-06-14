@@ -6,7 +6,7 @@ type Bgp4Capabilities struct {
 
 func(np *Bgp4Capabilities) SetSessionCapabilities () error {
  //parameters: PeerPoolHandle EmulationPduHandle
- //AgtBgp4Capabilities SetSessionCapabilities, m.Object, m.Name);
+ //AgtBgp4Capabilities SetSessionCapabilities
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *Bgp4Capabilities) GetSessionCapabilities ()(string, error) {
 
 func(np *Bgp4Capabilities) ClearSessionCapabilities () error {
  //parameters: PeerPoolHandle
- //AgtBgp4Capabilities ClearSessionCapabilities, m.Object, m.Name);
+ //AgtBgp4Capabilities ClearSessionCapabilities
  return nil
 }
 

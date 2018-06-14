@@ -12,25 +12,25 @@ func(np *IptvTestScenarioStatistics) ListAvailableStatisticsSets ()(string, erro
 
 func(np *IptvTestScenarioStatistics) EnableStatisticsSet () error {
  //parameters: ScenarioHandle StatisticsSet
- //AgtIptvTestScenarioStatistics EnableStatisticsSet, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics EnableStatisticsSet
  return nil
 }
 
 func(np *IptvTestScenarioStatistics) DisableStatisticsSet () error {
  //parameters: ScenarioHandle StatisticsSet
- //AgtIptvTestScenarioStatistics DisableStatisticsSet, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics DisableStatisticsSet
  return nil
 }
 
 func(np *IptvTestScenarioStatistics) IsStatisticsSetEnabled () error {
  //parameters: ScenarioHandle StatisticsSet
- //AgtIptvTestScenarioStatistics IsStatisticsSetEnabled, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics IsStatisticsSetEnabled
  return nil
 }
 
 func(np *IptvTestScenarioStatistics) IsStatisticsEnabled () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenarioStatistics IsStatisticsEnabled, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics IsStatisticsEnabled
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *IptvTestScenarioStatistics) ListAvailableThresholdTypes ()(string, erro
 
 func(np *IptvTestScenarioStatistics) SetThreshold () error {
  //parameters: ScenarioHandle ThresholdType ThresholdValue
- //AgtIptvTestScenarioStatistics SetThreshold, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics SetThreshold
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *IptvTestScenarioStatistics) ListAvailableThresholdByChannelTypes ()(str
 
 func(np *IptvTestScenarioStatistics) SetThresholdByChannel () error {
  //parameters: ScenarioHandle GroupPoolHandle Threshold ThresholdValue
- //AgtIptvTestScenarioStatistics SetThresholdByChannel, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics SetThresholdByChannel
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *IptvTestScenarioStatistics) GetThresholdByChannel ()(string, error) {
 
 func(np *IptvTestScenarioStatistics) SetMaxNumberOfReportedViolations () error {
  //parameters: ScenarioHandle ViolationReportSize
- //AgtIptvTestScenarioStatistics SetMaxNumberOfReportedViolations, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics SetMaxNumberOfReportedViolations
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *IptvTestScenarioStatistics) GetMaxNumberOfReportedViolations ()(string,
 
 func(np *IptvTestScenarioStatistics) ResetStatistics () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenarioStatistics ResetStatistics, m.Object, m.Name);
+ //AgtIptvTestScenarioStatistics ResetStatistics
  return nil
 }
 

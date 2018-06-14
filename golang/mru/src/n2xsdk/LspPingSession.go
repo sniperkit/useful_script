@@ -6,19 +6,19 @@ type LspPingSession struct {
 
 func(np *LspPingSession) Start () error {
  //parameters: SessionHandle
- //AgtLspPingSession Start, m.Object, m.Name);
+ //AgtLspPingSession Start
  return nil
 }
 
 func(np *LspPingSession) Reset () error {
  //parameters: SessionHandle
- //AgtLspPingSession Reset, m.Object, m.Name);
+ //AgtLspPingSession Reset
  return nil
 }
 
 func(np *LspPingSession) Renew () error {
  //parameters: SessionHandle
- //AgtLspPingSession Renew, m.Object, m.Name);
+ //AgtLspPingSession Renew
  return nil
 }
 

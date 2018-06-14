@@ -12,7 +12,7 @@ func(np *PduManager) GetPduBuilderMessageLog ()(string, error) {
 
 func(np *PduManager) ClearPduBuilderMessageLog () error {
  //parameters: 
- //AgtPduManager ClearPduBuilderMessageLog, m.Object, m.Name);
+ //AgtPduManager ClearPduBuilderMessageLog
  return nil
 }
 

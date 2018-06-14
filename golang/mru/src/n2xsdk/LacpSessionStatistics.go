@@ -18,7 +18,7 @@ func(np *LacpSessionStatistics) GetSessionConvergenceTimes ()(string, error) {
 
 func(np *LacpSessionStatistics) ClearSessionStatistics () error {
  //parameters: SessionHandle
- //AgtLacpSessionStatistics ClearSessionStatistics, m.Object, m.Name);
+ //AgtLacpSessionStatistics ClearSessionStatistics
  return nil
 }
 

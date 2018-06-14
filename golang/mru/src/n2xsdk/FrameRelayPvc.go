@@ -6,7 +6,7 @@ type FrameRelayPvc struct {
 
 func(np *FrameRelayPvc) SetHeaderFields () error {
  //parameters: PvcHandle Dlci Fecn Becn CR DE
- //AgtFrameRelayPvc SetHeaderFields, m.Object, m.Name);
+ //AgtFrameRelayPvc SetHeaderFields
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *FrameRelayPvc) GetHeaderFields ()(string, error) {
 
 func(np *FrameRelayPvc) SetEncapsulation () error {
  //parameters: PvcHandle Encapsulation
- //AgtFrameRelayPvc SetEncapsulation, m.Object, m.Name);
+ //AgtFrameRelayPvc SetEncapsulation
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *FrameRelayPvc) GetEncapsulation ()(string, error) {
 
 func(np *FrameRelayPvc) SetIpAddresses () error {
  //parameters: PvcHandle TesterIpAddress SutIpAddress PrefixLength
- //AgtFrameRelayPvc SetIpAddresses, m.Object, m.Name);
+ //AgtFrameRelayPvc SetIpAddresses
  return nil
 }
 

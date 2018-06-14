@@ -6,7 +6,7 @@ type AnSubscriberLinePool struct {
 
 func(np *nSubscriberLinePool) SetSubscriberLinesPerAccessNode () error {
  //parameters: SubscriberLinePoolHandle SubscriberLinesPerAccessNode
- //AgtAnSubscriberLinePool SetSubscriberLinesPerAccessNode, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetSubscriberLinesPerAccessNode
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *nSubscriberLinePool) GetSubscriberLinesPerAccessNode ()(string, error) 
 
 func(np *nSubscriberLinePool) SetVlanAllocationModel () error {
  //parameters: SubscriberLinePoolHandle VlanAllocModel
- //AgtAnSubscriberLinePool SetVlanAllocationModel, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetVlanAllocationModel
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *nSubscriberLinePool) GetVlanAllocationModel ()(string, error) {
 
 func(np *nSubscriberLinePool) SetServiceVlanId () error {
  //parameters: SubscriberLinePoolHandle VlanId Repeat Increment
- //AgtAnSubscriberLinePool SetServiceVlanId, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetServiceVlanId
  return nil
 }
 
@@ -42,25 +42,25 @@ func(np *nSubscriberLinePool) GetServiceVlanId ()(string, error) {
 
 func(np *nSubscriberLinePool) EnableCustomerTag () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool EnableCustomerTag, m.Object, m.Name);
+ //AgtAnSubscriberLinePool EnableCustomerTag
  return nil
 }
 
 func(np *nSubscriberLinePool) DisableCustomerTag () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool DisableCustomerTag, m.Object, m.Name);
+ //AgtAnSubscriberLinePool DisableCustomerTag
  return nil
 }
 
 func(np *nSubscriberLinePool) IsCustomerTagEnabled () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool IsCustomerTagEnabled, m.Object, m.Name);
+ //AgtAnSubscriberLinePool IsCustomerTagEnabled
  return nil
 }
 
 func(np *nSubscriberLinePool) SetCustomerVlanId () error {
  //parameters: SubscriberLinePoolHandle VlanId Repeat Increment
- //AgtAnSubscriberLinePool SetCustomerVlanId, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetCustomerVlanId
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *nSubscriberLinePool) GetCustomerVlanId ()(string, error) {
 
 func(np *nSubscriberLinePool) SetCircuitIdConstructionMode () error {
  //parameters: SubscriberLinePoolHandle CircuitIdConstructionMode
- //AgtAnSubscriberLinePool SetCircuitIdConstructionMode, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetCircuitIdConstructionMode
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *nSubscriberLinePool) GetCircuitIdConstructionMode ()(string, error) {
 
 func(np *nSubscriberLinePool) SetCircuitId () error {
  //parameters: SubscriberLinePoolHandle CircuitId
- //AgtAnSubscriberLinePool SetCircuitId, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetCircuitId
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *nSubscriberLinePool) GetCircuitId ()(string, error) {
 
 func(np *nSubscriberLinePool) SetCircuitIdSuffixIncrementor () error {
  //parameters: SubscriberLinePoolHandle SuffixValue SuffixValueIncrement SuffixValueRepeat
- //AgtAnSubscriberLinePool SetCircuitIdSuffixIncrementor, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetCircuitIdSuffixIncrementor
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *nSubscriberLinePool) GetCircuitIdSuffixIncrementor ()(string, error) {
 
 func(np *nSubscriberLinePool) SetAccessNodeIpIncrementorValue () error {
  //parameters: SubscriberLinePoolHandle IncrementorValue IncrementorValueCount IncrementorValueIncrement IncrementorValueRepeat
- //AgtAnSubscriberLinePool SetAccessNodeIpIncrementorValue, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAccessNodeIpIncrementorValue
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *nSubscriberLinePool) GetAccessNodeIpIncrementorValue ()(string, error) 
 
 func(np *nSubscriberLinePool) SetAccessNodeSlotIncrementorValue () error {
  //parameters: SubscriberLinePoolHandle IncrementorValue IncrementorValueCount IncrementorValueIncrement IncrementorValueRepeat
- //AgtAnSubscriberLinePool SetAccessNodeSlotIncrementorValue, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAccessNodeSlotIncrementorValue
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *nSubscriberLinePool) GetAccessNodeSlotIncrementorValue ()(string, error
 
 func(np *nSubscriberLinePool) SetAccessNodePortIncrementorValue () error {
  //parameters: SubscriberLinePoolHandle IncrementorValue IncrementorValueCount IncrementorValueIncrement IncrementorValueRepeat
- //AgtAnSubscriberLinePool SetAccessNodePortIncrementorValue, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAccessNodePortIncrementorValue
  return nil
 }
 
@@ -144,25 +144,25 @@ func(np *nSubscriberLinePool) GetAccessNodePortIncrementorValue ()(string, error
 
 func(np *nSubscriberLinePool) EnableRemoteId () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool EnableRemoteId, m.Object, m.Name);
+ //AgtAnSubscriberLinePool EnableRemoteId
  return nil
 }
 
 func(np *nSubscriberLinePool) DisableRemoteId () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool DisableRemoteId, m.Object, m.Name);
+ //AgtAnSubscriberLinePool DisableRemoteId
  return nil
 }
 
 func(np *nSubscriberLinePool) IsRemoteIdEnabled () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool IsRemoteIdEnabled, m.Object, m.Name);
+ //AgtAnSubscriberLinePool IsRemoteIdEnabled
  return nil
 }
 
 func(np *nSubscriberLinePool) SetRemoteId () error {
  //parameters: SubscriberLinePoolHandle RemoteId
- //AgtAnSubscriberLinePool SetRemoteId, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetRemoteId
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *nSubscriberLinePool) GetRemoteId ()(string, error) {
 
 func(np *nSubscriberLinePool) SetRemoteIdSuffixIncrementor () error {
  //parameters: SubscriberLinePoolHandle SuffixValue SuffixValueIncrement SuffixValueRepeat
- //AgtAnSubscriberLinePool SetRemoteIdSuffixIncrementor, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetRemoteIdSuffixIncrementor
  return nil
 }
 
@@ -186,25 +186,25 @@ func(np *nSubscriberLinePool) GetRemoteIdSuffixIncrementor ()(string, error) {
 
 func(np *nSubscriberLinePool) EnableAccessLoopEncapsulation () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool EnableAccessLoopEncapsulation, m.Object, m.Name);
+ //AgtAnSubscriberLinePool EnableAccessLoopEncapsulation
  return nil
 }
 
 func(np *nSubscriberLinePool) DisableAccessLoopEncapsulation () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool DisableAccessLoopEncapsulation, m.Object, m.Name);
+ //AgtAnSubscriberLinePool DisableAccessLoopEncapsulation
  return nil
 }
 
 func(np *nSubscriberLinePool) IsAccessLoopEncapsulationEnabled () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool IsAccessLoopEncapsulationEnabled, m.Object, m.Name);
+ //AgtAnSubscriberLinePool IsAccessLoopEncapsulationEnabled
  return nil
 }
 
 func(np *nSubscriberLinePool) SetAccessLoopDataLink () error {
  //parameters: SubscriberLinePoolHandle AccessLoopDataLink
- //AgtAnSubscriberLinePool SetAccessLoopDataLink, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAccessLoopDataLink
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *nSubscriberLinePool) GetAccessLoopDataLink ()(string, error) {
 
 func(np *nSubscriberLinePool) SetAccessLoopEncapsulation1 () error {
  //parameters: SubscriberLinePoolHandle AccessLoopEncapsulation1
- //AgtAnSubscriberLinePool SetAccessLoopEncapsulation1, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAccessLoopEncapsulation1
  return nil
 }
 
@@ -228,7 +228,7 @@ func(np *nSubscriberLinePool) GetAccessLoopEncapsulation1 ()(string, error) {
 
 func(np *nSubscriberLinePool) SetAncpAccessLoopEncapsulation1 () error {
  //parameters: SubscriberLinePoolHandle ANCPAccessLoopEncapsulation1
- //AgtAnSubscriberLinePool SetAncpAccessLoopEncapsulation1, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAncpAccessLoopEncapsulation1
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *nSubscriberLinePool) GetAncpAccessLoopEncapsulation1 ()(string, error) 
 
 func(np *nSubscriberLinePool) SetAccessLoopEncapsulation2 () error {
  //parameters: SubscriberLinePoolHandle AccessLoopEncapsulation2
- //AgtAnSubscriberLinePool SetAccessLoopEncapsulation2, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAccessLoopEncapsulation2
  return nil
 }
 
@@ -252,7 +252,7 @@ func(np *nSubscriberLinePool) GetAccessLoopEncapsulation2 ()(string, error) {
 
 func(np *nSubscriberLinePool) SetDslType () error {
  //parameters: SubscriberLinePoolHandle DslType
- //AgtAnSubscriberLinePool SetDslType, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetDslType
  return nil
 }
 
@@ -264,7 +264,7 @@ func(np *nSubscriberLinePool) GetDslType ()(string, error) {
 
 func(np *nSubscriberLinePool) SetAncpDslType () error {
  //parameters: SubscriberLinePoolHandle AncpDslType
- //AgtAnSubscriberLinePool SetAncpDslType, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetAncpDslType
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *nSubscriberLinePool) GetAncpDslType ()(string, error) {
 
 func(np *nSubscriberLinePool) SetDslDownstreamAttribute () error {
  //parameters: SubscriberLinePoolHandle LineAttribute LineAttributeValue
- //AgtAnSubscriberLinePool SetDslDownstreamAttribute, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetDslDownstreamAttribute
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *nSubscriberLinePool) GetDslDownstreamAttribute ()(string, error) {
 
 func(np *nSubscriberLinePool) SetActualDataRateDsIncrementor () error {
  //parameters: SubscriberLinePoolHandle Value ValueIncrement ValueRepeat
- //AgtAnSubscriberLinePool SetActualDataRateDsIncrementor, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetActualDataRateDsIncrementor
  return nil
 }
 
@@ -312,25 +312,25 @@ func(np *nSubscriberLinePool) GetActualDataRateDsList ()(string, error) {
 
 func(np *nSubscriberLinePool) EnableDslDownstreamAttribute () error {
  //parameters: SubscriberLinePoolHandle LineAttributeEdit
- //AgtAnSubscriberLinePool EnableDslDownstreamAttribute, m.Object, m.Name);
+ //AgtAnSubscriberLinePool EnableDslDownstreamAttribute
  return nil
 }
 
 func(np *nSubscriberLinePool) DisableDslDownstreamAttribute () error {
  //parameters: SubscriberLinePoolHandle LineAttributeEdit
- //AgtAnSubscriberLinePool DisableDslDownstreamAttribute, m.Object, m.Name);
+ //AgtAnSubscriberLinePool DisableDslDownstreamAttribute
  return nil
 }
 
 func(np *nSubscriberLinePool) IsDslDownstreamAttributeEnabled () error {
  //parameters: SubscriberLinePoolHandle LineAttributeEdit
- //AgtAnSubscriberLinePool IsDslDownstreamAttributeEnabled, m.Object, m.Name);
+ //AgtAnSubscriberLinePool IsDslDownstreamAttributeEnabled
  return nil
 }
 
 func(np *nSubscriberLinePool) SetDslUpstreamAttribute () error {
  //parameters: SubscriberLinePoolHandle LineAttribute LineAttributeValue
- //AgtAnSubscriberLinePool SetDslUpstreamAttribute, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetDslUpstreamAttribute
  return nil
 }
 
@@ -342,7 +342,7 @@ func(np *nSubscriberLinePool) GetDslUpstreamAttribute ()(string, error) {
 
 func(np *nSubscriberLinePool) SetActualDataRateUsIncrementor () error {
  //parameters: SubscriberLinePoolHandle Value ValueIncrement ValueRepeat
- //AgtAnSubscriberLinePool SetActualDataRateUsIncrementor, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetActualDataRateUsIncrementor
  return nil
 }
 
@@ -366,25 +366,25 @@ func(np *nSubscriberLinePool) GetActualDataRateUsList ()(string, error) {
 
 func(np *nSubscriberLinePool) EnableDslUpstreamAttribute () error {
  //parameters: SubscriberLinePoolHandle LineAttributeEdit
- //AgtAnSubscriberLinePool EnableDslUpstreamAttribute, m.Object, m.Name);
+ //AgtAnSubscriberLinePool EnableDslUpstreamAttribute
  return nil
 }
 
 func(np *nSubscriberLinePool) DisableDslUpstreamAttribute () error {
  //parameters: SubscriberLinePoolHandle LineAttributeEdit
- //AgtAnSubscriberLinePool DisableDslUpstreamAttribute, m.Object, m.Name);
+ //AgtAnSubscriberLinePool DisableDslUpstreamAttribute
  return nil
 }
 
 func(np *nSubscriberLinePool) IsDslUpstreamAttributeEnabled () error {
  //parameters: SubscriberLinePoolHandle LineAttributeEdit
- //AgtAnSubscriberLinePool IsDslUpstreamAttributeEnabled, m.Object, m.Name);
+ //AgtAnSubscriberLinePool IsDslUpstreamAttributeEnabled
  return nil
 }
 
 func(np *nSubscriberLinePool) SetFlapMode () error {
  //parameters: SubscriberLinePoolHandle FlapMode
- //AgtAnSubscriberLinePool SetFlapMode, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetFlapMode
  return nil
 }
 
@@ -396,7 +396,7 @@ func(np *nSubscriberLinePool) GetFlapMode ()(string, error) {
 
 func(np *nSubscriberLinePool) SetFlapUpTime () error {
  //parameters: SubscriberLinePoolHandle TimeMs
- //AgtAnSubscriberLinePool SetFlapUpTime, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetFlapUpTime
  return nil
 }
 
@@ -408,7 +408,7 @@ func(np *nSubscriberLinePool) GetFlapUpTime ()(string, error) {
 
 func(np *nSubscriberLinePool) SetFlapDownTime () error {
  //parameters: SubscriberLinePoolHandle TimeMs
- //AgtAnSubscriberLinePool SetFlapDownTime, m.Object, m.Name);
+ //AgtAnSubscriberLinePool SetFlapDownTime
  return nil
 }
 
@@ -420,37 +420,37 @@ func(np *nSubscriberLinePool) GetFlapDownTime ()(string, error) {
 
 func(np *nSubscriberLinePool) StartFlap () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool StartFlap, m.Object, m.Name);
+ //AgtAnSubscriberLinePool StartFlap
  return nil
 }
 
 func(np *nSubscriberLinePool) StopFlap () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool StopFlap, m.Object, m.Name);
+ //AgtAnSubscriberLinePool StopFlap
  return nil
 }
 
 func(np *nSubscriberLinePool) Enable () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool Enable, m.Object, m.Name);
+ //AgtAnSubscriberLinePool Enable
  return nil
 }
 
 func(np *nSubscriberLinePool) Disable () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool Disable, m.Object, m.Name);
+ //AgtAnSubscriberLinePool Disable
  return nil
 }
 
 func(np *nSubscriberLinePool) ResetEmulationStatistics () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool ResetEmulationStatistics, m.Object, m.Name);
+ //AgtAnSubscriberLinePool ResetEmulationStatistics
  return nil
 }
 
 func(np *nSubscriberLinePool) ResetEmulation () error {
  //parameters: SubscriberLinePoolHandle
- //AgtAnSubscriberLinePool ResetEmulation, m.Object, m.Name);
+ //AgtAnSubscriberLinePool ResetEmulation
  return nil
 }
 

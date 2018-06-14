@@ -120,7 +120,7 @@ func(np *PacketSe) GetProtocolField32 ()(string, error) {
 
 func(np *PacketSe) ReloadProtocolFile () error {
  //parameters: 
- //AgtPacketSet ReloadProtocolFile, m.Object, m.Name);
+ //AgtPacketSet ReloadProtocolFile
  return nil
 }
 

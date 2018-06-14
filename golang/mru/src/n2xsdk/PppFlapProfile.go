@@ -6,7 +6,7 @@ type PppFlapProfile struct {
 
 func(np *PppFlapProfile) SetPortParameters () error {
  //parameters: PortHandle FlapOrder FlapCycles FlapDelay
- //AgtPppFlapProfile SetPortParameters, m.Object, m.Name);
+ //AgtPppFlapProfile SetPortParameters
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *PppFlapProfile) GetPortParameters ()(string, error) {
 
 func(np *PppFlapProfile) SetSessionPoolParameters () error {
  //parameters: SessionPoolHandle FlapCycles FlapDelay
- //AgtPppFlapProfile SetSessionPoolParameters, m.Object, m.Name);
+ //AgtPppFlapProfile SetSessionPoolParameters
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *PppFlapProfile) GetSessionPoolParameters ()(string, error) {
 
 func(np *PppFlapProfile) SetObjects () error {
  //parameters: FlapObjectType Count psaObjectHandles
- //AgtPppFlapProfile SetObjects, m.Object, m.Name);
+ //AgtPppFlapProfile SetObjects
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *PppFlapProfile) GetObjects ()(string, error) {
 
 func(np *PppFlapProfile) StartFlap () error {
  //parameters: 
- //AgtPppFlapProfile StartFlap, m.Object, m.Name);
+ //AgtPppFlapProfile StartFlap
  return nil
 }
 
 func(np *PppFlapProfile) StopFlap () error {
  //parameters: 
- //AgtPppFlapProfile StopFlap, m.Object, m.Name);
+ //AgtPppFlapProfile StopFlap
  return nil
 }
 

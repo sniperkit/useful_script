@@ -6,19 +6,19 @@ type Bgp4Ipv6Session struct {
 
 func(np *Bgp4Ipv6Session) SetSutIpAddress () error {
  //parameters: SessionHandle RemoteIpAddress
- //AgtBgp4Ipv6Session SetSutIpAddress, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetSutIpAddress
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetTesterIpAddress () error {
  //parameters: SessionHandle LocalIpAddress
- //AgtBgp4Ipv6Session SetTesterIpAddress, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetTesterIpAddress
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetBgp4Identifier () error {
  //parameters: SessionHandle Bgp4Identifier
- //AgtBgp4Ipv6Session SetBgp4Identifier, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetBgp4Identifier
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *Bgp4Ipv6Session) GetTesterIpAddress ()(string, error) {
 
 func(np *Bgp4Ipv6Session) SetSutAsNumber () error {
  //parameters: SessionHandle AsNumber
- //AgtBgp4Ipv6Session SetSutAsNumber, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetSutAsNumber
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Bgp4Ipv6Session) GetSutAsNumber ()(string, error) {
 
 func(np *Bgp4Ipv6Session) SetTesterAsNumber () error {
  //parameters: SessionHandle AsNumber
- //AgtBgp4Ipv6Session SetTesterAsNumber, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetTesterAsNumber
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Bgp4Ipv6Session) GetTesterAsNumber ()(string, error) {
 
 func(np *Bgp4Ipv6Session) SetTesterAsNumberType () error {
  //parameters: SessionHandle TesterAsNumberType
- //AgtBgp4Ipv6Session SetTesterAsNumberType, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetTesterAsNumberType
  return nil
 }
 
@@ -78,13 +78,13 @@ func(np *Bgp4Ipv6Session) GetTesterAsNumberType ()(string, error) {
 
 func(np *Bgp4Ipv6Session) SetTester4ByteAsNumber () error {
  //parameters: SessionHandle AsNumber
- //AgtBgp4Ipv6Session SetTester4ByteAsNumber, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetTester4ByteAsNumber
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetTester4ByteAsNumberPlain () error {
  //parameters: SessionHandle FourByteFormatType AsNumber
- //AgtBgp4Ipv6Session SetTester4ByteAsNumberPlain, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetTester4ByteAsNumberPlain
  return nil
 }
 
@@ -102,13 +102,13 @@ func(np *Bgp4Ipv6Session) GetTester4ByteAsNumberPlain ()(string, error) {
 
 func(np *Bgp4Ipv6Session) Enable () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session Enable, m.Object, m.Name);
+ //AgtBgp4Ipv6Session Enable
  return nil
 }
 
 func(np *Bgp4Ipv6Session) Disable () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session Disable, m.Object, m.Name);
+ //AgtBgp4Ipv6Session Disable
  return nil
 }
 
@@ -120,37 +120,37 @@ func(np *Bgp4Ipv6Session) GetEnableFlag ()(string, error) {
 
 func(np *Bgp4Ipv6Session) Open () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session Open, m.Object, m.Name);
+ //AgtBgp4Ipv6Session Open
  return nil
 }
 
 func(np *Bgp4Ipv6Session) OpenAllSessions () error {
  //parameters: 
- //AgtBgp4Ipv6Session OpenAllSessions, m.Object, m.Name);
+ //AgtBgp4Ipv6Session OpenAllSessions
  return nil
 }
 
 func(np *Bgp4Ipv6Session) Close () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session Close, m.Object, m.Name);
+ //AgtBgp4Ipv6Session Close
  return nil
 }
 
 func(np *Bgp4Ipv6Session) CloseAllSessions () error {
  //parameters: 
- //AgtBgp4Ipv6Session CloseAllSessions, m.Object, m.Name);
+ //AgtBgp4Ipv6Session CloseAllSessions
  return nil
 }
 
 func(np *Bgp4Ipv6Session) CloseSessionWithoutNotification () error {
  //parameters: SessionHandle CloseType
- //AgtBgp4Ipv6Session CloseSessionWithoutNotification, m.Object, m.Name);
+ //AgtBgp4Ipv6Session CloseSessionWithoutNotification
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetNotificationParameters () error {
  //parameters: SessionHandle ErrorCode ErrorSubcode
- //AgtBgp4Ipv6Session SetNotificationParameters, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetNotificationParameters
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *Bgp4Ipv6Session) GetLastError ()(string, error) {
 
 func(np *Bgp4Ipv6Session) SetOpenParameter () error {
  //parameters: SessionHandle OpenParameter Value
- //AgtBgp4Ipv6Session SetOpenParameter, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetOpenParameter
  return nil
 }
 
@@ -198,25 +198,25 @@ func(np *Bgp4Ipv6Session) GetOpenParameter ()(string, error) {
 
 func(np *Bgp4Ipv6Session) EnableKeepAliveTimerNegotiation () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session EnableKeepAliveTimerNegotiation, m.Object, m.Name);
+ //AgtBgp4Ipv6Session EnableKeepAliveTimerNegotiation
  return nil
 }
 
 func(np *Bgp4Ipv6Session) DisableKeepAliveTimerNegotiation () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session DisableKeepAliveTimerNegotiation, m.Object, m.Name);
+ //AgtBgp4Ipv6Session DisableKeepAliveTimerNegotiation
  return nil
 }
 
 func(np *Bgp4Ipv6Session) IsKeepAliveTimerNegotiationEnabled () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session IsKeepAliveTimerNegotiationEnabled, m.Object, m.Name);
+ //AgtBgp4Ipv6Session IsKeepAliveTimerNegotiationEnabled
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetRoutesPerUpdate () error {
  //parameters: SessionHandle NumRoutes
- //AgtBgp4Ipv6Session SetRoutesPerUpdate, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetRoutesPerUpdate
  return nil
 }
 
@@ -228,7 +228,7 @@ func(np *Bgp4Ipv6Session) GetRoutesPerUpdate ()(string, error) {
 
 func(np *Bgp4Ipv6Session) SetInterUpdateDelay () error {
  //parameters: SessionHandle Delay
- //AgtBgp4Ipv6Session SetInterUpdateDelay, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetInterUpdateDelay
  return nil
 }
 
@@ -240,43 +240,43 @@ func(np *Bgp4Ipv6Session) GetInterUpdateDelay ()(string, error) {
 
 func(np *Bgp4Ipv6Session) EnableAllEndOfRibMarkers () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session EnableAllEndOfRibMarkers, m.Object, m.Name);
+ //AgtBgp4Ipv6Session EnableAllEndOfRibMarkers
  return nil
 }
 
 func(np *Bgp4Ipv6Session) DisableAllEndOfRibMarkers () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session DisableAllEndOfRibMarkers, m.Object, m.Name);
+ //AgtBgp4Ipv6Session DisableAllEndOfRibMarkers
  return nil
 }
 
 func(np *Bgp4Ipv6Session) IsAllEndOfRibMarkersEnabled () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session IsAllEndOfRibMarkersEnabled, m.Object, m.Name);
+ //AgtBgp4Ipv6Session IsAllEndOfRibMarkersEnabled
  return nil
 }
 
 func(np *Bgp4Ipv6Session) EnableMd5Authentication () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session EnableMd5Authentication, m.Object, m.Name);
+ //AgtBgp4Ipv6Session EnableMd5Authentication
  return nil
 }
 
 func(np *Bgp4Ipv6Session) DisableMd5Authentication () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session DisableMd5Authentication, m.Object, m.Name);
+ //AgtBgp4Ipv6Session DisableMd5Authentication
  return nil
 }
 
 func(np *Bgp4Ipv6Session) IsMd5AuthenticationEnabled () error {
  //parameters: SessionHandle
- //AgtBgp4Ipv6Session IsMd5AuthenticationEnabled, m.Object, m.Name);
+ //AgtBgp4Ipv6Session IsMd5AuthenticationEnabled
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetMd5AuthenticationKey () error {
  //parameters: SessionHandle Md5Key
- //AgtBgp4Ipv6Session SetMd5AuthenticationKey, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetMd5AuthenticationKey
  return nil
 }
 
@@ -288,43 +288,43 @@ func(np *Bgp4Ipv6Session) GetMd5AuthenticationKey ()(string, error) {
 
 func(np *Bgp4Ipv6Session) EnableAllSessions () error {
  //parameters: 
- //AgtBgp4Ipv6Session EnableAllSessions, m.Object, m.Name);
+ //AgtBgp4Ipv6Session EnableAllSessions
  return nil
 }
 
 func(np *Bgp4Ipv6Session) DisableAllSessions () error {
  //parameters: 
- //AgtBgp4Ipv6Session DisableAllSessions, m.Object, m.Name);
+ //AgtBgp4Ipv6Session DisableAllSessions
  return nil
 }
 
 func(np *Bgp4Ipv6Session) EnableAllPeerPools () error {
  //parameters: 
- //AgtBgp4Ipv6Session EnableAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Ipv6Session EnableAllPeerPools
  return nil
 }
 
 func(np *Bgp4Ipv6Session) DisableAllPeerPools () error {
  //parameters: 
- //AgtBgp4Ipv6Session DisableAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Ipv6Session DisableAllPeerPools
  return nil
 }
 
 func(np *Bgp4Ipv6Session) OpenAllPeerPools () error {
  //parameters: 
- //AgtBgp4Ipv6Session OpenAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Ipv6Session OpenAllPeerPools
  return nil
 }
 
 func(np *Bgp4Ipv6Session) CloseAllPeerPools () error {
  //parameters: 
- //AgtBgp4Ipv6Session CloseAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Ipv6Session CloseAllPeerPools
  return nil
 }
 
 func(np *Bgp4Ipv6Session) SetDefaultOpenParameter () error {
  //parameters: Parameter Value
- //AgtBgp4Ipv6Session SetDefaultOpenParameter, m.Object, m.Name);
+ //AgtBgp4Ipv6Session SetDefaultOpenParameter
  return nil
 }
 

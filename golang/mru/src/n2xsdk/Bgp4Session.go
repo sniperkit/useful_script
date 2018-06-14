@@ -6,7 +6,7 @@ type Bgp4Session struct {
 
 func(np *Bgp4Session) SetSutIpAddress () error {
  //parameters: SessionHandle RemoteIpAddress
- //AgtBgp4Session SetSutIpAddress, m.Object, m.Name);
+ //AgtBgp4Session SetSutIpAddress
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *Bgp4Session) GetSutIpAddress ()(string, error) {
 
 func(np *Bgp4Session) SetTesterIpAddress () error {
  //parameters: SessionHandle LocalIpAddress
- //AgtBgp4Session SetTesterIpAddress, m.Object, m.Name);
+ //AgtBgp4Session SetTesterIpAddress
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *Bgp4Session) GetTesterIpAddress ()(string, error) {
 
 func(np *Bgp4Session) SetSutAsNumber () error {
  //parameters: SessionHandle AsNumber
- //AgtBgp4Session SetSutAsNumber, m.Object, m.Name);
+ //AgtBgp4Session SetSutAsNumber
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *Bgp4Session) GetSutAsNumber ()(string, error) {
 
 func(np *Bgp4Session) SetTesterAsNumber () error {
  //parameters: SessionHandle AsNumber
- //AgtBgp4Session SetTesterAsNumber, m.Object, m.Name);
+ //AgtBgp4Session SetTesterAsNumber
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Bgp4Session) GetTesterAsNumber ()(string, error) {
 
 func(np *Bgp4Session) SetTesterAsNumberType () error {
  //parameters: SessionHandle TesterAsNumberType
- //AgtBgp4Session SetTesterAsNumberType, m.Object, m.Name);
+ //AgtBgp4Session SetTesterAsNumberType
  return nil
 }
 
@@ -66,13 +66,13 @@ func(np *Bgp4Session) GetTesterAsNumberType ()(string, error) {
 
 func(np *Bgp4Session) SetTester4ByteAsNumber () error {
  //parameters: SessionHandle AsNumber
- //AgtBgp4Session SetTester4ByteAsNumber, m.Object, m.Name);
+ //AgtBgp4Session SetTester4ByteAsNumber
  return nil
 }
 
 func(np *Bgp4Session) SetTester4ByteAsNumberPlain () error {
  //parameters: SessionHandle FourByteFormatType AsNumber
- //AgtBgp4Session SetTester4ByteAsNumberPlain, m.Object, m.Name);
+ //AgtBgp4Session SetTester4ByteAsNumberPlain
  return nil
 }
 
@@ -90,13 +90,13 @@ func(np *Bgp4Session) GetTester4ByteAsNumberPlain ()(string, error) {
 
 func(np *Bgp4Session) Enable () error {
  //parameters: SessionHandle
- //AgtBgp4Session Enable, m.Object, m.Name);
+ //AgtBgp4Session Enable
  return nil
 }
 
 func(np *Bgp4Session) Disable () error {
  //parameters: SessionHandle
- //AgtBgp4Session Disable, m.Object, m.Name);
+ //AgtBgp4Session Disable
  return nil
 }
 
@@ -108,37 +108,37 @@ func(np *Bgp4Session) GetEnableFlag ()(string, error) {
 
 func(np *Bgp4Session) Open () error {
  //parameters: SessionHandle
- //AgtBgp4Session Open, m.Object, m.Name);
+ //AgtBgp4Session Open
  return nil
 }
 
 func(np *Bgp4Session) OpenAllSessions () error {
  //parameters: 
- //AgtBgp4Session OpenAllSessions, m.Object, m.Name);
+ //AgtBgp4Session OpenAllSessions
  return nil
 }
 
 func(np *Bgp4Session) Close () error {
  //parameters: SessionHandle
- //AgtBgp4Session Close, m.Object, m.Name);
+ //AgtBgp4Session Close
  return nil
 }
 
 func(np *Bgp4Session) CloseAllSessions () error {
  //parameters: 
- //AgtBgp4Session CloseAllSessions, m.Object, m.Name);
+ //AgtBgp4Session CloseAllSessions
  return nil
 }
 
 func(np *Bgp4Session) CloseSessionWithoutNotification () error {
  //parameters: SessionHandle CloseType
- //AgtBgp4Session CloseSessionWithoutNotification, m.Object, m.Name);
+ //AgtBgp4Session CloseSessionWithoutNotification
  return nil
 }
 
 func(np *Bgp4Session) SetNotificationParameters () error {
  //parameters: SessionHandle ErrorCode ErrorSubcode
- //AgtBgp4Session SetNotificationParameters, m.Object, m.Name);
+ //AgtBgp4Session SetNotificationParameters
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *Bgp4Session) GetLastError ()(string, error) {
 
 func(np *Bgp4Session) SetOpenParameter () error {
  //parameters: SessionHandle OpenParameter Value
- //AgtBgp4Session SetOpenParameter, m.Object, m.Name);
+ //AgtBgp4Session SetOpenParameter
  return nil
 }
 
@@ -186,25 +186,25 @@ func(np *Bgp4Session) GetOpenParameter ()(string, error) {
 
 func(np *Bgp4Session) EnableKeepAliveTimerNegotiation () error {
  //parameters: SessionHandle
- //AgtBgp4Session EnableKeepAliveTimerNegotiation, m.Object, m.Name);
+ //AgtBgp4Session EnableKeepAliveTimerNegotiation
  return nil
 }
 
 func(np *Bgp4Session) DisableKeepAliveTimerNegotiation () error {
  //parameters: SessionHandle
- //AgtBgp4Session DisableKeepAliveTimerNegotiation, m.Object, m.Name);
+ //AgtBgp4Session DisableKeepAliveTimerNegotiation
  return nil
 }
 
 func(np *Bgp4Session) IsKeepAliveTimerNegotiationEnabled () error {
  //parameters: SessionHandle
- //AgtBgp4Session IsKeepAliveTimerNegotiationEnabled, m.Object, m.Name);
+ //AgtBgp4Session IsKeepAliveTimerNegotiationEnabled
  return nil
 }
 
 func(np *Bgp4Session) SetRoutesPerUpdate () error {
  //parameters: SessionHandle NumRoutes
- //AgtBgp4Session SetRoutesPerUpdate, m.Object, m.Name);
+ //AgtBgp4Session SetRoutesPerUpdate
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *Bgp4Session) GetRoutesPerUpdate ()(string, error) {
 
 func(np *Bgp4Session) SetInterUpdateDelay () error {
  //parameters: SessionHandle Delay
- //AgtBgp4Session SetInterUpdateDelay, m.Object, m.Name);
+ //AgtBgp4Session SetInterUpdateDelay
  return nil
 }
 
@@ -228,43 +228,43 @@ func(np *Bgp4Session) GetInterUpdateDelay ()(string, error) {
 
 func(np *Bgp4Session) EnableAllEndOfRibMarkers () error {
  //parameters: SessionHandle
- //AgtBgp4Session EnableAllEndOfRibMarkers, m.Object, m.Name);
+ //AgtBgp4Session EnableAllEndOfRibMarkers
  return nil
 }
 
 func(np *Bgp4Session) DisableAllEndOfRibMarkers () error {
  //parameters: SessionHandle
- //AgtBgp4Session DisableAllEndOfRibMarkers, m.Object, m.Name);
+ //AgtBgp4Session DisableAllEndOfRibMarkers
  return nil
 }
 
 func(np *Bgp4Session) IsAllEndOfRibMarkersEnabled () error {
  //parameters: SessionHandle
- //AgtBgp4Session IsAllEndOfRibMarkersEnabled, m.Object, m.Name);
+ //AgtBgp4Session IsAllEndOfRibMarkersEnabled
  return nil
 }
 
 func(np *Bgp4Session) EnableMd5Authentication () error {
  //parameters: SessionHandle
- //AgtBgp4Session EnableMd5Authentication, m.Object, m.Name);
+ //AgtBgp4Session EnableMd5Authentication
  return nil
 }
 
 func(np *Bgp4Session) DisableMd5Authentication () error {
  //parameters: SessionHandle
- //AgtBgp4Session DisableMd5Authentication, m.Object, m.Name);
+ //AgtBgp4Session DisableMd5Authentication
  return nil
 }
 
 func(np *Bgp4Session) IsMd5AuthenticationEnabled () error {
  //parameters: SessionHandle
- //AgtBgp4Session IsMd5AuthenticationEnabled, m.Object, m.Name);
+ //AgtBgp4Session IsMd5AuthenticationEnabled
  return nil
 }
 
 func(np *Bgp4Session) SetMd5AuthenticationKey () error {
  //parameters: SessionHandle Md5Key
- //AgtBgp4Session SetMd5AuthenticationKey, m.Object, m.Name);
+ //AgtBgp4Session SetMd5AuthenticationKey
  return nil
 }
 
@@ -276,43 +276,43 @@ func(np *Bgp4Session) GetMd5AuthenticationKey ()(string, error) {
 
 func(np *Bgp4Session) EnableAllSessions () error {
  //parameters: 
- //AgtBgp4Session EnableAllSessions, m.Object, m.Name);
+ //AgtBgp4Session EnableAllSessions
  return nil
 }
 
 func(np *Bgp4Session) DisableAllSessions () error {
  //parameters: 
- //AgtBgp4Session DisableAllSessions, m.Object, m.Name);
+ //AgtBgp4Session DisableAllSessions
  return nil
 }
 
 func(np *Bgp4Session) EnableAllPeerPools () error {
  //parameters: 
- //AgtBgp4Session EnableAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Session EnableAllPeerPools
  return nil
 }
 
 func(np *Bgp4Session) DisableAllPeerPools () error {
  //parameters: 
- //AgtBgp4Session DisableAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Session DisableAllPeerPools
  return nil
 }
 
 func(np *Bgp4Session) OpenAllPeerPools () error {
  //parameters: 
- //AgtBgp4Session OpenAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Session OpenAllPeerPools
  return nil
 }
 
 func(np *Bgp4Session) CloseAllPeerPools () error {
  //parameters: 
- //AgtBgp4Session CloseAllPeerPools, m.Object, m.Name);
+ //AgtBgp4Session CloseAllPeerPools
  return nil
 }
 
 func(np *Bgp4Session) SetDefaultOpenParameter () error {
  //parameters: Parameter Value
- //AgtBgp4Session SetDefaultOpenParameter, m.Object, m.Name);
+ //AgtBgp4Session SetDefaultOpenParameter
  return nil
 }
 

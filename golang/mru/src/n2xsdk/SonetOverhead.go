@@ -6,7 +6,7 @@ type SonetOverhead struct {
 
 func(np *SonetOverhead) SetTransmitOverheadByteMode () error {
  //parameters: PortHandle Byte Mode
- //AgtSonetOverhead SetTransmitOverheadByteMode, m.Object, m.Name);
+ //AgtSonetOverhead SetTransmitOverheadByteMode
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *SonetOverhead) GetTransmitOverheadByteMode ()(string, error) {
 
 func(np *SonetOverhead) SetTransmitOverheadByte () error {
  //parameters: PortHandle Byte Column Value
- //AgtSonetOverhead SetTransmitOverheadByte, m.Object, m.Name);
+ //AgtSonetOverhead SetTransmitOverheadByte
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *SonetOverhead) GetReceivedOverheadByte ()(string, error) {
 
 func(np *SonetOverhead) SetTransmitAps () error {
  //parameters: PortHandle Aps
- //AgtSonetOverhead SetTransmitAps, m.Object, m.Name);
+ //AgtSonetOverhead SetTransmitAps
  return nil
 }
 
@@ -54,25 +54,25 @@ func(np *SonetOverhead) GetReceivedAps ()(string, error) {
 
 func(np *SonetOverhead) SectionTraceOn () error {
  //parameters: PortHandle
- //AgtSonetOverhead SectionTraceOn, m.Object, m.Name);
+ //AgtSonetOverhead SectionTraceOn
  return nil
 }
 
 func(np *SonetOverhead) SectionTraceOff () error {
  //parameters: PortHandle
- //AgtSonetOverhead SectionTraceOff, m.Object, m.Name);
+ //AgtSonetOverhead SectionTraceOff
  return nil
 }
 
 func(np *SonetOverhead) IsSectionTraceOn () error {
  //parameters: PortHandle
- //AgtSonetOverhead IsSectionTraceOn, m.Object, m.Name);
+ //AgtSonetOverhead IsSectionTraceOn
  return nil
 }
 
 func(np *SonetOverhead) SetTransmitSectionTrace () error {
  //parameters: PortHandle SectionTrace
- //AgtSonetOverhead SetTransmitSectionTrace, m.Object, m.Name);
+ //AgtSonetOverhead SetTransmitSectionTrace
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *SonetOverhead) GetReceivedSectionTrace ()(string, error) {
 
 func(np *SonetOverhead) SetTransmitPathTrace () error {
  //parameters: PortHandle PathTrace
- //AgtSonetOverhead SetTransmitPathTrace, m.Object, m.Name);
+ //AgtSonetOverhead SetTransmitPathTrace
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *SonetOverhead) GetMaximumPathTraceLengthOnPort ()(string, error) {
 
 func(np *SonetOverhead) SetPathTraceMode () error {
  //parameters: PortHandle PathTraceMode
- //AgtSonetOverhead SetPathTraceMode, m.Object, m.Name);
+ //AgtSonetOverhead SetPathTraceMode
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *SonetOverhead) GetPathTraceMode ()(string, error) {
 
 func(np *SonetOverhead) SetSectionTraceMode () error {
  //parameters: PortHandle SectionTraceMode
- //AgtSonetOverhead SetSectionTraceMode, m.Object, m.Name);
+ //AgtSonetOverhead SetSectionTraceMode
  return nil
 }
 

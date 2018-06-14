@@ -18,13 +18,13 @@ func(np *FastFindDataSetLis) GetFastFindSessionDataSet ()(string, error) {
 
 func(np *FastFindDataSetLis) OpenFastFindDataSetFile () error {
  //parameters: Filename
- //AgtFastFindDataSetList OpenFastFindDataSetFile, m.Object, m.Name);
+ //AgtFastFindDataSetList OpenFastFindDataSetFile
  return nil
 }
 
 func(np *FastFindDataSetLis) CloseFastFindDataSetFile () error {
  //parameters: DataSetHandle
- //AgtFastFindDataSetList CloseFastFindDataSetFile, m.Object, m.Name);
+ //AgtFastFindDataSetList CloseFastFindDataSetFile
  return nil
 }
 

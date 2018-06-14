@@ -30,7 +30,7 @@ func(np *StreamGroup) GetSourcePort ()(string, error) {
 
 func(np *StreamGroup) SetSourceEndpointType () error {
  //parameters: StreamGroupHandle EndpointType
- //AgtStreamGroup SetSourceEndpointType, m.Object, m.Name);
+ //AgtStreamGroup SetSourceEndpointType
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *StreamGroup) GetSourceEndpointType ()(string, error) {
 
 func(np *StreamGroup) SetSourceEndpoint () error {
  //parameters: StreamGroupHandle Count psaEndpointIdentifier
- //AgtStreamGroup SetSourceEndpoint, m.Object, m.Name);
+ //AgtStreamGroup SetSourceEndpoint
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *StreamGroup) GetSourceEndpoint ()(string, error) {
 
 func(np *StreamGroup) Refresh () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup Refresh, m.Object, m.Name);
+ //AgtStreamGroup Refresh
  return nil
 }
 
 func(np *StreamGroup) SetExpectedDestinationPorts () error {
  //parameters: StreamGroupHandle Count psaDestinationPorts
- //AgtStreamGroup SetExpectedDestinationPorts, m.Object, m.Name);
+ //AgtStreamGroup SetExpectedDestinationPorts
  return nil
 }
 
@@ -84,19 +84,19 @@ func(np *StreamGroup) ListAllPacketTypes ()(string, error) {
 
 func(np *StreamGroup) SetPduHeaders () error {
  //parameters: StreamGroupHandle Count psaProtocolList
- //AgtStreamGroup SetPduHeaders, m.Object, m.Name);
+ //AgtStreamGroup SetPduHeaders
  return nil
 }
 
 func(np *StreamGroup) SetPduHeadersByPacketType () error {
  //parameters: StreamGroupHandle L2Protocol PacketType
- //AgtStreamGroup SetPduHeadersByPacketType, m.Object, m.Name);
+ //AgtStreamGroup SetPduHeadersByPacketType
  return nil
 }
 
 func(np *StreamGroup) AppendHeader () error {
  //parameters: StreamGroupHandle Protocol
- //AgtStreamGroup AppendHeader, m.Object, m.Name);
+ //AgtStreamGroup AppendHeader
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *StreamGroup) GetDefaultL2Protocol ()(string, error) {
 
 func(np *StreamGroup) SetLengthMode () error {
  //parameters: StreamGroupHandle LengthMode
- //AgtStreamGroup SetLengthMode, m.Object, m.Name);
+ //AgtStreamGroup SetLengthMode
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *StreamGroup) GetLengthMode ()(string, error) {
 
 func(np *StreamGroup) SetLength () error {
  //parameters: StreamGroupHandle LengthType Count psaLengthParameterList
- //AgtStreamGroup SetLength, m.Object, m.Name);
+ //AgtStreamGroup SetLength
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *StreamGroup) GetStreamId ()(string, error) {
 
 func(np *StreamGroup) SetRepeatCount () error {
  //parameters: StreamGroupHandle RepeatCount
- //AgtStreamGroup SetRepeatCount, m.Object, m.Name);
+ //AgtStreamGroup SetRepeatCount
  return nil
 }
 
@@ -156,25 +156,25 @@ func(np *StreamGroup) GetRepeatCount ()(string, error) {
 
 func(np *StreamGroup) EnableTestPayload () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup EnableTestPayload, m.Object, m.Name);
+ //AgtStreamGroup EnableTestPayload
  return nil
 }
 
 func(np *StreamGroup) DisableTestPayload () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup DisableTestPayload, m.Object, m.Name);
+ //AgtStreamGroup DisableTestPayload
  return nil
 }
 
 func(np *StreamGroup) IsTestPayloadEnabled () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup IsTestPayloadEnabled, m.Object, m.Name);
+ //AgtStreamGroup IsTestPayloadEnabled
  return nil
 }
 
 func(np *StreamGroup) SetProfile () error {
  //parameters: StreamGroupHandle ProfileHandle
- //AgtStreamGroup SetProfile, m.Object, m.Name);
+ //AgtStreamGroup SetProfile
  return nil
 }
 
@@ -192,7 +192,7 @@ func(np *StreamGroup) GetPdu ()(string, error) {
 
 func(np *StreamGroup) SetStreamGenerationParameter () error {
  //parameters: StreamGroupHandle Protocol ProtocolInstance Field
- //AgtStreamGroup SetStreamGenerationParameter, m.Object, m.Name);
+ //AgtStreamGroup SetStreamGenerationParameter
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *StreamGroup) GetStreamGenerationFieldValue ()(string, error) {
 
 func(np *StreamGroup) SetFieldModifiersRelation () error {
  //parameters: StreamGroupHandle FieldModifiersRelation
- //AgtStreamGroup SetFieldModifiersRelation, m.Object, m.Name);
+ //AgtStreamGroup SetFieldModifiersRelation
  return nil
 }
 
@@ -228,7 +228,7 @@ func(np *StreamGroup) GetFieldModifiersRelation ()(string, error) {
 
 func(np *StreamGroup) SetLinkedFieldModifiers () error {
  //parameters: StreamGroupHandle NumProtocols psaProtocols NumProtocolInstances psaProtocolInstances NumFields psaFields
- //AgtStreamGroup SetLinkedFieldModifiers, m.Object, m.Name);
+ //AgtStreamGroup SetLinkedFieldModifiers
  return nil
 }
 
@@ -240,25 +240,25 @@ func(np *StreamGroup) GetLinkedFieldModifiers ()(string, error) {
 
 func(np *StreamGroup) Enable () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup Enable, m.Object, m.Name);
+ //AgtStreamGroup Enable
  return nil
 }
 
 func(np *StreamGroup) Disable () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup Disable, m.Object, m.Name);
+ //AgtStreamGroup Disable
  return nil
 }
 
 func(np *StreamGroup) IsEnabled () error {
  //parameters: StreamGroupHandle
- //AgtStreamGroup IsEnabled, m.Object, m.Name);
+ //AgtStreamGroup IsEnabled
  return nil
 }
 
 func(np *StreamGroup) SetL2Error () error {
  //parameters: StreamGroupHandle L2Error
- //AgtStreamGroup SetL2Error, m.Object, m.Name);
+ //AgtStreamGroup SetL2Error
  return nil
 }
 

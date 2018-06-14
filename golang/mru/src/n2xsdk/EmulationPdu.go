@@ -6,13 +6,13 @@ type EmulationPdu struct {
 
 func(np *EmulationPdu) TransmitPdu () error {
  //parameters: DeviceHandle PduHandle
- //AgtEmulationPdu TransmitPdu, m.Object, m.Name);
+ //AgtEmulationPdu TransmitPdu
  return nil
 }
 
 func(np *EmulationPdu) IsTransmitPduSupported () error {
  //parameters: SessionHandle
- //AgtEmulationPdu IsTransmitPduSupported, m.Object, m.Name);
+ //AgtEmulationPdu IsTransmitPduSupported
  return nil
 }
 

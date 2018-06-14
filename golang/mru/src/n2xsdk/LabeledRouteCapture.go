@@ -6,25 +6,25 @@ type LabeledRouteCapture struct {
 
 func(np *LabeledRouteCapture) Start () error {
  //parameters: SessionHandle Type
- //AgtLabeledRouteCapture Start, m.Object, m.Name);
+ //AgtLabeledRouteCapture Start
  return nil
 }
 
 func(np *LabeledRouteCapture) Stop () error {
  //parameters: SessionHandle Type
- //AgtLabeledRouteCapture Stop, m.Object, m.Name);
+ //AgtLabeledRouteCapture Stop
  return nil
 }
 
 func(np *LabeledRouteCapture) Clear () error {
  //parameters: SessionHandle Type
- //AgtLabeledRouteCapture Clear, m.Object, m.Name);
+ //AgtLabeledRouteCapture Clear
  return nil
 }
 
 func(np *LabeledRouteCapture) IsCaptureEnabled () error {
  //parameters: SessionHandle Type
- //AgtLabeledRouteCapture IsCaptureEnabled, m.Object, m.Name);
+ //AgtLabeledRouteCapture IsCaptureEnabled
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *LabeledRouteCapture) GetNumReceivedLabeledRoutesWithdraws ()(string, er
 
 func(np *LabeledRouteCapture) SetCaptureMode () error {
  //parameters: SessionHandle Type Mode
- //AgtLabeledRouteCapture SetCaptureMode, m.Object, m.Name);
+ //AgtLabeledRouteCapture SetCaptureMode
  return nil
 }
 
@@ -60,13 +60,13 @@ func(np *LabeledRouteCapture) GetCaptureMode ()(string, error) {
 
 func(np *LabeledRouteCapture) UploadAllLabeledRoutes () error {
  //parameters: SessionIdCount psaSessionId Type
- //AgtLabeledRouteCapture UploadAllLabeledRoutes, m.Object, m.Name);
+ //AgtLabeledRouteCapture UploadAllLabeledRoutes
  return nil
 }
 
 func(np *LabeledRouteCapture) UploadSelectedLabeledRoutes () error {
  //parameters: SessionIdCount psaSessionId Type FirstRoute PrefixLength NumRoutes Modifier
- //AgtLabeledRouteCapture UploadSelectedLabeledRoutes, m.Object, m.Name);
+ //AgtLabeledRouteCapture UploadSelectedLabeledRoutes
  return nil
 }
 

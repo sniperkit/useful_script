@@ -6,7 +6,7 @@ type AtmPvcPool struct {
 
 func(np *mPvcPool) SetNumberOfPvcs () error {
  //parameters: PvcPoolHandle NumPvcs
- //AgtAtmPvcPool SetNumberOfPvcs, m.Object, m.Name);
+ //AgtAtmPvcPool SetNumberOfPvcs
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *mPvcPool) GetNumberOfPvcs ()(string, error) {
 
 func(np *mPvcPool) SetVpiVcis () error {
  //parameters: PvcPoolHandle FirstVpi VpiIncrement FirstVci VciIncrement
- //AgtAtmPvcPool SetVpiVcis, m.Object, m.Name);
+ //AgtAtmPvcPool SetVpiVcis
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *mPvcPool) GetVpiVcis ()(string, error) {
 
 func(np *mPvcPool) SetEncapsulation () error {
  //parameters: PvcPoolHandle Encapsulation
- //AgtAtmPvcPool SetEncapsulation, m.Object, m.Name);
+ //AgtAtmPvcPool SetEncapsulation
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *mPvcPool) GetEncapsulation ()(string, error) {
 
 func(np *mPvcPool) SetIpAddresses () error {
  //parameters: PvcPoolHandle FirstTesterIpv4Address FirstSutIpv4Address Ipv4PrefixLength Ipv4Modifier
- //AgtAtmPvcPool SetIpAddresses, m.Object, m.Name);
+ //AgtAtmPvcPool SetIpAddresses
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *mPvcPool) GetIpAddresses ()(string, error) {
 
 func(np *mPvcPool) SetIpv6Addresses () error {
  //parameters: PvcPoolHandle FirstTesterIpv6Address FirstSutIpv6Address Ipv6PrefixLength Ipv6Modifier
- //AgtAtmPvcPool SetIpv6Addresses, m.Object, m.Name);
+ //AgtAtmPvcPool SetIpv6Addresses
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *mPvcPool) GetIpv6Addresses ()(string, error) {
 
 func(np *mPvcPool) SetMacAddresses () error {
  //parameters: PvcPoolHandle FirstTesterMacAddress SutMacAddress
- //AgtAtmPvcPool SetMacAddresses, m.Object, m.Name);
+ //AgtAtmPvcPool SetMacAddresses
  return nil
 }
 
@@ -78,19 +78,19 @@ func(np *mPvcPool) GetMacAddresses ()(string, error) {
 
 func(np *mPvcPool) EnableTrafficDestinations () error {
  //parameters: PvcPoolHandle
- //AgtAtmPvcPool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtAtmPvcPool EnableTrafficDestinations
  return nil
 }
 
 func(np *mPvcPool) DisableTrafficDestinations () error {
  //parameters: PvcPoolHandle
- //AgtAtmPvcPool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtAtmPvcPool DisableTrafficDestinations
  return nil
 }
 
 func(np *mPvcPool) IsTrafficDestinationEnabled () error {
  //parameters: PvcPoolHandle
- //AgtAtmPvcPool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtAtmPvcPool IsTrafficDestinationEnabled
  return nil
 }
 

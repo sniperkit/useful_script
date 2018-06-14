@@ -6,7 +6,7 @@ type PtpSlaveIpv6ClockPool struct {
 
 func(np *PtpSlaveIpv6ClockPool) SetAnnounceReceiptTimeout () error {
  //parameters: SessionPoolHandle AnnounceTimeout
- //AgtPtpSlaveIpv6ClockPool SetAnnounceReceiptTimeout, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetAnnounceReceiptTimeout
  return nil
 }
 
@@ -18,25 +18,25 @@ func(np *PtpSlaveIpv6ClockPool) GetAnnounceReceiptTimeout ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) EnableDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnableDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnableDelayRequest
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisableDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisableDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisableDelayRequest
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledDelayRequest
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SetDelayRequestAttributes () error {
  //parameters: SessionPoolHandle IntervalMode LogMessageInterval RandomDistributionEnabled
- //AgtPtpSlaveIpv6ClockPool SetDelayRequestAttributes, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetDelayRequestAttributes
  return nil
 }
 
@@ -48,43 +48,43 @@ func(np *PtpSlaveIpv6ClockPool) GetDelayRequestAttributes ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) EnableActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnableActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnableActivityTrace
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisableActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisableActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisableActivityTrace
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledActivityTrace
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) EnableActivityTraceFilter () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnableActivityTraceFilter, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnableActivityTraceFilter
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisableActivityTraceFilter () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisableActivityTraceFilter, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisableActivityTraceFilter
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledActivityTraceFilter () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledActivityTraceFilter, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledActivityTraceFilter
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SetActivityTraceAttributes () error {
  //parameters: SessionPoolHandle InstanceNumber
- //AgtPtpSlaveIpv6ClockPool SetActivityTraceAttributes, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetActivityTraceAttributes
  return nil
 }
 
@@ -96,13 +96,13 @@ func(np *PtpSlaveIpv6ClockPool) GetActivityTraceAttributes ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) RefreshActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool RefreshActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool RefreshActivityTrace
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) ClearActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool ClearActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool ClearActivityTrace
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *PtpSlaveIpv6ClockPool) GetActivityTraceRow ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetDomainNumber () error {
  //parameters: SessionPoolHandle DomainNumber
- //AgtPtpSlaveIpv6ClockPool SetDomainNumber, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetDomainNumber
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *PtpSlaveIpv6ClockPool) GetDomainNumber ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetPortNumber () error {
  //parameters: SessionPoolHandle PortNumber
- //AgtPtpSlaveIpv6ClockPool SetPortNumber, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetPortNumber
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *PtpSlaveIpv6ClockPool) GetPortNumber ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetClockId () error {
  //parameters: SessionPoolHandle ClockId
- //AgtPtpSlaveIpv6ClockPool SetClockId, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetClockId
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *PtpSlaveIpv6ClockPool) GetClockId ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetClockIdIncrementingRange () error {
  //parameters: SessionPoolHandle FirstClockId Repeat Increment
- //AgtPtpSlaveIpv6ClockPool SetClockIdIncrementingRange, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetClockIdIncrementingRange
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *PtpSlaveIpv6ClockPool) GetClockIdList ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetPathDelayMode () error {
  //parameters: SessionPoolHandle PathDelayMode
- //AgtPtpSlaveIpv6ClockPool SetPathDelayMode, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetPathDelayMode
  return nil
 }
 
@@ -192,61 +192,61 @@ func(np *PtpSlaveIpv6ClockPool) GetPathDelayMode ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) EnablePeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnablePeerDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnablePeerDelayRequest
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisablePeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisablePeerDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisablePeerDelayRequest
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledPeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledPeerDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledPeerDelayRequest
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) EnablePeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnablePeerDelayResponse, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnablePeerDelayResponse
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisablePeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisablePeerDelayResponse, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisablePeerDelayResponse
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledPeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledPeerDelayResponse, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledPeerDelayResponse
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) EnablePeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnablePeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnablePeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisablePeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisablePeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisablePeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledPeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledPeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledPeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SetPeerToPeerPathDelayAttributes () error {
  //parameters: SessionPoolHandle LogMessageInterval TwoStepFlagMode FollowUpDelay
- //AgtPtpSlaveIpv6ClockPool SetPeerToPeerPathDelayAttributes, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetPeerToPeerPathDelayAttributes
  return nil
 }
 
@@ -258,7 +258,7 @@ func(np *PtpSlaveIpv6ClockPool) GetPeerToPeerPathDelayAttributes ()(string, erro
 
 func(np *PtpSlaveIpv6ClockPool) SetTimestampCalibration () error {
  //parameters: SessionPoolHandle TxOffset RxOffset
- //AgtPtpSlaveIpv6ClockPool SetTimestampCalibration, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetTimestampCalibration
  return nil
 }
 
@@ -276,13 +276,13 @@ func(np *PtpSlaveIpv6ClockPool) GetVlanPriority ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtPtpSlaveIpv6ClockPool SetVlanPriority, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetVlanPriority
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SetUnicastSignalingMessageMode () error {
  //parameters: SessionPoolHandle SignalingMessageMode
- //AgtPtpSlaveIpv6ClockPool SetUnicastSignalingMessageMode, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetUnicastSignalingMessageMode
  return nil
 }
 
@@ -294,7 +294,7 @@ func(np *PtpSlaveIpv6ClockPool) GetUnicastSignalingMessageMode ()(string, error)
 
 func(np *PtpSlaveIpv6ClockPool) SetAnnounceLogInterMessagePeriod () error {
  //parameters: SessionPoolHandle LogMessageInterval
- //AgtPtpSlaveIpv6ClockPool SetAnnounceLogInterMessagePeriod, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetAnnounceLogInterMessagePeriod
  return nil
 }
 
@@ -306,7 +306,7 @@ func(np *PtpSlaveIpv6ClockPool) GetAnnounceLogInterMessagePeriod ()(string, erro
 
 func(np *PtpSlaveIpv6ClockPool) SetSyncLogInterMessagePeriod () error {
  //parameters: SessionPoolHandle LogMessageInterval
- //AgtPtpSlaveIpv6ClockPool SetSyncLogInterMessagePeriod, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetSyncLogInterMessagePeriod
  return nil
 }
 
@@ -318,7 +318,7 @@ func(np *PtpSlaveIpv6ClockPool) GetSyncLogInterMessagePeriod ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetUnicastDestinationClockId () error {
  //parameters: SessionPoolHandle ClockId
- //AgtPtpSlaveIpv6ClockPool SetUnicastDestinationClockId, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetUnicastDestinationClockId
  return nil
 }
 
@@ -330,7 +330,7 @@ func(np *PtpSlaveIpv6ClockPool) GetUnicastDestinationClockId ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetUnicastDestinationClockIdIncrementingRange () error {
  //parameters: SessionPoolHandle FirstClockId Increment Repeat PercentageOverlap
- //AgtPtpSlaveIpv6ClockPool SetUnicastDestinationClockIdIncrementingRange, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetUnicastDestinationClockIdIncrementingRange
  return nil
 }
 
@@ -354,7 +354,7 @@ func(np *PtpSlaveIpv6ClockPool) GetUnicastDestinationClockIdList ()(string, erro
 
 func(np *PtpSlaveIpv6ClockPool) SetDestinationAddressType () error {
  //parameters: SessionPoolHandle AddressType
- //AgtPtpSlaveIpv6ClockPool SetDestinationAddressType, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetDestinationAddressType
  return nil
 }
 
@@ -366,13 +366,13 @@ func(np *PtpSlaveIpv6ClockPool) GetDestinationAddressType ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) IsIpv6PriorityNoCodePointFieldSelected () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsIpv6PriorityNoCodePointFieldSelected, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsIpv6PriorityNoCodePointFieldSelected
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SelectIpv6PriorityNoCodePointField () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool SelectIpv6PriorityNoCodePointField, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SelectIpv6PriorityNoCodePointField
  return nil
 }
 
@@ -384,19 +384,19 @@ func(np *PtpSlaveIpv6ClockPool) GetIpv6Priority ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetIpv6Priority () error {
  //parameters: SessionPoolHandle Ipv6Priority
- //AgtPtpSlaveIpv6ClockPool SetIpv6Priority, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetIpv6Priority
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsIpv6PriorityDiffServFieldSelected () error {
  //parameters: SessionPoolHandle DiffServPerHopBehaviorGroup
- //AgtPtpSlaveIpv6ClockPool IsIpv6PriorityDiffServFieldSelected, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsIpv6PriorityDiffServFieldSelected
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SelectIpv6PriorityDiffServField () error {
  //parameters: SessionPoolHandle DiffServPerHopBehaviorGroup
- //AgtPtpSlaveIpv6ClockPool SelectIpv6PriorityDiffServField, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SelectIpv6PriorityDiffServField
  return nil
 }
 
@@ -408,13 +408,13 @@ func(np *PtpSlaveIpv6ClockPool) GetIpv6PriorityDiffServValue ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetIpv6PriorityDiffServValue () error {
  //parameters: SessionPoolHandle DiffServCodePointConfigurableField Value
- //AgtPtpSlaveIpv6ClockPool SetIpv6PriorityDiffServValue, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetIpv6PriorityDiffServValue
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SetDestinationAddress () error {
  //parameters: SessionPoolHandle FirstAddress
- //AgtPtpSlaveIpv6ClockPool SetDestinationAddress, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetDestinationAddress
  return nil
 }
 
@@ -426,7 +426,7 @@ func(np *PtpSlaveIpv6ClockPool) GetDestinationAddress ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetDestinationAddressIncrementingRange () error {
  //parameters: SessionPoolHandle FirstAddress PrefixLength Increment Repeat PercentageOverlap
- //AgtPtpSlaveIpv6ClockPool SetDestinationAddressIncrementingRange, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetDestinationAddressIncrementingRange
  return nil
 }
 
@@ -450,7 +450,7 @@ func(np *PtpSlaveIpv6ClockPool) GetDestinationAddressList ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetPeerDestinationAddress () error {
  //parameters: SessionPoolHandle PeerAddress
- //AgtPtpSlaveIpv6ClockPool SetPeerDestinationAddress, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetPeerDestinationAddress
  return nil
 }
 
@@ -462,25 +462,25 @@ func(np *PtpSlaveIpv6ClockPool) GetPeerDestinationAddress ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) EnableUnicastNegotiation () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool EnableUnicastNegotiation, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool EnableUnicastNegotiation
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) DisableUnicastNegotiation () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool DisableUnicastNegotiation, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool DisableUnicastNegotiation
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) IsEnabledUnicastNegotiation () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveIpv6ClockPool IsEnabledUnicastNegotiation, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool IsEnabledUnicastNegotiation
  return nil
 }
 
 func(np *PtpSlaveIpv6ClockPool) SetUnicastGrantDuration () error {
  //parameters: SessionPoolHandle UnicastGrantDuration
- //AgtPtpSlaveIpv6ClockPool SetUnicastGrantDuration, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetUnicastGrantDuration
  return nil
 }
 
@@ -492,7 +492,7 @@ func(np *PtpSlaveIpv6ClockPool) GetUnicastGrantDuration ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetNumberOfUnicastDestinations () error {
  //parameters: SessionPoolHandle UnicastDestinationCount
- //AgtPtpSlaveIpv6ClockPool SetNumberOfUnicastDestinations, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetNumberOfUnicastDestinations
  return nil
 }
 
@@ -504,7 +504,7 @@ func(np *PtpSlaveIpv6ClockPool) GetNumberOfUnicastDestinations ()(string, error)
 
 func(np *PtpSlaveIpv6ClockPool) SetPeerPortNumber () error {
  //parameters: SessionPoolHandle PortNumber
- //AgtPtpSlaveIpv6ClockPool SetPeerPortNumber, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetPeerPortNumber
  return nil
 }
 
@@ -516,7 +516,7 @@ func(np *PtpSlaveIpv6ClockPool) GetPeerPortNumber ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetPeerClockId () error {
  //parameters: SessionPoolHandle ClockId
- //AgtPtpSlaveIpv6ClockPool SetPeerClockId, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetPeerClockId
  return nil
 }
 
@@ -528,7 +528,7 @@ func(np *PtpSlaveIpv6ClockPool) GetPeerClockId ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetUdpSourcePort () error {
  //parameters: SessionPoolHandle FirstPort
- //AgtPtpSlaveIpv6ClockPool SetUdpSourcePort, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetUdpSourcePort
  return nil
 }
 
@@ -540,7 +540,7 @@ func(np *PtpSlaveIpv6ClockPool) GetUdpSourcePort ()(string, error) {
 
 func(np *PtpSlaveIpv6ClockPool) SetUdpSourcePortIncrementingRange () error {
  //parameters: SessionPoolHandle FirstPort Increment Repeat
- //AgtPtpSlaveIpv6ClockPool SetUdpSourcePortIncrementingRange, m.Object, m.Name);
+ //AgtPtpSlaveIpv6ClockPool SetUdpSourcePortIncrementingRange
  return nil
 }
 

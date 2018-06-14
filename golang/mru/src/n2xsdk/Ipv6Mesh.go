@@ -24,25 +24,25 @@ func(np *Ipv6Mesh) GetLockCount ()(string, error) {
 
 func(np *Ipv6Mesh) Enable () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh Enable, m.Object, m.Name);
+ //AgtIpv6Mesh Enable
  return nil
 }
 
 func(np *Ipv6Mesh) Disable () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh Disable, m.Object, m.Name);
+ //AgtIpv6Mesh Disable
  return nil
 }
 
 func(np *Ipv6Mesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh IsEnabled, m.Object, m.Name);
+ //AgtIpv6Mesh IsEnabled
  return nil
 }
 
 func(np *Ipv6Mesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtIpv6Mesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtIpv6Mesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Ipv6Mesh) GetTrafficOrientation ()(string, error) {
 
 func(np *Ipv6Mesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtIpv6Mesh SetLengthMode, m.Object, m.Name);
+ //AgtIpv6Mesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Ipv6Mesh) GetLengthMode ()(string, error) {
 
 func(np *Ipv6Mesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtIpv6Mesh SetLength, m.Object, m.Name);
+ //AgtIpv6Mesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *Ipv6Mesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *Ipv6Mesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtIpv6Mesh EnableStreamGeneration
  return nil
 }
 
 func(np *Ipv6Mesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtIpv6Mesh DisableStreamGeneration
  return nil
 }
 
 func(np *Ipv6Mesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtIpv6Mesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *Ipv6Mesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtIpv6Mesh SetAverageLoad, m.Object, m.Name);
+ //AgtIpv6Mesh SetAverageLoad
  return nil
 }
 
@@ -138,37 +138,37 @@ func(np *Ipv6Mesh) GetAverageLoad ()(string, error) {
 
 func(np *Ipv6Mesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtIpv6Mesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *Ipv6Mesh) AddSources () error {
  //parameters: MeshHandle Count psaSourcePorts
- //AgtIpv6Mesh AddSources, m.Object, m.Name);
+ //AgtIpv6Mesh AddSources
  return nil
 }
 
 func(np *Ipv6Mesh) RemoveSources () error {
  //parameters: MeshHandle Count psaSourcePorts
- //AgtIpv6Mesh RemoveSources, m.Object, m.Name);
+ //AgtIpv6Mesh RemoveSources
  return nil
 }
 
 func(np *Ipv6Mesh) AddDestinations () error {
  //parameters: MeshHandle Count psaDestinationPorts
- //AgtIpv6Mesh AddDestinations, m.Object, m.Name);
+ //AgtIpv6Mesh AddDestinations
  return nil
 }
 
 func(np *Ipv6Mesh) RemoveDestinations () error {
  //parameters: MeshHandle Count psaDestinationPorts
- //AgtIpv6Mesh RemoveDestinations, m.Object, m.Name);
+ //AgtIpv6Mesh RemoveDestinations
  return nil
 }
 
 func(np *Ipv6Mesh) SetTrafficDistribution () error {
  //parameters: MeshHandle Distribution
- //AgtIpv6Mesh SetTrafficDistribution, m.Object, m.Name);
+ //AgtIpv6Mesh SetTrafficDistribution
  return nil
 }
 
@@ -204,7 +204,7 @@ func(np *Ipv6Mesh) GetRoutePoolForStreamGroup ()(string, error) {
 
 func(np *Ipv6Mesh) SetSourceVirtualInterface () error {
  //parameters: MeshHandle Count psaInterfaceHandles
- //AgtIpv6Mesh SetSourceVirtualInterface, m.Object, m.Name);
+ //AgtIpv6Mesh SetSourceVirtualInterface
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *Ipv6Mesh) GetSourceVirtualInterface ()(string, error) {
 
 func(np *Ipv6Mesh) SetVirtualInterfaces () error {
  //parameters: MeshHandle Port Count psaVirtualInterfaces
- //AgtIpv6Mesh SetVirtualInterfaces, m.Object, m.Name);
+ //AgtIpv6Mesh SetVirtualInterfaces
  return nil
 }
 
@@ -246,13 +246,13 @@ func(np *Ipv6Mesh) GetTotalDestinationRoutesInUse ()(string, error) {
 
 func(np *Ipv6Mesh) UpdateStreamGroups () error {
  //parameters: MeshHandle
- //AgtIpv6Mesh UpdateStreamGroups, m.Object, m.Name);
+ //AgtIpv6Mesh UpdateStreamGroups
  return nil
 }
 
 func(np *Ipv6Mesh) SetEncapsulationProtocols () error {
  //parameters: MeshHandle Source Count psaProtocols
- //AgtIpv6Mesh SetEncapsulationProtocols, m.Object, m.Name);
+ //AgtIpv6Mesh SetEncapsulationProtocols
  return nil
 }
 

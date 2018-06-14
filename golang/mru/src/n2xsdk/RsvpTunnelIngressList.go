@@ -6,13 +6,13 @@ type RsvpTunnelIngressList struct {
 
 func(np *RsvpTunnelIngressLis) AddTunnels () error {
  //parameters: SessionHandle TunnelListSize psaTunnelIds SourceListSize psaSourceAddresses DestListSize psaDestAddresses
- //AgtRsvpTunnelIngressList AddTunnels, m.Object, m.Name);
+ //AgtRsvpTunnelIngressList AddTunnels
  return nil
 }
 
 func(np *RsvpTunnelIngressLis) RemoveTunnels () error {
  //parameters: SessionHandle Count psaHandles
- //AgtRsvpTunnelIngressList RemoveTunnels, m.Object, m.Name);
+ //AgtRsvpTunnelIngressList RemoveTunnels
  return nil
 }
 

@@ -6,7 +6,7 @@ type HistogramClass struct {
 
 func(np *HistogramClass) SetLabel () error {
  //parameters: ClassHandle Label
- //AgtHistogramClass SetLabel, m.Object, m.Name);
+ //AgtHistogramClass SetLabel
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *HistogramClass) GetLabel ()(string, error) {
 
 func(np *HistogramClass) SetRange () error {
  //parameters: ClassHandle LowerBound UpperBound
- //AgtHistogramClass SetRange, m.Object, m.Name);
+ //AgtHistogramClass SetRange
  return nil
 }
 

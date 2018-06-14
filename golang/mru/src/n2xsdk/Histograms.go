@@ -6,7 +6,7 @@ type Histograms struct {
 
 func(np *Histograms) IsHistogrammingSupported () error {
  //parameters: PortHandle
- //AgtHistograms IsHistogrammingSupported, m.Object, m.Name);
+ //AgtHistograms IsHistogrammingSupported
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *Histograms) GetMaximumNumberOfBuckets ()(string, error) {
 
 func(np *Histograms) AddPorts () error {
  //parameters: HistogramsHandle NumPorts pPortHandles
- //AgtHistograms AddPorts, m.Object, m.Name);
+ //AgtHistograms AddPorts
  return nil
 }
 
 func(np *Histograms) RemovePorts () error {
  //parameters: HistogramsHandle NumPorts pPortHandles
- //AgtHistograms RemovePorts, m.Object, m.Name);
+ //AgtHistograms RemovePorts
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *Histograms) ListAvailableClassFields ()(string, error) {
 
 func(np *Histograms) SetClassField () error {
  //parameters: HistogramsHandle Field
- //AgtHistograms SetClassField, m.Object, m.Name);
+ //AgtHistograms SetClassField
  return nil
 }
 
 func(np *Histograms) ClearClassField () error {
  //parameters: HistogramsHandle
- //AgtHistograms ClearClassField, m.Object, m.Name);
+ //AgtHistograms ClearClassField
  return nil
 }
 
@@ -66,13 +66,13 @@ func(np *Histograms) GetClassField ()(string, error) {
 
 func(np *Histograms) AddClasses () error {
  //parameters: HistogramsHandle NumLowerBounds pLowerBounds NumUpperBounds pUpperBounds
- //AgtHistograms AddClasses, m.Object, m.Name);
+ //AgtHistograms AddClasses
  return nil
 }
 
 func(np *Histograms) RemoveClasses () error {
  //parameters: HistogramsHandle NumClasses pClassHandles
- //AgtHistograms RemoveClasses, m.Object, m.Name);
+ //AgtHistograms RemoveClasses
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *Histograms) ListClasses ()(string, error) {
 
 func(np *Histograms) SetBucketBoundaries () error {
  //parameters: HistogramsHandle NumBucketBoundaries pBucketBoundaries
- //AgtHistograms SetBucketBoundaries, m.Object, m.Name);
+ //AgtHistograms SetBucketBoundaries
  return nil
 }
 
@@ -96,19 +96,19 @@ func(np *Histograms) GetBucketBoundaries ()(string, error) {
 
 func(np *Histograms) DeriveBucketBoundaries () error {
  //parameters: NumberOfBuckets MinimumBound MaximumBound
- //AgtHistograms DeriveBucketBoundaries, m.Object, m.Name);
+ //AgtHistograms DeriveBucketBoundaries
  return nil
 }
 
 func(np *Histograms) SetDerivedBucketBoundaries () error {
  //parameters: HistogramsHandle NumberOfBuckets MinimumBound MaximumBound
- //AgtHistograms SetDerivedBucketBoundaries, m.Object, m.Name);
+ //AgtHistograms SetDerivedBucketBoundaries
  return nil
 }
 
 func(np *Histograms) AreBucketBoundariesDerived () error {
  //parameters: HistogramsHandle
- //AgtHistograms AreBucketBoundariesDerived, m.Object, m.Name);
+ //AgtHistograms AreBucketBoundariesDerived
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *Histograms) GetMeasurementExtents ()(string, error) {
 
 func(np *Histograms) ResetResults () error {
  //parameters: HistogramsHandle
- //AgtHistograms ResetResults, m.Object, m.Name);
+ //AgtHistograms ResetResults
  return nil
 }
 

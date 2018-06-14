@@ -12,13 +12,13 @@ func(np *PppStatistics) ListSelectedPools ()(string, error) {
 
 func(np *PppStatistics) SelectPools () error {
  //parameters: Count psaPoolHandles
- //AgtPppStatistics SelectPools, m.Object, m.Name);
+ //AgtPppStatistics SelectPools
  return nil
 }
 
 func(np *PppStatistics) DeselectPool () error {
  //parameters: SessionPoolHandle
- //AgtPppStatistics DeselectPool, m.Object, m.Name);
+ //AgtPppStatistics DeselectPool
  return nil
 }
 

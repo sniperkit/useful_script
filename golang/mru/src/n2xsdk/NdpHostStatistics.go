@@ -24,7 +24,7 @@ func(np *NdpHostStatistics) GetStatisticsUpdateCount ()(string, error) {
 
 func(np *NdpHostStatistics) ClearStatistics () error {
  //parameters: DevicePoolHandle
- //AgtNdpHostStatistics ClearStatistics, m.Object, m.Name);
+ //AgtNdpHostStatistics ClearStatistics
  return nil
 }
 

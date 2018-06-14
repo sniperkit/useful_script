@@ -6,7 +6,7 @@ type PimRouterPool struct {
 
 func(np *PimRouterPool) SetTypeOfService () error {
  //parameters: RouterPoolHandle TypeOfService
- //AgtPimRouterPool SetTypeOfService, m.Object, m.Name);
+ //AgtPimRouterPool SetTypeOfService
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *PimRouterPool) GetTypeOfService ()(string, error) {
 
 func(np *PimRouterPool) SetHoldTime () error {
  //parameters: RouterPoolHandle HoldTime
- //AgtPimRouterPool SetHoldTime, m.Object, m.Name);
+ //AgtPimRouterPool SetHoldTime
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *PimRouterPool) GetHoldTime ()(string, error) {
 
 func(np *PimRouterPool) SetDrPriority () error {
  //parameters: RouterPoolHandle DrPriority
- //AgtPimRouterPool SetDrPriority, m.Object, m.Name);
+ //AgtPimRouterPool SetDrPriority
  return nil
 }
 
@@ -42,19 +42,19 @@ func(np *PimRouterPool) GetDrPriority ()(string, error) {
 
 func(np *PimRouterPool) AddGroup () error {
  //parameters: RouterPoolHandle GroupType
- //AgtPimRouterPool AddGroup, m.Object, m.Name);
+ //AgtPimRouterPool AddGroup
  return nil
 }
 
 func(np *PimRouterPool) RemoveGroup () error {
  //parameters: RouterPoolHandle GroupHandle
- //AgtPimRouterPool RemoveGroup, m.Object, m.Name);
+ //AgtPimRouterPool RemoveGroup
  return nil
 }
 
 func(np *PimRouterPool) RemoveAllGroups () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool RemoveAllGroups, m.Object, m.Name);
+ //AgtPimRouterPool RemoveAllGroups
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *PimRouterPool) GetGroupName ()(string, error) {
 
 func(np *PimRouterPool) SetGroupName () error {
  //parameters: RouterPoolHandle GroupHandle GroupName
- //AgtPimRouterPool SetGroupName, m.Object, m.Name);
+ //AgtPimRouterPool SetGroupName
  return nil
 }
 
@@ -90,25 +90,25 @@ func(np *PimRouterPool) ListGroupsByType ()(string, error) {
 
 func(np *PimRouterPool) EnableGreTunnel () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool EnableGreTunnel, m.Object, m.Name);
+ //AgtPimRouterPool EnableGreTunnel
  return nil
 }
 
 func(np *PimRouterPool) DisableGreTunnel () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool DisableGreTunnel, m.Object, m.Name);
+ //AgtPimRouterPool DisableGreTunnel
  return nil
 }
 
 func(np *PimRouterPool) IsGreTunnelEnabled () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool IsGreTunnelEnabled, m.Object, m.Name);
+ //AgtPimRouterPool IsGreTunnelEnabled
  return nil
 }
 
 func(np *PimRouterPool) SetGreTunnelLocalAddressIncrementingRange () error {
  //parameters: RouterPoolHandle FirstIpAddress PrefixLength Increment Repeat Count
- //AgtPimRouterPool SetGreTunnelLocalAddressIncrementingRange, m.Object, m.Name);
+ //AgtPimRouterPool SetGreTunnelLocalAddressIncrementingRange
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *PimRouterPool) GetGreTunnelLocalAddressList ()(string, error) {
 
 func(np *PimRouterPool) SetGreTunnelLocalAddress () error {
  //parameters: RouterPoolHandle IpAddress
- //AgtPimRouterPool SetGreTunnelLocalAddress, m.Object, m.Name);
+ //AgtPimRouterPool SetGreTunnelLocalAddress
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *PimRouterPool) GetGreTunnelLocalAddress ()(string, error) {
 
 func(np *PimRouterPool) SetGreTunnelRemoteAddressIncrementingRange () error {
  //parameters: RouterPoolHandle FirstIpAddress PrefixLength Increment Repeat Count
- //AgtPimRouterPool SetGreTunnelRemoteAddressIncrementingRange, m.Object, m.Name);
+ //AgtPimRouterPool SetGreTunnelRemoteAddressIncrementingRange
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *PimRouterPool) GetGreTunnelRemoteAddressList ()(string, error) {
 
 func(np *PimRouterPool) SetGreTunnelRemoteAddress () error {
  //parameters: RouterPoolHandle IpAddress
- //AgtPimRouterPool SetGreTunnelRemoteAddress, m.Object, m.Name);
+ //AgtPimRouterPool SetGreTunnelRemoteAddress
  return nil
 }
 
@@ -180,43 +180,43 @@ func(np *PimRouterPool) GetGreTunnelRemoteAddress ()(string, error) {
 
 func(np *PimRouterPool) EnableGreTunnelChecksum () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool EnableGreTunnelChecksum, m.Object, m.Name);
+ //AgtPimRouterPool EnableGreTunnelChecksum
  return nil
 }
 
 func(np *PimRouterPool) DisableGreTunnelChecksum () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool DisableGreTunnelChecksum, m.Object, m.Name);
+ //AgtPimRouterPool DisableGreTunnelChecksum
  return nil
 }
 
 func(np *PimRouterPool) IsGreTunnelChecksumEnabled () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool IsGreTunnelChecksumEnabled, m.Object, m.Name);
+ //AgtPimRouterPool IsGreTunnelChecksumEnabled
  return nil
 }
 
 func(np *PimRouterPool) EnableNeighborRouter () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool EnableNeighborRouter, m.Object, m.Name);
+ //AgtPimRouterPool EnableNeighborRouter
  return nil
 }
 
 func(np *PimRouterPool) DisableNeighborRouter () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool DisableNeighborRouter, m.Object, m.Name);
+ //AgtPimRouterPool DisableNeighborRouter
  return nil
 }
 
 func(np *PimRouterPool) IsNeighborRouterEnabled () error {
  //parameters: RouterPoolHandle
- //AgtPimRouterPool IsNeighborRouterEnabled, m.Object, m.Name);
+ //AgtPimRouterPool IsNeighborRouterEnabled
  return nil
 }
 
 func(np *PimRouterPool) SetNeighborRouterAddressIncrementingRange () error {
  //parameters: RouterPoolHandle FirstIpAddress PrefixLength Increment Repeat Count
- //AgtPimRouterPool SetNeighborRouterAddressIncrementingRange, m.Object, m.Name);
+ //AgtPimRouterPool SetNeighborRouterAddressIncrementingRange
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *PimRouterPool) GetNeighborRouterAddressList ()(string, error) {
 
 func(np *PimRouterPool) SetNeighborRouterAddress () error {
  //parameters: RouterPoolHandle IpAddress
- //AgtPimRouterPool SetNeighborRouterAddress, m.Object, m.Name);
+ //AgtPimRouterPool SetNeighborRouterAddress
  return nil
 }
 
@@ -252,7 +252,7 @@ func(np *PimRouterPool) GetNeighborRouterAddress ()(string, error) {
 
 func(np *PimRouterPool) SetTimer () error {
  //parameters: RouterPoolHandle TimerType TimerValue
- //AgtPimRouterPool SetTimer, m.Object, m.Name);
+ //AgtPimRouterPool SetTimer
  return nil
 }
 

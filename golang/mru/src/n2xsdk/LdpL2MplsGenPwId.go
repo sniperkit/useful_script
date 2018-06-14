@@ -6,25 +6,25 @@ type LdpL2MplsGenPwId struct {
 
 func(np *LdpL2MplsGenPwId) EnableGroupId () error {
  //parameters: PoolHandle
- //AgtLdpL2MplsGenPwId EnableGroupId, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId EnableGroupId
  return nil
 }
 
 func(np *LdpL2MplsGenPwId) DisableGroupId () error {
  //parameters: PoolHandle
- //AgtLdpL2MplsGenPwId DisableGroupId, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId DisableGroupId
  return nil
 }
 
 func(np *LdpL2MplsGenPwId) IsGroupIdEnabled () error {
  //parameters: PoolHandle
- //AgtLdpL2MplsGenPwId IsGroupIdEnabled, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId IsGroupIdEnabled
  return nil
 }
 
 func(np *LdpL2MplsGenPwId) SetGroupId () error {
  //parameters: PoolHandle GroupId
- //AgtLdpL2MplsGenPwId SetGroupId, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetGroupId
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *LdpL2MplsGenPwId) GetGroupId ()(string, error) {
 
 func(np *LdpL2MplsGenPwId) SetAgiType () error {
  //parameters: PoolHandle enAgiType
- //AgtLdpL2MplsGenPwId SetAgiType, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetAgiType
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *LdpL2MplsGenPwId) GetAgiType ()(string, error) {
 
 func(np *LdpL2MplsGenPwId) SetAgiTypeOneValue () error {
  //parameters: PoolHandle enRdType AgiStartValue IncrAgi
- //AgtLdpL2MplsGenPwId SetAgiTypeOneValue, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetAgiTypeOneValue
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *LdpL2MplsGenPwId) GetAgiTypeOneValue ()(string, error) {
 
 func(np *LdpL2MplsGenPwId) SetSaiiType () error {
  //parameters: PoolHandle enSaiiType
- //AgtLdpL2MplsGenPwId SetSaiiType, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetSaiiType
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *LdpL2MplsGenPwId) GetSaiiType ()(string, error) {
 
 func(np *LdpL2MplsGenPwId) SetSaiiTypeOneValue () error {
  //parameters: PoolHandle SaiiValue
- //AgtLdpL2MplsGenPwId SetSaiiTypeOneValue, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetSaiiTypeOneValue
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *LdpL2MplsGenPwId) GetSaiiTypeOneValue ()(string, error) {
 
 func(np *LdpL2MplsGenPwId) SetTaiiType () error {
  //parameters: PoolHandle enTaiiType
- //AgtLdpL2MplsGenPwId SetTaiiType, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetTaiiType
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *LdpL2MplsGenPwId) GetTaiiType ()(string, error) {
 
 func(np *LdpL2MplsGenPwId) SetTaiiTypeOneValue () error {
  //parameters: PoolHandle TaiiValue
- //AgtLdpL2MplsGenPwId SetTaiiTypeOneValue, m.Object, m.Name);
+ //AgtLdpL2MplsGenPwId SetTaiiTypeOneValue
  return nil
 }
 

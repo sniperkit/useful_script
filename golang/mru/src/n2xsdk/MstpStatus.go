@@ -60,7 +60,7 @@ func(np *MstpStatus) GetMstiRemainingHops ()(string, error) {
 
 func(np *MstpStatus) IsRegionBoundary () error {
  //parameters: SessionPoolHandle SessionInstanceHandle
- //AgtMstpStatus IsRegionBoundary, m.Object, m.Name);
+ //AgtMstpStatus IsRegionBoundary
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *MstpStatus) GetRootPathCost ()(string, error) {
 
 func(np *MstpStatus) IsEdge () error {
  //parameters: SessionPoolHandle SessionInstanceHandle
- //AgtMstpStatus IsEdge, m.Object, m.Name);
+ //AgtMstpStatus IsEdge
  return nil
 }
 

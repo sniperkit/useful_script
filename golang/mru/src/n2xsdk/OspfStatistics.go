@@ -24,13 +24,13 @@ func(np *OspfStatistics) ListSelectedOspfv3Sessions ()(string, error) {
 
 func(np *OspfStatistics) SelectSessions () error {
  //parameters: Count psaSessions
- //AgtOspfStatistics SelectSessions, m.Object, m.Name);
+ //AgtOspfStatistics SelectSessions
  return nil
 }
 
 func(np *OspfStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtOspfStatistics DeselectSession, m.Object, m.Name);
+ //AgtOspfStatistics DeselectSession
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *OspfStatistics) GetOspfv3SessionAccumulatedValue ()(string, error) {
 
 func(np *OspfStatistics) ClearSessionStatistics () error {
  //parameters: SessionHandle
- //AgtOspfStatistics ClearSessionStatistics, m.Object, m.Name);
+ //AgtOspfStatistics ClearSessionStatistics
  return nil
 }
 

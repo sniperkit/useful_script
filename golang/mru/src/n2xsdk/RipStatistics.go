@@ -12,13 +12,13 @@ func(np *RipStatistics) ListSelectedSessions ()(string, error) {
 
 func(np *RipStatistics) SelectSessions () error {
  //parameters: Count psaSessions
- //AgtRipStatistics SelectSessions, m.Object, m.Name);
+ //AgtRipStatistics SelectSessions
  return nil
 }
 
 func(np *RipStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtRipStatistics DeselectSession, m.Object, m.Name);
+ //AgtRipStatistics DeselectSession
  return nil
 }
 

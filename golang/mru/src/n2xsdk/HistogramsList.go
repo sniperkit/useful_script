@@ -6,31 +6,31 @@ type HistogramsList struct {
 
 func(np *HistogramsLis) Add () error {
  //parameters: Type
- //AgtHistogramsList Add, m.Object, m.Name);
+ //AgtHistogramsList Add
  return nil
 }
 
 func(np *HistogramsLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtHistogramsList AddItems, m.Object, m.Name);
+ //AgtHistogramsList AddItems
  return nil
 }
 
 func(np *HistogramsLis) Remove () error {
  //parameters: Handle
- //AgtHistogramsList Remove, m.Object, m.Name);
+ //AgtHistogramsList Remove
  return nil
 }
 
 func(np *HistogramsLis) Copy () error {
  //parameters: Handle
- //AgtHistogramsList Copy, m.Object, m.Name);
+ //AgtHistogramsList Copy
  return nil
 }
 
 func(np *HistogramsLis) SetName () error {
  //parameters: Handle Name
- //AgtHistogramsList SetName, m.Object, m.Name);
+ //AgtHistogramsList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *HistogramsLis) GetType ()(string, error) {
 
 func(np *HistogramsLis) LockItem () error {
  //parameters: Handle
- //AgtHistogramsList LockItem, m.Object, m.Name);
+ //AgtHistogramsList LockItem
  return nil
 }
 
 func(np *HistogramsLis) UnlockItem () error {
  //parameters: Handle
- //AgtHistogramsList UnlockItem, m.Object, m.Name);
+ //AgtHistogramsList UnlockItem
  return nil
 }
 

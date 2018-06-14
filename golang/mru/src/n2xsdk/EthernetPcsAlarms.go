@@ -6,7 +6,7 @@ type EthernetPcsAlarms struct {
 
 func(np *EthernetPcsAlarms) SetTransmitAlarm () error {
  //parameters: PortHandle Alarm
- //AgtEthernetPcsAlarms SetTransmitAlarm, m.Object, m.Name);
+ //AgtEthernetPcsAlarms SetTransmitAlarm
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *EthernetPcsAlarms) GetTransmitAlarm ()(string, error) {
 
 func(np *EthernetPcsAlarms) IsEthernetPcsAlarmsSupported () error {
  //parameters: PortHandle
- //AgtEthernetPcsAlarms IsEthernetPcsAlarmsSupported, m.Object, m.Name);
+ //AgtEthernetPcsAlarms IsEthernetPcsAlarmsSupported
  return nil
 }
 

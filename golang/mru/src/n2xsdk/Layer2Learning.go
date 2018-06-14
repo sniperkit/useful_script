@@ -6,25 +6,25 @@ type Layer2Learning struct {
 
 func(np *Layer2Learnin) EnableAutoSend () error {
  //parameters: DevicePoolHandle
- //AgtLayer2Learning EnableAutoSend, m.Object, m.Name);
+ //AgtLayer2Learning EnableAutoSend
  return nil
 }
 
 func(np *Layer2Learnin) DisableAutoSend () error {
  //parameters: DevicePoolHandle
- //AgtLayer2Learning DisableAutoSend, m.Object, m.Name);
+ //AgtLayer2Learning DisableAutoSend
  return nil
 }
 
 func(np *Layer2Learnin) IsAutoSendEnabled () error {
  //parameters: DevicePoolHandle
- //AgtLayer2Learning IsAutoSendEnabled, m.Object, m.Name);
+ //AgtLayer2Learning IsAutoSendEnabled
  return nil
 }
 
 func(np *Layer2Learnin) SetFrameLength () error {
  //parameters: DevicePoolHandle FrameLength
- //AgtLayer2Learning SetFrameLength, m.Object, m.Name);
+ //AgtLayer2Learning SetFrameLength
  return nil
 }
 
@@ -42,43 +42,43 @@ func(np *Layer2Learnin) GetCustomState ()(string, error) {
 
 func(np *Layer2Learnin) Start () error {
  //parameters: DevicePoolHandle
- //AgtLayer2Learning Start, m.Object, m.Name);
+ //AgtLayer2Learning Start
  return nil
 }
 
 func(np *Layer2Learnin) Stop () error {
  //parameters: DevicePoolHandle
- //AgtLayer2Learning Stop, m.Object, m.Name);
+ //AgtLayer2Learning Stop
  return nil
 }
 
 func(np *Layer2Learnin) StartByPort () error {
  //parameters: PortHandle
- //AgtLayer2Learning StartByPort, m.Object, m.Name);
+ //AgtLayer2Learning StartByPort
  return nil
 }
 
 func(np *Layer2Learnin) StopByPort () error {
  //parameters: PortHandle
- //AgtLayer2Learning StopByPort, m.Object, m.Name);
+ //AgtLayer2Learning StopByPort
  return nil
 }
 
 func(np *Layer2Learnin) StartAll () error {
  //parameters: 
- //AgtLayer2Learning StartAll, m.Object, m.Name);
+ //AgtLayer2Learning StartAll
  return nil
 }
 
 func(np *Layer2Learnin) StopAll () error {
  //parameters: 
- //AgtLayer2Learning StopAll, m.Object, m.Name);
+ //AgtLayer2Learning StopAll
  return nil
 }
 
 func(np *Layer2Learnin) SetRateControl () error {
  //parameters: PortHandle RateControlMode
- //AgtLayer2Learning SetRateControl, m.Object, m.Name);
+ //AgtLayer2Learning SetRateControl
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *Layer2Learnin) GetRateControl ()(string, error) {
 
 func(np *Layer2Learnin) SetFixedRateProfile () error {
  //parameters: PortHandle FixedRate MaxBurstSize
- //AgtLayer2Learning SetFixedRateProfile, m.Object, m.Name);
+ //AgtLayer2Learning SetFixedRateProfile
  return nil
 }
 

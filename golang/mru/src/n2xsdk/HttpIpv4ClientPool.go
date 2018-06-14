@@ -6,7 +6,7 @@ type HttpIpv4ClientPool struct {
 
 func(np *HttpIpv4ClientPool) SetServerIpv4IncrementorValue () error {
  //parameters: SessionPoolHandle IncrementorValue IncrementorValueIncrement IncrementorValueRepeat
- //AgtHttpIpv4ClientPool SetServerIpv4IncrementorValue, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetServerIpv4IncrementorValue
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *HttpIpv4ClientPool) GetServerIpv4IncrementorValue ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetIpPriorityType () error {
  //parameters: SessionPoolHandle PriorityType
- //AgtHttpIpv4ClientPool SetIpPriorityType, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetIpPriorityType
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *HttpIpv4ClientPool) GetIpPriorityType ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetRawPriority () error {
  //parameters: SessionPoolHandle RawPriorityValue
- //AgtHttpIpv4ClientPool SetRawPriority, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetRawPriority
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *HttpIpv4ClientPool) GetRawPriority ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetTosPrecedence () error {
  //parameters: SessionPoolHandle TosPrecedenceType
- //AgtHttpIpv4ClientPool SetTosPrecedence, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetTosPrecedence
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *HttpIpv4ClientPool) GetTosPrecedence ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetTosDelay () error {
  //parameters: SessionPoolHandle TosDelayType
- //AgtHttpIpv4ClientPool SetTosDelay, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetTosDelay
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *HttpIpv4ClientPool) GetTosDelay ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetTosThroughput () error {
  //parameters: SessionPoolHandle TosThroughputType
- //AgtHttpIpv4ClientPool SetTosThroughput, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetTosThroughput
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *HttpIpv4ClientPool) GetTosThroughput ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetTosReliability () error {
  //parameters: SessionPoolHandle TosReliabilityType
- //AgtHttpIpv4ClientPool SetTosReliability, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetTosReliability
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *HttpIpv4ClientPool) GetTosReliability ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetDiffServType () error {
  //parameters: SessionPoolHandle DiffServType
- //AgtHttpIpv4ClientPool SetDiffServType, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetDiffServType
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *HttpIpv4ClientPool) GetDiffServType ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetDiffServDefault () error {
  //parameters: SessionPoolHandle DiffServDefaultValue
- //AgtHttpIpv4ClientPool SetDiffServDefault, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetDiffServDefault
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *HttpIpv4ClientPool) GetDiffServDefault ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetDiffServClassSelector () error {
  //parameters: SessionPoolHandle DiffServClassSelectorType
- //AgtHttpIpv4ClientPool SetDiffServClassSelector, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetDiffServClassSelector
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *HttpIpv4ClientPool) GetDiffServClassSelector ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetDiffServAssuredForwarding () error {
  //parameters: SessionPoolHandle DiffServAssuredForwardingType
- //AgtHttpIpv4ClientPool SetDiffServAssuredForwarding, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetDiffServAssuredForwarding
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *HttpIpv4ClientPool) GetDiffServAssuredForwarding ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetDiffServExpeditedForwarding () error {
  //parameters: SessionPoolHandle DiffServExpeditedForwardingValue
- //AgtHttpIpv4ClientPool SetDiffServExpeditedForwarding, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetDiffServExpeditedForwarding
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *HttpIpv4ClientPool) GetDiffServExpeditedForwarding ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetDiffServEcn () error {
  //parameters: SessionPoolHandle DiffServECNType
- //AgtHttpIpv4ClientPool SetDiffServEcn, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetDiffServEcn
  return nil
 }
 
@@ -162,7 +162,7 @@ func(np *HttpIpv4ClientPool) GetDiffServEcn ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetVersion () error {
  //parameters: SessionPoolHandle HttpVersion
- //AgtHttpIpv4ClientPool SetVersion, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetVersion
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *HttpIpv4ClientPool) GetVersion ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetServerPortNumber () error {
  //parameters: SessionPoolHandle HttpPortNumber
- //AgtHttpIpv4ClientPool SetServerPortNumber, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetServerPortNumber
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *HttpIpv4ClientPool) GetServerPortNumber ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetResponseWaitTimer () error {
  //parameters: SessionPoolHandle ResponseWaitTimer
- //AgtHttpIpv4ClientPool SetResponseWaitTimer, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetResponseWaitTimer
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *HttpIpv4ClientPool) GetResponseWaitTimer ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetResumeWriteTimer () error {
  //parameters: SessionPoolHandle ResumeWriteTimer
- //AgtHttpIpv4ClientPool SetResumeWriteTimer, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetResumeWriteTimer
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *HttpIpv4ClientPool) GetResumeWriteTimer ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetBytesPerWrite () error {
  //parameters: SessionPoolHandle BytesPerWrite
- //AgtHttpIpv4ClientPool SetBytesPerWrite, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetBytesPerWrite
  return nil
 }
 
@@ -222,7 +222,7 @@ func(np *HttpIpv4ClientPool) GetBytesPerWrite ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetOperatingMode () error {
  //parameters: SessionPoolHandle OperatingMode
- //AgtHttpIpv4ClientPool SetOperatingMode, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetOperatingMode
  return nil
 }
 
@@ -246,25 +246,25 @@ func(np *HttpIpv4ClientPool) GetMaximumTcpConnectionsPerPool ()(string, error) {
 
 func(np *HttpIpv4ClientPool) EnableHttpLimitedRedirections () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv4ClientPool EnableHttpLimitedRedirections, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool EnableHttpLimitedRedirections
  return nil
 }
 
 func(np *HttpIpv4ClientPool) DisableHttpLimitedRedirections () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv4ClientPool DisableHttpLimitedRedirections, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool DisableHttpLimitedRedirections
  return nil
 }
 
 func(np *HttpIpv4ClientPool) IsHttpLimitedRedirectionsEnabled () error {
  //parameters: SessionPoolHandle
- //AgtHttpIpv4ClientPool IsHttpLimitedRedirectionsEnabled, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool IsHttpLimitedRedirectionsEnabled
  return nil
 }
 
 func(np *HttpIpv4ClientPool) SetHttpRedirections () error {
  //parameters: SessionPoolHandle HttpRedirections
- //AgtHttpIpv4ClientPool SetHttpRedirections, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetHttpRedirections
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *HttpIpv4ClientPool) GetHttpRedirections ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetMaximumSegmentSize () error {
  //parameters: SessionPoolHandle MaximumSegmentSize
- //AgtHttpIpv4ClientPool SetMaximumSegmentSize, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetMaximumSegmentSize
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *HttpIpv4ClientPool) GetMaximumSegmentSize ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SetMaximumWindowSize () error {
  //parameters: SessionPoolHandle MaximumWindowSize
- //AgtHttpIpv4ClientPool SetMaximumWindowSize, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SetMaximumWindowSize
  return nil
 }
 
@@ -300,13 +300,13 @@ func(np *HttpIpv4ClientPool) GetMaximumWindowSize ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SendStartCommand () error {
  //parameters: SessionIdentifiers
- //AgtHttpIpv4ClientPool SendStartCommand, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendStartCommand
  return nil
 }
 
 func(np *HttpIpv4ClientPool) SendStopCommand () error {
  //parameters: SessionIdentifiers
- //AgtHttpIpv4ClientPool SendStopCommand, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendStopCommand
  return nil
 }
 
@@ -318,31 +318,31 @@ func(np *HttpIpv4ClientPool) SendGetRequest ()(string, error) {
 
 func(np *HttpIpv4ClientPool) SendHeadRequest () error {
  //parameters: SessionIdentifiers FileName
- //AgtHttpIpv4ClientPool SendHeadRequest, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendHeadRequest
  return nil
 }
 
 func(np *HttpIpv4ClientPool) SendDeleteRequest () error {
  //parameters: SessionIdentifiers FileName
- //AgtHttpIpv4ClientPool SendDeleteRequest, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendDeleteRequest
  return nil
 }
 
 func(np *HttpIpv4ClientPool) SendPutRequest () error {
  //parameters: SessionIdentifiers FileName FileSize
- //AgtHttpIpv4ClientPool SendPutRequest, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendPutRequest
  return nil
 }
 
 func(np *HttpIpv4ClientPool) SendPostRequest () error {
  //parameters: SessionIdentifiers FileName PostData
- //AgtHttpIpv4ClientPool SendPostRequest, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendPostRequest
  return nil
 }
 
 func(np *HttpIpv4ClientPool) SendNullCommand () error {
  //parameters: SessionIdentifiers
- //AgtHttpIpv4ClientPool SendNullCommand, m.Object, m.Name);
+ //AgtHttpIpv4ClientPool SendNullCommand
  return nil
 }
 

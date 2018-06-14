@@ -6,43 +6,43 @@ type EthernetAddresses struct {
 
 func(np *EthernetAddresses) IsVlanSupported () error {
  //parameters: PortHandle
- //AgtEthernetAddresses IsVlanSupported, m.Object, m.Name);
+ //AgtEthernetAddresses IsVlanSupported
  return nil
 }
 
 func(np *EthernetAddresses) IsMacAddressAccessSupported () error {
  //parameters: PortHandle
- //AgtEthernetAddresses IsMacAddressAccessSupported, m.Object, m.Name);
+ //AgtEthernetAddresses IsMacAddressAccessSupported
  return nil
 }
 
 func(np *EthernetAddresses) AddSutIpAddresses () error {
  //parameters: PortHandle NumOfSutIpAddresses FirstSutIpAddress PrefixLength IpAddressIncrement
- //AgtEthernetAddresses AddSutIpAddresses, m.Object, m.Name);
+ //AgtEthernetAddresses AddSutIpAddresses
  return nil
 }
 
 func(np *EthernetAddresses) AddSutIpAddress () error {
  //parameters: PortHandle IpAddress
- //AgtEthernetAddresses AddSutIpAddress, m.Object, m.Name);
+ //AgtEthernetAddresses AddSutIpAddress
  return nil
 }
 
 func(np *EthernetAddresses) ModifySutIpAddress () error {
  //parameters: PortHandle OldIpAddress NewIpAddress
- //AgtEthernetAddresses ModifySutIpAddress, m.Object, m.Name);
+ //AgtEthernetAddresses ModifySutIpAddress
  return nil
 }
 
 func(np *EthernetAddresses) RemoveSutIpAddress () error {
  //parameters: PortHandle IpAddress
- //AgtEthernetAddresses RemoveSutIpAddress, m.Object, m.Name);
+ //AgtEthernetAddresses RemoveSutIpAddress
  return nil
 }
 
 func(np *EthernetAddresses) RemoveSutIpAddresses () error {
  //parameters: PortHandle NumAddresses pIpAddresses
- //AgtEthernetAddresses RemoveSutIpAddresses, m.Object, m.Name);
+ //AgtEthernetAddresses RemoveSutIpAddresses
  return nil
 }
 
@@ -72,31 +72,31 @@ func(np *EthernetAddresses) GetSutMacAddress ()(string, error) {
 
 func(np *EthernetAddresses) SetSutMacAddress () error {
  //parameters: PortHandle IpAddress MacAddress
- //AgtEthernetAddresses SetSutMacAddress, m.Object, m.Name);
+ //AgtEthernetAddresses SetSutMacAddress
  return nil
 }
 
 func(np *EthernetAddresses) AddAddressPools () error {
  //parameters: PortHandle NumOfAddressPools FirstTesterIpAddress PrefixLength NumAddressesPerPool InPoolAddressModifier IpAddressAcrossPoolIncrement VlanEnableFlag VlanNum psaFirstVlanIds IncrementsNum psaVlanIdIncrements
- //AgtEthernetAddresses AddAddressPools, m.Object, m.Name);
+ //AgtEthernetAddresses AddAddressPools
  return nil
 }
 
 func(np *EthernetAddresses) AddAddressPool () error {
  //parameters: PortHandle FirstTesterIpAddress PrefixLength NumAddresses AddressModifier
- //AgtEthernetAddresses AddAddressPool, m.Object, m.Name);
+ //AgtEthernetAddresses AddAddressPool
  return nil
 }
 
 func(np *EthernetAddresses) RemoveAddressPool () error {
  //parameters: PortHandle AddressPoolHandle
- //AgtEthernetAddresses RemoveAddressPool, m.Object, m.Name);
+ //AgtEthernetAddresses RemoveAddressPool
  return nil
 }
 
 func(np *EthernetAddresses) RemoveAddressPools () error {
  //parameters: PortHandle NumAddressPools pAddressPoolHandles
- //AgtEthernetAddresses RemoveAddressPools, m.Object, m.Name);
+ //AgtEthernetAddresses RemoveAddressPools
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *EthernetAddresses) GetTesterIpAddressCountByVlan ()(string, error) {
 
 func(np *EthernetAddresses) SetVlanEtherType () error {
  //parameters: PortHandle VlanIndex EtherType
- //AgtEthernetAddresses SetVlanEtherType, m.Object, m.Name);
+ //AgtEthernetAddresses SetVlanEtherType
  return nil
 }
 

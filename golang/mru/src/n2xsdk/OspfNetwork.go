@@ -6,7 +6,7 @@ type OspfNetwork struct {
 
 func(np *OspfNetwork) SetNetwork () error {
  //parameters: NetworkHandle IpAdress PrefixLength
- //AgtOspfNetwork SetNetwork, m.Object, m.Name);
+ //AgtOspfNetwork SetNetwork
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *OspfNetwork) GetIntraAreaPrefixLsa ()(string, error) {
 
 func(np *OspfNetwork) SetDesignatedRouter () error {
  //parameters: NetworkHandle RouterHandle
- //AgtOspfNetwork SetDesignatedRouter, m.Object, m.Name);
+ //AgtOspfNetwork SetDesignatedRouter
  return nil
 }
 

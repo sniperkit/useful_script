@@ -6,19 +6,19 @@ type FrameTransmitter struct {
 
 func(np *FrameTransmitter) AddPdu () error {
  //parameters: Count ProtocolList PduLength
- //AgtFrameTransmitter AddPdu, m.Object, m.Name);
+ //AgtFrameTransmitter AddPdu
  return nil
 }
 
 func(np *FrameTransmitter) AddPduWithPacketType () error {
  //parameters: OuterProtocol PacketType PduLength
- //AgtFrameTransmitter AddPduWithPacketType, m.Object, m.Name);
+ //AgtFrameTransmitter AddPduWithPacketType
  return nil
 }
 
 func(np *FrameTransmitter) RemovePdu () error {
  //parameters: PduHandle
- //AgtFrameTransmitter RemovePdu, m.Object, m.Name);
+ //AgtFrameTransmitter RemovePdu
  return nil
 }
 
@@ -30,19 +30,19 @@ func(np *FrameTransmitter) GetPduLength ()(string, error) {
 
 func(np *FrameTransmitter) SetPduLength () error {
  //parameters: PduHandle PduLength
- //AgtFrameTransmitter SetPduLength, m.Object, m.Name);
+ //AgtFrameTransmitter SetPduLength
  return nil
 }
 
 func(np *FrameTransmitter) TransmitPdu () error {
  //parameters: PortHandle PduHandle TransmitOptions
- //AgtFrameTransmitter TransmitPdu, m.Object, m.Name);
+ //AgtFrameTransmitter TransmitPdu
  return nil
 }
 
 func(np *FrameTransmitter) TransmitFrame () error {
  //parameters: PortHandle FrameLength psaFrameBytes TransmitOptions
- //AgtFrameTransmitter TransmitFrame, m.Object, m.Name);
+ //AgtFrameTransmitter TransmitFrame
  return nil
 }
 

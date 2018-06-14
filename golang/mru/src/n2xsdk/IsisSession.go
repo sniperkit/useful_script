@@ -6,7 +6,7 @@ type IsisSession struct {
 
 func(np *IsisSession) SetMaximumPacketSize () error {
  //parameters: SessionHandle MaximumPacketSize
- //AgtIsisSession SetMaximumPacketSize, m.Object, m.Name);
+ //AgtIsisSession SetMaximumPacketSize
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *IsisSession) GetMaximumPacketSize ()(string, error) {
 
 func(np *IsisSession) Restart () error {
  //parameters: SessionHandle
- //AgtIsisSession Restart, m.Object, m.Name);
+ //AgtIsisSession Restart
  return nil
 }
 
 func(np *IsisSession) RestartAllSessions () error {
  //parameters: 
- //AgtIsisSession RestartAllSessions, m.Object, m.Name);
+ //AgtIsisSession RestartAllSessions
  return nil
 }
 
@@ -48,19 +48,19 @@ func(np *IsisSession) GetSessionState ()(string, error) {
 
 func(np *IsisSession) AddNeighbor () error {
  //parameters: SessionHandle
- //AgtIsisSession AddNeighbor, m.Object, m.Name);
+ //AgtIsisSession AddNeighbor
  return nil
 }
 
 func(np *IsisSession) RemoveNeighbor () error {
  //parameters: SessionHandle NeighborHandle
- //AgtIsisSession RemoveNeighbor, m.Object, m.Name);
+ //AgtIsisSession RemoveNeighbor
  return nil
 }
 
 func(np *IsisSession) RemoveAllNeighbors () error {
  //parameters: SessionHandle
- //AgtIsisSession RemoveAllNeighbors, m.Object, m.Name);
+ //AgtIsisSession RemoveAllNeighbors
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *IsisSession) ListNeighbors ()(string, error) {
 
 func(np *IsisSession) SetSutLinkIpAddress () error {
  //parameters: SessionHandle Ipv4Address Ipv4PrefixLength
- //AgtIsisSession SetSutLinkIpAddress, m.Object, m.Name);
+ //AgtIsisSession SetSutLinkIpAddress
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *IsisSession) GetSutLinkIpAddress ()(string, error) {
 
 func(np *IsisSession) SetSutLinkIpv4Address () error {
  //parameters: SessionHandle Ipv4Address Ipv4PrefixLength
- //AgtIsisSession SetSutLinkIpv4Address, m.Object, m.Name);
+ //AgtIsisSession SetSutLinkIpv4Address
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *IsisSession) GetSutLinkIpv4Address ()(string, error) {
 
 func(np *IsisSession) SetSutLinkIpv6Address () error {
  //parameters: SessionHandle Ipv6Address Ipv6PrefixLength
- //AgtIsisSession SetSutLinkIpv6Address, m.Object, m.Name);
+ //AgtIsisSession SetSutLinkIpv6Address
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *IsisSession) GetSutLinkLocalIpv6Address ()(string, error) {
 
 func(np *IsisSession) SetAreaId () error {
  //parameters: SessionHandle AreaId
- //AgtIsisSession SetAreaId, m.Object, m.Name);
+ //AgtIsisSession SetAreaId
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *IsisSession) GetAreaList ()(string, error) {
 
 func(np *IsisSession) SetSystemId () error {
  //parameters: SessionHandle SystemId
- //AgtIsisSession SetSystemId, m.Object, m.Name);
+ //AgtIsisSession SetSystemId
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *IsisSession) GetSystemId ()(string, error) {
 
 func(np *IsisSession) IsEnabled () error {
  //parameters: SessionHandle
- //AgtIsisSession IsEnabled, m.Object, m.Name);
+ //AgtIsisSession IsEnabled
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *IsisSession) GetSessionRouter ()(string, error) {
 
 func(np *IsisSession) SetTeRouterId () error {
  //parameters: SessionHandle TeRouterId
- //AgtIsisSession SetTeRouterId, m.Object, m.Name);
+ //AgtIsisSession SetTeRouterId
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *IsisSession) GetTeRouterId ()(string, error) {
 
 func(np *IsisSession) SetPseudonodeNumber () error {
  //parameters: SessionHandle PseudonodeNumber
- //AgtIsisSession SetPseudonodeNumber, m.Object, m.Name);
+ //AgtIsisSession SetPseudonodeNumber
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *IsisSession) GetPseudonodeNumber ()(string, error) {
 
 func(np *IsisSession) SetRoutingLevel () error {
  //parameters: SessionHandle RoutingLevel
- //AgtIsisSession SetRoutingLevel, m.Object, m.Name);
+ //AgtIsisSession SetRoutingLevel
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *IsisSession) GetRoutingLevel ()(string, error) {
 
 func(np *IsisSession) SetNetworkType () error {
  //parameters: SessionHandle NetworkType
- //AgtIsisSession SetNetworkType, m.Object, m.Name);
+ //AgtIsisSession SetNetworkType
  return nil
 }
 
@@ -222,25 +222,25 @@ func(np *IsisSession) GetNetworkType ()(string, error) {
 
 func(np *IsisSession) EnableWideMetrics () error {
  //parameters: SessionHandle
- //AgtIsisSession EnableWideMetrics, m.Object, m.Name);
+ //AgtIsisSession EnableWideMetrics
  return nil
 }
 
 func(np *IsisSession) DisableWideMetrics () error {
  //parameters: SessionHandle
- //AgtIsisSession DisableWideMetrics, m.Object, m.Name);
+ //AgtIsisSession DisableWideMetrics
  return nil
 }
 
 func(np *IsisSession) IsWideMetricsEnabled () error {
  //parameters: SessionHandle
- //AgtIsisSession IsWideMetricsEnabled, m.Object, m.Name);
+ //AgtIsisSession IsWideMetricsEnabled
  return nil
 }
 
 func(np *IsisSession) SetIpMode () error {
  //parameters: SessionHandle IpMode
- //AgtIsisSession SetIpMode, m.Object, m.Name);
+ //AgtIsisSession SetIpMode
  return nil
 }
 
@@ -252,7 +252,7 @@ func(np *IsisSession) GetIpMode ()(string, error) {
 
 func(np *IsisSession) EnableLspDiscardMode () error {
  //parameters: SessionHandle
- //AgtIsisSession EnableLspDiscardMode, m.Object, m.Name);
+ //AgtIsisSession EnableLspDiscardMode
  return nil
 }
 
@@ -264,85 +264,85 @@ func(np *IsisSession) GetLspDiscardModeFlag ()(string, error) {
 
 func(np *IsisSession) DisableLspDiscardMode () error {
  //parameters: SessionHandle
- //AgtIsisSession DisableLspDiscardMode, m.Object, m.Name);
+ //AgtIsisSession DisableLspDiscardMode
  return nil
 }
 
 func(np *IsisSession) EnableMultiTopologies () error {
  //parameters: SessionHandle
- //AgtIsisSession EnableMultiTopologies, m.Object, m.Name);
+ //AgtIsisSession EnableMultiTopologies
  return nil
 }
 
 func(np *IsisSession) DisableMultiTopologies () error {
  //parameters: SessionHandle
- //AgtIsisSession DisableMultiTopologies, m.Object, m.Name);
+ //AgtIsisSession DisableMultiTopologies
  return nil
 }
 
 func(np *IsisSession) IsMultiTopologiesEnabled () error {
  //parameters: SessionHandle
- //AgtIsisSession IsMultiTopologiesEnabled, m.Object, m.Name);
+ //AgtIsisSession IsMultiTopologiesEnabled
  return nil
 }
 
 func(np *IsisSession) Enable3WayHandshake () error {
  //parameters: SessionHandle
- //AgtIsisSession Enable3WayHandshake, m.Object, m.Name);
+ //AgtIsisSession Enable3WayHandshake
  return nil
 }
 
 func(np *IsisSession) Disable3WayHandshake () error {
  //parameters: SessionHandle
- //AgtIsisSession Disable3WayHandshake, m.Object, m.Name);
+ //AgtIsisSession Disable3WayHandshake
  return nil
 }
 
 func(np *IsisSession) Is3WayHandshakeEnabled () error {
  //parameters: SessionHandle
- //AgtIsisSession Is3WayHandshakeEnabled, m.Object, m.Name);
+ //AgtIsisSession Is3WayHandshakeEnabled
  return nil
 }
 
 func(np *IsisSession) EnableGracefulRestart () error {
  //parameters: SessionHandle
- //AgtIsisSession EnableGracefulRestart, m.Object, m.Name);
+ //AgtIsisSession EnableGracefulRestart
  return nil
 }
 
 func(np *IsisSession) DisableGracefulRestart () error {
  //parameters: SessionHandle
- //AgtIsisSession DisableGracefulRestart, m.Object, m.Name);
+ //AgtIsisSession DisableGracefulRestart
  return nil
 }
 
 func(np *IsisSession) IsGracefulRestartEnabled () error {
  //parameters: SessionHandle
- //AgtIsisSession IsGracefulRestartEnabled, m.Object, m.Name);
+ //AgtIsisSession IsGracefulRestartEnabled
  return nil
 }
 
 func(np *IsisSession) EnableIihPadding () error {
  //parameters: SessionHandle
- //AgtIsisSession EnableIihPadding, m.Object, m.Name);
+ //AgtIsisSession EnableIihPadding
  return nil
 }
 
 func(np *IsisSession) DisableIihPadding () error {
  //parameters: SessionHandle
- //AgtIsisSession DisableIihPadding, m.Object, m.Name);
+ //AgtIsisSession DisableIihPadding
  return nil
 }
 
 func(np *IsisSession) IsIihPaddingEnabled () error {
  //parameters: SessionHandle
- //AgtIsisSession IsIihPaddingEnabled, m.Object, m.Name);
+ //AgtIsisSession IsIihPaddingEnabled
  return nil
 }
 
 func(np *IsisSession) SetSutLinkParameter () error {
  //parameters: SessionHandle SutLinkParameter SutLinkParameterValue
- //AgtIsisSession SetSutLinkParameter, m.Object, m.Name);
+ //AgtIsisSession SetSutLinkParameter
  return nil
 }
 
@@ -354,13 +354,13 @@ func(np *IsisSession) GetSutLinkParameter ()(string, error) {
 
 func(np *IsisSession) Enable () error {
  //parameters: SessionHandle
- //AgtIsisSession Enable, m.Object, m.Name);
+ //AgtIsisSession Enable
  return nil
 }
 
 func(np *IsisSession) Disable () error {
  //parameters: SessionHandle
- //AgtIsisSession Disable, m.Object, m.Name);
+ //AgtIsisSession Disable
  return nil
 }
 
@@ -372,7 +372,7 @@ func(np *IsisSession) GetRoutersAndConnections ()(string, error) {
 
 func(np *IsisSession) SetAuthenticationMode () error {
  //parameters: SessionHandle KeyType AuthenticationMode
- //AgtIsisSession SetAuthenticationMode, m.Object, m.Name);
+ //AgtIsisSession SetAuthenticationMode
  return nil
 }
 
@@ -384,61 +384,61 @@ func(np *IsisSession) GetAuthenticationMode ()(string, error) {
 
 func(np *IsisSession) EnableAuthenticationKey () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession EnableAuthenticationKey, m.Object, m.Name);
+ //AgtIsisSession EnableAuthenticationKey
  return nil
 }
 
 func(np *IsisSession) DisableAuthenticationKey () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession DisableAuthenticationKey, m.Object, m.Name);
+ //AgtIsisSession DisableAuthenticationKey
  return nil
 }
 
 func(np *IsisSession) IsAuthenticationKeyEnabled () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession IsAuthenticationKeyEnabled, m.Object, m.Name);
+ //AgtIsisSession IsAuthenticationKeyEnabled
  return nil
 }
 
 func(np *IsisSession) EnableAuthenticationSendKey () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession EnableAuthenticationSendKey, m.Object, m.Name);
+ //AgtIsisSession EnableAuthenticationSendKey
  return nil
 }
 
 func(np *IsisSession) DisableAuthenticationSendKey () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession DisableAuthenticationSendKey, m.Object, m.Name);
+ //AgtIsisSession DisableAuthenticationSendKey
  return nil
 }
 
 func(np *IsisSession) IsAuthenticationSendKeyEnabled () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession IsAuthenticationSendKeyEnabled, m.Object, m.Name);
+ //AgtIsisSession IsAuthenticationSendKeyEnabled
  return nil
 }
 
 func(np *IsisSession) EnableAuthenticationReceiveKey () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession EnableAuthenticationReceiveKey, m.Object, m.Name);
+ //AgtIsisSession EnableAuthenticationReceiveKey
  return nil
 }
 
 func(np *IsisSession) DisableAuthenticationReceiveKey () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession DisableAuthenticationReceiveKey, m.Object, m.Name);
+ //AgtIsisSession DisableAuthenticationReceiveKey
  return nil
 }
 
 func(np *IsisSession) IsAuthenticationReceiveKeyEnabled () error {
  //parameters: SessionHandle KeyType
- //AgtIsisSession IsAuthenticationReceiveKeyEnabled, m.Object, m.Name);
+ //AgtIsisSession IsAuthenticationReceiveKeyEnabled
  return nil
 }
 
 func(np *IsisSession) SetAuthenticationSendKey () error {
  //parameters: SessionHandle KeyType Key
- //AgtIsisSession SetAuthenticationSendKey, m.Object, m.Name);
+ //AgtIsisSession SetAuthenticationSendKey
  return nil
 }
 
@@ -450,7 +450,7 @@ func(np *IsisSession) GetAuthenticationSendKey ()(string, error) {
 
 func(np *IsisSession) SetAuthenticationReceiveKey () error {
  //parameters: SessionHandle KeyType Key
- //AgtIsisSession SetAuthenticationReceiveKey, m.Object, m.Name);
+ //AgtIsisSession SetAuthenticationReceiveKey
  return nil
 }
 
@@ -462,19 +462,19 @@ func(np *IsisSession) GetAuthenticationReceiveKey ()(string, error) {
 
 func(np *IsisSession) EnableAllSessions () error {
  //parameters: 
- //AgtIsisSession EnableAllSessions, m.Object, m.Name);
+ //AgtIsisSession EnableAllSessions
  return nil
 }
 
 func(np *IsisSession) DisableAllSessions () error {
  //parameters: 
- //AgtIsisSession DisableAllSessions, m.Object, m.Name);
+ //AgtIsisSession DisableAllSessions
  return nil
 }
 
 func(np *IsisSession) SetMacAddressSource () error {
  //parameters: MacAddressSourceType
- //AgtIsisSession SetMacAddressSource, m.Object, m.Name);
+ //AgtIsisSession SetMacAddressSource
  return nil
 }
 
@@ -486,25 +486,25 @@ func(np *IsisSession) GetMacAddressSource ()(string, error) {
 
 func(np *IsisSession) EnableAuthentication () error {
  //parameters: SessionHandle AuthenticationType
- //AgtIsisSession EnableAuthentication, m.Object, m.Name);
+ //AgtIsisSession EnableAuthentication
  return nil
 }
 
 func(np *IsisSession) DisableAuthentication () error {
  //parameters: SessionHandle AuthenticationType
- //AgtIsisSession DisableAuthentication, m.Object, m.Name);
+ //AgtIsisSession DisableAuthentication
  return nil
 }
 
 func(np *IsisSession) IsAuthenticationEnabled () error {
  //parameters: SessionHandle AuthenticationType
- //AgtIsisSession IsAuthenticationEnabled, m.Object, m.Name);
+ //AgtIsisSession IsAuthenticationEnabled
  return nil
 }
 
 func(np *IsisSession) SetSendPassword () error {
  //parameters: SessionHandle AuthenticationType Password
- //AgtIsisSession SetSendPassword, m.Object, m.Name);
+ //AgtIsisSession SetSendPassword
  return nil
 }
 
@@ -516,7 +516,7 @@ func(np *IsisSession) GetSendPassword ()(string, error) {
 
 func(np *IsisSession) SetReceivePassword () error {
  //parameters: SessionHandle AuthenticationType Count PasswordList
- //AgtIsisSession SetReceivePassword, m.Object, m.Name);
+ //AgtIsisSession SetReceivePassword
  return nil
 }
 

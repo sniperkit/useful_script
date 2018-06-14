@@ -30,7 +30,7 @@ func(np *CustomProfile) GetSourcePort ()(string, error) {
 
 func(np *CustomProfile) SetProfileType () error {
  //parameters: ProfileHandle ProfileType
- //AgtCustomProfile SetProfileType, m.Object, m.Name);
+ //AgtCustomProfile SetProfileType
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *CustomProfile) GetProfileType ()(string, error) {
 
 func(np *CustomProfile) SetAverageLoad () error {
  //parameters: ProfileHandle AverageLoad Units
- //AgtCustomProfile SetAverageLoad, m.Object, m.Name);
+ //AgtCustomProfile SetAverageLoad
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *CustomProfile) GetAverageLoad ()(string, error) {
 
 func(np *CustomProfile) SetMode () error {
  //parameters: ProfileHandle Mode
- //AgtCustomProfile SetMode, m.Object, m.Name);
+ //AgtCustomProfile SetMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *CustomProfile) GetMode ()(string, error) {
 
 func(np *CustomProfile) SetNumberOfPacketsToInject () error {
  //parameters: ProfileHandle NumberOfPackets
- //AgtCustomProfile SetNumberOfPacketsToInject, m.Object, m.Name);
+ //AgtCustomProfile SetNumberOfPacketsToInject
  return nil
 }
 
@@ -78,13 +78,13 @@ func(np *CustomProfile) GetNumberOfPacketsToInject ()(string, error) {
 
 func(np *CustomProfile) SendSingleInjection () error {
  //parameters: ProfileHandle
- //AgtCustomProfile SendSingleInjection, m.Object, m.Name);
+ //AgtCustomProfile SendSingleInjection
  return nil
 }
 
 func(np *CustomProfile) IsSendSingleInjectionInProgress () error {
  //parameters: ProfileHandle
- //AgtCustomProfile IsSendSingleInjectionInProgress, m.Object, m.Name);
+ //AgtCustomProfile IsSendSingleInjectionInProgress
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *CustomProfile) ListStreamGroups ()(string, error) {
 
 func(np *CustomProfile) AddStreamGroups () error {
  //parameters: ProfileHandle Count psaStreamGroupHandles
- //AgtCustomProfile AddStreamGroups, m.Object, m.Name);
+ //AgtCustomProfile AddStreamGroups
  return nil
 }
 
@@ -120,31 +120,31 @@ func(np *CustomProfile) GetInterdepartureValueResolution ()(string, error) {
 
 func(np *CustomProfile) Enable () error {
  //parameters: ProfileHandle
- //AgtCustomProfile Enable, m.Object, m.Name);
+ //AgtCustomProfile Enable
  return nil
 }
 
 func(np *CustomProfile) Disable () error {
  //parameters: ProfileHandle
- //AgtCustomProfile Disable, m.Object, m.Name);
+ //AgtCustomProfile Disable
  return nil
 }
 
 func(np *CustomProfile) IsEnabled () error {
  //parameters: ProfileHandle
- //AgtCustomProfile IsEnabled, m.Object, m.Name);
+ //AgtCustomProfile IsEnabled
  return nil
 }
 
 func(np *CustomProfile) SetInterdepartureValues () error {
  //parameters: ProfileHandle Count psaIDVs
- //AgtCustomProfile SetInterdepartureValues, m.Object, m.Name);
+ //AgtCustomProfile SetInterdepartureValues
  return nil
 }
 
 func(np *CustomProfile) SetInterdepartureValuesWithRepeatCounts () error {
  //parameters: ProfileHandle Count psaIDVs RcCount ppsaRepeatCounts
- //AgtCustomProfile SetInterdepartureValuesWithRepeatCounts, m.Object, m.Name);
+ //AgtCustomProfile SetInterdepartureValuesWithRepeatCounts
  return nil
 }
 

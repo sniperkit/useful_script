@@ -6,43 +6,43 @@ type OspfLsaDatabase struct {
 
 func(np *OspfLsaDatabase) AddLsa () error {
  //parameters: DatabaseHandle LsaType
- //AgtOspfLsaDatabase AddLsa, m.Object, m.Name);
+ //AgtOspfLsaDatabase AddLsa
  return nil
 }
 
 func(np *OspfLsaDatabase) RemoveLsa () error {
  //parameters: LsaHandle
- //AgtOspfLsaDatabase RemoveLsa, m.Object, m.Name);
+ //AgtOspfLsaDatabase RemoveLsa
  return nil
 }
 
 func(np *OspfLsaDatabase) Clear () error {
  //parameters: DatabaseHandle
- //AgtOspfLsaDatabase Clear, m.Object, m.Name);
+ //AgtOspfLsaDatabase Clear
  return nil
 }
 
 func(np *OspfLsaDatabase) AdvertiseLsa () error {
  //parameters: LsaHandle
- //AgtOspfLsaDatabase AdvertiseLsa, m.Object, m.Name);
+ //AgtOspfLsaDatabase AdvertiseLsa
  return nil
 }
 
 func(np *OspfLsaDatabase) WithdrawLsa () error {
  //parameters: LsaHandle
- //AgtOspfLsaDatabase WithdrawLsa, m.Object, m.Name);
+ //AgtOspfLsaDatabase WithdrawLsa
  return nil
 }
 
 func(np *OspfLsaDatabase) AdvertiseAll () error {
  //parameters: DatabaseHandle
- //AgtOspfLsaDatabase AdvertiseAll, m.Object, m.Name);
+ //AgtOspfLsaDatabase AdvertiseAll
  return nil
 }
 
 func(np *OspfLsaDatabase) WithdrawAll () error {
  //parameters: DatabaseHandle
- //AgtOspfLsaDatabase WithdrawAll, m.Object, m.Name);
+ //AgtOspfLsaDatabase WithdrawAll
  return nil
 }
 

@@ -18,7 +18,7 @@ func(np *HardwareFailureStatus) GetStatusDescription ()(string, error) {
 
 func(np *HardwareFailureStatus) SaveStatus () error {
  //parameters: PortHandle LogFile
- //AgtHardwareFailureStatus SaveStatus, m.Object, m.Name);
+ //AgtHardwareFailureStatus SaveStatus
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *HardwareFailureStatus) GetStatusSummaryDescription ()(string, error) {
 
 func(np *HardwareFailureStatus) SaveStatusSummary () error {
  //parameters: LogFile
- //AgtHardwareFailureStatus SaveStatusSummary, m.Object, m.Name);
+ //AgtHardwareFailureStatus SaveStatusSummary
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *HardwareFailureStatus) GetStatusHistoryDescription ()(string, error) {
 
 func(np *HardwareFailureStatus) SaveStatusHistory () error {
  //parameters: LogFile
- //AgtHardwareFailureStatus SaveStatusHistory, m.Object, m.Name);
+ //AgtHardwareFailureStatus SaveStatusHistory
  return nil
 }
 
 func(np *HardwareFailureStatus) ClearHistory () error {
  //parameters: 
- //AgtHardwareFailureStatus ClearHistory, m.Object, m.Name);
+ //AgtHardwareFailureStatus ClearHistory
  return nil
 }
 
 func(np *HardwareFailureStatus) SetHistorySize () error {
  //parameters: HistorySize
- //AgtHardwareFailureStatus SetHistorySize, m.Object, m.Name);
+ //AgtHardwareFailureStatus SetHistorySize
  return nil
 }
 

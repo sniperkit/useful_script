@@ -12,43 +12,43 @@ func(np *PppoXClientPool) GetEnableFlag ()(string, error) {
 
 func(np *PppoXClientPool) Enable () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool Enable, m.Object, m.Name);
+ //AgtPppoXClientPool Enable
  return nil
 }
 
 func(np *PppoXClientPool) Disable () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool Disable, m.Object, m.Name);
+ //AgtPppoXClientPool Disable
  return nil
 }
 
 func(np *PppoXClientPool) Cancel () error {
  //parameters: DeviceOrSession
- //AgtPppoXClientPool Cancel, m.Object, m.Name);
+ //AgtPppoXClientPool Cancel
  return nil
 }
 
 func(np *PppoXClientPool) Reset () error {
  //parameters: DeviceOrSession
- //AgtPppoXClientPool Reset, m.Object, m.Name);
+ //AgtPppoXClientPool Reset
  return nil
 }
 
 func(np *PppoXClientPool) Open () error {
  //parameters: DeviceOrSession
- //AgtPppoXClientPool Open, m.Object, m.Name);
+ //AgtPppoXClientPool Open
  return nil
 }
 
 func(np *PppoXClientPool) Close () error {
  //parameters: DeviceOrSession
- //AgtPppoXClientPool Close, m.Object, m.Name);
+ //AgtPppoXClientPool Close
  return nil
 }
 
 func(np *PppoXClientPool) CancelAttempts () error {
  //parameters: DeviceOrSession
- //AgtPppoXClientPool CancelAttempts, m.Object, m.Name);
+ //AgtPppoXClientPool CancelAttempts
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *PppoXClientPool) GetNumberOfEstablishedSessions ()(string, error) {
 
 func(np *PppoXClientPool) SetConnectionRetryFlags () error {
  //parameters: DeviceHandle ConnectionRetryFlags
- //AgtPppoXClientPool SetConnectionRetryFlags, m.Object, m.Name);
+ //AgtPppoXClientPool SetConnectionRetryFlags
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *PppoXClientPool) GetConnectionRetryFlags ()(string, error) {
 
 func(np *PppoXClientPool) SetReestablishmentFlags () error {
  //parameters: DeviceHandle ReestablishmentFlags
- //AgtPppoXClientPool SetReestablishmentFlags, m.Object, m.Name);
+ //AgtPppoXClientPool SetReestablishmentFlags
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *PppoXClientPool) GetReestablishmentFlags ()(string, error) {
 
 func(np *PppoXClientPool) SetUnlimitedConnectionAttemptsFlag () error {
  //parameters: DeviceHandle EnableFlag
- //AgtPppoXClientPool SetUnlimitedConnectionAttemptsFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetUnlimitedConnectionAttemptsFlag
  return nil
 }
 
@@ -96,19 +96,19 @@ func(np *PppoXClientPool) GetUnlimitedConnectionAttemptsFlag ()(string, error) {
 
 func(np *PppoXClientPool) EnableUnlimitedReestablishment () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool EnableUnlimitedReestablishment, m.Object, m.Name);
+ //AgtPppoXClientPool EnableUnlimitedReestablishment
  return nil
 }
 
 func(np *PppoXClientPool) DisableUnlimitedReestablishment () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool DisableUnlimitedReestablishment, m.Object, m.Name);
+ //AgtPppoXClientPool DisableUnlimitedReestablishment
  return nil
 }
 
 func(np *PppoXClientPool) IsUnlimitedReestablishmentEnabled () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool IsUnlimitedReestablishmentEnabled, m.Object, m.Name);
+ //AgtPppoXClientPool IsUnlimitedReestablishmentEnabled
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *PppoXClientPool) GetNumberOfSessions ()(string, error) {
 
 func(np *PppoXClientPool) SetNumberOfSessions () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetNumberOfSessions, m.Object, m.Name);
+ //AgtPppoXClientPool SetNumberOfSessions
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *PppoXClientPool) GetAutoStartFlag ()(string, error) {
 
 func(np *PppoXClientPool) SetAutoStartFlag () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetAutoStartFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetAutoStartFlag
  return nil
 }
 
@@ -162,7 +162,7 @@ func(np *PppoXClientPool) GetSessionLifetime ()(string, error) {
 
 func(np *PppoXClientPool) SetSessionLifetime () error {
  //parameters: DeviceHandle Value Value
- //AgtPppoXClientPool SetSessionLifetime, m.Object, m.Name);
+ //AgtPppoXClientPool SetSessionLifetime
  return nil
 }
 
@@ -180,31 +180,31 @@ func(np *PppoXClientPool) GetClosingWindow ()(string, error) {
 
 func(np *PppoXClientPool) SetOpeningWindow () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetOpeningWindow, m.Object, m.Name);
+ //AgtPppoXClientPool SetOpeningWindow
  return nil
 }
 
 func(np *PppoXClientPool) SetClosingWindow () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetClosingWindow, m.Object, m.Name);
+ //AgtPppoXClientPool SetClosingWindow
  return nil
 }
 
 func(np *PppoXClientPool) IsSustainedProlongedFlappingEnabled () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool IsSustainedProlongedFlappingEnabled, m.Object, m.Name);
+ //AgtPppoXClientPool IsSustainedProlongedFlappingEnabled
  return nil
 }
 
 func(np *PppoXClientPool) DisableSustainedProlongedFlapping () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool DisableSustainedProlongedFlapping, m.Object, m.Name);
+ //AgtPppoXClientPool DisableSustainedProlongedFlapping
  return nil
 }
 
 func(np *PppoXClientPool) EnableSustainedProlongedFlapping () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool EnableSustainedProlongedFlapping, m.Object, m.Name);
+ //AgtPppoXClientPool EnableSustainedProlongedFlapping
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *PppoXClientPool) GetMaxConnectionAttempts ()(string, error) {
 
 func(np *PppoXClientPool) SetMaxConnectionAttempts () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetMaxConnectionAttempts, m.Object, m.Name);
+ //AgtPppoXClientPool SetMaxConnectionAttempts
  return nil
 }
 
@@ -234,13 +234,13 @@ func(np *PppoXClientPool) GetMaxReestablishments ()(string, error) {
 
 func(np *PppoXClientPool) SetMaxReestablishments () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetMaxReestablishments, m.Object, m.Name);
+ //AgtPppoXClientPool SetMaxReestablishments
  return nil
 }
 
 func(np *PppoXClientPool) RetryConnections () error {
  //parameters: DeviceOrSession
- //AgtPppoXClientPool RetryConnections, m.Object, m.Name);
+ //AgtPppoXClientPool RetryConnections
  return nil
 }
 
@@ -252,7 +252,7 @@ func(np *PppoXClientPool) GetInitiationRateLimitFlag ()(string, error) {
 
 func(np *PppoXClientPool) SetInitiationRateLimitFlag () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetInitiationRateLimitFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetInitiationRateLimitFlag
  return nil
 }
 
@@ -264,7 +264,7 @@ func(np *PppoXClientPool) GetSessionInitiationRate ()(string, error) {
 
 func(np *PppoXClientPool) SetSessionInitiationRate () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetSessionInitiationRate, m.Object, m.Name);
+ //AgtPppoXClientPool SetSessionInitiationRate
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *PppoXClientPool) GetLimitOpeningRateMode ()(string, error) {
 
 func(np *PppoXClientPool) SetLimitOpeningRateMode () error {
  //parameters: DeviceHandle SetupInterval
- //AgtPppoXClientPool SetLimitOpeningRateMode, m.Object, m.Name);
+ //AgtPppoXClientPool SetLimitOpeningRateMode
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *PppoXClientPool) GetSessionInitiationRateInMilliseconds ()(string, erro
 
 func(np *PppoXClientPool) SetSessionInitiationRateInMilliseconds () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetSessionInitiationRateInMilliseconds, m.Object, m.Name);
+ //AgtPppoXClientPool SetSessionInitiationRateInMilliseconds
  return nil
 }
 
@@ -300,7 +300,7 @@ func(np *PppoXClientPool) GetClosureRateLimitFlag ()(string, error) {
 
 func(np *PppoXClientPool) SetClosureRateLimitFlag () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetClosureRateLimitFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetClosureRateLimitFlag
  return nil
 }
 
@@ -312,7 +312,7 @@ func(np *PppoXClientPool) GetSessionClosureRate ()(string, error) {
 
 func(np *PppoXClientPool) SetSessionClosureRate () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetSessionClosureRate, m.Object, m.Name);
+ //AgtPppoXClientPool SetSessionClosureRate
  return nil
 }
 
@@ -324,7 +324,7 @@ func(np *PppoXClientPool) GetLcpOption ()(string, error) {
 
 func(np *PppoXClientPool) SetLcpOption () error {
  //parameters: DeviceHandle PppOption Value
- //AgtPppoXClientPool SetLcpOption, m.Object, m.Name);
+ //AgtPppoXClientPool SetLcpOption
  return nil
 }
 
@@ -336,25 +336,25 @@ func(np *PppoXClientPool) GetPppOption ()(string, error) {
 
 func(np *PppoXClientPool) SetPppOption () error {
  //parameters: DeviceHandle PppOption Value
- //AgtPppoXClientPool SetPppOption, m.Object, m.Name);
+ //AgtPppoXClientPool SetPppOption
  return nil
 }
 
 func(np *PppoXClientPool) IsMlPppLcpMrruOptionEnabled () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool IsMlPppLcpMrruOptionEnabled, m.Object, m.Name);
+ //AgtPppoXClientPool IsMlPppLcpMrruOptionEnabled
  return nil
 }
 
 func(np *PppoXClientPool) DisableMlPppLcpMrruOption () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool DisableMlPppLcpMrruOption, m.Object, m.Name);
+ //AgtPppoXClientPool DisableMlPppLcpMrruOption
  return nil
 }
 
 func(np *PppoXClientPool) EnableMlPppLcpMrruOption () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool EnableMlPppLcpMrruOption, m.Object, m.Name);
+ //AgtPppoXClientPool EnableMlPppLcpMrruOption
  return nil
 }
 
@@ -366,7 +366,7 @@ func(np *PppoXClientPool) GetMlPppLcpMrruSize ()(string, error) {
 
 func(np *PppoXClientPool) SetMlPppLcpMrruSize () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetMlPppLcpMrruSize, m.Object, m.Name);
+ //AgtPppoXClientPool SetMlPppLcpMrruSize
  return nil
 }
 
@@ -378,7 +378,7 @@ func(np *PppoXClientPool) GetIpcpEnableFlag ()(string, error) {
 
 func(np *PppoXClientPool) SetIpcpEnableFlag () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetIpcpEnableFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetIpcpEnableFlag
  return nil
 }
 
@@ -390,7 +390,7 @@ func(np *PppoXClientPool) GetIpcpAdvertisedAddressMode ()(string, error) {
 
 func(np *PppoXClientPool) SetIpcpAdvertisedAddressMode () error {
  //parameters: DeviceHandle AdvertisedIpValue
- //AgtPppoXClientPool SetIpcpAdvertisedAddressMode, m.Object, m.Name);
+ //AgtPppoXClientPool SetIpcpAdvertisedAddressMode
  return nil
 }
 
@@ -402,7 +402,7 @@ func(np *PppoXClientPool) GetIpcpAdvertisedAddressIncrementor ()(string, error) 
 
 func(np *PppoXClientPool) SetIpcpAdvertisedAddressIncrementor () error {
  //parameters: DeviceHandle IncrementorValue IncrementorValueIncrement IncrementorValueRepeat
- //AgtPppoXClientPool SetIpcpAdvertisedAddressIncrementor, m.Object, m.Name);
+ //AgtPppoXClientPool SetIpcpAdvertisedAddressIncrementor
  return nil
 }
 
@@ -414,7 +414,7 @@ func(np *PppoXClientPool) GetNegotiateNetmaskFlag ()(string, error) {
 
 func(np *PppoXClientPool) SetNegotiateNetmaskFlag () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetNegotiateNetmaskFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetNegotiateNetmaskFlag
  return nil
 }
 
@@ -426,7 +426,7 @@ func(np *PppoXClientPool) GetNetmaskRequestType ()(string, error) {
 
 func(np *PppoXClientPool) SetNetmaskRequestType () error {
  //parameters: DeviceHandle NetmaskRequestType
- //AgtPppoXClientPool SetNetmaskRequestType, m.Object, m.Name);
+ //AgtPppoXClientPool SetNetmaskRequestType
  return nil
 }
 
@@ -438,7 +438,7 @@ func(np *PppoXClientPool) GetRequestedNetmaskLength ()(string, error) {
 
 func(np *PppoXClientPool) SetRequestedNetmaskLength () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetRequestedNetmaskLength, m.Object, m.Name);
+ //AgtPppoXClientPool SetRequestedNetmaskLength
  return nil
 }
 
@@ -450,7 +450,7 @@ func(np *PppoXClientPool) GetRequestedNetmaskLengthModifier ()(string, error) {
 
 func(np *PppoXClientPool) SetRequestedNetmaskLengthModifier () error {
  //parameters: DeviceHandle Value IncrementorValueRepeat IncrementorValueIncrement
- //AgtPppoXClientPool SetRequestedNetmaskLengthModifier, m.Object, m.Name);
+ //AgtPppoXClientPool SetRequestedNetmaskLengthModifier
  return nil
 }
 
@@ -468,7 +468,7 @@ func(np *PppoXClientPool) GetRequestNameServerAddressFlag ()(string, error) {
 
 func(np *PppoXClientPool) SetRequestNameServerAddressFlag () error {
  //parameters: DeviceHandle NameAddressServerType Value
- //AgtPppoXClientPool SetRequestNameServerAddressFlag, m.Object, m.Name);
+ //AgtPppoXClientPool SetRequestNameServerAddressFlag
  return nil
 }
 
@@ -480,7 +480,7 @@ func(np *PppoXClientPool) GetNameServerAddressRequestType ()(string, error) {
 
 func(np *PppoXClientPool) SetNameServerAddressRequestType () error {
  //parameters: DeviceHandle NameAddressServerType NameServerAddressRequestType
- //AgtPppoXClientPool SetNameServerAddressRequestType, m.Object, m.Name);
+ //AgtPppoXClientPool SetNameServerAddressRequestType
  return nil
 }
 
@@ -492,7 +492,7 @@ func(np *PppoXClientPool) GetRequestedNameServerAddress ()(string, error) {
 
 func(np *PppoXClientPool) SetRequestedNameServerAddress () error {
  //parameters: DeviceHandle NameAddressServerType IPv4Address
- //AgtPppoXClientPool SetRequestedNameServerAddress, m.Object, m.Name);
+ //AgtPppoXClientPool SetRequestedNameServerAddress
  return nil
 }
 
@@ -504,7 +504,7 @@ func(np *PppoXClientPool) GetRequestedNameServerAddressIncrementingValue ()(stri
 
 func(np *PppoXClientPool) SetRequestedNameServerAddressIncrementingValue () error {
  //parameters: DeviceHandle NameAddressServerType IPv4Address IncrementorValueRepeat IncrementorValueIncrement
- //AgtPppoXClientPool SetRequestedNameServerAddressIncrementingValue, m.Object, m.Name);
+ //AgtPppoXClientPool SetRequestedNameServerAddressIncrementingValue
  return nil
 }
 
@@ -534,13 +534,13 @@ func(np *PppoXClientPool) GetAuthenticationProtocol ()(string, error) {
 
 func(np *PppoXClientPool) SetAuthenticationProtocol () error {
  //parameters: DeviceHandle AuthProtocol
- //AgtPppoXClientPool SetAuthenticationProtocol, m.Object, m.Name);
+ //AgtPppoXClientPool SetAuthenticationProtocol
  return nil
 }
 
 func(np *PppoXClientPool) SetAuthenticationRestartTimer () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetAuthenticationRestartTimer, m.Object, m.Name);
+ //AgtPppoXClientPool SetAuthenticationRestartTimer
  return nil
 }
 
@@ -552,7 +552,7 @@ func(np *PppoXClientPool) GetAuthenticationRestartTimer ()(string, error) {
 
 func(np *PppoXClientPool) SetAuthenticationMaximumAttempts () error {
  //parameters: DeviceHandle Value
- //AgtPppoXClientPool SetAuthenticationMaximumAttempts, m.Object, m.Name);
+ //AgtPppoXClientPool SetAuthenticationMaximumAttempts
  return nil
 }
 
@@ -570,7 +570,7 @@ func(np *PppoXClientPool) GetTesterCredentials ()(string, error) {
 
 func(np *PppoXClientPool) SetTesterCredentials () error {
  //parameters: DeviceHandle CredentialParameterName Value
- //AgtPppoXClientPool SetTesterCredentials, m.Object, m.Name);
+ //AgtPppoXClientPool SetTesterCredentials
  return nil
 }
 
@@ -582,19 +582,19 @@ func(np *PppoXClientPool) GetTesterCredentialsIncrementor ()(string, error) {
 
 func(np *PppoXClientPool) SetTesterCredentialsIncrementor () error {
  //parameters: DeviceHandle CredentialParameterName IteratedValue IteratedValueIncrement IteratedValueRepeat
- //AgtPppoXClientPool SetTesterCredentialsIncrementor, m.Object, m.Name);
+ //AgtPppoXClientPool SetTesterCredentialsIncrementor
  return nil
 }
 
 func(np *PppoXClientPool) AddTesterCredentialsNumberedIncrementor () error {
  //parameters: DeviceHandle CredentialParameterName
- //AgtPppoXClientPool AddTesterCredentialsNumberedIncrementor, m.Object, m.Name);
+ //AgtPppoXClientPool AddTesterCredentialsNumberedIncrementor
  return nil
 }
 
 func(np *PppoXClientPool) RemoveTesterCredentialsNumberedIncrementor () error {
  //parameters: DeviceHandle CredentialParameterName IncrementorNumber
- //AgtPppoXClientPool RemoveTesterCredentialsNumberedIncrementor, m.Object, m.Name);
+ //AgtPppoXClientPool RemoveTesterCredentialsNumberedIncrementor
  return nil
 }
 
@@ -606,7 +606,7 @@ func(np *PppoXClientPool) GetTesterCredentialsNumberedIncrementor ()(string, err
 
 func(np *PppoXClientPool) SetTesterCredentialsNumberedIncrementor () error {
  //parameters: DeviceHandle CredentialParameterName IncrementorNumber IteratedValue IteratedValueCount IteratedValueIncrement IteratedValueRepeat
- //AgtPppoXClientPool SetTesterCredentialsNumberedIncrementor, m.Object, m.Name);
+ //AgtPppoXClientPool SetTesterCredentialsNumberedIncrementor
  return nil
 }
 
@@ -618,7 +618,7 @@ func(np *PppoXClientPool) GetTesterCredentialsIncrementorCountOverride ()(string
 
 func(np *PppoXClientPool) SetTesterCredentialsIncrementorCountOverride () error {
  //parameters: DeviceHandle CredentialParameterName IncrementorNumber IsIncrementCountOverridden
- //AgtPppoXClientPool SetTesterCredentialsIncrementorCountOverride, m.Object, m.Name);
+ //AgtPppoXClientPool SetTesterCredentialsIncrementorCountOverride
  return nil
 }
 
@@ -630,13 +630,13 @@ func(np *PppoXClientPool) ListSelectedPools ()(string, error) {
 
 func(np *PppoXClientPool) SelectPools () error {
  //parameters: SessionIdentifiers
- //AgtPppoXClientPool SelectPools, m.Object, m.Name);
+ //AgtPppoXClientPool SelectPools
  return nil
 }
 
 func(np *PppoXClientPool) DeselectPools () error {
  //parameters: SessionIdentifiers
- //AgtPppoXClientPool DeselectPools, m.Object, m.Name);
+ //AgtPppoXClientPool DeselectPools
  return nil
 }
 
@@ -660,7 +660,7 @@ func(np *PppoXClientPool) GetSessionAccumulatedSpecifiedValues ()(string, error)
 
 func(np *PppoXClientPool) ClearStatistics () error {
  //parameters: DeviceHandle
- //AgtPppoXClientPool ClearStatistics, m.Object, m.Name);
+ //AgtPppoXClientPool ClearStatistics
  return nil
 }
 

@@ -6,7 +6,7 @@ type HdlcInterface struct {
 
 func(np *HdlcInterface) SetMtu () error {
  //parameters: PortHandle Mtu
- //AgtHdlcInterface SetMtu, m.Object, m.Name);
+ //AgtHdlcInterface SetMtu
  return nil
 }
 

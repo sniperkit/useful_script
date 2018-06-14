@@ -24,19 +24,19 @@ func(np *TestSession) GetInterfaceDetails ()(string, error) {
 
 func(np *TestSession) OpenSession () error {
  //parameters: SessionType Version SessionMode
- //AgtTestSession OpenSession, m.Object, m.Name);
+ //AgtTestSession OpenSession
  return nil
 }
 
 func(np *TestSession) CloseSession () error {
  //parameters: 
- //AgtTestSession CloseSession, m.Object, m.Name);
+ //AgtTestSession CloseSession
  return nil
 }
 
 func(np *TestSession) CloseSessionForce () error {
  //parameters: 
- //AgtTestSession CloseSessionForce, m.Object, m.Name);
+ //AgtTestSession CloseSessionForce
  return nil
 }
 
@@ -96,19 +96,19 @@ func(np *TestSession) GetSaveableInterfaceDescription ()(string, error) {
 
 func(np *TestSession) SaveInterfaces () error {
  //parameters: FileName Count InterfaceNames
- //AgtTestSession SaveInterfaces, m.Object, m.Name);
+ //AgtTestSession SaveInterfaces
  return nil
 }
 
 func(np *TestSession) SaveSession () error {
  //parameters: FileName
- //AgtTestSession SaveSession, m.Object, m.Name);
+ //AgtTestSession SaveSession
  return nil
 }
 
 func(np *TestSession) RestoreSession () error {
  //parameters: FileName
- //AgtTestSession RestoreSession, m.Object, m.Name);
+ //AgtTestSession RestoreSession
  return nil
 }
 
@@ -120,19 +120,19 @@ func(np *TestSession) ListSavedInterfaces ()(string, error) {
 
 func(np *TestSession) RestoreInterfaces () error {
  //parameters: FileName Count InterfaceNames
- //AgtTestSession RestoreInterfaces, m.Object, m.Name);
+ //AgtTestSession RestoreInterfaces
  return nil
 }
 
 func(np *TestSession) ResetSession () error {
  //parameters: 
- //AgtTestSession ResetSession, m.Object, m.Name);
+ //AgtTestSession ResetSession
  return nil
 }
 
 func(np *TestSession) ResetInterfaces () error {
  //parameters: Count InterfaceNames
- //AgtTestSession ResetInterfaces, m.Object, m.Name);
+ //AgtTestSession ResetInterfaces
  return nil
 }
 
@@ -144,19 +144,19 @@ func(np *TestSession) GetNumPorts ()(string, error) {
 
 func(np *TestSession) RestoreSessionOnPorts () error {
  //parameters: FileName Count PortNames
- //AgtTestSession RestoreSessionOnPorts, m.Object, m.Name);
+ //AgtTestSession RestoreSessionOnPorts
  return nil
 }
 
 func(np *TestSession) RestoreInterfacesOnPorts () error {
  //parameters: FileName InterfaceCount InterfaceNames PortCount PortNames
- //AgtTestSession RestoreInterfacesOnPorts, m.Object, m.Name);
+ //AgtTestSession RestoreInterfacesOnPorts
  return nil
 }
 
 func(np *TestSession) RestoreInterfacesOnSomePorts () error {
  //parameters: FileName InterfaceCount InterfaceNames PortCount PortMapping
- //AgtTestSession RestoreInterfacesOnSomePorts, m.Object, m.Name);
+ //AgtTestSession RestoreInterfacesOnSomePorts
  return nil
 }
 

@@ -6,7 +6,7 @@ type ConnectionGroup struct {
 
 func(np *ConnectionGroup) SetApplicationType () error {
  //parameters: ConnectionGroupHandle ApplicationType
- //AgtConnectionGroup SetApplicationType, m.Object, m.Name);
+ //AgtConnectionGroup SetApplicationType
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *ConnectionGroup) GetClientPort ()(string, error) {
 
 func(np *ConnectionGroup) SetServerPort () error {
  //parameters: ConnectionGroupHandle ServerPortHandle
- //AgtConnectionGroup SetServerPort, m.Object, m.Name);
+ //AgtConnectionGroup SetServerPort
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *ConnectionGroup) GetServerPort ()(string, error) {
 
 func(np *ConnectionGroup) SetNumberOfClients () error {
  //parameters: ConnectionGroupHandle NumberOfClients
- //AgtConnectionGroup SetNumberOfClients, m.Object, m.Name);
+ //AgtConnectionGroup SetNumberOfClients
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *ConnectionGroup) GetNumberOfClients ()(string, error) {
 
 func(np *ConnectionGroup) SetNumberOfServers () error {
  //parameters: ConnectionGroupHandle NumberOfServers
- //AgtConnectionGroup SetNumberOfServers, m.Object, m.Name);
+ //AgtConnectionGroup SetNumberOfServers
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *ConnectionGroup) GetNumberOfServers ()(string, error) {
 
 func(np *ConnectionGroup) SetClientDistributionType () error {
  //parameters: ConnectionGroupHandle ClientDistributionType
- //AgtConnectionGroup SetClientDistributionType, m.Object, m.Name);
+ //AgtConnectionGroup SetClientDistributionType
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *ConnectionGroup) GetNumberOfConnectionsPerServer ()(string, error) {
 
 func(np *ConnectionGroup) SetApplicationFileSize () error {
  //parameters: ConnectionGroupHandle ApplicationFileSize
- //AgtConnectionGroup SetApplicationFileSize, m.Object, m.Name);
+ //AgtConnectionGroup SetApplicationFileSize
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *ConnectionGroup) GetApplicationFileSize ()(string, error) {
 
 func(np *ConnectionGroup) SetConnectionCloseDelay () error {
  //parameters: ConnectionGroupHandle ConnectionCloseDelay
- //AgtConnectionGroup SetConnectionCloseDelay, m.Object, m.Name);
+ //AgtConnectionGroup SetConnectionCloseDelay
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *ConnectionGroup) GetConnectionCloseDelay ()(string, error) {
 
 func(np *ConnectionGroup) SetConnectionTeardownType () error {
  //parameters: ConnectionGroupHandle ConnectionTeardownType
- //AgtConnectionGroup SetConnectionTeardownType, m.Object, m.Name);
+ //AgtConnectionGroup SetConnectionTeardownType
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *ConnectionGroup) GetConnectionTeardownType ()(string, error) {
 
 func(np *ConnectionGroup) SetTargetLoad () error {
  //parameters: ConnectionGroupHandle IsClientSide LoadUnits Load
- //AgtConnectionGroup SetTargetLoad, m.Object, m.Name);
+ //AgtConnectionGroup SetTargetLoad
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *ConnectionGroup) ListSupportedTcpParameters ()(string, error) {
 
 func(np *ConnectionGroup) SetTcpParameterValues () error {
  //parameters: ConnectionGroupHandle IsClientSide NumberOfTcpParameters psaTcpParameters NumberOfValues psaValues
- //AgtConnectionGroup SetTcpParameterValues, m.Object, m.Name);
+ //AgtConnectionGroup SetTcpParameterValues
  return nil
 }
 
@@ -168,25 +168,25 @@ func(np *ConnectionGroup) ListClientServerIpAddressPairs ()(string, error) {
 
 func(np *ConnectionGroup) Enable () error {
  //parameters: ConnectionGroupHandle
- //AgtConnectionGroup Enable, m.Object, m.Name);
+ //AgtConnectionGroup Enable
  return nil
 }
 
 func(np *ConnectionGroup) Disable () error {
  //parameters: ConnectionGroupHandle
- //AgtConnectionGroup Disable, m.Object, m.Name);
+ //AgtConnectionGroup Disable
  return nil
 }
 
 func(np *ConnectionGroup) IsEnabled () error {
  //parameters: ConnectionGroupHandle
- //AgtConnectionGroup IsEnabled, m.Object, m.Name);
+ //AgtConnectionGroup IsEnabled
  return nil
 }
 
 func(np *ConnectionGroup) SetNumberOfConnectionsPerSecond () error {
  //parameters: ConnectionGroupHandle NumberOfConnectionsPerSecond
- //AgtConnectionGroup SetNumberOfConnectionsPerSecond, m.Object, m.Name);
+ //AgtConnectionGroup SetNumberOfConnectionsPerSecond
  return nil
 }
 

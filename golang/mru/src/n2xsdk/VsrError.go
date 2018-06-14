@@ -6,19 +6,19 @@ type VsrError struct {
 
 func(np *VsrError) VsrErrorOn () error {
  //parameters: PortHandle VsrError
- //AgtVsrError VsrErrorOn, m.Object, m.Name);
+ //AgtVsrError VsrErrorOn
  return nil
 }
 
 func(np *VsrError) VsrErrorOff () error {
  //parameters: PortHandle VsrError
- //AgtVsrError VsrErrorOff, m.Object, m.Name);
+ //AgtVsrError VsrErrorOff
  return nil
 }
 
 func(np *VsrError) IsVsrErrorOn () error {
  //parameters: PortHandle VsrError
- //AgtVsrError IsVsrErrorOn, m.Object, m.Name);
+ //AgtVsrError IsVsrErrorOn
  return nil
 }
 

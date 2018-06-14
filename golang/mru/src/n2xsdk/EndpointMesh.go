@@ -24,25 +24,25 @@ func(np *EndpointMesh) GetLockCount ()(string, error) {
 
 func(np *EndpointMesh) Enable () error {
  //parameters: MeshHandle
- //AgtEndpointMesh Enable, m.Object, m.Name);
+ //AgtEndpointMesh Enable
  return nil
 }
 
 func(np *EndpointMesh) Disable () error {
  //parameters: MeshHandle
- //AgtEndpointMesh Disable, m.Object, m.Name);
+ //AgtEndpointMesh Disable
  return nil
 }
 
 func(np *EndpointMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtEndpointMesh IsEnabled, m.Object, m.Name);
+ //AgtEndpointMesh IsEnabled
  return nil
 }
 
 func(np *EndpointMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtEndpointMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtEndpointMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *EndpointMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *EndpointMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtEndpointMesh SetLengthMode, m.Object, m.Name);
+ //AgtEndpointMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *EndpointMesh) GetLengthMode ()(string, error) {
 
 func(np *EndpointMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtEndpointMesh SetLength, m.Object, m.Name);
+ //AgtEndpointMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *EndpointMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *EndpointMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtEndpointMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtEndpointMesh EnableStreamGeneration
  return nil
 }
 
 func(np *EndpointMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtEndpointMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtEndpointMesh DisableStreamGeneration
  return nil
 }
 
 func(np *EndpointMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtEndpointMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtEndpointMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *EndpointMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtEndpointMesh SetAverageLoad, m.Object, m.Name);
+ //AgtEndpointMesh SetAverageLoad
  return nil
 }
 
@@ -138,37 +138,37 @@ func(np *EndpointMesh) GetAverageLoad ()(string, error) {
 
 func(np *EndpointMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtEndpointMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtEndpointMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *EndpointMesh) AddSources () error {
  //parameters: MeshHandle NumSources psaSources
- //AgtEndpointMesh AddSources, m.Object, m.Name);
+ //AgtEndpointMesh AddSources
  return nil
 }
 
 func(np *EndpointMesh) RemoveSources () error {
  //parameters: MeshHandle NumSources psaSources
- //AgtEndpointMesh RemoveSources, m.Object, m.Name);
+ //AgtEndpointMesh RemoveSources
  return nil
 }
 
 func(np *EndpointMesh) AddDestinations () error {
  //parameters: MeshHandle NumDestinations psaDestinations
- //AgtEndpointMesh AddDestinations, m.Object, m.Name);
+ //AgtEndpointMesh AddDestinations
  return nil
 }
 
 func(np *EndpointMesh) RemoveDestinations () error {
  //parameters: MeshHandle NumDestinations psaDestinations
- //AgtEndpointMesh RemoveDestinations, m.Object, m.Name);
+ //AgtEndpointMesh RemoveDestinations
  return nil
 }
 
 func(np *EndpointMesh) SetEndpointTypes () error {
  //parameters: MeshHandle SourceType DestinationType
- //AgtEndpointMesh SetEndpointTypes, m.Object, m.Name);
+ //AgtEndpointMesh SetEndpointTypes
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *EndpointMesh) GetEndpointTypes ()(string, error) {
 
 func(np *EndpointMesh) SetTrafficDistribution () error {
  //parameters: MeshHandle Distribution
- //AgtEndpointMesh SetTrafficDistribution, m.Object, m.Name);
+ //AgtEndpointMesh SetTrafficDistribution
  return nil
 }
 
@@ -192,7 +192,7 @@ func(np *EndpointMesh) GetTrafficDistribution ()(string, error) {
 
 func(np *EndpointMesh) SetDeviceUnderTestType () error {
  //parameters: MeshHandle DutType
- //AgtEndpointMesh SetDeviceUnderTestType, m.Object, m.Name);
+ //AgtEndpointMesh SetDeviceUnderTestType
  return nil
 }
 
@@ -204,19 +204,19 @@ func(np *EndpointMesh) GetDeviceUnderTestType ()(string, error) {
 
 func(np *EndpointMesh) EnableFullMeshTransmitWithinPool () error {
  //parameters: MeshHandle
- //AgtEndpointMesh EnableFullMeshTransmitWithinPool, m.Object, m.Name);
+ //AgtEndpointMesh EnableFullMeshTransmitWithinPool
  return nil
 }
 
 func(np *EndpointMesh) DisableFullMeshTransmitWithinPool () error {
  //parameters: MeshHandle
- //AgtEndpointMesh DisableFullMeshTransmitWithinPool, m.Object, m.Name);
+ //AgtEndpointMesh DisableFullMeshTransmitWithinPool
  return nil
 }
 
 func(np *EndpointMesh) IsFullMeshTransmitWithinPoolEnabled () error {
  //parameters: MeshHandle
- //AgtEndpointMesh IsFullMeshTransmitWithinPoolEnabled, m.Object, m.Name);
+ //AgtEndpointMesh IsFullMeshTransmitWithinPoolEnabled
  return nil
 }
 
@@ -234,13 +234,13 @@ func(np *EndpointMesh) GetEndpointsForStreamGroup ()(string, error) {
 
 func(np *EndpointMesh) Refresh () error {
  //parameters: MeshHandle
- //AgtEndpointMesh Refresh, m.Object, m.Name);
+ //AgtEndpointMesh Refresh
  return nil
 }
 
 func(np *EndpointMesh) SetIpMode () error {
  //parameters: MeshHandle IpMode
- //AgtEndpointMesh SetIpMode, m.Object, m.Name);
+ //AgtEndpointMesh SetIpMode
  return nil
 }
 
@@ -252,19 +252,19 @@ func(np *EndpointMesh) GetIpMode ()(string, error) {
 
 func(np *EndpointMesh) EnableEmulationEncapsulation () error {
  //parameters: MeshHandle
- //AgtEndpointMesh EnableEmulationEncapsulation, m.Object, m.Name);
+ //AgtEndpointMesh EnableEmulationEncapsulation
  return nil
 }
 
 func(np *EndpointMesh) DisableEmulationEncapsulation () error {
  //parameters: MeshHandle
- //AgtEndpointMesh DisableEmulationEncapsulation, m.Object, m.Name);
+ //AgtEndpointMesh DisableEmulationEncapsulation
  return nil
 }
 
 func(np *EndpointMesh) IsEmulationEncapsulationEnabled () error {
  //parameters: MeshHandle
- //AgtEndpointMesh IsEmulationEncapsulationEnabled, m.Object, m.Name);
+ //AgtEndpointMesh IsEmulationEncapsulationEnabled
  return nil
 }
 

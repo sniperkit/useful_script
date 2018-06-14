@@ -6,7 +6,7 @@ type AncpServerOam struct {
 
 func(np *ncpServerOam) SetLoopbackCount () error {
  //parameters: SessionPoolHandle LoopbackCount
- //AgtAncpServerOam SetLoopbackCount, m.Object, m.Name);
+ //AgtAncpServerOam SetLoopbackCount
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *ncpServerOam) GetLoopbackCount ()(string, error) {
 
 func(np *ncpServerOam) SetLoopbackTimeout () error {
  //parameters: SessionPoolHandle LoopbackTimeout
- //AgtAncpServerOam SetLoopbackTimeout, m.Object, m.Name);
+ //AgtAncpServerOam SetLoopbackTimeout
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *ncpServerOam) GetLoopbackTimeout ()(string, error) {
 
 func(np *ncpServerOam) SetOpaqueData () error {
  //parameters: SessionPoolHandle FirstToken SecondToken
- //AgtAncpServerOam SetOpaqueData, m.Object, m.Name);
+ //AgtAncpServerOam SetOpaqueData
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *ncpServerOam) GetOpaqueData ()(string, error) {
 
 func(np *ncpServerOam) AddTlv () error {
  //parameters: SessionPoolHandle TlvType TlvLength TlvValue
- //AgtAncpServerOam AddTlv, m.Object, m.Name);
+ //AgtAncpServerOam AddTlv
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *ncpServerOam) ListTlvs ()(string, error) {
 
 func(np *ncpServerOam) RemoveTlv () error {
  //parameters: SessionPoolHandle TlvType
- //AgtAncpServerOam RemoveTlv, m.Object, m.Name);
+ //AgtAncpServerOam RemoveTlv
  return nil
 }
 
 func(np *ncpServerOam) RemoveAllTlvs () error {
  //parameters: SessionPoolHandle
- //AgtAncpServerOam RemoveAllTlvs, m.Object, m.Name);
+ //AgtAncpServerOam RemoveAllTlvs
  return nil
 }
 
 func(np *ncpServerOam) SetTlv () error {
  //parameters: SessionPoolHandle TlvType TlvLength TlvValue
- //AgtAncpServerOam SetTlv, m.Object, m.Name);
+ //AgtAncpServerOam SetTlv
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *ncpServerOam) GetTlv ()(string, error) {
 
 func(np *ncpServerOam) AddSubTlv () error {
  //parameters: SessionPoolHandle TlvType SubTlvType SubTlvLength SubTlvValue
- //AgtAncpServerOam AddSubTlv, m.Object, m.Name);
+ //AgtAncpServerOam AddSubTlv
  return nil
 }
 
@@ -90,19 +90,19 @@ func(np *ncpServerOam) ListSubTlvs ()(string, error) {
 
 func(np *ncpServerOam) RemoveSubTlv () error {
  //parameters: SessionPoolHandle TlvType SubTlvType
- //AgtAncpServerOam RemoveSubTlv, m.Object, m.Name);
+ //AgtAncpServerOam RemoveSubTlv
  return nil
 }
 
 func(np *ncpServerOam) RemoveAllSubTlvs () error {
  //parameters: SessionPoolHandle TlvType
- //AgtAncpServerOam RemoveAllSubTlvs, m.Object, m.Name);
+ //AgtAncpServerOam RemoveAllSubTlvs
  return nil
 }
 
 func(np *ncpServerOam) SetSubTlv () error {
  //parameters: SessionPoolHandle TlvType SubTlvType SubTlvLength SubTlvValue
- //AgtAncpServerOam SetSubTlv, m.Object, m.Name);
+ //AgtAncpServerOam SetSubTlv
  return nil
 }
 

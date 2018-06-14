@@ -6,19 +6,19 @@ type Bgp4VpnIpv6RouteProfile struct {
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableSourceAs () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableSourceAs, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableSourceAs
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableSourceAs () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableSourceAs, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableSourceAs
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsSourceAsEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsSourceAsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsSourceAsEnabled
  return nil
 }
 
@@ -30,31 +30,31 @@ func(np *Bgp4VpnIpv6RouteProfile) GetSourceAsType ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAutoSourceAs () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableAutoSourceAs, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAutoSourceAs
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAuto4ByteSourceAs () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableAuto4ByteSourceAs, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAuto4ByteSourceAs
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAutoSourceAs () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableAutoSourceAs, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAutoSourceAs
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAuto4ByteSourceAs () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableAuto4ByteSourceAs, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAuto4ByteSourceAs
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAutoSourceAsEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsAutoSourceAsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAutoSourceAsEnabled
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetSourceAsAuto ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAuto4ByteSourceAsEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsAuto4ByteSourceAsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAuto4ByteSourceAsEnabled
  return nil
 }
 
@@ -78,13 +78,13 @@ func(np *Bgp4VpnIpv6RouteProfile) Get4ByteSourceAsAuto ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetSourceAsIncrementingRange () error {
  //parameters: RouteProfileHandle First2ByteSourceAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4VpnIpv6RouteProfile SetSourceAsIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetSourceAsIncrementingRange
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteSourceAsIncrementingRange () error {
  //parameters: RouteProfileHandle First4ByteSourceAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4VpnIpv6RouteProfile Set4ByteSourceAsIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteSourceAsIncrementingRange
  return nil
 }
 
@@ -102,37 +102,37 @@ func(np *Bgp4VpnIpv6RouteProfile) Get4ByteSourceAsIncrementingRange ()(string, e
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableVrfImportRt () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableVrfImportRt, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableVrfImportRt
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableVrfImportRt () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableVrfImportRt, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableVrfImportRt
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsVrfImportRtEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsVrfImportRtEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsVrfImportRtEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAutoVrfRtPeAddress () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableAutoVrfRtPeAddress, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAutoVrfRtPeAddress
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAutoVrfRtPeAddress () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableAutoVrfRtPeAddress, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAutoVrfRtPeAddress
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAutoVrfRtPeAddressEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsAutoVrfRtPeAddressEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAutoVrfRtPeAddressEnabled
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetVrfRtPeAddressAuto ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetVrfRtPeAddressIncrementingRange () error {
  //parameters: RouteProfileHandle FirstRouteTarget PrefixLength RouteTargetIncrement RouteTargetRepeat
- //AgtBgp4VpnIpv6RouteProfile SetVrfRtPeAddressIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetVrfRtPeAddressIncrementingRange
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetVrfRtPeAddressIncrementingRange ()(string, 
 
 func(np *Bgp4VpnIpv6RouteProfile) SetVrfRtIdIncrementingRange () error {
  //parameters: RouteProfileHandle FirstRouteTargetId RouteTargetIncrement PercentOverlap
- //AgtBgp4VpnIpv6RouteProfile SetVrfRtIdIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetVrfRtIdIncrementingRange
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetVrfRtIdIncrementingRange ()(string, error) 
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRoutesPerVpn () error {
  //parameters: RouteProfileHandle NumRoutesPerVpn
- //AgtBgp4VpnIpv6RouteProfile SetRoutesPerVpn, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRoutesPerVpn
  return nil
 }
 
@@ -180,43 +180,43 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRoutesPerVpn ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) CreateMatchingVpnVrfPool () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile CreateMatchingVpnVrfPool, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile CreateMatchingVpnVrfPool
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableConnector () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableConnector, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableConnector
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableConnector () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableConnector, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableConnector
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsConnectorEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsConnectorEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsConnectorEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAutoConnectorIpAddress () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableAutoConnectorIpAddress, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAutoConnectorIpAddress
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAutoConnectorIpAddress () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableAutoConnectorIpAddress, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAutoConnectorIpAddress
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAutoConnectorIpAddressEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsAutoConnectorIpAddressEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAutoConnectorIpAddressEnabled
  return nil
 }
 
@@ -228,7 +228,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetConnectorIpAddressAuto ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetConnectorRouteDistinguisherIncrementingRange () error {
  //parameters: RouteProfileHandle FirstRouteDistinguisher RouteDistinguisherIncrement RouteDistinguisherRepeat PercentOverlap
- //AgtBgp4VpnIpv6RouteProfile SetConnectorRouteDistinguisherIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetConnectorRouteDistinguisherIncrementingRange
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetConnectorRouteDistinguisherIncrementingRang
 
 func(np *Bgp4VpnIpv6RouteProfile) SetConnectorIpAddressIncrementingRange () error {
  //parameters: RouteProfileHandle FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4VpnIpv6RouteProfile SetConnectorIpAddressIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetConnectorIpAddressIncrementingRange
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetConnectorIpAddressList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetConnectorRouteDistinguisher () error {
  //parameters: RouteProfileHandle RouteDistinguisher
- //AgtBgp4VpnIpv6RouteProfile SetConnectorRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetConnectorRouteDistinguisher
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetConnectorRouteDistinguisher ()(string, erro
 
 func(np *Bgp4VpnIpv6RouteProfile) SetConnectorIpAddress () error {
  //parameters: RouteProfileHandle IpAddress
- //AgtBgp4VpnIpv6RouteProfile SetConnectorIpAddress, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetConnectorIpAddress
  return nil
 }
 
@@ -300,7 +300,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetConnectorIpAddress ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetExportRouteTargetType () error {
  //parameters: RouteProfileHandle RouteTargetTypeValue
- //AgtBgp4VpnIpv6RouteProfile SetExportRouteTargetType, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetExportRouteTargetType
  return nil
 }
 
@@ -312,7 +312,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetExportRouteTargetType ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRouteDistinguisherType () error {
  //parameters: RouteProfileHandle RouteDistinguisherTypeValue
- //AgtBgp4VpnIpv6RouteProfile SetRouteDistinguisherType, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRouteDistinguisherType
  return nil
 }
 
@@ -324,25 +324,25 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRouteDistinguisherType ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAutoRouteDistinguisher () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableAutoRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAutoRouteDistinguisher
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAutoRouteDistinguisher () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableAutoRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAutoRouteDistinguisher
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAutoRouteDistinguisherEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsAutoRouteDistinguisherEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAutoRouteDistinguisherEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) SetVpnsPerPeer () error {
  //parameters: RouteProfileHandle NumVpnsPerPeer
- //AgtBgp4VpnIpv6RouteProfile SetVpnsPerPeer, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetVpnsPerPeer
  return nil
 }
 
@@ -360,7 +360,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetTotalNumberOfVpns ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetExportRouteTargetIncrementingRange () error {
  //parameters: RouteProfileHandle RouteTargetType FirstRouteTarget RouteTargetIncrement RouteTargetRepeat PercentOverlap
- //AgtBgp4VpnIpv6RouteProfile SetExportRouteTargetIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetExportRouteTargetIncrementingRange
  return nil
 }
 
@@ -384,7 +384,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetExportRouteTargetList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetExportRouteTarget () error {
  //parameters: RouteProfileHandle RouteTargetType RouteTarget
- //AgtBgp4VpnIpv6RouteProfile SetExportRouteTarget, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetExportRouteTarget
  return nil
 }
 
@@ -396,7 +396,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetExportRouteTarget ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRouteDistinguisherIncrementingRange () error {
  //parameters: RouteProfileHandle RouteDistinguisherType FirstRouteDistinguisher RouteDistinguisherIncrement RouteDistinguisherRepeat PercentOverlap
- //AgtBgp4VpnIpv6RouteProfile SetRouteDistinguisherIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRouteDistinguisherIncrementingRange
  return nil
 }
 
@@ -426,7 +426,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRouteDistinguisherList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRouteDistinguisher () error {
  //parameters: RouteProfileHandle RouteDistinguisherType RouteDistinguisher
- //AgtBgp4VpnIpv6RouteProfile SetRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRouteDistinguisher
  return nil
 }
 
@@ -438,7 +438,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRouteDistinguisher ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRoutesIncrementingRange () error {
  //parameters: RouteProfileHandle FirstRoute PrefixLengthIpv6 RouteIncrement PercentOverlap
- //AgtBgp4VpnIpv6RouteProfile SetRoutesIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRoutesIncrementingRange
  return nil
 }
 
@@ -450,7 +450,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRoutesIncrementingRange ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRoutesPrefixLength () error {
  //parameters: RouteProfileHandle PrefixLengthIpv6
- //AgtBgp4VpnIpv6RouteProfile SetRoutesPrefixLength, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRoutesPrefixLength
  return nil
 }
 
@@ -462,7 +462,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRoutesPrefixLength ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRoutesSubRangeOffsets () error {
  //parameters: RouteProfileHandle FirstRoute MsbOffsetList
- //AgtBgp4VpnIpv6RouteProfile SetRoutesSubRangeOffsets, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRoutesSubRangeOffsets
  return nil
 }
 
@@ -474,7 +474,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRoutesSubRangeOffsets ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRoutesSubRange () error {
  //parameters: RouteProfileHandle SubRangeInstance RouteIncrement Count Repeat
- //AgtBgp4VpnIpv6RouteProfile SetRoutesSubRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRoutesSubRange
  return nil
 }
 
@@ -486,25 +486,25 @@ func(np *Bgp4VpnIpv6RouteProfile) GetRoutesSubRange ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAutoPathAttribute () error {
  //parameters: RouteProfileHandle PathAttributeAuto
- //AgtBgp4VpnIpv6RouteProfile EnableAutoPathAttribute, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAutoPathAttribute
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAutoPathAttribute () error {
  //parameters: RouteProfileHandle PathAttributeAuto
- //AgtBgp4VpnIpv6RouteProfile DisableAutoPathAttribute, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAutoPathAttribute
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAutoPathAttributeEnabled () error {
  //parameters: RouteProfileHandle PathAttributeAuto
- //AgtBgp4VpnIpv6RouteProfile IsAutoPathAttributeEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAutoPathAttributeEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) SetNextHopIncrementingRange () error {
  //parameters: RouteProfileHandle FirstNextHop PrefixLength NextHopIncrement NextHopRepeat
- //AgtBgp4VpnIpv6RouteProfile SetNextHopIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetNextHopIncrementingRange
  return nil
 }
 
@@ -528,7 +528,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetNextHopList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetNextHop () error {
  //parameters: RouteProfileHandle NextHop
- //AgtBgp4VpnIpv6RouteProfile SetNextHop, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetNextHop
  return nil
 }
 
@@ -546,7 +546,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetNextHopAuto ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetLinkLocalNextHopIncrementingRange () error {
  //parameters: RouteProfileHandle FirstLinkLocalNextHop PrefixLength LinkLocalNextHopIncrement LinkLocalNextHopRepeat
- //AgtBgp4VpnIpv6RouteProfile SetLinkLocalNextHopIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetLinkLocalNextHopIncrementingRange
  return nil
 }
 
@@ -570,7 +570,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetLinkLocalNextHopList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetLinkLocalNextHop () error {
  //parameters: RouteProfileHandle LinkLocalNextHop
- //AgtBgp4VpnIpv6RouteProfile SetLinkLocalNextHop, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetLinkLocalNextHop
  return nil
 }
 
@@ -582,7 +582,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetLinkLocalNextHop ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetRoutesPerPeer () error {
  //parameters: RouteProfileHandle RoutesPerPeer
- //AgtBgp4VpnIpv6RouteProfile SetRoutesPerPeer, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetRoutesPerPeer
  return nil
 }
 
@@ -618,25 +618,25 @@ func(np *Bgp4VpnIpv6RouteProfile) GetNumWithdrawnRoutes ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableLabeling () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableLabeling, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableLabeling
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableLabeling () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableLabeling, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableLabeling
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsLabelingEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsLabelingEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsLabelingEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) SetLabelingMode () error {
  //parameters: RouteProfileHandle LabelingMode
- //AgtBgp4VpnIpv6RouteProfile SetLabelingMode, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetLabelingMode
  return nil
 }
 
@@ -648,7 +648,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetLabelingMode ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetUserLabelType () error {
  //parameters: RouteProfileHandle UserLabelType
- //AgtBgp4VpnIpv6RouteProfile SetUserLabelType, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetUserLabelType
  return nil
 }
 
@@ -660,7 +660,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetUserLabelType ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetUserLabelIncrementingRange () error {
  //parameters: RouteProfileHandle StartLabel LabelIncrement LabelRepeat
- //AgtBgp4VpnIpv6RouteProfile SetUserLabelIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetUserLabelIncrementingRange
  return nil
 }
 
@@ -684,7 +684,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetUserLabelList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetUserLabel () error {
  //parameters: RouteProfileHandle Label
- //AgtBgp4VpnIpv6RouteProfile SetUserLabel, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetUserLabel
  return nil
 }
 
@@ -720,91 +720,91 @@ func(np *Bgp4VpnIpv6RouteProfile) GetState ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) IsEnabled () error {
  //parameters: RouteProfileInstance
- //AgtBgp4VpnIpv6RouteProfile IsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile EnableAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Enable4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile Enable4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Enable4ByteAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile DisableAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Disable4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile Disable4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Disable4ByteAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAsPathEnabled () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile IsAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAsPathEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Is4ByteAsPathEnabled () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile Is4ByteAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Is4ByteAsPathEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAutoAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile EnableAutoAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAutoAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableAuto4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile EnableAuto4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableAuto4ByteAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAutoAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile DisableAutoAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAutoAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableAuto4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile DisableAuto4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableAuto4ByteAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAutoAsPathEnabled () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile IsAutoAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAutoAsPathEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsAuto4ByteAsPathEnabled () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4VpnIpv6RouteProfile IsAuto4ByteAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsAuto4ByteAsPathEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) SetAsPathIncrementingRange () error {
  //parameters: RouteProfileHandle AsPathAttributeType FirstAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4VpnIpv6RouteProfile SetAsPathIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetAsPathIncrementingRange
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteAsPathIncrementingRange () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType First4ByteAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4VpnIpv6RouteProfile Set4ByteAsPathIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteAsPathIncrementingRange
  return nil
 }
 
@@ -846,13 +846,13 @@ func(np *Bgp4VpnIpv6RouteProfile) Get4ByteAsPathList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType AsNumber
- //AgtBgp4VpnIpv6RouteProfile SetAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetAsPath
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType AsNumber
- //AgtBgp4VpnIpv6RouteProfile Set4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteAsPath
  return nil
 }
 
@@ -936,25 +936,25 @@ func(np *Bgp4VpnIpv6RouteProfile) Get4ByteAsPathAutoWithFormat ()(string, error)
 
 func(np *Bgp4VpnIpv6RouteProfile) EnablePathAttribute () error {
  //parameters: RouteProfileHandle PathAttribute
- //AgtBgp4VpnIpv6RouteProfile EnablePathAttribute, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnablePathAttribute
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisablePathAttribute () error {
  //parameters: RouteProfileHandle PathAttribute
- //AgtBgp4VpnIpv6RouteProfile DisablePathAttribute, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisablePathAttribute
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsPathAttributeEnabled () error {
  //parameters: RouteProfileHandle PathAttribute
- //AgtBgp4VpnIpv6RouteProfile IsPathAttributeEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsPathAttributeEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) SetOrigin () error {
  //parameters: RouteProfileHandle Origin
- //AgtBgp4VpnIpv6RouteProfile SetOrigin, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetOrigin
  return nil
 }
 
@@ -966,7 +966,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetOrigin ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetLocalPreference () error {
  //parameters: RouteProfileHandle LocalPreference
- //AgtBgp4VpnIpv6RouteProfile SetLocalPreference, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetLocalPreference
  return nil
 }
 
@@ -978,7 +978,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetLocalPreference ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetMultiExitDiscriminator () error {
  //parameters: RouteProfileHandle MultiExitDiscriminator
- //AgtBgp4VpnIpv6RouteProfile SetMultiExitDiscriminator, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetMultiExitDiscriminator
  return nil
 }
 
@@ -990,19 +990,19 @@ func(np *Bgp4VpnIpv6RouteProfile) GetMultiExitDiscriminator ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetAggregatorIncrementingRange () error {
  //parameters: RouteProfileHandle FirstAsNumber AsNumberIncrement AsNumberRepeat FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4VpnIpv6RouteProfile SetAggregatorIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetAggregatorIncrementingRange
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteAsAggregatorIncrementingRange () error {
  //parameters: RouteProfileHandle First4ByteAsNumber AsNumberIncrement AsNumberRepeat FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregatorIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregatorIncrementingRange
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteAsAggregatorIncrementingRangeWithFormat () error {
  //parameters: RouteProfileHandle FourByteFormatType First4ByteAsNumber AsNumberIncrement AsNumberRepeat FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregatorIncrementingRangeWithFormat, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregatorIncrementingRangeWithFormat
  return nil
 }
 
@@ -1062,19 +1062,19 @@ func(np *Bgp4VpnIpv6RouteProfile) Get4ByteAsAggregatorListWithFormat ()(string, 
 
 func(np *Bgp4VpnIpv6RouteProfile) SetAggregator () error {
  //parameters: RouteProfileHandle AsNumber IpAddress
- //AgtBgp4VpnIpv6RouteProfile SetAggregator, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetAggregator
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteAsAggregator () error {
  //parameters: RouteProfileHandle AsNumber IpAddress
- //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregator, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregator
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Set4ByteAsAggregatorWithFormat () error {
  //parameters: RouteProfileHandle FourByteFormatType AsNumber IpAddress
- //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregatorWithFormat, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Set4ByteAsAggregatorWithFormat
  return nil
 }
 
@@ -1116,7 +1116,7 @@ func(np *Bgp4VpnIpv6RouteProfile) Get4ByteAggregatorAutoWithFormat ()(string, er
 
 func(np *Bgp4VpnIpv6RouteProfile) SetOriginatorIdIncrementingRange () error {
  //parameters: RouteProfileHandle FirstOriginatorId PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4VpnIpv6RouteProfile SetOriginatorIdIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetOriginatorIdIncrementingRange
  return nil
 }
 
@@ -1140,7 +1140,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetOriginatorIdList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetOriginatorId () error {
  //parameters: RouteProfileHandle OriginatorId
- //AgtBgp4VpnIpv6RouteProfile SetOriginatorId, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetOriginatorId
  return nil
 }
 
@@ -1176,7 +1176,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetClusterListAuto ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetCommunities () error {
  //parameters: RouteProfileHandle CommunitiesList
- //AgtBgp4VpnIpv6RouteProfile SetCommunities, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetCommunities
  return nil
 }
 
@@ -1188,7 +1188,7 @@ func(np *Bgp4VpnIpv6RouteProfile) GetCommunities ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) SetCommunitiesIncrementingRange () error {
  //parameters: RouteProfileHandle CommunitiesList CommunityIncrement CommunityRepeat
- //AgtBgp4VpnIpv6RouteProfile SetCommunitiesIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetCommunitiesIncrementingRange
  return nil
 }
 
@@ -1212,25 +1212,25 @@ func(np *Bgp4VpnIpv6RouteProfile) GetCommunitiesList ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) EnableTrafficDestinations () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile EnableTrafficDestinations, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile EnableTrafficDestinations
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) DisableTrafficDestinations () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile DisableTrafficDestinations, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile DisableTrafficDestinations
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) IsTrafficDestinationsEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile IsTrafficDestinationsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile IsTrafficDestinationsEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) SetFlapDistribution () error {
  //parameters: RouteProfileHandle FlapPercentage FlapOffset
- //AgtBgp4VpnIpv6RouteProfile SetFlapDistribution, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile SetFlapDistribution
  return nil
 }
 
@@ -1242,25 +1242,25 @@ func(np *Bgp4VpnIpv6RouteProfile) GetFlapDistribution ()(string, error) {
 
 func(np *Bgp4VpnIpv6RouteProfile) Advertise () error {
  //parameters: RouteProfileIdentifiers
- //AgtBgp4VpnIpv6RouteProfile Advertise, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Advertise
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Withdraw () error {
  //parameters: RouteProfileIdentifiers
- //AgtBgp4VpnIpv6RouteProfile Withdraw, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Withdraw
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Enable () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile Enable, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Enable
  return nil
 }
 
 func(np *Bgp4VpnIpv6RouteProfile) Disable () error {
  //parameters: RouteProfileHandle
- //AgtBgp4VpnIpv6RouteProfile Disable, m.Object, m.Name);
+ //AgtBgp4VpnIpv6RouteProfile Disable
  return nil
 }
 

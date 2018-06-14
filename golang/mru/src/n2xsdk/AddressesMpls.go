@@ -6,13 +6,13 @@ type AddressesMpls struct {
 
 func(np *ddressesMpls) AddTxLabel () error {
  //parameters: DeviceHandle
- //AgtAddressesMpls AddTxLabel, m.Object, m.Name);
+ //AgtAddressesMpls AddTxLabel
  return nil
 }
 
 func(np *ddressesMpls) RemoveTxLabel () error {
  //parameters: DeviceHandle LabelIndex
- //AgtAddressesMpls RemoveTxLabel, m.Object, m.Name);
+ //AgtAddressesMpls RemoveTxLabel
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *ddressesMpls) GetTxLabelOption ()(string, error) {
 
 func(np *ddressesMpls) SetTxLabelValueIncrementingRange () error {
  //parameters: DeviceHandle LabelIndex FirstLabelValue LabelValueIncrement LabelValueRepeat
- //AgtAddressesMpls SetTxLabelValueIncrementingRange, m.Object, m.Name);
+ //AgtAddressesMpls SetTxLabelValueIncrementingRange
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *ddressesMpls) GetTxLabelValueList ()(string, error) {
 
 func(np *ddressesMpls) SetTxLabelValue () error {
  //parameters: DeviceHandle LabelIndex LabelValue
- //AgtAddressesMpls SetTxLabelValue, m.Object, m.Name);
+ //AgtAddressesMpls SetTxLabelValue
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *ddressesMpls) GetTxLabelValue ()(string, error) {
 
 func(np *ddressesMpls) SetTxLabelExp () error {
  //parameters: DeviceHandle LabelIndex LabelExp
- //AgtAddressesMpls SetTxLabelExp, m.Object, m.Name);
+ //AgtAddressesMpls SetTxLabelExp
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *ddressesMpls) GetTxLabelExp ()(string, error) {
 
 func(np *ddressesMpls) SetTxLabelTtl () error {
  //parameters: DeviceHandle LabelIndex LabelTtl
- //AgtAddressesMpls SetTxLabelTtl, m.Object, m.Name);
+ //AgtAddressesMpls SetTxLabelTtl
  return nil
 }
 
@@ -90,19 +90,19 @@ func(np *ddressesMpls) GetTxLabelTtl ()(string, error) {
 
 func(np *ddressesMpls) EnableRxLabel () error {
  //parameters: DeviceHandle
- //AgtAddressesMpls EnableRxLabel, m.Object, m.Name);
+ //AgtAddressesMpls EnableRxLabel
  return nil
 }
 
 func(np *ddressesMpls) DisableRxLabel () error {
  //parameters: DeviceHandle
- //AgtAddressesMpls DisableRxLabel, m.Object, m.Name);
+ //AgtAddressesMpls DisableRxLabel
  return nil
 }
 
 func(np *ddressesMpls) IsRxLabelEnabled () error {
  //parameters: DeviceHandle
- //AgtAddressesMpls IsRxLabelEnabled, m.Object, m.Name);
+ //AgtAddressesMpls IsRxLabelEnabled
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *ddressesMpls) GetRxLabelOption ()(string, error) {
 
 func(np *ddressesMpls) SetRxLabelValueIncrementingRange () error {
  //parameters: DeviceHandle FirstLabelValue LabelValueIncrement LabelValueRepeat
- //AgtAddressesMpls SetRxLabelValueIncrementingRange, m.Object, m.Name);
+ //AgtAddressesMpls SetRxLabelValueIncrementingRange
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *ddressesMpls) GetRxLabelValueList ()(string, error) {
 
 func(np *ddressesMpls) SetRxLabelValue () error {
  //parameters: DeviceHandle LabelValue
- //AgtAddressesMpls SetRxLabelValue, m.Object, m.Name);
+ //AgtAddressesMpls SetRxLabelValue
  return nil
 }
 

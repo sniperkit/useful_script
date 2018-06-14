@@ -24,19 +24,19 @@ func(np *Gateway) ListEmulationsByType ()(string, error) {
 
 func(np *Gateway) AddEmulation () error {
  //parameters: DeviceHandle EmulationType
- //AgtGateway AddEmulation, m.Object, m.Name);
+ //AgtGateway AddEmulation
  return nil
 }
 
 func(np *Gateway) RemoveEmulation () error {
  //parameters: EmulationHandles
- //AgtGateway RemoveEmulation, m.Object, m.Name);
+ //AgtGateway RemoveEmulation
  return nil
 }
 
 func(np *Gateway) RemoveEmulationsByType () error {
  //parameters: DeviceHandle EmulationType
- //AgtGateway RemoveEmulationsByType, m.Object, m.Name);
+ //AgtGateway RemoveEmulationsByType
  return nil
 }
 

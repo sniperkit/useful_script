@@ -6,7 +6,7 @@ type IgmpQuerierPool struct {
 
 func(np *IgmpQuerierPool) SetVersion () error {
  //parameters: DeviceHandle IgmpVersion
- //AgtIgmpQuerierPool SetVersion, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetVersion
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *IgmpQuerierPool) GetVersion ()(string, error) {
 
 func(np *IgmpQuerierPool) SetParameter () error {
  //parameters: DeviceHandle Parameter Value
- //AgtIgmpQuerierPool SetParameter, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetParameter
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *IgmpQuerierPool) GetInfo ()(string, error) {
 
 func(np *IgmpQuerierPool) SetGeneralQueryInterval () error {
  //parameters: DeviceHandle QueryInterval
- //AgtIgmpQuerierPool SetGeneralQueryInterval, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetGeneralQueryInterval
  return nil
 }
 
@@ -48,19 +48,19 @@ func(np *IgmpQuerierPool) GetGeneralQueryInterval ()(string, error) {
 
 func(np *IgmpQuerierPool) AddGroupQueryMessage () error {
  //parameters: DeviceHandle GroupPoolHandles
- //AgtIgmpQuerierPool AddGroupQueryMessage, m.Object, m.Name);
+ //AgtIgmpQuerierPool AddGroupQueryMessage
  return nil
 }
 
 func(np *IgmpQuerierPool) RemoveGroupQueryMessage () error {
  //parameters: DeviceHandle GroupPoolHandle
- //AgtIgmpQuerierPool RemoveGroupQueryMessage, m.Object, m.Name);
+ //AgtIgmpQuerierPool RemoveGroupQueryMessage
  return nil
 }
 
 func(np *IgmpQuerierPool) RemoveAllQueryMessages () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool RemoveAllQueryMessages, m.Object, m.Name);
+ //AgtIgmpQuerierPool RemoveAllQueryMessages
  return nil
 }
 
@@ -72,19 +72,19 @@ func(np *IgmpQuerierPool) ListGroupQueryMessages ()(string, error) {
 
 func(np *IgmpQuerierPool) AddSourcePools () error {
  //parameters: DeviceHandle GroupPoolHandle SourcePoolHandles
- //AgtIgmpQuerierPool AddSourcePools, m.Object, m.Name);
+ //AgtIgmpQuerierPool AddSourcePools
  return nil
 }
 
 func(np *IgmpQuerierPool) RemoveSourcePools () error {
  //parameters: DeviceHandle GroupPoolHandle SourcePoolHandles
- //AgtIgmpQuerierPool RemoveSourcePools, m.Object, m.Name);
+ //AgtIgmpQuerierPool RemoveSourcePools
  return nil
 }
 
 func(np *IgmpQuerierPool) RemoveAllSourcePools () error {
  //parameters: DeviceHandle GroupPoolHandle
- //AgtIgmpQuerierPool RemoveAllSourcePools, m.Object, m.Name);
+ //AgtIgmpQuerierPool RemoveAllSourcePools
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *IgmpQuerierPool) GetNumberOfSourcesInGroupPool ()(string, error) {
 
 func(np *IgmpQuerierPool) SetGroupQueryParameters () error {
  //parameters: DeviceHandle GroupPoolHandle Lmqi Lmqc
- //AgtIgmpQuerierPool SetGroupQueryParameters, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetGroupQueryParameters
  return nil
 }
 
@@ -114,43 +114,43 @@ func(np *IgmpQuerierPool) GetGroupQueryParameters ()(string, error) {
 
 func(np *IgmpQuerierPool) StartGeneralQueryMessage () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool StartGeneralQueryMessage, m.Object, m.Name);
+ //AgtIgmpQuerierPool StartGeneralQueryMessage
  return nil
 }
 
 func(np *IgmpQuerierPool) StopGeneralQueryMessage () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool StopGeneralQueryMessage, m.Object, m.Name);
+ //AgtIgmpQuerierPool StopGeneralQueryMessage
  return nil
 }
 
 func(np *IgmpQuerierPool) IsGeneralQueryRunning () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool IsGeneralQueryRunning, m.Object, m.Name);
+ //AgtIgmpQuerierPool IsGeneralQueryRunning
  return nil
 }
 
 func(np *IgmpQuerierPool) StartGroupQueryMessages () error {
  //parameters: DeviceHandle GroupPoolHandle
- //AgtIgmpQuerierPool StartGroupQueryMessages, m.Object, m.Name);
+ //AgtIgmpQuerierPool StartGroupQueryMessages
  return nil
 }
 
 func(np *IgmpQuerierPool) StartAllQueryMessages () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool StartAllQueryMessages, m.Object, m.Name);
+ //AgtIgmpQuerierPool StartAllQueryMessages
  return nil
 }
 
 func(np *IgmpQuerierPool) StopGroupQueryMessages () error {
  //parameters: DeviceHandle GroupPoolHandle
- //AgtIgmpQuerierPool StopGroupQueryMessages, m.Object, m.Name);
+ //AgtIgmpQuerierPool StopGroupQueryMessages
  return nil
 }
 
 func(np *IgmpQuerierPool) StopAllQueryMessages () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool StopAllQueryMessages, m.Object, m.Name);
+ //AgtIgmpQuerierPool StopAllQueryMessages
  return nil
 }
 
@@ -162,19 +162,19 @@ func(np *IgmpQuerierPool) ListGroupQueryMessagesRunning ()(string, error) {
 
 func(np *IgmpQuerierPool) IsGroupQueryRunning () error {
  //parameters: DeviceHandle GroupPoolHandle
- //AgtIgmpQuerierPool IsGroupQueryRunning, m.Object, m.Name);
+ //AgtIgmpQuerierPool IsGroupQueryRunning
  return nil
 }
 
 func(np *IgmpQuerierPool) IsIpv4PriorityNoCodePointFieldSelected () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool IsIpv4PriorityNoCodePointFieldSelected, m.Object, m.Name);
+ //AgtIgmpQuerierPool IsIpv4PriorityNoCodePointFieldSelected
  return nil
 }
 
 func(np *IgmpQuerierPool) SelectIpv4PriorityNoCodePointField () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool SelectIpv4PriorityNoCodePointField, m.Object, m.Name);
+ //AgtIgmpQuerierPool SelectIpv4PriorityNoCodePointField
  return nil
 }
 
@@ -186,19 +186,19 @@ func(np *IgmpQuerierPool) GetIpv4Priority ()(string, error) {
 
 func(np *IgmpQuerierPool) SetIpv4Priority () error {
  //parameters: DeviceHandle Ipv4Priority
- //AgtIgmpQuerierPool SetIpv4Priority, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetIpv4Priority
  return nil
 }
 
 func(np *IgmpQuerierPool) IsIpv4PriorityTypeOfServiceFieldSelected () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool IsIpv4PriorityTypeOfServiceFieldSelected, m.Object, m.Name);
+ //AgtIgmpQuerierPool IsIpv4PriorityTypeOfServiceFieldSelected
  return nil
 }
 
 func(np *IgmpQuerierPool) SelectIpv4PriorityTypeOfServiceField () error {
  //parameters: DeviceHandle
- //AgtIgmpQuerierPool SelectIpv4PriorityTypeOfServiceField, m.Object, m.Name);
+ //AgtIgmpQuerierPool SelectIpv4PriorityTypeOfServiceField
  return nil
 }
 
@@ -210,19 +210,19 @@ func(np *IgmpQuerierPool) GetIpv4PriorityTypeOfServiceValue ()(string, error) {
 
 func(np *IgmpQuerierPool) SetIpv4PriorityTypeOfServiceValue () error {
  //parameters: DeviceHandle TosCodePointField Value
- //AgtIgmpQuerierPool SetIpv4PriorityTypeOfServiceValue, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetIpv4PriorityTypeOfServiceValue
  return nil
 }
 
 func(np *IgmpQuerierPool) IsIpv4PriorityDiffServFieldSelected () error {
  //parameters: DeviceHandle DiffServPerHopBehaviorGroup
- //AgtIgmpQuerierPool IsIpv4PriorityDiffServFieldSelected, m.Object, m.Name);
+ //AgtIgmpQuerierPool IsIpv4PriorityDiffServFieldSelected
  return nil
 }
 
 func(np *IgmpQuerierPool) SelectIpv4PriorityDiffServField () error {
  //parameters: DeviceHandle DiffServPerHopBehaviorGroup
- //AgtIgmpQuerierPool SelectIpv4PriorityDiffServField, m.Object, m.Name);
+ //AgtIgmpQuerierPool SelectIpv4PriorityDiffServField
  return nil
 }
 
@@ -234,7 +234,7 @@ func(np *IgmpQuerierPool) GetIpv4PriorityDiffServValue ()(string, error) {
 
 func(np *IgmpQuerierPool) SetIpv4PriorityDiffServValue () error {
  //parameters: DeviceHandle DiffServCodePointConfigurableField Value
- //AgtIgmpQuerierPool SetIpv4PriorityDiffServValue, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetIpv4PriorityDiffServValue
  return nil
 }
 
@@ -246,7 +246,7 @@ func(np *IgmpQuerierPool) GetVlanPriority ()(string, error) {
 
 func(np *IgmpQuerierPool) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtIgmpQuerierPool SetVlanPriority, m.Object, m.Name);
+ //AgtIgmpQuerierPool SetVlanPriority
  return nil
 }
 

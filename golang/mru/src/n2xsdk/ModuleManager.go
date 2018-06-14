@@ -12,37 +12,37 @@ func(np *ModuleManager) GetSystemState ()(string, error) {
 
 func(np *ModuleManager) RebootAllModules () error {
  //parameters: 
- //AgtModuleManager RebootAllModules, m.Object, m.Name);
+ //AgtModuleManager RebootAllModules
  return nil
 }
 
 func(np *ModuleManager) UpdateModules () error {
  //parameters: 
- //AgtModuleManager UpdateModules, m.Object, m.Name);
+ //AgtModuleManager UpdateModules
  return nil
 }
 
 func(np *ModuleManager) DisableAutoUpdate () error {
  //parameters: 
- //AgtModuleManager DisableAutoUpdate, m.Object, m.Name);
+ //AgtModuleManager DisableAutoUpdate
  return nil
 }
 
 func(np *ModuleManager) EnableAutoUpdate () error {
  //parameters: 
- //AgtModuleManager EnableAutoUpdate, m.Object, m.Name);
+ //AgtModuleManager EnableAutoUpdate
  return nil
 }
 
 func(np *ModuleManager) IsAutoUpdateEnabled () error {
  //parameters: 
- //AgtModuleManager IsAutoUpdateEnabled, m.Object, m.Name);
+ //AgtModuleManager IsAutoUpdateEnabled
  return nil
 }
 
 func(np *ModuleManager) UseSingleModule () error {
  //parameters: SerialNumber
- //AgtModuleManager UseSingleModule, m.Object, m.Name);
+ //AgtModuleManager UseSingleModule
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *ModuleManager) GetChassisSlotNumber ()(string, error) {
 
 func(np *ModuleManager) SetModuleAnnotation () error {
  //parameters: SerialNumber ModuleAnnotation
- //AgtModuleManager SetModuleAnnotation, m.Object, m.Name);
+ //AgtModuleManager SetModuleAnnotation
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *ModuleManager) GetModuleAnnotation ()(string, error) {
 
 func(np *ModuleManager) IsDummyModule () error {
  //parameters: SerialNumber
- //AgtModuleManager IsDummyModule, m.Object, m.Name);
+ //AgtModuleManager IsDummyModule
  return nil
 }
 
@@ -174,25 +174,25 @@ func(np *ModuleManager) GetModuleLock ()(string, error) {
 
 func(np *ModuleManager) UnlockModule () error {
  //parameters: SerialNumber
- //AgtModuleManager UnlockModule, m.Object, m.Name);
+ //AgtModuleManager UnlockModule
  return nil
 }
 
 func(np *ModuleManager) RebootModule () error {
  //parameters: SerialNumber
- //AgtModuleManager RebootModule, m.Object, m.Name);
+ //AgtModuleManager RebootModule
  return nil
 }
 
 func(np *ModuleManager) FlashModuleLEDs () error {
  //parameters: SerialNumber
- //AgtModuleManager FlashModuleLEDs, m.Object, m.Name);
+ //AgtModuleManager FlashModuleLEDs
  return nil
 }
 
 func(np *ModuleManager) ShowIpAddresses () error {
  //parameters: 
- //AgtModuleManager ShowIpAddresses, m.Object, m.Name);
+ //AgtModuleManager ShowIpAddresses
  return nil
 }
 
@@ -216,19 +216,19 @@ func(np *ModuleManager) ListChassisRequiringUpgrade ()(string, error) {
 
 func(np *ModuleManager) RebootPort () error {
  //parameters: SerialNumber PortNumber
- //AgtModuleManager RebootPort, m.Object, m.Name);
+ //AgtModuleManager RebootPort
  return nil
 }
 
 func(np *ModuleManager) IsMultiUserChassisSupported () error {
  //parameters: ChassisNumber
- //AgtModuleManager IsMultiUserChassisSupported, m.Object, m.Name);
+ //AgtModuleManager IsMultiUserChassisSupported
  return nil
 }
 
 func(np *ModuleManager) IsMultiUserChassisEnabled () error {
  //parameters: ChassisNumber
- //AgtModuleManager IsMultiUserChassisEnabled, m.Object, m.Name);
+ //AgtModuleManager IsMultiUserChassisEnabled
  return nil
 }
 

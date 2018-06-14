@@ -6,7 +6,7 @@ type IntMeasurementAnalysisSystem struct {
 
 func(np *IntMeasurementAnalysisSystem) DataSourceAvailable () error {
  //parameters: ViewHandle
- //IntMeasurementAnalysisSystem DataSourceAvailable, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem DataSourceAvailable
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *IntMeasurementAnalysisSystem) GetHelpDirectory ()(string, error) {
 
 func(np *IntMeasurementAnalysisSystem) FindKeyByBeginWith () error {
  //parameters: ViewHandle columnName value
- //IntMeasurementAnalysisSystem FindKeyByBeginWith, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem FindKeyByBeginWith
  return nil
 }
 
 func(np *IntMeasurementAnalysisSystem) FindKeyByValue () error {
  //parameters: ViewHandle columnName value
- //IntMeasurementAnalysisSystem FindKeyByValue, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem FindKeyByValue
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *IntMeasurementAnalysisSystem) GetTableProperties ()(string, error) {
 
 func(np *IntMeasurementAnalysisSystem) SetSortOrder () error {
  //parameters: ViewHandle sortOrder
- //IntMeasurementAnalysisSystem SetSortOrder, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem SetSortOrder
  return nil
 }
 
@@ -78,19 +78,19 @@ func(np *IntMeasurementAnalysisSystem) GetNamedFilters ()(string, error) {
 
 func(np *IntMeasurementAnalysisSystem) AddNamedFilter () error {
  //parameters: name NamedFilterBytes
- //IntMeasurementAnalysisSystem AddNamedFilter, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem AddNamedFilter
  return nil
 }
 
 func(np *IntMeasurementAnalysisSystem) Subscribe () error {
  //parameters: eventSink
- //IntMeasurementAnalysisSystem Subscribe, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem Subscribe
  return nil
 }
 
 func(np *IntMeasurementAnalysisSystem) Unsubscribe () error {
  //parameters: eventSink
- //IntMeasurementAnalysisSystem Unsubscribe, m.Object, m.Name);
+ //IntMeasurementAnalysisSystem Unsubscribe
  return nil
 }
 

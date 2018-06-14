@@ -18,7 +18,7 @@ func(np *SonetStatus) GetStatusDescription ()(string, error) {
 
 func(np *SonetStatus) SaveStatus () error {
  //parameters: PortHandle LogFile
- //AgtSonetStatus SaveStatus, m.Object, m.Name);
+ //AgtSonetStatus SaveStatus
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *SonetStatus) GetStatusSummaryDescription ()(string, error) {
 
 func(np *SonetStatus) SaveStatusSummary () error {
  //parameters: LogFile
- //AgtSonetStatus SaveStatusSummary, m.Object, m.Name);
+ //AgtSonetStatus SaveStatusSummary
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *SonetStatus) GetStatusHistoryDescription ()(string, error) {
 
 func(np *SonetStatus) SaveStatusHistory () error {
  //parameters: LogFile
- //AgtSonetStatus SaveStatusHistory, m.Object, m.Name);
+ //AgtSonetStatus SaveStatusHistory
  return nil
 }
 
 func(np *SonetStatus) ClearHistory () error {
  //parameters: 
- //AgtSonetStatus ClearHistory, m.Object, m.Name);
+ //AgtSonetStatus ClearHistory
  return nil
 }
 
 func(np *SonetStatus) SetHistorySize () error {
  //parameters: HistorySize
- //AgtSonetStatus SetHistorySize, m.Object, m.Name);
+ //AgtSonetStatus SetHistorySize
  return nil
 }
 

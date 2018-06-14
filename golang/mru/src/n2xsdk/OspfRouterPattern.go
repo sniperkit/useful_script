@@ -6,7 +6,7 @@ type OspfRouterPattern struct {
 
 func(np *OspfRouterPattern) IsNumberedLinksEnabled () error {
  //parameters: TopologyHandle
- //AgtOspfRouterPattern IsNumberedLinksEnabled, m.Object, m.Name);
+ //AgtOspfRouterPattern IsNumberedLinksEnabled
  return nil
 }
 

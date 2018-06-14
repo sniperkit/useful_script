@@ -24,7 +24,7 @@ func(np *NdpAddressAutoconfigHostStatistics) GetStatisticsUpdateCount ()(string,
 
 func(np *NdpAddressAutoconfigHostStatistics) ClearStatistics () error {
  //parameters: DevicePoolHandle
- //AgtNdpAddressAutoconfigHostStatistics ClearStatistics, m.Object, m.Name);
+ //AgtNdpAddressAutoconfigHostStatistics ClearStatistics
  return nil
 }
 

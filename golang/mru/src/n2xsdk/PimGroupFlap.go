@@ -6,7 +6,7 @@ type PimGroupFlap struct {
 
 func(np *PimGroupFlap) SetFlapTimers () error {
  //parameters: SessionHandle MembershipPoolHandle JoinToLeaveDelay LeaveToJoinDelay
- //AgtPimGroupFlap SetFlapTimers, m.Object, m.Name);
+ //AgtPimGroupFlap SetFlapTimers
  return nil
 }
 
@@ -18,79 +18,79 @@ func(np *PimGroupFlap) GetFlapTimers ()(string, error) {
 
 func(np *PimGroupFlap) StartFlap () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap StartFlap, m.Object, m.Name);
+ //AgtPimGroupFlap StartFlap
  return nil
 }
 
 func(np *PimGroupFlap) StopFlap () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap StopFlap, m.Object, m.Name);
+ //AgtPimGroupFlap StopFlap
  return nil
 }
 
 func(np *PimGroupFlap) StartAllFlapsInSession () error {
  //parameters: SessionHandle
- //AgtPimGroupFlap StartAllFlapsInSession, m.Object, m.Name);
+ //AgtPimGroupFlap StartAllFlapsInSession
  return nil
 }
 
 func(np *PimGroupFlap) StopAllFlapsInSession () error {
  //parameters: SessionHandle
- //AgtPimGroupFlap StopAllFlapsInSession, m.Object, m.Name);
+ //AgtPimGroupFlap StopAllFlapsInSession
  return nil
 }
 
 func(np *PimGroupFlap) StartAllFlaps () error {
  //parameters: 
- //AgtPimGroupFlap StartAllFlaps, m.Object, m.Name);
+ //AgtPimGroupFlap StartAllFlaps
  return nil
 }
 
 func(np *PimGroupFlap) StopAllFlaps () error {
  //parameters: 
- //AgtPimGroupFlap StopAllFlaps, m.Object, m.Name);
+ //AgtPimGroupFlap StopAllFlaps
  return nil
 }
 
 func(np *PimGroupFlap) Cancel () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap Cancel, m.Object, m.Name);
+ //AgtPimGroupFlap Cancel
  return nil
 }
 
 func(np *PimGroupFlap) CancelAllInSession () error {
  //parameters: SessionHandle
- //AgtPimGroupFlap CancelAllInSession, m.Object, m.Name);
+ //AgtPimGroupFlap CancelAllInSession
  return nil
 }
 
 func(np *PimGroupFlap) CancelAll () error {
  //parameters: 
- //AgtPimGroupFlap CancelAll, m.Object, m.Name);
+ //AgtPimGroupFlap CancelAll
  return nil
 }
 
 func(np *PimGroupFlap) IsPoolAvailableForAction () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap IsPoolAvailableForAction, m.Object, m.Name);
+ //AgtPimGroupFlap IsPoolAvailableForAction
  return nil
 }
 
 func(np *PimGroupFlap) IsPoolAvailableForCancel () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap IsPoolAvailableForCancel, m.Object, m.Name);
+ //AgtPimGroupFlap IsPoolAvailableForCancel
  return nil
 }
 
 func(np *PimGroupFlap) EnableFlapFlag () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap EnableFlapFlag, m.Object, m.Name);
+ //AgtPimGroupFlap EnableFlapFlag
  return nil
 }
 
 func(np *PimGroupFlap) DisableFlapFlag () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimGroupFlap DisableFlapFlag, m.Object, m.Name);
+ //AgtPimGroupFlap DisableFlapFlag
  return nil
 }
 

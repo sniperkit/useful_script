@@ -6,7 +6,7 @@ type ActionControl struct {
 
 func(np *ctionControl) StartConstantRate () error {
  //parameters: InstanceCount Interval Object Method Parameters
- //AgtActionControl StartConstantRate, m.Object, m.Name);
+ //AgtActionControl StartConstantRate
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *ctionControl) GetState ()(string, error) {
 
 func(np *ctionControl) Cancel () error {
  //parameters: Handle
- //AgtActionControl Cancel, m.Object, m.Name);
+ //AgtActionControl Cancel
  return nil
 }
 
 func(np *ctionControl) IsSupported () error {
  //parameters: Object Method
- //AgtActionControl IsSupported, m.Object, m.Name);
+ //AgtActionControl IsSupported
  return nil
 }
 

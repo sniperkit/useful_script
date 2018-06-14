@@ -6,25 +6,25 @@ type SipIpv4UserAgentPool struct {
 
 func(np *SipIpv4UserAgentPool) IsNetworkAddressTranslationEnabled () error {
  //parameters: DeviceHandle
- //AgtSipIpv4UserAgentPool IsNetworkAddressTranslationEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsNetworkAddressTranslationEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableNetworkAddressTranslation () error {
  //parameters: DeviceHandle
- //AgtSipIpv4UserAgentPool EnableNetworkAddressTranslation, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableNetworkAddressTranslation
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableNetworkAddressTranslation () error {
  //parameters: DeviceHandle
- //AgtSipIpv4UserAgentPool DisableNetworkAddressTranslation, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableNetworkAddressTranslation
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetNatedInternaIpv4AddressRange () error {
  //parameters: DeviceHandle Ipv4Address Increment Repeat
- //AgtSipIpv4UserAgentPool SetNatedInternaIpv4AddressRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetNatedInternaIpv4AddressRange
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *SipIpv4UserAgentPool) GetNatedInternaIpv4AddressRange ()(string, error)
 
 func(np *SipIpv4UserAgentPool) SetNatedExternalIpv4AddressRange () error {
  //parameters: DeviceHandle Ipv4Address Increment Repeat
- //AgtSipIpv4UserAgentPool SetNatedExternalIpv4AddressRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetNatedExternalIpv4AddressRange
  return nil
 }
 
@@ -48,43 +48,43 @@ func(np *SipIpv4UserAgentPool) GetNatedExternalIpv4AddressRange ()(string, error
 
 func(np *SipIpv4UserAgentPool) EstablishSession () error {
  //parameters: DeviceOrSession
- //AgtSipIpv4UserAgentPool EstablishSession, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EstablishSession
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) TerminateSession () error {
  //parameters: DeviceOrSession
- //AgtSipIpv4UserAgentPool TerminateSession, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool TerminateSession
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) RegisterSession () error {
  //parameters: DeviceOrSession
- //AgtSipIpv4UserAgentPool RegisterSession, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool RegisterSession
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DeregisterSession () error {
  //parameters: DeviceOrSession
- //AgtSipIpv4UserAgentPool DeregisterSession, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DeregisterSession
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetLocalUsernamePrefix () error {
  //parameters: EmulationHandle LocalUserNamePrefix
- //AgtSipIpv4UserAgentPool SetLocalUsernamePrefix, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetLocalUsernamePrefix
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetLocalUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle LocalUserNameSuffix Increment Repeat
- //AgtSipIpv4UserAgentPool SetLocalUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetLocalUsernameSuffixIncrementingRange
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetLocalDomain () error {
  //parameters: EmulationHandle LocalDomain
- //AgtSipIpv4UserAgentPool SetLocalDomain, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetLocalDomain
  return nil
 }
 
@@ -108,31 +108,31 @@ func(np *SipIpv4UserAgentPool) GetLocalUsernameSuffixIncrementingRange ()(string
 
 func(np *SipIpv4UserAgentPool) IsUseRemoteAddressOfRecordEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsUseRemoteAddressOfRecordEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsUseRemoteAddressOfRecordEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableUseRemoteAddressOfRecord () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableUseRemoteAddressOfRecord, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableUseRemoteAddressOfRecord
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableUseRemoteAddressOfRecord () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableUseRemoteAddressOfRecord, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableUseRemoteAddressOfRecord
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetRemoteUsernamePrefix () error {
  //parameters: EmulationHandle RemoteUserNamePrefix
- //AgtSipIpv4UserAgentPool SetRemoteUsernamePrefix, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRemoteUsernamePrefix
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetRemoteUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle RemoteUserNameSuffix Increment Repeat
- //AgtSipIpv4UserAgentPool SetRemoteUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRemoteUsernameSuffixIncrementingRange
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *SipIpv4UserAgentPool) GetRemoteUsernameSuffixIncrementingRange ()(strin
 
 func(np *SipIpv4UserAgentPool) SetRemoteDomain () error {
  //parameters: EmulationHandle RemoteDomain
- //AgtSipIpv4UserAgentPool SetRemoteDomain, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRemoteDomain
  return nil
 }
 
@@ -162,13 +162,13 @@ func(np *SipIpv4UserAgentPool) GetRemoteDomain ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetRemoteHostAddressV4IncrementingRange () error {
  //parameters: EmulationHandle Ipv4Address Increment Repeat
- //AgtSipIpv4UserAgentPool SetRemoteHostAddressV4IncrementingRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRemoteHostAddressV4IncrementingRange
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetRemoteHostL3AddressFamily () error {
  //parameters: EmulationHandle RegistrarAddressType
- //AgtSipIpv4UserAgentPool SetRemoteHostL3AddressFamily, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRemoteHostL3AddressFamily
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *SipIpv4UserAgentPool) GetRemoteHostAddressV4IncrementingRange ()(string
 
 func(np *SipIpv4UserAgentPool) SetRemoteHostAddressV6IncrementingRange () error {
  //parameters: EmulationHandle Ipv6Address Increment Repeat
- //AgtSipIpv4UserAgentPool SetRemoteHostAddressV6IncrementingRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRemoteHostAddressV6IncrementingRange
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *SipIpv4UserAgentPool) GetRemoteHostAddressV6IncrementingRange ()(string
 
 func(np *SipIpv4UserAgentPool) SetMediaPayloadType () error {
  //parameters: EmulationHandle MediaPayloadType
- //AgtSipIpv4UserAgentPool SetMediaPayloadType, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetMediaPayloadType
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *SipIpv4UserAgentPool) GetMediaPayloadType ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetMediaPort () error {
  //parameters: EmulationHandle Port
- //AgtSipIpv4UserAgentPool SetMediaPort, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetMediaPort
  return nil
 }
 
@@ -222,7 +222,7 @@ func(np *SipIpv4UserAgentPool) GetMediaPort ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetSipPort () error {
  //parameters: EmulationHandle Port
- //AgtSipIpv4UserAgentPool SetSipPort, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetSipPort
  return nil
 }
 
@@ -234,25 +234,25 @@ func(np *SipIpv4UserAgentPool) GetSipPort ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsRegistrarEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsRegistrarEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsRegistrarEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableRegistrar () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableRegistrar, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableRegistrar
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableRegistrar () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableRegistrar, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableRegistrar
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetRegistrarIpv4Address () error {
  //parameters: EmulationHandle Ipv4Address
- //AgtSipIpv4UserAgentPool SetRegistrarIpv4Address, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRegistrarIpv4Address
  return nil
 }
 
@@ -264,7 +264,7 @@ func(np *SipIpv4UserAgentPool) GetRegistrarIpv4Address ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetRegistrarIpv6Address () error {
  //parameters: EmulationHandle Ipv6Address
- //AgtSipIpv4UserAgentPool SetRegistrarIpv6Address, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRegistrarIpv6Address
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *SipIpv4UserAgentPool) GetRegistrarIpv6Address ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetRegistrarL3AddressFamily () error {
  //parameters: EmulationHandle L3AddressFamily
- //AgtSipIpv4UserAgentPool SetRegistrarL3AddressFamily, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRegistrarL3AddressFamily
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *SipIpv4UserAgentPool) GetRegistrarL3AddressFamily ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetRegistrarHostname () error {
  //parameters: EmulationHandle RegistrarHostname
- //AgtSipIpv4UserAgentPool SetRegistrarHostname, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRegistrarHostname
  return nil
 }
 
@@ -300,25 +300,25 @@ func(np *SipIpv4UserAgentPool) GetRegistrarHostname ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsAutomaticRegistrationEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsAutomaticRegistrationEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsAutomaticRegistrationEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableAutomaticRegistration () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableAutomaticRegistration, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableAutomaticRegistration
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableAutomaticRegistration () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableAutomaticRegistration, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableAutomaticRegistration
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetDesiredRegistrationExpiryTime () error {
  //parameters: EmulationHandle DesiredRegistrationExpiryTime
- //AgtSipIpv4UserAgentPool SetDesiredRegistrationExpiryTime, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetDesiredRegistrationExpiryTime
  return nil
 }
 
@@ -330,7 +330,7 @@ func(np *SipIpv4UserAgentPool) GetDesiredRegistrationExpiryTime ()(string, error
 
 func(np *SipIpv4UserAgentPool) SetMaxRegistrationAttempts () error {
  //parameters: EmulationHandle MaxRegistrationAttempts
- //AgtSipIpv4UserAgentPool SetMaxRegistrationAttempts, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetMaxRegistrationAttempts
  return nil
 }
 
@@ -342,7 +342,7 @@ func(np *SipIpv4UserAgentPool) GetMaxRegistrationAttempts ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetRegistrationAttemptDelayTime () error {
  //parameters: EmulationHandle RegistrationAttemptDelayTime
- //AgtSipIpv4UserAgentPool SetRegistrationAttemptDelayTime, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRegistrationAttemptDelayTime
  return nil
 }
 
@@ -354,19 +354,19 @@ func(np *SipIpv4UserAgentPool) GetRegistrationAttemptDelayTime ()(string, error)
 
 func(np *SipIpv4UserAgentPool) SetTransactionTimerT1 () error {
  //parameters: EmulationHandle Time
- //AgtSipIpv4UserAgentPool SetTransactionTimerT1, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetTransactionTimerT1
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetTransactionTimerT2 () error {
  //parameters: EmulationHandle Time
- //AgtSipIpv4UserAgentPool SetTransactionTimerT2, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetTransactionTimerT2
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetTransactionTimerT4 () error {
  //parameters: EmulationHandle Time
- //AgtSipIpv4UserAgentPool SetTransactionTimerT4, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetTransactionTimerT4
  return nil
 }
 
@@ -390,25 +390,25 @@ func(np *SipIpv4UserAgentPool) GetTransactionTimerT4 ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsResourcePriorityEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsResourcePriorityEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsResourcePriorityEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableResourcePriority () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableResourcePriority, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableResourcePriority
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableResourcePriority () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableResourcePriority, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableResourcePriority
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetResourcePriority () error {
  //parameters: EmulationHandle ResourcePriority
- //AgtSipIpv4UserAgentPool SetResourcePriority, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetResourcePriority
  return nil
 }
 
@@ -420,25 +420,25 @@ func(np *SipIpv4UserAgentPool) GetResourcePriority ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsSessionRefreshTimerEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsSessionRefreshTimerEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsSessionRefreshTimerEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableSessionRefreshTimer () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableSessionRefreshTimer, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableSessionRefreshTimer
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableSessionRefreshTimer () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableSessionRefreshTimer, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableSessionRefreshTimer
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetDesiredSessionInterval () error {
  //parameters: EmulationHandle DesiredSessionInterval
- //AgtSipIpv4UserAgentPool SetDesiredSessionInterval, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetDesiredSessionInterval
  return nil
 }
 
@@ -456,13 +456,13 @@ func(np *SipIpv4UserAgentPool) GetMinimumSessionInterval ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetMinimumSessionInterval () error {
  //parameters: EmulationHandle MinimumSessionInterval
- //AgtSipIpv4UserAgentPool SetMinimumSessionInterval, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetMinimumSessionInterval
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetRoundTripDelay () error {
  //parameters: EmulationHandle RoundTripInterval
- //AgtSipIpv4UserAgentPool SetRoundTripDelay, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetRoundTripDelay
  return nil
 }
 
@@ -474,7 +474,7 @@ func(np *SipIpv4UserAgentPool) GetRoundTripDelay ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetSessionRefresher () error {
  //parameters: EmulationHandle UserAgentType
- //AgtSipIpv4UserAgentPool SetSessionRefresher, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetSessionRefresher
  return nil
 }
 
@@ -486,25 +486,25 @@ func(np *SipIpv4UserAgentPool) GetSessionRefresher ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsCallAcceptDelayEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsCallAcceptDelayEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsCallAcceptDelayEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableCallAcceptDelay () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableCallAcceptDelay, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableCallAcceptDelay
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableCallAcceptDelay () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableCallAcceptDelay, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableCallAcceptDelay
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetResponseDelayInterval () error {
  //parameters: EmulationHandle Time
- //AgtSipIpv4UserAgentPool SetResponseDelayInterval, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetResponseDelayInterval
  return nil
 }
 
@@ -516,25 +516,25 @@ func(np *SipIpv4UserAgentPool) GetResponseDelayInterval ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsPrivacyHeaderEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsPrivacyHeaderEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsPrivacyHeaderEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnablePrivacyHeader () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnablePrivacyHeader, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnablePrivacyHeader
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisablePrivacyHeader () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisablePrivacyHeader, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisablePrivacyHeader
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetPrivacyType () error {
  //parameters: EmulationHandle PrivacyType
- //AgtSipIpv4UserAgentPool SetPrivacyType, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetPrivacyType
  return nil
 }
 
@@ -546,61 +546,61 @@ func(np *SipIpv4UserAgentPool) GetPrivacyType ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) IsAuthenticationEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsAuthenticationEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsAuthenticationEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableAuthentication () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableAuthentication, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableAuthentication
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableAuthentication () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableAuthentication, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableAuthentication
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) IsAuthenticationCredentialEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsAuthenticationCredentialEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsAuthenticationCredentialEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableAuthenticationCredential () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableAuthenticationCredential, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableAuthenticationCredential
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableAuthenticationCredential () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableAuthenticationCredential, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableAuthenticationCredential
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) IsCredentialInDialogEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsCredentialInDialogEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsCredentialInDialogEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableCredentialInDialog () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableCredentialInDialog, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableCredentialInDialog
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableCredentialInDialog () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableCredentialInDialog, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableCredentialInDialog
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) SetAuthCredentialUsernamePrefix () error {
  //parameters: EmulationHandle AuthCredentialUsernamePrefix
- //AgtSipIpv4UserAgentPool SetAuthCredentialUsernamePrefix, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthCredentialUsernamePrefix
  return nil
 }
 
@@ -612,7 +612,7 @@ func(np *SipIpv4UserAgentPool) GetAuthCredentialUsernamePrefix ()(string, error)
 
 func(np *SipIpv4UserAgentPool) SetAuthCredentialUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle AuthCredentialUsernameSuffix Increment Repeat
- //AgtSipIpv4UserAgentPool SetAuthCredentialUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthCredentialUsernameSuffixIncrementingRange
  return nil
 }
 
@@ -624,7 +624,7 @@ func(np *SipIpv4UserAgentPool) GetAuthCredentialUsernameSuffixIncrementingRange 
 
 func(np *SipIpv4UserAgentPool) SetAuthCredentialPassword () error {
  //parameters: EmulationHandle AuthCredentialPassword
- //AgtSipIpv4UserAgentPool SetAuthCredentialPassword, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthCredentialPassword
  return nil
 }
 
@@ -636,7 +636,7 @@ func(np *SipIpv4UserAgentPool) GetAuthCredentialPassword ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetAuthCredentialPasswordModifier () error {
  //parameters: EmulationHandle AuthCredentialPasswordModifier Increment Repeat
- //AgtSipIpv4UserAgentPool SetAuthCredentialPasswordModifier, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthCredentialPasswordModifier
  return nil
 }
 
@@ -648,19 +648,19 @@ func(np *SipIpv4UserAgentPool) GetAuthCredentialPasswordModifier ()(string, erro
 
 func(np *SipIpv4UserAgentPool) IsAuthenticationChallengeEnabled () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool IsAuthenticationChallengeEnabled, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool IsAuthenticationChallengeEnabled
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) EnableAuthenticationChallenge () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool EnableAuthenticationChallenge, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool EnableAuthenticationChallenge
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) DisableAuthenticationChallenge () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool DisableAuthenticationChallenge, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool DisableAuthenticationChallenge
  return nil
 }
 
@@ -672,7 +672,7 @@ func(np *SipIpv4UserAgentPool) GetChallengeAuthenticationScheme ()(string, error
 
 func(np *SipIpv4UserAgentPool) SetChallengeAuthenticationRealm () error {
  //parameters: EmulationHandle ChallengeAuthenticationRealm
- //AgtSipIpv4UserAgentPool SetChallengeAuthenticationRealm, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetChallengeAuthenticationRealm
  return nil
 }
 
@@ -684,7 +684,7 @@ func(np *SipIpv4UserAgentPool) GetChallengeAuthenticationRealm ()(string, error)
 
 func(np *SipIpv4UserAgentPool) SetAuthChallengeUsernamePrefix () error {
  //parameters: EmulationHandle AuthChallengeUsernamePrefix
- //AgtSipIpv4UserAgentPool SetAuthChallengeUsernamePrefix, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthChallengeUsernamePrefix
  return nil
 }
 
@@ -696,7 +696,7 @@ func(np *SipIpv4UserAgentPool) GetAuthChallengeUsernamePrefix ()(string, error) 
 
 func(np *SipIpv4UserAgentPool) SetAuthChallengeUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle AuthChallengeUsernameSuffix Increment Repeat
- //AgtSipIpv4UserAgentPool SetAuthChallengeUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthChallengeUsernameSuffixIncrementingRange
  return nil
 }
 
@@ -708,7 +708,7 @@ func(np *SipIpv4UserAgentPool) GetAuthChallengeUsernameSuffixIncrementingRange (
 
 func(np *SipIpv4UserAgentPool) SetAuthChallengePassword () error {
  //parameters: EmulationHandle AuthChallengePassword
- //AgtSipIpv4UserAgentPool SetAuthChallengePassword, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthChallengePassword
  return nil
 }
 
@@ -720,7 +720,7 @@ func(np *SipIpv4UserAgentPool) GetAuthChallengePassword ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetAuthChallengePasswordModifier () error {
  //parameters: EmulationHandle AuthChallengePasswordModifier Increment Repeat
- //AgtSipIpv4UserAgentPool SetAuthChallengePasswordModifier, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetAuthChallengePasswordModifier
  return nil
 }
 
@@ -732,7 +732,7 @@ func(np *SipIpv4UserAgentPool) GetAuthChallengePasswordModifier ()(string, error
 
 func(np *SipIpv4UserAgentPool) SetChallengeOpaque () error {
  //parameters: EmulationHandle ChallengeOpaque
- //AgtSipIpv4UserAgentPool SetChallengeOpaque, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetChallengeOpaque
  return nil
 }
 
@@ -744,7 +744,7 @@ func(np *SipIpv4UserAgentPool) GetChallengeOpaque ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetChallengeAlgorithm () error {
  //parameters: EmulationHandle ChallengeAlgorithm
- //AgtSipIpv4UserAgentPool SetChallengeAlgorithm, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetChallengeAlgorithm
  return nil
 }
 
@@ -756,7 +756,7 @@ func(np *SipIpv4UserAgentPool) GetChallengeAlgorithm ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetChallengeQop () error {
  //parameters: EmulationHandle ChallengeQop
- //AgtSipIpv4UserAgentPool SetChallengeQop, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetChallengeQop
  return nil
 }
 
@@ -768,7 +768,7 @@ func(np *SipIpv4UserAgentPool) GetChallengeQop ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetNonceExpireTime () error {
  //parameters: EmulationHandle NonceExpireTime
- //AgtSipIpv4UserAgentPool SetNonceExpireTime, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetNonceExpireTime
  return nil
 }
 
@@ -780,7 +780,7 @@ func(np *SipIpv4UserAgentPool) GetNonceExpireTime ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SetMaximumChallengeAttempts () error {
  //parameters: EmulationHandle MaximumChallengeAttempts
- //AgtSipIpv4UserAgentPool SetMaximumChallengeAttempts, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SetMaximumChallengeAttempts
  return nil
 }
 
@@ -792,13 +792,13 @@ func(np *SipIpv4UserAgentPool) GetMaximumChallengeAttempts ()(string, error) {
 
 func(np *SipIpv4UserAgentPool) SendTrafficParams () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool SendTrafficParams, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool SendTrafficParams
  return nil
 }
 
 func(np *SipIpv4UserAgentPool) ResetTrafficParams () error {
  //parameters: EmulationHandle
- //AgtSipIpv4UserAgentPool ResetTrafficParams, m.Object, m.Name);
+ //AgtSipIpv4UserAgentPool ResetTrafficParams
  return nil
 }
 

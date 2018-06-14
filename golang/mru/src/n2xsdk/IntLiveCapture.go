@@ -6,7 +6,7 @@ type IntLiveCapture struct {
 
 func(np *IntLiveCapture) Initialize () error {
  //parameters: 
- //IntLiveCapture Initialize, m.Object, m.Name);
+ //IntLiveCapture Initialize
  return nil
 }
 

@@ -6,7 +6,7 @@ type OspfExternalLsaPool struct {
 
 func(np *OspfExternalLsaPool) SetAdvertisingRouter () error {
  //parameters: LsaHandle RouterId
- //AgtOspfExternalLsaPool SetAdvertisingRouter, m.Object, m.Name);
+ //AgtOspfExternalLsaPool SetAdvertisingRouter
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *OspfExternalLsaPool) GetAdvertisingRouter ()(string, error) {
 
 func(np *OspfExternalLsaPool) Advertise () error {
  //parameters: LsaHandle
- //AgtOspfExternalLsaPool Advertise, m.Object, m.Name);
+ //AgtOspfExternalLsaPool Advertise
  return nil
 }
 
 func(np *OspfExternalLsaPool) Withdraw () error {
  //parameters: LsaHandle
- //AgtOspfExternalLsaPool Withdraw, m.Object, m.Name);
+ //AgtOspfExternalLsaPool Withdraw
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *OspfExternalLsaPool) GetAdvertiseFlag ()(string, error) {
 
 func(np *OspfExternalLsaPool) SetRoutes () error {
  //parameters: LsaHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfExternalLsaPool SetRoutes, m.Object, m.Name);
+ //AgtOspfExternalLsaPool SetRoutes
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *OspfExternalLsaPool) GetRoutes ()(string, error) {
 
 func(np *OspfExternalLsaPool) SetMetric () error {
  //parameters: LsaHandle Metric
- //AgtOspfExternalLsaPool SetMetric, m.Object, m.Name);
+ //AgtOspfExternalLsaPool SetMetric
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *OspfExternalLsaPool) GetMetric ()(string, error) {
 
 func(np *OspfExternalLsaPool) SetEbit () error {
  //parameters: LsaHandle Flag
- //AgtOspfExternalLsaPool SetEbit, m.Object, m.Name);
+ //AgtOspfExternalLsaPool SetEbit
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *OspfExternalLsaPool) GetEbit ()(string, error) {
 
 func(np *OspfExternalLsaPool) SetForwardingAddress () error {
  //parameters: LsaHandle IpAddress
- //AgtOspfExternalLsaPool SetForwardingAddress, m.Object, m.Name);
+ //AgtOspfExternalLsaPool SetForwardingAddress
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *OspfExternalLsaPool) GetForwardingAddress ()(string, error) {
 
 func(np *OspfExternalLsaPool) SetExternalRouteTag () error {
  //parameters: LsaHandle RouteTag
- //AgtOspfExternalLsaPool SetExternalRouteTag, m.Object, m.Name);
+ //AgtOspfExternalLsaPool SetExternalRouteTag
  return nil
 }
 

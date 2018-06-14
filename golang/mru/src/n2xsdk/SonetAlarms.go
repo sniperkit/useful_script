@@ -6,7 +6,7 @@ type SonetAlarms struct {
 
 func(np *SonetAlarms) SetTransmitAlarm () error {
  //parameters: PortHandle Alarm
- //AgtSonetAlarms SetTransmitAlarm, m.Object, m.Name);
+ //AgtSonetAlarms SetTransmitAlarm
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *SonetAlarms) GetAlarmStopTimestamp ()(string, error) {
 
 func(np *SonetAlarms) SetAlarmValue () error {
  //parameters: PortHandle Alarm Value
- //AgtSonetAlarms SetAlarmValue, m.Object, m.Name);
+ //AgtSonetAlarms SetAlarmValue
  return nil
 }
 

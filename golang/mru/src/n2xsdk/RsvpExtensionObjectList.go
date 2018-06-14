@@ -6,7 +6,7 @@ type RsvpExtensionObjectList struct {
 
 func(np *RsvpExtensionObjectLis) AddExtensionObjectsByPduHandle () error {
  //parameters: Handle NumPduHandles psaPduHandles
- //AgtRsvpExtensionObjectList AddExtensionObjectsByPduHandle, m.Object, m.Name);
+ //AgtRsvpExtensionObjectList AddExtensionObjectsByPduHandle
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *RsvpExtensionObjectLis) ListExtensionObjects ()(string, error) {
 
 func(np *RsvpExtensionObjectLis) RemoveExtensionObjects () error {
  //parameters: Handle Count psaObjectHandles
- //AgtRsvpExtensionObjectList RemoveExtensionObjects, m.Object, m.Name);
+ //AgtRsvpExtensionObjectList RemoveExtensionObjects
  return nil
 }
 
 func(np *RsvpExtensionObjectLis) ClearExtensionObjects () error {
  //parameters: Handle
- //AgtRsvpExtensionObjectList ClearExtensionObjects, m.Object, m.Name);
+ //AgtRsvpExtensionObjectList ClearExtensionObjects
  return nil
 }
 

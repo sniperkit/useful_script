@@ -6,43 +6,43 @@ type BfdSession struct {
 
 func(np *BfdSession) Shutdown () error {
  //parameters: SessionList
- //AgtBfdSession Shutdown, m.Object, m.Name);
+ //AgtBfdSession Shutdown
  return nil
 }
 
 func(np *BfdSession) NoShutdown () error {
  //parameters: SessionList
- //AgtBfdSession NoShutdown, m.Object, m.Name);
+ //AgtBfdSession NoShutdown
  return nil
 }
 
 func(np *BfdSession) Suspend () error {
  //parameters: SessionList
- //AgtBfdSession Suspend, m.Object, m.Name);
+ //AgtBfdSession Suspend
  return nil
 }
 
 func(np *BfdSession) Resume () error {
  //parameters: SessionList
- //AgtBfdSession Resume, m.Object, m.Name);
+ //AgtBfdSession Resume
  return nil
 }
 
 func(np *BfdSession) Reset () error {
  //parameters: SessionList
- //AgtBfdSession Reset, m.Object, m.Name);
+ //AgtBfdSession Reset
  return nil
 }
 
 func(np *BfdSession) ResetMeasurements () error {
  //parameters: SessionList
- //AgtBfdSession ResetMeasurements, m.Object, m.Name);
+ //AgtBfdSession ResetMeasurements
  return nil
 }
 
 func(np *BfdSession) SetParameter () error {
  //parameters: SessionPoolHandle Parameter Value
- //AgtBfdSession SetParameter, m.Object, m.Name);
+ //AgtBfdSession SetParameter
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *BfdSession) GetParameter ()(string, error) {
 
 func(np *BfdSession) SetIncrementingParameter () error {
  //parameters: SessionPoolHandle Parameter Value Repeat Increment
- //AgtBfdSession SetIncrementingParameter, m.Object, m.Name);
+ //AgtBfdSession SetIncrementingParameter
  return nil
 }
 
@@ -66,37 +66,37 @@ func(np *BfdSession) GetIncrementingParameter ()(string, error) {
 
 func(np *BfdSession) IsEchoResponderEnabled () error {
  //parameters: SessionPoolHandle
- //AgtBfdSession IsEchoResponderEnabled, m.Object, m.Name);
+ //AgtBfdSession IsEchoResponderEnabled
  return nil
 }
 
 func(np *BfdSession) EnableEchoResponder () error {
  //parameters: SessionPoolHandle
- //AgtBfdSession EnableEchoResponder, m.Object, m.Name);
+ //AgtBfdSession EnableEchoResponder
  return nil
 }
 
 func(np *BfdSession) DisableEchoResponder () error {
  //parameters: SessionPoolHandle
- //AgtBfdSession DisableEchoResponder, m.Object, m.Name);
+ //AgtBfdSession DisableEchoResponder
  return nil
 }
 
 func(np *BfdSession) IsEchoInitiatorEnabled () error {
  //parameters: SessionPoolHandle
- //AgtBfdSession IsEchoInitiatorEnabled, m.Object, m.Name);
+ //AgtBfdSession IsEchoInitiatorEnabled
  return nil
 }
 
 func(np *BfdSession) EnableEchoInitiator () error {
  //parameters: SessionPoolHandle
- //AgtBfdSession EnableEchoInitiator, m.Object, m.Name);
+ //AgtBfdSession EnableEchoInitiator
  return nil
 }
 
 func(np *BfdSession) DisableEchoInitiator () error {
  //parameters: SessionPoolHandle
- //AgtBfdSession DisableEchoInitiator, m.Object, m.Name);
+ //AgtBfdSession DisableEchoInitiator
  return nil
 }
 

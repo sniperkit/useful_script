@@ -18,7 +18,7 @@ func(np *Ospfv2RouterPool) GetNetworkType ()(string, error) {
 
 func(np *Ospfv2RouterPool) SetRouterId () error {
  //parameters: RouterPoolHandle FirstRouterId Increment Repeat
- //AgtOspfv2RouterPool SetRouterId, m.Object, m.Name);
+ //AgtOspfv2RouterPool SetRouterId
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *Ospfv2RouterPool) GetRouterId ()(string, error) {
 
 func(np *Ospfv2RouterPool) SetAreaId () error {
  //parameters: RouterPoolHandle FirstAreaId Increment Repeat
- //AgtOspfv2RouterPool SetAreaId, m.Object, m.Name);
+ //AgtOspfv2RouterPool SetAreaId
  return nil
 }
 
@@ -42,25 +42,25 @@ func(np *Ospfv2RouterPool) GetAreaId ()(string, error) {
 
 func(np *Ospfv2RouterPool) EnableOption () error {
  //parameters: RouterPoolHandle OptionsFieldBitType
- //AgtOspfv2RouterPool EnableOption, m.Object, m.Name);
+ //AgtOspfv2RouterPool EnableOption
  return nil
 }
 
 func(np *Ospfv2RouterPool) DisableOption () error {
  //parameters: RouterPoolHandle OptionsFieldBitType
- //AgtOspfv2RouterPool DisableOption, m.Object, m.Name);
+ //AgtOspfv2RouterPool DisableOption
  return nil
 }
 
 func(np *Ospfv2RouterPool) IsOptionEnabled () error {
  //parameters: RouterPoolHandle OptionsFieldBitType
- //AgtOspfv2RouterPool IsOptionEnabled, m.Object, m.Name);
+ //AgtOspfv2RouterPool IsOptionEnabled
  return nil
 }
 
 func(np *Ospfv2RouterPool) SetInterval () error {
  //parameters: RouterPoolHandle IntervalType Interval
- //AgtOspfv2RouterPool SetInterval, m.Object, m.Name);
+ //AgtOspfv2RouterPool SetInterval
  return nil
 }
 
@@ -72,25 +72,25 @@ func(np *Ospfv2RouterPool) GetInterval ()(string, error) {
 
 func(np *Ospfv2RouterPool) EnableChecksumValidation () error {
  //parameters: RouterPoolHandle ChecksumType
- //AgtOspfv2RouterPool EnableChecksumValidation, m.Object, m.Name);
+ //AgtOspfv2RouterPool EnableChecksumValidation
  return nil
 }
 
 func(np *Ospfv2RouterPool) DisableChecksumValidation () error {
  //parameters: RouterPoolHandle ChecksumType
- //AgtOspfv2RouterPool DisableChecksumValidation, m.Object, m.Name);
+ //AgtOspfv2RouterPool DisableChecksumValidation
  return nil
 }
 
 func(np *Ospfv2RouterPool) IsChecksumValidationEnabled () error {
  //parameters: RouterPoolHandle ChecksumType
- //AgtOspfv2RouterPool IsChecksumValidationEnabled, m.Object, m.Name);
+ //AgtOspfv2RouterPool IsChecksumValidationEnabled
  return nil
 }
 
 func(np *Ospfv2RouterPool) SetInterfaceCost () error {
  //parameters: RouterPoolHandle InterfaceCost
- //AgtOspfv2RouterPool SetInterfaceCost, m.Object, m.Name);
+ //AgtOspfv2RouterPool SetInterfaceCost
  return nil
 }
 
@@ -102,25 +102,25 @@ func(np *Ospfv2RouterPool) GetInterfaceCost ()(string, error) {
 
 func(np *Ospfv2RouterPool) EnableUpdateRateControl () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool EnableUpdateRateControl, m.Object, m.Name);
+ //AgtOspfv2RouterPool EnableUpdateRateControl
  return nil
 }
 
 func(np *Ospfv2RouterPool) DisableUpdateRateControl () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool DisableUpdateRateControl, m.Object, m.Name);
+ //AgtOspfv2RouterPool DisableUpdateRateControl
  return nil
 }
 
 func(np *Ospfv2RouterPool) IsUpdateRateControlEnabled () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool IsUpdateRateControlEnabled, m.Object, m.Name);
+ //AgtOspfv2RouterPool IsUpdateRateControlEnabled
  return nil
 }
 
 func(np *Ospfv2RouterPool) SetInterUpdateDelay () error {
  //parameters: RouterPoolHandle InterUpdateDelay
- //AgtOspfv2RouterPool SetInterUpdateDelay, m.Object, m.Name);
+ //AgtOspfv2RouterPool SetInterUpdateDelay
  return nil
 }
 
@@ -132,37 +132,37 @@ func(np *Ospfv2RouterPool) GetInterUpdateDelay ()(string, error) {
 
 func(np *Ospfv2RouterPool) EnableLsaDiscard () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool EnableLsaDiscard, m.Object, m.Name);
+ //AgtOspfv2RouterPool EnableLsaDiscard
  return nil
 }
 
 func(np *Ospfv2RouterPool) DisableLsaDiscard () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool DisableLsaDiscard, m.Object, m.Name);
+ //AgtOspfv2RouterPool DisableLsaDiscard
  return nil
 }
 
 func(np *Ospfv2RouterPool) IsLsaDiscardEnabled () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool IsLsaDiscardEnabled, m.Object, m.Name);
+ //AgtOspfv2RouterPool IsLsaDiscardEnabled
  return nil
 }
 
 func(np *Ospfv2RouterPool) AddLsaProfile () error {
  //parameters: RouterPoolHandle LsaProfileType
- //AgtOspfv2RouterPool AddLsaProfile, m.Object, m.Name);
+ //AgtOspfv2RouterPool AddLsaProfile
  return nil
 }
 
 func(np *Ospfv2RouterPool) RemoveLsaProfile () error {
  //parameters: RouterPoolHandle LsaProfileHandle
- //AgtOspfv2RouterPool RemoveLsaProfile, m.Object, m.Name);
+ //AgtOspfv2RouterPool RemoveLsaProfile
  return nil
 }
 
 func(np *Ospfv2RouterPool) RemoveAllLsaProfiles () error {
  //parameters: RouterPoolHandle
- //AgtOspfv2RouterPool RemoveAllLsaProfiles, m.Object, m.Name);
+ //AgtOspfv2RouterPool RemoveAllLsaProfiles
  return nil
 }
 

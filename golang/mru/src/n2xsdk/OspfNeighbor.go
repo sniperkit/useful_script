@@ -6,7 +6,7 @@ type OspfNeighbor struct {
 
 func(np *OspfNeighbor) SetRouterId () error {
  //parameters: NeighborHandle RouterId
- //AgtOspfNeighbor SetRouterId, m.Object, m.Name);
+ //AgtOspfNeighbor SetRouterId
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *OspfNeighbor) GetRouterId ()(string, error) {
 
 func(np *OspfNeighbor) SetIpAddress () error {
  //parameters: NeighborHandle IpAddress
- //AgtOspfNeighbor SetIpAddress, m.Object, m.Name);
+ //AgtOspfNeighbor SetIpAddress
  return nil
 }
 
@@ -30,25 +30,25 @@ func(np *OspfNeighbor) GetIpAddress ()(string, error) {
 
 func(np *OspfNeighbor) EnableDrEligibility () error {
  //parameters: NeighborHandle
- //AgtOspfNeighbor EnableDrEligibility, m.Object, m.Name);
+ //AgtOspfNeighbor EnableDrEligibility
  return nil
 }
 
 func(np *OspfNeighbor) DisableDrEligibility () error {
  //parameters: NeighborHandle
- //AgtOspfNeighbor DisableDrEligibility, m.Object, m.Name);
+ //AgtOspfNeighbor DisableDrEligibility
  return nil
 }
 
 func(np *OspfNeighbor) IsDrEligibilityEnabled () error {
  //parameters: NeighborHandle
- //AgtOspfNeighbor IsDrEligibilityEnabled, m.Object, m.Name);
+ //AgtOspfNeighbor IsDrEligibilityEnabled
  return nil
 }
 
 func(np *OspfNeighbor) SetMaxLsasPerPacket () error {
  //parameters: NeighborHandle MaxLsas
- //AgtOspfNeighbor SetMaxLsasPerPacket, m.Object, m.Name);
+ //AgtOspfNeighbor SetMaxLsasPerPacket
  return nil
 }
 

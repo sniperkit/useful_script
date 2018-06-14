@@ -6,7 +6,7 @@ type RipRouteList struct {
 
 func(np *RipRouteLis) AddRoutePools () error {
  //parameters: SessionHandle PfxCount saPrefixLengths RouteCount saRoutes
- //AgtRipRouteList AddRoutePools, m.Object, m.Name);
+ //AgtRipRouteList AddRoutePools
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *RipRouteLis) ListRoutePools ()(string, error) {
 
 func(np *RipRouteLis) RemoveRoutePools () error {
  //parameters: SessionHandle Count saRoutePools
- //AgtRipRouteList RemoveRoutePools, m.Object, m.Name);
+ //AgtRipRouteList RemoveRoutePools
  return nil
 }
 
 func(np *RipRouteLis) ClearRoutePools () error {
  //parameters: SessionHandle
- //AgtRipRouteList ClearRoutePools, m.Object, m.Name);
+ //AgtRipRouteList ClearRoutePools
  return nil
 }
 

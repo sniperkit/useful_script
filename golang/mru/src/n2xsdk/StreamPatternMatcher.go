@@ -24,13 +24,13 @@ func(np *StreamPatternMatcher) ListUnusedMatchers ()(string, error) {
 
 func(np *StreamPatternMatcher) ResetMatcherField () error {
  //parameters: PortHandle Matcher
- //AgtStreamPatternMatcher ResetMatcherField, m.Object, m.Name);
+ //AgtStreamPatternMatcher ResetMatcherField
  return nil
 }
 
 func(np *StreamPatternMatcher) SetMatcherField () error {
  //parameters: PortHandle Matcher Field
- //AgtStreamPatternMatcher SetMatcherField, m.Object, m.Name);
+ //AgtStreamPatternMatcher SetMatcherField
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *StreamPatternMatcher) ListAvailableMatcherFields ()(string, error) {
 
 func(np *StreamPatternMatcher) SetMatcherFieldByOffset () error {
  //parameters: PortHandle Matcher OffsetType ByteOffset BitMask
- //AgtStreamPatternMatcher SetMatcherFieldByOffset, m.Object, m.Name);
+ //AgtStreamPatternMatcher SetMatcherFieldByOffset
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *StreamPatternMatcher) GetMatcherFieldByOffset ()(string, error) {
 
 func(np *StreamPatternMatcher) SetMatcherValues () error {
  //parameters: PortHandle StreamGroupHandle Matcher ValueType Count psaValues
- //AgtStreamPatternMatcher SetMatcherValues, m.Object, m.Name);
+ //AgtStreamPatternMatcher SetMatcherValues
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *StreamPatternMatcher) GetMatcherValues ()(string, error) {
 
 func(np *StreamPatternMatcher) ClearMatcherValues () error {
  //parameters: PortHandle StreamGroupHandle Matcher
- //AgtStreamPatternMatcher ClearMatcherValues, m.Object, m.Name);
+ //AgtStreamPatternMatcher ClearMatcherValues
  return nil
 }
 

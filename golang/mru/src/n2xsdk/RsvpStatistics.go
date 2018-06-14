@@ -12,13 +12,13 @@ func(np *RsvpStatistics) ListSelectedSessions ()(string, error) {
 
 func(np *RsvpStatistics) SelectSessions () error {
  //parameters: Count psaSessions
- //AgtRsvpStatistics SelectSessions, m.Object, m.Name);
+ //AgtRsvpStatistics SelectSessions
  return nil
 }
 
 func(np *RsvpStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtRsvpStatistics DeselectSession, m.Object, m.Name);
+ //AgtRsvpStatistics DeselectSession
  return nil
 }
 

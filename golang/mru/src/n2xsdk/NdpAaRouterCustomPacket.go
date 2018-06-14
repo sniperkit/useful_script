@@ -6,13 +6,13 @@ type NdpAaRouterCustomPacket struct {
 
 func(np *NdpAaRouterCustomPacke) AddPdu () error {
  //parameters: DeviceHandle PduHandleList
- //AgtNdpAaRouterCustomPacket AddPdu, m.Object, m.Name);
+ //AgtNdpAaRouterCustomPacket AddPdu
  return nil
 }
 
 func(np *NdpAaRouterCustomPacke) RemovePdu () error {
  //parameters: DeviceHandle
- //AgtNdpAaRouterCustomPacket RemovePdu, m.Object, m.Name);
+ //AgtNdpAaRouterCustomPacket RemovePdu
  return nil
 }
 

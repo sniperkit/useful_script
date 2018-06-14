@@ -6,7 +6,7 @@ type PimRp struct {
 
 func(np *PimRp) SetRpEntityType () error {
  //parameters: SessionHandle RpEntityType
- //AgtPimRp SetRpEntityType, m.Object, m.Name);
+ //AgtPimRp SetRpEntityType
  return nil
 }
 
@@ -102,13 +102,13 @@ func(np *PimRp) GetRpSetRpDetails ()(string, error) {
 
 func(np *PimRp) StopCBsrMessages () error {
  //parameters: SessionHandle
- //AgtPimRp StopCBsrMessages, m.Object, m.Name);
+ //AgtPimRp StopCBsrMessages
  return nil
 }
 
 func(np *PimRp) StartCBsrMessages () error {
  //parameters: SessionHandle
- //AgtPimRp StartCBsrMessages, m.Object, m.Name);
+ //AgtPimRp StartCBsrMessages
  return nil
 }
 
@@ -120,115 +120,115 @@ func(np *PimRp) GetCBsrFsmState ()(string, error) {
 
 func(np *PimRp) SetRemoteRpAddress () error {
  //parameters: 
- //AgtPimRp SetRemoteRpAddress, m.Object, m.Name);
+ //AgtPimRp SetRemoteRpAddress
  return nil
 }
 
 func(np *PimRp) SetCRpDetails () error {
  //parameters: 
- //AgtPimRp SetCRpDetails, m.Object, m.Name);
+ //AgtPimRp SetCRpDetails
  return nil
 }
 
 func(np *PimRp) AddCRpGroupRanges () error {
  //parameters: 
- //AgtPimRp AddCRpGroupRanges, m.Object, m.Name);
+ //AgtPimRp AddCRpGroupRanges
  return nil
 }
 
 func(np *PimRp) RemoveCRpGroupRanges () error {
  //parameters: 
- //AgtPimRp RemoveCRpGroupRanges, m.Object, m.Name);
+ //AgtPimRp RemoveCRpGroupRanges
  return nil
 }
 
 func(np *PimRp) RemoveAllCRpGroupRanges () error {
  //parameters: 
- //AgtPimRp RemoveAllCRpGroupRanges, m.Object, m.Name);
+ //AgtPimRp RemoveAllCRpGroupRanges
  return nil
 }
 
 func(np *PimRp) SetCRpGroupAdminScope () error {
  //parameters: 
- //AgtPimRp SetCRpGroupAdminScope, m.Object, m.Name);
+ //AgtPimRp SetCRpGroupAdminScope
  return nil
 }
 
 func(np *PimRp) SetCRpGroupBiDirBit () error {
  //parameters: 
- //AgtPimRp SetCRpGroupBiDirBit, m.Object, m.Name);
+ //AgtPimRp SetCRpGroupBiDirBit
  return nil
 }
 
 func(np *PimRp) StopCRpAdvertisements () error {
  //parameters: 
- //AgtPimRp StopCRpAdvertisements, m.Object, m.Name);
+ //AgtPimRp StopCRpAdvertisements
  return nil
 }
 
 func(np *PimRp) StartCRpAdvertisements () error {
  //parameters: 
- //AgtPimRp StartCRpAdvertisements, m.Object, m.Name);
+ //AgtPimRp StartCRpAdvertisements
  return nil
 }
 
 func(np *PimRp) SetCBsrDetails () error {
  //parameters: 
- //AgtPimRp SetCBsrDetails, m.Object, m.Name);
+ //AgtPimRp SetCBsrDetails
  return nil
 }
 
 func(np *PimRp) AddRpSet () error {
  //parameters: 
- //AgtPimRp AddRpSet, m.Object, m.Name);
+ //AgtPimRp AddRpSet
  return nil
 }
 
 func(np *PimRp) RemoveRpSets () error {
  //parameters: 
- //AgtPimRp RemoveRpSets, m.Object, m.Name);
+ //AgtPimRp RemoveRpSets
  return nil
 }
 
 func(np *PimRp) RemoveAllRpSets () error {
  //parameters: 
- //AgtPimRp RemoveAllRpSets, m.Object, m.Name);
+ //AgtPimRp RemoveAllRpSets
  return nil
 }
 
 func(np *PimRp) SetRpSetGroupRange () error {
  //parameters: 
- //AgtPimRp SetRpSetGroupRange, m.Object, m.Name);
+ //AgtPimRp SetRpSetGroupRange
  return nil
 }
 
 func(np *PimRp) SetRpSetGroupAdminScope () error {
  //parameters: 
- //AgtPimRp SetRpSetGroupAdminScope, m.Object, m.Name);
+ //AgtPimRp SetRpSetGroupAdminScope
  return nil
 }
 
 func(np *PimRp) SetRpSetGroupBiDirBit () error {
  //parameters: 
- //AgtPimRp SetRpSetGroupBiDirBit, m.Object, m.Name);
+ //AgtPimRp SetRpSetGroupBiDirBit
  return nil
 }
 
 func(np *PimRp) AddRpSetRps () error {
  //parameters: 
- //AgtPimRp AddRpSetRps, m.Object, m.Name);
+ //AgtPimRp AddRpSetRps
  return nil
 }
 
 func(np *PimRp) RemoveRpSetRps () error {
  //parameters: 
- //AgtPimRp RemoveRpSetRps, m.Object, m.Name);
+ //AgtPimRp RemoveRpSetRps
  return nil
 }
 
 func(np *PimRp) RemoveAllRpSetRps () error {
  //parameters: 
- //AgtPimRp RemoveAllRpSetRps, m.Object, m.Name);
+ //AgtPimRp RemoveAllRpSetRps
  return nil
 }
 

@@ -6,31 +6,31 @@ type SourceAddressList struct {
 
 func(np *SourceAddressLis) Add () error {
  //parameters: Type
- //AgtSourceAddressList Add, m.Object, m.Name);
+ //AgtSourceAddressList Add
  return nil
 }
 
 func(np *SourceAddressLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtSourceAddressList AddItems, m.Object, m.Name);
+ //AgtSourceAddressList AddItems
  return nil
 }
 
 func(np *SourceAddressLis) Remove () error {
  //parameters: Handle
- //AgtSourceAddressList Remove, m.Object, m.Name);
+ //AgtSourceAddressList Remove
  return nil
 }
 
 func(np *SourceAddressLis) Copy () error {
  //parameters: Handle
- //AgtSourceAddressList Copy, m.Object, m.Name);
+ //AgtSourceAddressList Copy
  return nil
 }
 
 func(np *SourceAddressLis) SetName () error {
  //parameters: Handle Name
- //AgtSourceAddressList SetName, m.Object, m.Name);
+ //AgtSourceAddressList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *SourceAddressLis) GetType ()(string, error) {
 
 func(np *SourceAddressLis) LockItem () error {
  //parameters: Handle
- //AgtSourceAddressList LockItem, m.Object, m.Name);
+ //AgtSourceAddressList LockItem
  return nil
 }
 
 func(np *SourceAddressLis) UnlockItem () error {
  //parameters: Handle
- //AgtSourceAddressList UnlockItem, m.Object, m.Name);
+ //AgtSourceAddressList UnlockItem
  return nil
 }
 

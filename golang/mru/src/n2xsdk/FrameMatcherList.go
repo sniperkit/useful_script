@@ -6,13 +6,13 @@ type FrameMatcherList struct {
 
 func(np *FrameMatcherLis) AddFrameMatcher () error {
  //parameters: PortHandle
- //AgtFrameMatcherList AddFrameMatcher, m.Object, m.Name);
+ //AgtFrameMatcherList AddFrameMatcher
  return nil
 }
 
 func(np *FrameMatcherLis) RemoveFrameMatcher () error {
  //parameters: PortHandle pFrameMatcherHandle
- //AgtFrameMatcherList RemoveFrameMatcher, m.Object, m.Name);
+ //AgtFrameMatcherList RemoveFrameMatcher
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *FrameMatcherLis) GetFreeFrameMatcherCount ()(string, error) {
 
 func(np *FrameMatcherLis) SetName () error {
  //parameters: FrameMatcherHandle Name
- //AgtFrameMatcherList SetName, m.Object, m.Name);
+ //AgtFrameMatcherList SetName
  return nil
 }
 

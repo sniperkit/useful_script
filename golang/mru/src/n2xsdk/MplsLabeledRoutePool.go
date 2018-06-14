@@ -6,31 +6,31 @@ type MplsLabeledRoutePool struct {
 
 func(np *MplsLabeledRoutePool) EnableLabeling () error {
  //parameters: SessionHandle RoutePoolHandle
- //AgtMplsLabeledRoutePool EnableLabeling, m.Object, m.Name);
+ //AgtMplsLabeledRoutePool EnableLabeling
  return nil
 }
 
 func(np *MplsLabeledRoutePool) DisableLabeling () error {
  //parameters: SessionHandle RoutePoolHandle
- //AgtMplsLabeledRoutePool DisableLabeling, m.Object, m.Name);
+ //AgtMplsLabeledRoutePool DisableLabeling
  return nil
 }
 
 func(np *MplsLabeledRoutePool) SetLabelingMode () error {
  //parameters: SessionHandle RoutePoolHandle LabelingMode
- //AgtMplsLabeledRoutePool SetLabelingMode, m.Object, m.Name);
+ //AgtMplsLabeledRoutePool SetLabelingMode
  return nil
 }
 
 func(np *MplsLabeledRoutePool) SetUserLabelValue () error {
  //parameters: SessionHandle RoutePoolHandle LabelValue
- //AgtMplsLabeledRoutePool SetUserLabelValue, m.Object, m.Name);
+ //AgtMplsLabeledRoutePool SetUserLabelValue
  return nil
 }
 
 func(np *MplsLabeledRoutePool) IsLabelingEnabled () error {
  //parameters: SessionHandle RoutePoolHandle
- //AgtMplsLabeledRoutePool IsLabelingEnabled, m.Object, m.Name);
+ //AgtMplsLabeledRoutePool IsLabelingEnabled
  return nil
 }
 

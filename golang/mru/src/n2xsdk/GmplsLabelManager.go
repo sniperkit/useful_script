@@ -12,7 +12,7 @@ func(np *GmplsLabelManager) GetLabelSessionType ()(string, error) {
 
 func(np *GmplsLabelManager) SetSwitchingCapability () error {
  //parameters: PortHandle SwitchingCapability
- //AgtGmplsLabelManager SetSwitchingCapability, m.Object, m.Name);
+ //AgtGmplsLabelManager SetSwitchingCapability
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *GmplsLabelManager) GetSwitchingCapability ()(string, error) {
 
 func(np *GmplsLabelManager) SetInterfaceNumbering () error {
  //parameters: PortHandle InterfaceNumbering
- //AgtGmplsLabelManager SetInterfaceNumbering, m.Object, m.Name);
+ //AgtGmplsLabelManager SetInterfaceNumbering
  return nil
 }
 
@@ -36,25 +36,25 @@ func(np *GmplsLabelManager) GetInterfaceNumbering ()(string, error) {
 
 func(np *GmplsLabelManager) AddUnnumberedInterfaceGroup () error {
  //parameters: PortHandle InterfaceIdStart InterfaceIdIncr NumberOfInterfaces
- //AgtGmplsLabelManager AddUnnumberedInterfaceGroup, m.Object, m.Name);
+ //AgtGmplsLabelManager AddUnnumberedInterfaceGroup
  return nil
 }
 
 func(np *GmplsLabelManager) AddNumberedInterfaceGroup () error {
  //parameters: PortHandle InterfaceIdStart InterfaceIdIncr NumberOfInterfaces RemoteIdStart RemoteIdIncr
- //AgtGmplsLabelManager AddNumberedInterfaceGroup, m.Object, m.Name);
+ //AgtGmplsLabelManager AddNumberedInterfaceGroup
  return nil
 }
 
 func(np *GmplsLabelManager) SetUnnumberedInterfaceGroup () error {
  //parameters: PortHandle GroupHandle InterfaceIdStart InterfaceIdIncr NumberOfInterfaces
- //AgtGmplsLabelManager SetUnnumberedInterfaceGroup, m.Object, m.Name);
+ //AgtGmplsLabelManager SetUnnumberedInterfaceGroup
  return nil
 }
 
 func(np *GmplsLabelManager) SetNumberedInterfaceGroup () error {
  //parameters: PortHandle GroupHandle InterfaceIdStart InterfaceIdIncr NumberOfInterfaces RemoteIdStart RemoteIdIncr
- //AgtGmplsLabelManager SetNumberedInterfaceGroup, m.Object, m.Name);
+ //AgtGmplsLabelManager SetNumberedInterfaceGroup
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *GmplsLabelManager) GetNumberedInterfaceGroup ()(string, error) {
 
 func(np *GmplsLabelManager) SetInterfaceGroupTeLink () error {
  //parameters: PortHandle GroupHandle UseTeLink TeLinkAddr
- //AgtGmplsLabelManager SetInterfaceGroupTeLink, m.Object, m.Name);
+ //AgtGmplsLabelManager SetInterfaceGroupTeLink
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *GmplsLabelManager) GetInterfaceGroupTeLink ()(string, error) {
 
 func(np *GmplsLabelManager) SetUnnumberedInterfaceGroupRemoteId () error {
  //parameters: PortHandle GroupHandle RemoteIdStart RemoteIdIncr
- //AgtGmplsLabelManager SetUnnumberedInterfaceGroupRemoteId, m.Object, m.Name);
+ //AgtGmplsLabelManager SetUnnumberedInterfaceGroupRemoteId
  return nil
 }
 
@@ -96,25 +96,25 @@ func(np *GmplsLabelManager) GetUnnumberedInterfaceGroupRemoteId ()(string, error
 
 func(np *GmplsLabelManager) EnableChannelization () error {
  //parameters: PortHandle GroupHandle
- //AgtGmplsLabelManager EnableChannelization, m.Object, m.Name);
+ //AgtGmplsLabelManager EnableChannelization
  return nil
 }
 
 func(np *GmplsLabelManager) DisableChannelization () error {
  //parameters: PortHandle GroupHandle
- //AgtGmplsLabelManager DisableChannelization, m.Object, m.Name);
+ //AgtGmplsLabelManager DisableChannelization
  return nil
 }
 
 func(np *GmplsLabelManager) IsChannelizationEnabled () error {
  //parameters: PortHandle GroupHandle
- //AgtGmplsLabelManager IsChannelizationEnabled, m.Object, m.Name);
+ //AgtGmplsLabelManager IsChannelizationEnabled
  return nil
 }
 
 func(np *GmplsLabelManager) SetTdmInterfaceGroupRate () error {
  //parameters: PortHandle GroupHandle InterfaceRate
- //AgtGmplsLabelManager SetTdmInterfaceGroupRate, m.Object, m.Name);
+ //AgtGmplsLabelManager SetTdmInterfaceGroupRate
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *GmplsLabelManager) GetTdmInterfaceGroupRate ()(string, error) {
 
 func(np *GmplsLabelManager) SetLscInterfaceGroupRate () error {
  //parameters: PortHandle GroupHandle LambdaIdStart LambdaIdIncr NumberOfLambdas InterfaceRate
- //AgtGmplsLabelManager SetLscInterfaceGroupRate, m.Object, m.Name);
+ //AgtGmplsLabelManager SetLscInterfaceGroupRate
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *GmplsLabelManager) GetLscInterfaceGroupRate ()(string, error) {
 
 func(np *GmplsLabelManager) SetFscInterfaceGroupRate () error {
  //parameters: PortHandle GroupHandle FscInterfaceStart FscInterfaceIncr InterfaceRate
- //AgtGmplsLabelManager SetFscInterfaceGroupRate, m.Object, m.Name);
+ //AgtGmplsLabelManager SetFscInterfaceGroupRate
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *GmplsLabelManager) GetFscInterfaceGroupRate ()(string, error) {
 
 func(np *GmplsLabelManager) RemoveInterfaceGroup () error {
  //parameters: PortHandle GroupHandle
- //AgtGmplsLabelManager RemoveInterfaceGroup, m.Object, m.Name);
+ //AgtGmplsLabelManager RemoveInterfaceGroup
  return nil
 }
 

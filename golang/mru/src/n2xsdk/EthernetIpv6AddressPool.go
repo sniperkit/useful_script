@@ -6,7 +6,7 @@ type EthernetIpv6AddressPool struct {
 
 func(np *EthernetIpv6AddressPool) SetTesterAddresses () error {
  //parameters: hAddressPool FirstIpv6Address PrefixLength NumAddresses AddressModifier VlanNum psaVlanIds
- //AgtEthernetIpv6AddressPool SetTesterAddresses, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool SetTesterAddresses
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *EthernetIpv6AddressPool) GetTesterLinkLocalAddresses ()(string, error) 
 
 func(np *EthernetIpv6AddressPool) CheckSetTesterAddresses () error {
  //parameters: hAddressPool FirstIpv6Address PrefixLength NumAddresses AddressModifier VlanNum psaVlanIds
- //AgtEthernetIpv6AddressPool CheckSetTesterAddresses, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool CheckSetTesterAddresses
  return nil
 }
 
@@ -42,31 +42,31 @@ func(np *EthernetIpv6AddressPool) GetNthTesterAddress ()(string, error) {
 
 func(np *EthernetIpv6AddressPool) EnableTesterAddressAutoconfiguration () error {
  //parameters: hAddressPool
- //AgtEthernetIpv6AddressPool EnableTesterAddressAutoconfiguration, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool EnableTesterAddressAutoconfiguration
  return nil
 }
 
 func(np *EthernetIpv6AddressPool) DisableTesterAddressAutoconfiguration () error {
  //parameters: hAddressPool
- //AgtEthernetIpv6AddressPool DisableTesterAddressAutoconfiguration, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool DisableTesterAddressAutoconfiguration
  return nil
 }
 
 func(np *EthernetIpv6AddressPool) IsTesterAddressAutoconfigurationEnabled () error {
  //parameters: hAddressPool
- //AgtEthernetIpv6AddressPool IsTesterAddressAutoconfigurationEnabled, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool IsTesterAddressAutoconfigurationEnabled
  return nil
 }
 
 func(np *EthernetIpv6AddressPool) SetTesterVlanId () error {
  //parameters: hAddressPool VlanId
- //AgtEthernetIpv6AddressPool SetTesterVlanId, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool SetTesterVlanId
  return nil
 }
 
 func(np *EthernetIpv6AddressPool) SetTesterVlanIds () error {
  //parameters: hAddressPool VlanNum psaVlanIds
- //AgtEthernetIpv6AddressPool SetTesterVlanIds, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool SetTesterVlanIds
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *EthernetIpv6AddressPool) GetTesterVlanIds ()(string, error) {
 
 func(np *EthernetIpv6AddressPool) SetTesterMacAddressUniqueFlag () error {
  //parameters: hAddressPool UniqueMacAddressFlag
- //AgtEthernetIpv6AddressPool SetTesterMacAddressUniqueFlag, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool SetTesterMacAddressUniqueFlag
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *EthernetIpv6AddressPool) GetTesterMacAddressUniqueFlag ()(string, error
 
 func(np *EthernetIpv6AddressPool) SetTesterMacAddresses () error {
  //parameters: hAddressPool FirstMacAddress UniqueMacAddressFlag
- //AgtEthernetIpv6AddressPool SetTesterMacAddresses, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool SetTesterMacAddresses
  return nil
 }
 
@@ -120,13 +120,13 @@ func(np *EthernetIpv6AddressPool) GetAddressPoolInfo ()(string, error) {
 
 func(np *EthernetIpv6AddressPool) EnableTrafficDestinations () error {
  //parameters: hAddressPool
- //AgtEthernetIpv6AddressPool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool EnableTrafficDestinations
  return nil
 }
 
 func(np *EthernetIpv6AddressPool) EnableTrafficDestinationsByPort () error {
  //parameters: hPort
- //AgtEthernetIpv6AddressPool EnableTrafficDestinationsByPort, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool EnableTrafficDestinationsByPort
  return nil
 }
 
@@ -138,13 +138,13 @@ func(np *EthernetIpv6AddressPool) EnableTrafficDestinationsByList ()(string, err
 
 func(np *EthernetIpv6AddressPool) DisableTrafficDestinations () error {
  //parameters: hAddressPool
- //AgtEthernetIpv6AddressPool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool DisableTrafficDestinations
  return nil
 }
 
 func(np *EthernetIpv6AddressPool) DisableTrafficDestinationsByPort () error {
  //parameters: hPort
- //AgtEthernetIpv6AddressPool DisableTrafficDestinationsByPort, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool DisableTrafficDestinationsByPort
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *EthernetIpv6AddressPool) DisableTrafficDestinationsByList ()(string, er
 
 func(np *EthernetIpv6AddressPool) IsTrafficDestinationEnabled () error {
  //parameters: hAddressPool
- //AgtEthernetIpv6AddressPool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtEthernetIpv6AddressPool IsTrafficDestinationEnabled
  return nil
 }
 

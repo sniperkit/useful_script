@@ -6,7 +6,7 @@ type VsrAlarms struct {
 
 func(np *VsrAlarms) SetTransmitAlarm () error {
  //parameters: PortHandle Alarm
- //AgtVsrAlarms SetTransmitAlarm, m.Object, m.Name);
+ //AgtVsrAlarms SetTransmitAlarm
  return nil
 }
 

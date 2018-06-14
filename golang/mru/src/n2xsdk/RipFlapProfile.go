@@ -12,7 +12,7 @@ func(np *RipFlapProfile) GetAdvertiseToWithdrawDelay ()(string, error) {
 
 func(np *RipFlapProfile) SetAdvertiseToWithdrawDelay () error {
  //parameters: SessionHandle WithdrawDelay
- //AgtRipFlapProfile SetAdvertiseToWithdrawDelay, m.Object, m.Name);
+ //AgtRipFlapProfile SetAdvertiseToWithdrawDelay
  return nil
 }
 
@@ -24,19 +24,19 @@ func(np *RipFlapProfile) GetWithdrawToAdvertiseDelay ()(string, error) {
 
 func(np *RipFlapProfile) SetWithdrawToAdvertiseDelay () error {
  //parameters: SessionHandle AdvertiseDelay
- //AgtRipFlapProfile SetWithdrawToAdvertiseDelay, m.Object, m.Name);
+ //AgtRipFlapProfile SetWithdrawToAdvertiseDelay
  return nil
 }
 
 func(np *RipFlapProfile) StartFlap () error {
  //parameters: SessionHandle
- //AgtRipFlapProfile StartFlap, m.Object, m.Name);
+ //AgtRipFlapProfile StartFlap
  return nil
 }
 
 func(np *RipFlapProfile) StopFlap () error {
  //parameters: SessionHandle
- //AgtRipFlapProfile StopFlap, m.Object, m.Name);
+ //AgtRipFlapProfile StopFlap
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *RipFlapProfile) GetRoutePools ()(string, error) {
 
 func(np *RipFlapProfile) SetRoutePools () error {
  //parameters: SessionHandle Count pRoutePoolHandles
- //AgtRipFlapProfile SetRoutePools, m.Object, m.Name);
+ //AgtRipFlapProfile SetRoutePools
  return nil
 }
 

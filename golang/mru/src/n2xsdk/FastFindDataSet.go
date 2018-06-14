@@ -6,7 +6,7 @@ type FastFindDataSet struct {
 
 func(np *FastFindDataSe) Save () error {
  //parameters: DataSetHandle Filename
- //AgtFastFindDataSet Save, m.Object, m.Name);
+ //AgtFastFindDataSet Save
  return nil
 }
 

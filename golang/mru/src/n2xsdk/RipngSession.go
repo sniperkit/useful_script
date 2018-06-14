@@ -6,85 +6,85 @@ type RipngSession struct {
 
 func(np *RipngSession) SetInterfaceIpAddress () error {
  //parameters: SessionHandle LocalIpAddress
- //AgtRipngSession SetInterfaceIpAddress, m.Object, m.Name);
+ //AgtRipngSession SetInterfaceIpAddress
  return nil
 }
 
 func(np *RipngSession) SetSutIpAddress () error {
  //parameters: SessionHandle RemoteIpAddress
- //AgtRipngSession SetSutIpAddress, m.Object, m.Name);
+ //AgtRipngSession SetSutIpAddress
  return nil
 }
 
 func(np *RipngSession) SetRouterId () error {
  //parameters: SessionHandle RouterId
- //AgtRipngSession SetRouterId, m.Object, m.Name);
+ //AgtRipngSession SetRouterId
  return nil
 }
 
 func(np *RipngSession) SetSubnetMask () error {
  //parameters: SessionHandle SubnetMask
- //AgtRipngSession SetSubnetMask, m.Object, m.Name);
+ //AgtRipngSession SetSubnetMask
  return nil
 }
 
 func(np *RipngSession) SetMetric () error {
  //parameters: SessionHandle Metric
- //AgtRipngSession SetMetric, m.Object, m.Name);
+ //AgtRipngSession SetMetric
  return nil
 }
 
 func(np *RipngSession) SetUpdateInterval () error {
  //parameters: SessionHandle UpdateInterval
- //AgtRipngSession SetUpdateInterval, m.Object, m.Name);
+ //AgtRipngSession SetUpdateInterval
  return nil
 }
 
 func(np *RipngSession) SetTriggeredInterval () error {
  //parameters: SessionHandle TriggeredInterval
- //AgtRipngSession SetTriggeredInterval, m.Object, m.Name);
+ //AgtRipngSession SetTriggeredInterval
  return nil
 }
 
 func(np *RipngSession) SetUpdateControl () error {
  //parameters: SessionHandle UpdateControl
- //AgtRipngSession SetUpdateControl, m.Object, m.Name);
+ //AgtRipngSession SetUpdateControl
  return nil
 }
 
 func(np *RipngSession) SetExpirationInterval () error {
  //parameters: SessionHandle ExpirationInterval
- //AgtRipngSession SetExpirationInterval, m.Object, m.Name);
+ //AgtRipngSession SetExpirationInterval
  return nil
 }
 
 func(np *RipngSession) SetGarbageInterval () error {
  //parameters: SessionHandle GarbageInterval
- //AgtRipngSession SetGarbageInterval, m.Object, m.Name);
+ //AgtRipngSession SetGarbageInterval
  return nil
 }
 
 func(np *RipngSession) Enable () error {
  //parameters: SessionHandle
- //AgtRipngSession Enable, m.Object, m.Name);
+ //AgtRipngSession Enable
  return nil
 }
 
 func(np *RipngSession) Disable () error {
  //parameters: SessionHandle
- //AgtRipngSession Disable, m.Object, m.Name);
+ //AgtRipngSession Disable
  return nil
 }
 
 func(np *RipngSession) EnableAllSessions () error {
  //parameters: 
- //AgtRipngSession EnableAllSessions, m.Object, m.Name);
+ //AgtRipngSession EnableAllSessions
  return nil
 }
 
 func(np *RipngSession) DisableAllSessions () error {
  //parameters: 
- //AgtRipngSession DisableAllSessions, m.Object, m.Name);
+ //AgtRipngSession DisableAllSessions
  return nil
 }
 
@@ -150,43 +150,43 @@ func(np *RipngSession) GetGarbageInterval ()(string, error) {
 
 func(np *RipngSession) AdvertiseAllRoutePools () error {
  //parameters: SessionHandle
- //AgtRipngSession AdvertiseAllRoutePools, m.Object, m.Name);
+ //AgtRipngSession AdvertiseAllRoutePools
  return nil
 }
 
 func(np *RipngSession) WithdrawAllRoutePools () error {
  //parameters: SessionHandle
- //AgtRipngSession WithdrawAllRoutePools, m.Object, m.Name);
+ //AgtRipngSession WithdrawAllRoutePools
  return nil
 }
 
 func(np *RipngSession) StartFlapAll () error {
  //parameters: 
- //AgtRipngSession StartFlapAll, m.Object, m.Name);
+ //AgtRipngSession StartFlapAll
  return nil
 }
 
 func(np *RipngSession) StopFlapAll () error {
  //parameters: 
- //AgtRipngSession StopFlapAll, m.Object, m.Name);
+ //AgtRipngSession StopFlapAll
  return nil
 }
 
 func(np *RipngSession) EnableAllRoutePools () error {
  //parameters: 
- //AgtRipngSession EnableAllRoutePools, m.Object, m.Name);
+ //AgtRipngSession EnableAllRoutePools
  return nil
 }
 
 func(np *RipngSession) DisableAllRoutePools () error {
  //parameters: 
- //AgtRipngSession DisableAllRoutePools, m.Object, m.Name);
+ //AgtRipngSession DisableAllRoutePools
  return nil
 }
 
 func(np *RipngSession) IsEnabled () error {
  //parameters: SessionHandle
- //AgtRipngSession IsEnabled, m.Object, m.Name);
+ //AgtRipngSession IsEnabled
  return nil
 }
 

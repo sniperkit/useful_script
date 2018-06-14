@@ -48,7 +48,7 @@ func(np *RstpStatus) GetRootPathCost ()(string, error) {
 
 func(np *RstpStatus) IsEdge () error {
  //parameters: SessionPoolHandle SessionInstanceHandle
- //AgtRstpStatus IsEdge, m.Object, m.Name);
+ //AgtRstpStatus IsEdge
  return nil
 }
 

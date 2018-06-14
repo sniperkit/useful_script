@@ -6,7 +6,7 @@ type Emulation struct {
 
 func(np *Emulation) SetGlobalStatisticsUpdateInterval () error {
  //parameters: UpdateInterval
- //AgtEmulation SetGlobalStatisticsUpdateInterval, m.Object, m.Name);
+ //AgtEmulation SetGlobalStatisticsUpdateInterval
  return nil
 }
 
@@ -18,19 +18,19 @@ func(np *Emulation) GetGlobalStatisticsUpdateInterval ()(string, error) {
 
 func(np *Emulation) Enable () error {
  //parameters: DeviceHandle EmulationType
- //AgtEmulation Enable, m.Object, m.Name);
+ //AgtEmulation Enable
  return nil
 }
 
 func(np *Emulation) Disable () error {
  //parameters: DeviceHandle EmulationType
- //AgtEmulation Disable, m.Object, m.Name);
+ //AgtEmulation Disable
  return nil
 }
 
 func(np *Emulation) DisableErrored () error {
  //parameters: DeviceHandle EmulationType
- //AgtEmulation DisableErrored, m.Object, m.Name);
+ //AgtEmulation DisableErrored
  return nil
 }
 
@@ -66,19 +66,19 @@ func(np *Emulation) GetPortLimit ()(string, error) {
 
 func(np *Emulation) ResetStatistics () error {
  //parameters: DeviceHandle EmulationType
- //AgtEmulation ResetStatistics, m.Object, m.Name);
+ //AgtEmulation ResetStatistics
  return nil
 }
 
 func(np *Emulation) Reset () error {
  //parameters: DeviceHandle EmulationType
- //AgtEmulation Reset, m.Object, m.Name);
+ //AgtEmulation Reset
  return nil
 }
 
 func(np *Emulation) ResetInCustomState () error {
  //parameters: DeviceHandle EmulationType CustomState
- //AgtEmulation ResetInCustomState, m.Object, m.Name);
+ //AgtEmulation ResetInCustomState
  return nil
 }
 

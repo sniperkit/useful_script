@@ -30,13 +30,13 @@ func(np *IgmpStatistics) GetSessionAccumulatedValue ()(string, error) {
 
 func(np *IgmpStatistics) ClearStatistics () error {
  //parameters: SessionList
- //AgtIgmpStatistics ClearStatistics, m.Object, m.Name);
+ //AgtIgmpStatistics ClearStatistics
  return nil
 }
 
 func(np *IgmpStatistics) ClearSessionStatistics () error {
  //parameters: SessionList
- //AgtIgmpStatistics ClearSessionStatistics, m.Object, m.Name);
+ //AgtIgmpStatistics ClearSessionStatistics
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *IgmpStatistics) ListSelectedSessions ()(string, error) {
 
 func(np *IgmpStatistics) SelectSessions () error {
  //parameters: Count psaSessionHandles
- //AgtIgmpStatistics SelectSessions, m.Object, m.Name);
+ //AgtIgmpStatistics SelectSessions
  return nil
 }
 
 func(np *IgmpStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtIgmpStatistics DeselectSession, m.Object, m.Name);
+ //AgtIgmpStatistics DeselectSession
  return nil
 }
 

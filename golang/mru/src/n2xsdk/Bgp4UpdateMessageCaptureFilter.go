@@ -6,19 +6,19 @@ type Bgp4UpdateMessageCaptureFilter struct {
 
 func(np *Bgp4UpdateMessageCaptureFilter) Enable () error {
  //parameters: UpdateMessageCaptureFilterHandle
- //AgtBgp4UpdateMessageCaptureFilter Enable, m.Object, m.Name);
+ //AgtBgp4UpdateMessageCaptureFilter Enable
  return nil
 }
 
 func(np *Bgp4UpdateMessageCaptureFilter) Disable () error {
  //parameters: UpdateMessageCaptureFilterHandle
- //AgtBgp4UpdateMessageCaptureFilter Disable, m.Object, m.Name);
+ //AgtBgp4UpdateMessageCaptureFilter Disable
  return nil
 }
 
 func(np *Bgp4UpdateMessageCaptureFilter) Reset () error {
  //parameters: UpdateMessageCaptureFilterHandle
- //AgtBgp4UpdateMessageCaptureFilter Reset, m.Object, m.Name);
+ //AgtBgp4UpdateMessageCaptureFilter Reset
  return nil
 }
 

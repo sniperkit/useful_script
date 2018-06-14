@@ -6,7 +6,7 @@ type Ospfv3InterAreaPrefixRoutePool struct {
 
 func(np *Ospfv3InterAreaPrefixRoutePool) SetRoutes () error {
  //parameters: RoutePoolHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfv3InterAreaPrefixRoutePool SetRoutes, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool SetRoutes
  return nil
 }
 
@@ -18,37 +18,37 @@ func(np *Ospfv3InterAreaPrefixRoutePool) GetRoutes ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixRoutePool) EnableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtOspfv3InterAreaPrefixRoutePool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool EnableTrafficDestinations
  return nil
 }
 
 func(np *Ospfv3InterAreaPrefixRoutePool) DisableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtOspfv3InterAreaPrefixRoutePool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool DisableTrafficDestinations
  return nil
 }
 
 func(np *Ospfv3InterAreaPrefixRoutePool) IsTrafficDestinationEnabled () error {
  //parameters: RoutePoolHandle
- //AgtOspfv3InterAreaPrefixRoutePool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool IsTrafficDestinationEnabled
  return nil
 }
 
 func(np *Ospfv3InterAreaPrefixRoutePool) SetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfv3InterAreaPrefixRoutePool SetRoutePoolFlag, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool SetRoutePoolFlag
  return nil
 }
 
 func(np *Ospfv3InterAreaPrefixRoutePool) UnsetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfv3InterAreaPrefixRoutePool UnsetRoutePoolFlag, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool UnsetRoutePoolFlag
  return nil
 }
 
 func(np *Ospfv3InterAreaPrefixRoutePool) IsRoutePoolFlagSet () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfv3InterAreaPrefixRoutePool IsRoutePoolFlagSet, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool IsRoutePoolFlagSet
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Ospfv3InterAreaPrefixRoutePool) GetNthRoute ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixRoutePool) SetResourceClasses () error {
  //parameters: RoutePoolHandle Count psaClasses
- //AgtOspfv3InterAreaPrefixRoutePool SetResourceClasses, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool SetResourceClasses
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *Ospfv3InterAreaPrefixRoutePool) GetPrefixOptions ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixRoutePool) SetPrefixOptions () error {
  //parameters: LsaHandle PrefixOptions
- //AgtOspfv3InterAreaPrefixRoutePool SetPrefixOptions, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixRoutePool SetPrefixOptions
  return nil
 }
 

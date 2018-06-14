@@ -18,7 +18,7 @@ func(np *OpticalInterface) ListAvailablePortModesByMediaType ()(string, error) {
 
 func(np *OpticalInterface) SetPortMode () error {
  //parameters: PortHandle PortMode
- //AgtOpticalInterface SetPortMode, m.Object, m.Name);
+ //AgtOpticalInterface SetPortMode
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *OpticalInterface) ListAvailableClockSources ()(string, error) {
 
 func(np *OpticalInterface) SetClockSource () error {
  //parameters: PortHandle ClockSource
- //AgtOpticalInterface SetClockSource, m.Object, m.Name);
+ //AgtOpticalInterface SetClockSource
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *OpticalInterface) GetClockState ()(string, error) {
 
 func(np *OpticalInterface) IsPluginMediaSupported () error {
  //parameters: PortHandle
- //AgtOpticalInterface IsPluginMediaSupported, m.Object, m.Name);
+ //AgtOpticalInterface IsPluginMediaSupported
  return nil
 }
 
 func(np *OpticalInterface) IsPluginMediaInserted () error {
  //parameters: PortHandle
- //AgtOpticalInterface IsPluginMediaInserted, m.Object, m.Name);
+ //AgtOpticalInterface IsPluginMediaInserted
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *OpticalInterface) ListAvailableMediaTypes ()(string, error) {
 
 func(np *OpticalInterface) SetMediaType () error {
  //parameters: PortHandle MediaType
- //AgtOpticalInterface SetMediaType, m.Object, m.Name);
+ //AgtOpticalInterface SetMediaType
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *OpticalInterface) GetMediaType ()(string, error) {
 
 func(np *OpticalInterface) IsMediaTypeSelectionSupported () error {
  //parameters: PortHandle MediaType
- //AgtOpticalInterface IsMediaTypeSelectionSupported, m.Object, m.Name);
+ //AgtOpticalInterface IsMediaTypeSelectionSupported
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *OpticalInterface) ListAvailableExternalClockRates ()(string, error) {
 
 func(np *OpticalInterface) SetExternalClockRate () error {
  //parameters: PortHandle Rate
- //AgtOpticalInterface SetExternalClockRate, m.Object, m.Name);
+ //AgtOpticalInterface SetExternalClockRate
  return nil
 }
 
@@ -114,31 +114,31 @@ func(np *OpticalInterface) GetExternalClockRate ()(string, error) {
 
 func(np *OpticalInterface) AllLasersOn () error {
  //parameters: 
- //AgtOpticalInterface AllLasersOn, m.Object, m.Name);
+ //AgtOpticalInterface AllLasersOn
  return nil
 }
 
 func(np *OpticalInterface) AllLasersOff () error {
  //parameters: 
- //AgtOpticalInterface AllLasersOff, m.Object, m.Name);
+ //AgtOpticalInterface AllLasersOff
  return nil
 }
 
 func(np *OpticalInterface) LaserOn () error {
  //parameters: PortHandle
- //AgtOpticalInterface LaserOn, m.Object, m.Name);
+ //AgtOpticalInterface LaserOn
  return nil
 }
 
 func(np *OpticalInterface) LaserOff () error {
  //parameters: PortHandle
- //AgtOpticalInterface LaserOff, m.Object, m.Name);
+ //AgtOpticalInterface LaserOff
  return nil
 }
 
 func(np *OpticalInterface) IsLaserOn () error {
  //parameters: PortHandle
- //AgtOpticalInterface IsLaserOn, m.Object, m.Name);
+ //AgtOpticalInterface IsLaserOn
  return nil
 }
 

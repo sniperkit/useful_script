@@ -6,19 +6,19 @@ type CaptureFilter struct {
 
 func(np *CaptureFilter) ClearAllFilters () error {
  //parameters: PortHandle
- //AgtCaptureFilter ClearAllFilters, m.Object, m.Name);
+ //AgtCaptureFilter ClearAllFilters
  return nil
 }
 
 func(np *CaptureFilter) AddStatusFilter () error {
  //parameters: PortHandle StatusFilter FilterAction
- //AgtCaptureFilter AddStatusFilter, m.Object, m.Name);
+ //AgtCaptureFilter AddStatusFilter
  return nil
 }
 
 func(np *CaptureFilter) RemoveStatusFilter () error {
  //parameters: PortHandle StatusFilter
- //AgtCaptureFilter RemoveStatusFilter, m.Object, m.Name);
+ //AgtCaptureFilter RemoveStatusFilter
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *CaptureFilter) ListStatusFilters ()(string, error) {
 
 func(np *CaptureFilter) AddFrameMatcherFilters () error {
  //parameters: PortHandle FrameMatcherHandleCount psaFrameMatcherHandles FilterAction
- //AgtCaptureFilter AddFrameMatcherFilters, m.Object, m.Name);
+ //AgtCaptureFilter AddFrameMatcherFilters
  return nil
 }
 
 func(np *CaptureFilter) RemoveFrameMatcherFilters () error {
  //parameters: PortHandle FrameMatcherHandleCount psaFrameMatcherHandles
- //AgtCaptureFilter RemoveFrameMatcherFilters, m.Object, m.Name);
+ //AgtCaptureFilter RemoveFrameMatcherFilters
  return nil
 }
 

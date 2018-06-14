@@ -6,13 +6,13 @@ type IsisNetwork struct {
 
 func(np *IsisNetwork) Clear () error {
  //parameters: NetworkHandle
- //AgtIsisNetwork Clear, m.Object, m.Name);
+ //AgtIsisNetwork Clear
  return nil
 }
 
 func(np *IsisNetwork) AddReachablePrefix () error {
  //parameters: NetworkHandle NetworkPrefix PrefixLength
- //AgtIsisNetwork AddReachablePrefix, m.Object, m.Name);
+ //AgtIsisNetwork AddReachablePrefix
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *IsisNetwork) GetReachablePrefix ()(string, error) {
 
 func(np *IsisNetwork) SetReachablePrefix () error {
  //parameters: NetworkHandle PrefixIndex NetworkPrefix
- //AgtIsisNetwork SetReachablePrefix, m.Object, m.Name);
+ //AgtIsisNetwork SetReachablePrefix
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *IsisNetwork) GetReachablePrefixLength ()(string, error) {
 
 func(np *IsisNetwork) SetReachablePrefixLength () error {
  //parameters: NetworkHandle PrefixIndex PrefixLength
- //AgtIsisNetwork SetReachablePrefixLength, m.Object, m.Name);
+ //AgtIsisNetwork SetReachablePrefixLength
  return nil
 }
 
 func(np *IsisNetwork) GenerateReachablePrefixes () error {
  //parameters: NetworkHandle StartPrefix PrefixLength Increment Count
- //AgtIsisNetwork GenerateReachablePrefixes, m.Object, m.Name);
+ //AgtIsisNetwork GenerateReachablePrefixes
  return nil
 }
 

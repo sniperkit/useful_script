@@ -6,7 +6,7 @@ type MstpSession struct {
 
 func(np *MstpSession) SignalTopologyChange () error {
  //parameters: SessionInstanceHandle SpanningTreeIdentifier
- //AgtMstpSession SignalTopologyChange, m.Object, m.Name);
+ //AgtMstpSession SignalTopologyChange
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *MstpSession) GetCistRegionalRootIdentifier ()(string, error) {
 
 func(np *MstpSession) SetCistRegionalRootIdentifier () error {
  //parameters: SessionPoolHandle Priority MacAddress
- //AgtMstpSession SetCistRegionalRootIdentifier, m.Object, m.Name);
+ //AgtMstpSession SetCistRegionalRootIdentifier
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *MstpSession) GetCistRootPathCostExternal ()(string, error) {
 
 func(np *MstpSession) SetCistRootPathCostExternal () error {
  //parameters: SessionPoolHandle RootPathCost
- //AgtMstpSession SetCistRootPathCostExternal, m.Object, m.Name);
+ //AgtMstpSession SetCistRootPathCostExternal
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *MstpSession) GetCistRootPathCostInternal ()(string, error) {
 
 func(np *MstpSession) SetCistRootPathCostInternal () error {
  //parameters: SessionPoolHandle RootPathCost
- //AgtMstpSession SetCistRootPathCostInternal, m.Object, m.Name);
+ //AgtMstpSession SetCistRootPathCostInternal
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *MstpSession) GetMstConfig ()(string, error) {
 
 func(np *MstpSession) SetMstConfig () error {
  //parameters: SessionPoolHandle MstConfigName MstConfigRevision
- //AgtMstpSession SetMstConfig, m.Object, m.Name);
+ //AgtMstpSession SetMstConfig
  return nil
 }
 
@@ -66,13 +66,13 @@ func(np *MstpSession) GetCistMaxHops ()(string, error) {
 
 func(np *MstpSession) SetCistMaxHops () error {
  //parameters: SessionPoolHandle MaxHops
- //AgtMstpSession SetCistMaxHops, m.Object, m.Name);
+ //AgtMstpSession SetCistMaxHops
  return nil
 }
 
 func(np *MstpSession) SetCistIncrementingParameter () error {
  //parameters: SessionPoolHandle IncrementingCistParameter Value Repeat Increment
- //AgtMstpSession SetCistIncrementingParameter, m.Object, m.Name);
+ //AgtMstpSession SetCistIncrementingParameter
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *MstpSession) GetMstiRegionalRootIdentifier ()(string, error) {
 
 func(np *MstpSession) SetMstiRegionalRootIdentifier () error {
  //parameters: SessionPoolHandle MstiIdentifier Priority MacAddress
- //AgtMstpSession SetMstiRegionalRootIdentifier, m.Object, m.Name);
+ //AgtMstpSession SetMstiRegionalRootIdentifier
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *MstpSession) GetMstiRootPathCostInternal ()(string, error) {
 
 func(np *MstpSession) SetMstiRootPathCostInternal () error {
  //parameters: SessionPoolHandle MstiIdentifier RootPathCost
- //AgtMstpSession SetMstiRootPathCostInternal, m.Object, m.Name);
+ //AgtMstpSession SetMstiRootPathCostInternal
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *MstpSession) GetMstiBridgePriority ()(string, error) {
 
 func(np *MstpSession) SetMstiBridgePriority () error {
  //parameters: SessionPoolHandle MstiIdentifier Priority
- //AgtMstpSession SetMstiBridgePriority, m.Object, m.Name);
+ //AgtMstpSession SetMstiBridgePriority
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *MstpSession) GetMstiPortPriority ()(string, error) {
 
 func(np *MstpSession) SetMstiPortPriority () error {
  //parameters: SessionPoolHandle MstiIdentifier Priority
- //AgtMstpSession SetMstiPortPriority, m.Object, m.Name);
+ //AgtMstpSession SetMstiPortPriority
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *MstpSession) GetMstiPathCost ()(string, error) {
 
 func(np *MstpSession) SetMstiPathCost () error {
  //parameters: SessionPoolHandle MstiIdentifier MstiPathCost
- //AgtMstpSession SetMstiPathCost, m.Object, m.Name);
+ //AgtMstpSession SetMstiPathCost
  return nil
 }
 
@@ -150,13 +150,13 @@ func(np *MstpSession) GetMstiMaxHops ()(string, error) {
 
 func(np *MstpSession) SetMstiMaxHops () error {
  //parameters: SessionPoolHandle MstiIdentifier MaxHops
- //AgtMstpSession SetMstiMaxHops, m.Object, m.Name);
+ //AgtMstpSession SetMstiMaxHops
  return nil
 }
 
 func(np *MstpSession) SetMstiIncrementingParameter () error {
  //parameters: SessionPoolHandle MstiIdentifier IncrementingMstiParameter Value Repeat Increment
- //AgtMstpSession SetMstiIncrementingParameter, m.Object, m.Name);
+ //AgtMstpSession SetMstiIncrementingParameter
  return nil
 }
 
@@ -168,13 +168,13 @@ func(np *MstpSession) GetMstiIncrementingParameter ()(string, error) {
 
 func(np *MstpSession) AddMsti () error {
  //parameters: SessionPoolHandle MstiIdentifier
- //AgtMstpSession AddMsti, m.Object, m.Name);
+ //AgtMstpSession AddMsti
  return nil
 }
 
 func(np *MstpSession) RemoveMsti () error {
  //parameters: SessionPoolHandle MstiIdentifier
- //AgtMstpSession RemoveMsti, m.Object, m.Name);
+ //AgtMstpSession RemoveMsti
  return nil
 }
 
@@ -186,13 +186,13 @@ func(np *MstpSession) ListMsti ()(string, error) {
 
 func(np *MstpSession) RemoveAllMstis () error {
  //parameters: SessionPoolHandle
- //AgtMstpSession RemoveAllMstis, m.Object, m.Name);
+ //AgtMstpSession RemoveAllMstis
  return nil
 }
 
 func(np *MstpSession) MapVlanToMsti () error {
  //parameters: SessionPoolHandle MstiIdentifier VlanIdStart Repeat Increment Count
- //AgtMstpSession MapVlanToMsti, m.Object, m.Name);
+ //AgtMstpSession MapVlanToMsti
  return nil
 }
 
@@ -210,49 +210,49 @@ func(np *MstpSession) GetMstiVlanMapEntry ()(string, error) {
 
 func(np *MstpSession) RemoveMstiVlanMapEntry () error {
  //parameters: SessionPoolHandle MstiIdentifier VlanMapEntryHandle
- //AgtMstpSession RemoveMstiVlanMapEntry, m.Object, m.Name);
+ //AgtMstpSession RemoveMstiVlanMapEntry
  return nil
 }
 
 func(np *MstpSession) ClearVlanMap () error {
  //parameters: SessionPoolHandle MstiIdentifier
- //AgtMstpSession ClearVlanMap, m.Object, m.Name);
+ //AgtMstpSession ClearVlanMap
  return nil
 }
 
 func(np *MstpSession) ForceMigrationCheck () error {
  //parameters: SessionInstanceHandle
- //AgtMstpSession ForceMigrationCheck, m.Object, m.Name);
+ //AgtMstpSession ForceMigrationCheck
  return nil
 }
 
 func(np *MstpSession) OpenActive () error {
  //parameters: SessionInstanceHandle
- //AgtMstpSession OpenActive, m.Object, m.Name);
+ //AgtMstpSession OpenActive
  return nil
 }
 
 func(np *MstpSession) OpenPassive () error {
  //parameters: SessionInstanceHandle
- //AgtMstpSession OpenPassive, m.Object, m.Name);
+ //AgtMstpSession OpenPassive
  return nil
 }
 
 func(np *MstpSession) Close () error {
  //parameters: SessionInstanceHandle
- //AgtMstpSession Close, m.Object, m.Name);
+ //AgtMstpSession Close
  return nil
 }
 
 func(np *MstpSession) Reset () error {
  //parameters: SessionInstanceHandle
- //AgtMstpSession Reset, m.Object, m.Name);
+ //AgtMstpSession Reset
  return nil
 }
 
 func(np *MstpSession) ResetMeasurements () error {
  //parameters: SessionInstanceHandle
- //AgtMstpSession ResetMeasurements, m.Object, m.Name);
+ //AgtMstpSession ResetMeasurements
  return nil
 }
 
@@ -264,7 +264,7 @@ func(np *MstpSession) GetIdentifierEncoding ()(string, error) {
 
 func(np *MstpSession) SetIdentifierEncoding () error {
  //parameters: SessionPoolHandle IdentifierEncoding
- //AgtMstpSession SetIdentifierEncoding, m.Object, m.Name);
+ //AgtMstpSession SetIdentifierEncoding
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *MstpSession) GetBridgeIdentifier ()(string, error) {
 
 func(np *MstpSession) SetBridgeIdentifier () error {
  //parameters: SessionPoolHandle Priority MacAddress
- //AgtMstpSession SetBridgeIdentifier, m.Object, m.Name);
+ //AgtMstpSession SetBridgeIdentifier
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *MstpSession) GetPortIdentifier ()(string, error) {
 
 func(np *MstpSession) SetPortIdentifier () error {
  //parameters: SessionPoolHandle Priority Number
- //AgtMstpSession SetPortIdentifier, m.Object, m.Name);
+ //AgtMstpSession SetPortIdentifier
  return nil
 }
 
@@ -300,7 +300,7 @@ func(np *MstpSession) GetPathCostMode ()(string, error) {
 
 func(np *MstpSession) SetPathCostMode () error {
  //parameters: SessionPoolHandle PathCostMode
- //AgtMstpSession SetPathCostMode, m.Object, m.Name);
+ //AgtMstpSession SetPathCostMode
  return nil
 }
 
@@ -312,7 +312,7 @@ func(np *MstpSession) GetPathCostValue ()(string, error) {
 
 func(np *MstpSession) SetPathCostValue () error {
  //parameters: SessionPoolHandle PathCost
- //AgtMstpSession SetPathCostValue, m.Object, m.Name);
+ //AgtMstpSession SetPathCostValue
  return nil
 }
 
@@ -324,7 +324,7 @@ func(np *MstpSession) GetRootIdentifier ()(string, error) {
 
 func(np *MstpSession) SetRootIdentifier () error {
  //parameters: SessionPoolHandle Priority MacAddress
- //AgtMstpSession SetRootIdentifier, m.Object, m.Name);
+ //AgtMstpSession SetRootIdentifier
  return nil
 }
 
@@ -336,7 +336,7 @@ func(np *MstpSession) GetRootPathCost ()(string, error) {
 
 func(np *MstpSession) SetRootPathCost () error {
  //parameters: SessionPoolHandle RootPathCost
- //AgtMstpSession SetRootPathCost, m.Object, m.Name);
+ //AgtMstpSession SetRootPathCost
  return nil
 }
 
@@ -348,7 +348,7 @@ func(np *MstpSession) GetTime ()(string, error) {
 
 func(np *MstpSession) SetTime () error {
  //parameters: SessionPoolHandle TimeParameter Time
- //AgtMstpSession SetTime, m.Object, m.Name);
+ //AgtMstpSession SetTime
  return nil
 }
 
@@ -360,13 +360,13 @@ func(np *MstpSession) GetOperationalModifier ()(string, error) {
 
 func(np *MstpSession) SetOperationalModifier () error {
  //parameters: SessionPoolHandle OperationalParameter Value
- //AgtMstpSession SetOperationalModifier, m.Object, m.Name);
+ //AgtMstpSession SetOperationalModifier
  return nil
 }
 
 func(np *MstpSession) SetIncrementingParameter () error {
  //parameters: SessionPoolHandle IncrementingParameter Value Repeat Increment
- //AgtMstpSession SetIncrementingParameter, m.Object, m.Name);
+ //AgtMstpSession SetIncrementingParameter
  return nil
 }
 
@@ -384,25 +384,25 @@ func(np *MstpSession) GetBridgeGroupAddressType ()(string, error) {
 
 func(np *MstpSession) SetBridgeGroupAddressType () error {
  //parameters: SessionPoolHandle BridgeGroupAddressType
- //AgtMstpSession SetBridgeGroupAddressType, m.Object, m.Name);
+ //AgtMstpSession SetBridgeGroupAddressType
  return nil
 }
 
 func(np *MstpSession) EnablePvstPlus () error {
  //parameters: SessionPoolHandle
- //AgtMstpSession EnablePvstPlus, m.Object, m.Name);
+ //AgtMstpSession EnablePvstPlus
  return nil
 }
 
 func(np *MstpSession) DisablePvstPlus () error {
  //parameters: SessionPoolHandle
- //AgtMstpSession DisablePvstPlus, m.Object, m.Name);
+ //AgtMstpSession DisablePvstPlus
  return nil
 }
 
 func(np *MstpSession) IsPvstPlusEnabled () error {
  //parameters: SessionPoolHandle
- //AgtMstpSession IsPvstPlusEnabled, m.Object, m.Name);
+ //AgtMstpSession IsPvstPlusEnabled
  return nil
 }
 

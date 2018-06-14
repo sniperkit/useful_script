@@ -6,7 +6,7 @@ type EthernetInterface struct {
 
 func(np *EthernetInterface) SetFramingMode () error {
  //parameters: PortHandle FramingMode
- //AgtEthernetInterface SetFramingMode, m.Object, m.Name);
+ //AgtEthernetInterface SetFramingMode
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *EthernetInterface) GetFramingMode ()(string, error) {
 
 func(np *EthernetInterface) SetRj45Mode () error {
  //parameters: PortHandle CrossoverMode
- //AgtEthernetInterface SetRj45Mode, m.Object, m.Name);
+ //AgtEthernetInterface SetRj45Mode
  return nil
 }
 
@@ -30,49 +30,49 @@ func(np *EthernetInterface) GetRj45Mode ()(string, error) {
 
 func(np *EthernetInterface) IsRj45AutoCrossoverSupported () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsRj45AutoCrossoverSupported, m.Object, m.Name);
+ //AgtEthernetInterface IsRj45AutoCrossoverSupported
  return nil
 }
 
 func(np *EthernetInterface) EnableFramePadding () error {
  //parameters: PortHandle
- //AgtEthernetInterface EnableFramePadding, m.Object, m.Name);
+ //AgtEthernetInterface EnableFramePadding
  return nil
 }
 
 func(np *EthernetInterface) DisableFramePadding () error {
  //parameters: PortHandle
- //AgtEthernetInterface DisableFramePadding, m.Object, m.Name);
+ //AgtEthernetInterface DisableFramePadding
  return nil
 }
 
 func(np *EthernetInterface) IsFramePaddingEnabled () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsFramePaddingEnabled, m.Object, m.Name);
+ //AgtEthernetInterface IsFramePaddingEnabled
  return nil
 }
 
 func(np *EthernetInterface) EnableJumboFrames () error {
  //parameters: PortHandle
- //AgtEthernetInterface EnableJumboFrames, m.Object, m.Name);
+ //AgtEthernetInterface EnableJumboFrames
  return nil
 }
 
 func(np *EthernetInterface) DisableJumboFrames () error {
  //parameters: PortHandle
- //AgtEthernetInterface DisableJumboFrames, m.Object, m.Name);
+ //AgtEthernetInterface DisableJumboFrames
  return nil
 }
 
 func(np *EthernetInterface) IsJumboFramesEnabled () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsJumboFramesEnabled, m.Object, m.Name);
+ //AgtEthernetInterface IsJumboFramesEnabled
  return nil
 }
 
 func(np *EthernetInterface) SetJumboFrameMtuSize () error {
  //parameters: PortHandle JumboFrameMtuSizeBytes
- //AgtEthernetInterface SetJumboFrameMtuSize, m.Object, m.Name);
+ //AgtEthernetInterface SetJumboFrameMtuSize
  return nil
 }
 
@@ -90,19 +90,19 @@ func(np *EthernetInterface) GetMaxJumboFrameMtuSize ()(string, error) {
 
 func(np *EthernetInterface) IsEthernetSupported () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsEthernetSupported, m.Object, m.Name);
+ //AgtEthernetInterface IsEthernetSupported
  return nil
 }
 
 func(np *EthernetInterface) IsEthernetPcsSupported () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsEthernetPcsSupported, m.Object, m.Name);
+ //AgtEthernetInterface IsEthernetPcsSupported
  return nil
 }
 
 func(np *EthernetInterface) IsEthernet10100Supported () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsEthernet10100Supported, m.Object, m.Name);
+ //AgtEthernetInterface IsEthernet10100Supported
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *EthernetInterface) GetLinkState ()(string, error) {
 
 func(np *EthernetInterface) SetCollisionBackoff () error {
  //parameters: PortHandle Value
- //AgtEthernetInterface SetCollisionBackoff, m.Object, m.Name);
+ //AgtEthernetInterface SetCollisionBackoff
  return nil
 }
 
@@ -126,43 +126,43 @@ func(np *EthernetInterface) GetCollisionBackoff ()(string, error) {
 
 func(np *EthernetInterface) EnableCollisionGeneration () error {
  //parameters: PortHandle
- //AgtEthernetInterface EnableCollisionGeneration, m.Object, m.Name);
+ //AgtEthernetInterface EnableCollisionGeneration
  return nil
 }
 
 func(np *EthernetInterface) DisableCollisionGeneration () error {
  //parameters: PortHandle
- //AgtEthernetInterface DisableCollisionGeneration, m.Object, m.Name);
+ //AgtEthernetInterface DisableCollisionGeneration
  return nil
 }
 
 func(np *EthernetInterface) IsCollisionGenerationEnabled () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsCollisionGenerationEnabled, m.Object, m.Name);
+ //AgtEthernetInterface IsCollisionGenerationEnabled
  return nil
 }
 
 func(np *EthernetInterface) EnablePauseFrameResponse () error {
  //parameters: PortHandle
- //AgtEthernetInterface EnablePauseFrameResponse, m.Object, m.Name);
+ //AgtEthernetInterface EnablePauseFrameResponse
  return nil
 }
 
 func(np *EthernetInterface) DisablePauseFrameResponse () error {
  //parameters: PortHandle
- //AgtEthernetInterface DisablePauseFrameResponse, m.Object, m.Name);
+ //AgtEthernetInterface DisablePauseFrameResponse
  return nil
 }
 
 func(np *EthernetInterface) IsPauseFrameResponseEnabled () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsPauseFrameResponseEnabled, m.Object, m.Name);
+ //AgtEthernetInterface IsPauseFrameResponseEnabled
  return nil
 }
 
 func(np *EthernetInterface) SetMinimumInterFrameGap () error {
  //parameters: PortHandle Value
- //AgtEthernetInterface SetMinimumInterFrameGap, m.Object, m.Name);
+ //AgtEthernetInterface SetMinimumInterFrameGap
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *EthernetInterface) GetMinimumInterFrameGapRange ()(string, error) {
 
 func(np *EthernetInterface) SetConfigRegister () error {
  //parameters: PortHandle Register RegisterValue
- //AgtEthernetInterface SetConfigRegister, m.Object, m.Name);
+ //AgtEthernetInterface SetConfigRegister
  return nil
 }
 
@@ -192,7 +192,7 @@ func(np *EthernetInterface) GetConfigRegister ()(string, error) {
 
 func(np *EthernetInterface) SetConfigRegisterField () error {
  //parameters: PortHandle Register RegisterField FieldValue
- //AgtEthernetInterface SetConfigRegisterField, m.Object, m.Name);
+ //AgtEthernetInterface SetConfigRegisterField
  return nil
 }
 
@@ -204,31 +204,31 @@ func(np *EthernetInterface) GetConfigRegisterField ()(string, error) {
 
 func(np *EthernetInterface) EnableAutoNegotiation () error {
  //parameters: PortHandle
- //AgtEthernetInterface EnableAutoNegotiation, m.Object, m.Name);
+ //AgtEthernetInterface EnableAutoNegotiation
  return nil
 }
 
 func(np *EthernetInterface) DisableAutoNegotiation () error {
  //parameters: PortHandle
- //AgtEthernetInterface DisableAutoNegotiation, m.Object, m.Name);
+ //AgtEthernetInterface DisableAutoNegotiation
  return nil
 }
 
 func(np *EthernetInterface) IsAutoNegotiationEnabled () error {
  //parameters: PortHandle
- //AgtEthernetInterface IsAutoNegotiationEnabled, m.Object, m.Name);
+ //AgtEthernetInterface IsAutoNegotiationEnabled
  return nil
 }
 
 func(np *EthernetInterface) RestartAutoNegotiation () error {
  //parameters: PortHandle
- //AgtEthernetInterface RestartAutoNegotiation, m.Object, m.Name);
+ //AgtEthernetInterface RestartAutoNegotiation
  return nil
 }
 
 func(np *EthernetInterface) SetLinkSpeed () error {
  //parameters: PortHandle LinkSpeed
- //AgtEthernetInterface SetLinkSpeed, m.Object, m.Name);
+ //AgtEthernetInterface SetLinkSpeed
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *EthernetInterface) GetLinkSpeed ()(string, error) {
 
 func(np *EthernetInterface) SetDuplexMode () error {
  //parameters: PortHandle DuplexMode
- //AgtEthernetInterface SetDuplexMode, m.Object, m.Name);
+ //AgtEthernetInterface SetDuplexMode
  return nil
 }
 
@@ -252,7 +252,7 @@ func(np *EthernetInterface) GetDuplexMode ()(string, error) {
 
 func(np *EthernetInterface) SetPonPortMode () error {
  //parameters: PortHandle PortMode
- //AgtEthernetInterface SetPonPortMode, m.Object, m.Name);
+ //AgtEthernetInterface SetPonPortMode
  return nil
 }
 

@@ -6,19 +6,19 @@ type LspTraceSession struct {
 
 func(np *LspTraceSession) Start () error {
  //parameters: SessionHandle
- //AgtLspTraceSession Start, m.Object, m.Name);
+ //AgtLspTraceSession Start
  return nil
 }
 
 func(np *LspTraceSession) Reset () error {
  //parameters: SessionHandle
- //AgtLspTraceSession Reset, m.Object, m.Name);
+ //AgtLspTraceSession Reset
  return nil
 }
 
 func(np *LspTraceSession) Renew () error {
  //parameters: SessionHandle
- //AgtLspTraceSession Renew, m.Object, m.Name);
+ //AgtLspTraceSession Renew
  return nil
 }
 

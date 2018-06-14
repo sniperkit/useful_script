@@ -6,37 +6,37 @@ type ContinuityCheckDataBase struct {
 
 func(np *ContinuityCheckDataBase) Enable () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase Enable, m.Object, m.Name);
+ //AgtContinuityCheckDataBase Enable
  return nil
 }
 
 func(np *ContinuityCheckDataBase) Disable () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase Disable, m.Object, m.Name);
+ //AgtContinuityCheckDataBase Disable
  return nil
 }
 
 func(np *ContinuityCheckDataBase) IsEnabled () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase IsEnabled, m.Object, m.Name);
+ //AgtContinuityCheckDataBase IsEnabled
  return nil
 }
 
 func(np *ContinuityCheckDataBase) EnableAutoDiscovery () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase EnableAutoDiscovery, m.Object, m.Name);
+ //AgtContinuityCheckDataBase EnableAutoDiscovery
  return nil
 }
 
 func(np *ContinuityCheckDataBase) DisableAutoDiscovery () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase DisableAutoDiscovery, m.Object, m.Name);
+ //AgtContinuityCheckDataBase DisableAutoDiscovery
  return nil
 }
 
 func(np *ContinuityCheckDataBase) IsAutoDiscoveryEnabled () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase IsAutoDiscoveryEnabled, m.Object, m.Name);
+ //AgtContinuityCheckDataBase IsAutoDiscoveryEnabled
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *ContinuityCheckDataBase) GetCcdbRowIdList ()(string, error) {
 
 func(np *ContinuityCheckDataBase) AddRemoteMep () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase AddRemoteMep, m.Object, m.Name);
+ //AgtContinuityCheckDataBase AddRemoteMep
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *ContinuityCheckDataBase) ListRemoteMeps ()(string, error) {
 
 func(np *ContinuityCheckDataBase) RemoveRemoteMep () error {
  //parameters: DeviceHandle RemoteMepKey
- //AgtContinuityCheckDataBase RemoveRemoteMep, m.Object, m.Name);
+ //AgtContinuityCheckDataBase RemoveRemoteMep
  return nil
 }
 
@@ -78,13 +78,13 @@ func(np *ContinuityCheckDataBase) GetCcdbNumRows ()(string, error) {
 
 func(np *ContinuityCheckDataBase) RemoveAllRemoteMeps () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase RemoveAllRemoteMeps, m.Object, m.Name);
+ //AgtContinuityCheckDataBase RemoveAllRemoteMeps
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetRemoteMepId () error {
  //parameters: DeviceHandle RemoteMepKey MepId
- //AgtContinuityCheckDataBase SetRemoteMepId, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetRemoteMepId
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *ContinuityCheckDataBase) GetRemoteMepId ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetRemoteMepMacAddress () error {
  //parameters: DeviceHandle RemoteMepKey MacAddress
- //AgtContinuityCheckDataBase SetRemoteMepMacAddress, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetRemoteMepMacAddress
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *ContinuityCheckDataBase) GetRemoteMepMacAddress ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetRemoteMepMdLevel () error {
  //parameters: DeviceHandle RemoteMepKey Level
- //AgtContinuityCheckDataBase SetRemoteMepMdLevel, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetRemoteMepMdLevel
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *ContinuityCheckDataBase) GetRemoteMepMdLevel ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetRemoteMepMegLevel () error {
  //parameters: DeviceHandle RemoteMepKey Level
- //AgtContinuityCheckDataBase SetRemoteMepMegLevel, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetRemoteMepMegLevel
  return nil
 }
 
@@ -150,31 +150,31 @@ func(np *ContinuityCheckDataBase) GetRemoteMepRdiBit ()(string, error) {
 
 func(np *ContinuityCheckDataBase) EnableExpectedConnectivity () error {
  //parameters: DeviceHandle RemoteMepKey
- //AgtContinuityCheckDataBase EnableExpectedConnectivity, m.Object, m.Name);
+ //AgtContinuityCheckDataBase EnableExpectedConnectivity
  return nil
 }
 
 func(np *ContinuityCheckDataBase) DisableExpectedConnectivity () error {
  //parameters: DeviceHandle RemoteMepKey
- //AgtContinuityCheckDataBase DisableExpectedConnectivity, m.Object, m.Name);
+ //AgtContinuityCheckDataBase DisableExpectedConnectivity
  return nil
 }
 
 func(np *ContinuityCheckDataBase) IsExpectedConnectivityEnabled () error {
  //parameters: DeviceHandle RemoteMepKey
- //AgtContinuityCheckDataBase IsExpectedConnectivityEnabled, m.Object, m.Name);
+ //AgtContinuityCheckDataBase IsExpectedConnectivityEnabled
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetExpectedConnectivity () error {
  //parameters: DeviceHandle
- //AgtContinuityCheckDataBase SetExpectedConnectivity, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetExpectedConnectivity
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetContinuityCheckInterval () error {
  //parameters: DeviceHandle RemoteMepKey CcInterval
- //AgtContinuityCheckDataBase SetContinuityCheckInterval, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetContinuityCheckInterval
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *ContinuityCheckDataBase) GetContinuityCheckInterval ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetStandard () error {
  //parameters: DeviceHandle RemoteMepKey Standard
- //AgtContinuityCheckDataBase SetStandard, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetStandard
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *ContinuityCheckDataBase) GetStandard ()(string, error) {
 
 func(np *ContinuityCheckDataBase) AddVlan () error {
  //parameters: DeviceHandle RemoteMepKey
- //AgtContinuityCheckDataBase AddVlan, m.Object, m.Name);
+ //AgtContinuityCheckDataBase AddVlan
  return nil
 }
 
@@ -210,13 +210,13 @@ func(np *ContinuityCheckDataBase) ListVlans ()(string, error) {
 
 func(np *ContinuityCheckDataBase) RemoveVlan () error {
  //parameters: DeviceHandle RemoteMepKey VlanStackIndex
- //AgtContinuityCheckDataBase RemoveVlan, m.Object, m.Name);
+ //AgtContinuityCheckDataBase RemoveVlan
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetVlanId () error {
  //parameters: DeviceHandle RemoteMepKey VlanStackIndex VlanId
- //AgtContinuityCheckDataBase SetVlanId, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetVlanId
  return nil
 }
 
@@ -228,25 +228,25 @@ func(np *ContinuityCheckDataBase) GetVlanId ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetMdNameFormat () error {
  //parameters: DeviceHandle RemoteMepKey MdNameFormat
- //AgtContinuityCheckDataBase SetMdNameFormat, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetMdNameFormat
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetMdNameString () error {
  //parameters: DeviceHandle RemoteMepKey MdName Length
- //AgtContinuityCheckDataBase SetMdNameString, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetMdNameString
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetMdNameMacAddrTwoOct () error {
  //parameters: DeviceHandle RemoteMepKey MacAddress Integer
- //AgtContinuityCheckDataBase SetMdNameMacAddrTwoOct, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetMdNameMacAddrTwoOct
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetMdNameCharString () error {
  //parameters: DeviceHandle RemoteMepKey MdName Length
- //AgtContinuityCheckDataBase SetMdNameCharString, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetMdNameCharString
  return nil
 }
 
@@ -276,31 +276,31 @@ func(np *ContinuityCheckDataBase) GetMdNameCharString ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetSmaNameFormat () error {
  //parameters: DeviceHandle RemoteMepKey SmaNameFormat
- //AgtContinuityCheckDataBase SetSmaNameFormat, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetSmaNameFormat
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetSmaNamePriVid () error {
  //parameters: DeviceHandle RemoteMepKey VlanId
- //AgtContinuityCheckDataBase SetSmaNamePriVid, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetSmaNamePriVid
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetSmaNameCharString () error {
  //parameters: DeviceHandle RemoteMepKey SmaName Length
- //AgtContinuityCheckDataBase SetSmaNameCharString, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetSmaNameCharString
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetSmaNameTwoOct () error {
  //parameters: DeviceHandle RemoteMepKey Integer
- //AgtContinuityCheckDataBase SetSmaNameTwoOct, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetSmaNameTwoOct
  return nil
 }
 
 func(np *ContinuityCheckDataBase) SetSmaNameVpnId () error {
  //parameters: DeviceHandle RemoteMepKey VpnId
- //AgtContinuityCheckDataBase SetSmaNameVpnId, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetSmaNameVpnId
  return nil
 }
 
@@ -336,7 +336,7 @@ func(np *ContinuityCheckDataBase) GetSmaNameVpnId ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetMegIdFormat () error {
  //parameters: DeviceHandle RemoteMepKey MegIdFormat
- //AgtContinuityCheckDataBase SetMegIdFormat, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetMegIdFormat
  return nil
 }
 
@@ -348,7 +348,7 @@ func(np *ContinuityCheckDataBase) GetMegIdFormat ()(string, error) {
 
 func(np *ContinuityCheckDataBase) SetMegIdValue () error {
  //parameters: DeviceHandle RemoteMepKey MegId
- //AgtContinuityCheckDataBase SetMegIdValue, m.Object, m.Name);
+ //AgtContinuityCheckDataBase SetMegIdValue
  return nil
 }
 

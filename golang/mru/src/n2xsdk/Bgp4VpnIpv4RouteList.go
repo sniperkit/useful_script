@@ -6,7 +6,7 @@ type Bgp4VpnIpv4RouteList struct {
 
 func(np *Bgp4VpnIpv4RouteLis) AddRoutePools () error {
  //parameters: SiteHandle PfxCount saPrefixLengths RouteCount saRoutes
- //AgtBgp4VpnIpv4RouteList AddRoutePools, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RouteList AddRoutePools
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *Bgp4VpnIpv4RouteLis) ListRoutePools ()(string, error) {
 
 func(np *Bgp4VpnIpv4RouteLis) RemoveRoutePools () error {
  //parameters: SiteHandle Count saRoutePools
- //AgtBgp4VpnIpv4RouteList RemoveRoutePools, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RouteList RemoveRoutePools
  return nil
 }
 
 func(np *Bgp4VpnIpv4RouteLis) ClearRoutePools () error {
  //parameters: SiteHandle
- //AgtBgp4VpnIpv4RouteList ClearRoutePools, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RouteList ClearRoutePools
  return nil
 }
 

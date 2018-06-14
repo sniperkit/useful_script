@@ -6,25 +6,25 @@ type PppSessionPoolL2tp struct {
 
 func(np *PppSessionPoolL2tp) SetTesterIpAddress () error {
  //parameters: SessionPoolHandle TesterIpAddress
- //AgtPppSessionPoolL2tp SetTesterIpAddress, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetTesterIpAddress
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetSutIpAddress () error {
  //parameters: SessionPoolHandle SutIpAddress
- //AgtPppSessionPoolL2tp SetSutIpAddress, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetSutIpAddress
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetIdentity () error {
  //parameters: SessionPoolHandle Identity
- //AgtPppSessionPoolL2tp SetIdentity, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetIdentity
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetNumberOfCallsPerTunnel () error {
  //parameters: SessionPoolHandle CallsPerTunnel
- //AgtPppSessionPoolL2tp SetNumberOfCallsPerTunnel, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetNumberOfCallsPerTunnel
  return nil
 }
 
@@ -36,61 +36,61 @@ func(np *PppSessionPoolL2tp) GetTunnelLifetime ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetTunnelLifetime () error {
  //parameters: SessionPoolHandle TunnelLifetime
- //AgtPppSessionPoolL2tp SetTunnelLifetime, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetTunnelLifetime
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetHelloInterval () error {
  //parameters: SessionPoolHandle Interval
- //AgtPppSessionPoolL2tp SetHelloInterval, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetHelloInterval
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetInitialAckTimeout () error {
  //parameters: SessionPoolHandle Timeout
- //AgtPppSessionPoolL2tp SetInitialAckTimeout, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetInitialAckTimeout
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetMaxTxRetries () error {
  //parameters: SessionPoolHandle Retries
- //AgtPppSessionPoolL2tp SetMaxTxRetries, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetMaxTxRetries
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetHostName () error {
  //parameters: SessionPoolHandle HostName
- //AgtPppSessionPoolL2tp SetHostName, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetHostName
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetSharedSecret () error {
  //parameters: SessionPoolHandle Secret
- //AgtPppSessionPoolL2tp SetSharedSecret, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetSharedSecret
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetReceiveWindowSize () error {
  //parameters: SessionPoolHandle WindowSize
- //AgtPppSessionPoolL2tp SetReceiveWindowSize, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetReceiveWindowSize
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetSourceUdpPort () error {
  //parameters: SessionPoolHandle SourcePort
- //AgtPppSessionPoolL2tp SetSourceUdpPort, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetSourceUdpPort
  return nil
 }
 
 func(np *PppSessionPoolL2tp) EnableAuthenticateSut () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp EnableAuthenticateSut, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableAuthenticateSut
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableAuthenticateSut () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp DisableAuthenticateSut, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableAuthenticateSut
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *PppSessionPoolL2tp) GetBearerCapabilities ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetBearerCapabilities () error {
  //parameters: SessionPoolHandle Capabilities
- //AgtPppSessionPoolL2tp SetBearerCapabilities, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetBearerCapabilities
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *PppSessionPoolL2tp) GetBearerType ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetBearerType () error {
  //parameters: SessionPoolHandle BearerType
- //AgtPppSessionPoolL2tp SetBearerType, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetBearerType
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *PppSessionPoolL2tp) GetCalledNumber ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetCalledNumber () error {
  //parameters: SessionPoolHandle CalledNumber
- //AgtPppSessionPoolL2tp SetCalledNumber, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetCalledNumber
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *PppSessionPoolL2tp) GetCallingNumber ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetCallingNumber () error {
  //parameters: SessionPoolHandle CallingNumber
- //AgtPppSessionPoolL2tp SetCallingNumber, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetCallingNumber
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *PppSessionPoolL2tp) GetRxConnectSpeed ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetRxConnectSpeed () error {
  //parameters: SessionPoolHandle RxSpeed
- //AgtPppSessionPoolL2tp SetRxConnectSpeed, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetRxConnectSpeed
  return nil
 }
 
@@ -252,103 +252,103 @@ func(np *PppSessionPoolL2tp) GetTxConnectSpeed ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetTxConnectSpeed () error {
  //parameters: SessionPoolHandle TxSpeed
- //AgtPppSessionPoolL2tp SetTxConnectSpeed, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetTxConnectSpeed
  return nil
 }
 
 func(np *PppSessionPoolL2tp) Enable () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp Enable, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp Enable
  return nil
 }
 
 func(np *PppSessionPoolL2tp) Disable () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp Disable, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp Disable
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetNumberOfSessions () error {
  //parameters: SessionPoolHandle NumSessions
- //AgtPppSessionPoolL2tp SetNumberOfSessions, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetNumberOfSessions
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetSessionLifetime () error {
  //parameters: SessionPoolHandle MinLifetime MaxLifetime
- //AgtPppSessionPoolL2tp SetSessionLifetime, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetSessionLifetime
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetSessionInitiationRate () error {
  //parameters: SessionPoolHandle NumSessions Period
- //AgtPppSessionPoolL2tp SetSessionInitiationRate, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetSessionInitiationRate
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetLcpOption () error {
  //parameters: SessionPoolHandle LcpOption Value
- //AgtPppSessionPoolL2tp SetLcpOption, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetLcpOption
  return nil
 }
 
 func(np *PppSessionPoolL2tp) EnableAccm () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp EnableAccm, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableAccm
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableAccm () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp DisableAccm, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableAccm
  return nil
 }
 
 func(np *PppSessionPoolL2tp) EnableAddressControlFieldCompression () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp EnableAddressControlFieldCompression, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableAddressControlFieldCompression
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableAddressControlFieldCompression () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp DisableAddressControlFieldCompression, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableAddressControlFieldCompression
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetMode () error {
  //parameters: SessionPoolHandle Mode
- //AgtPppSessionPoolL2tp SetMode, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetMode
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetAuthenticationProtocol () error {
  //parameters: SessionPoolHandle Protocol
- //AgtPppSessionPoolL2tp SetAuthenticationProtocol, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetAuthenticationProtocol
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetAuthenticationParameter () error {
  //parameters: SessionPoolHandle Parameter Value
- //AgtPppSessionPoolL2tp SetAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetAuthenticationParameter
  return nil
 }
 
 func(np *PppSessionPoolL2tp) EnableUniqueAuthenticationParameter () error {
  //parameters: SessionPoolHandle Parameter
- //AgtPppSessionPoolL2tp EnableUniqueAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableUniqueAuthenticationParameter
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableUniqueAuthenticationParameter () error {
  //parameters: SessionPoolHandle Parameter
- //AgtPppSessionPoolL2tp DisableUniqueAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableUniqueAuthenticationParameter
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetAuthenticationParameterStartValue () error {
  //parameters: SessionPoolHandle Parameter StartValue
- //AgtPppSessionPoolL2tp SetAuthenticationParameterStartValue, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetAuthenticationParameterStartValue
  return nil
 }
 
@@ -360,7 +360,7 @@ func(np *PppSessionPoolL2tp) GetAuthenticationParameter ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetPeerAuthenticationParameter () error {
  //parameters: SessionPoolHandle PeerParameter Value
- //AgtPppSessionPoolL2tp SetPeerAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetPeerAuthenticationParameter
  return nil
 }
 
@@ -372,25 +372,25 @@ func(np *PppSessionPoolL2tp) GetPeerAuthenticationParameter ()(string, error) {
 
 func(np *PppSessionPoolL2tp) EnableAcceptAllAuthenticationValues () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp EnableAcceptAllAuthenticationValues, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableAcceptAllAuthenticationValues
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableAcceptAllAuthenticationValues () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp DisableAcceptAllAuthenticationValues, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableAcceptAllAuthenticationValues
  return nil
 }
 
 func(np *PppSessionPoolL2tp) IsAcceptAllAuthenticationValuesEnabled () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp IsAcceptAllAuthenticationValuesEnabled, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp IsAcceptAllAuthenticationValuesEnabled
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetUserToDomainRatio () error {
  //parameters: SessionPoolHandle UserToDomainRatio
- //AgtPppSessionPoolL2tp SetUserToDomainRatio, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetUserToDomainRatio
  return nil
 }
 
@@ -402,7 +402,7 @@ func(np *PppSessionPoolL2tp) GetUserToDomainRatio ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetPasswordIncrementMethod () error {
  //parameters: SessionPoolHandle PasswordIncrementMethod
- //AgtPppSessionPoolL2tp SetPasswordIncrementMethod, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetPasswordIncrementMethod
  return nil
 }
 
@@ -414,7 +414,7 @@ func(np *PppSessionPoolL2tp) GetPasswordIncrementMethod ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetDomainCountLimit () error {
  //parameters: SessionPoolHandle DomainCountLimit
- //AgtPppSessionPoolL2tp SetDomainCountLimit, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetDomainCountLimit
  return nil
 }
 
@@ -426,25 +426,25 @@ func(np *PppSessionPoolL2tp) GetDomainCountLimit ()(string, error) {
 
 func(np *PppSessionPoolL2tp) EnableDomainNameIncrementAfterExtension () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp EnableDomainNameIncrementAfterExtension, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableDomainNameIncrementAfterExtension
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableDomainNameIncrementAfterExtension () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp DisableDomainNameIncrementAfterExtension, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableDomainNameIncrementAfterExtension
  return nil
 }
 
 func(np *PppSessionPoolL2tp) IsDomainNameIncrementAfterExtensionEnabled () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp IsDomainNameIncrementAfterExtensionEnabled, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp IsDomainNameIncrementAfterExtensionEnabled
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetAcceptedAuthenticationParameter () error {
  //parameters: SessionPoolHandle AcceptedParameter Value
- //AgtPppSessionPoolL2tp SetAcceptedAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetAcceptedAuthenticationParameter
  return nil
 }
 
@@ -456,19 +456,19 @@ func(np *PppSessionPoolL2tp) GetAcceptedAuthenticationParameter ()(string, error
 
 func(np *PppSessionPoolL2tp) SetStartingSourceIpAddress () error {
  //parameters: SessionPoolHandle IpAddress
- //AgtPppSessionPoolL2tp SetStartingSourceIpAddress, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetStartingSourceIpAddress
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetSourceIpAddressModifier () error {
  //parameters: SessionPoolHandle Modifier
- //AgtPppSessionPoolL2tp SetSourceIpAddressModifier, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetSourceIpAddressModifier
  return nil
 }
 
 func(np *PppSessionPoolL2tp) SetMaxConnectionAttempts () error {
  //parameters: SessionPoolHandle MaxConnectionAttempts
- //AgtPppSessionPoolL2tp SetMaxConnectionAttempts, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetMaxConnectionAttempts
  return nil
 }
 
@@ -480,7 +480,7 @@ func(np *PppSessionPoolL2tp) GetMaxConnectionAttempts ()(string, error) {
 
 func(np *PppSessionPoolL2tp) RetryConnections () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp RetryConnections, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp RetryConnections
  return nil
 }
 
@@ -492,7 +492,7 @@ func(np *PppSessionPoolL2tp) GetConnectionAttempts ()(string, error) {
 
 func(np *PppSessionPoolL2tp) Cancel () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolL2tp Cancel, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp Cancel
  return nil
 }
 
@@ -546,7 +546,7 @@ func(np *PppSessionPoolL2tp) GetName ()(string, error) {
 
 func(np *PppSessionPoolL2tp) SetName () error {
  //parameters: SessionPoolHandle Name
- //AgtPppSessionPoolL2tp SetName, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp SetName
  return nil
 }
 
@@ -624,13 +624,13 @@ func(np *PppSessionPoolL2tp) GetUniqueAuthenticationParameterFlag ()(string, err
 
 func(np *PppSessionPoolL2tp) EnableAllSessions () error {
  //parameters: 
- //AgtPppSessionPoolL2tp EnableAllSessions, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp EnableAllSessions
  return nil
 }
 
 func(np *PppSessionPoolL2tp) DisableAllSessions () error {
  //parameters: 
- //AgtPppSessionPoolL2tp DisableAllSessions, m.Object, m.Name);
+ //AgtPppSessionPoolL2tp DisableAllSessions
  return nil
 }
 

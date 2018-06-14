@@ -30,7 +30,7 @@ func(np *BurstProfile) GetSourcePort ()(string, error) {
 
 func(np *BurstProfile) SetProfileType () error {
  //parameters: ProfileHandle ProfileType
- //AgtBurstProfile SetProfileType, m.Object, m.Name);
+ //AgtBurstProfile SetProfileType
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *BurstProfile) GetProfileType ()(string, error) {
 
 func(np *BurstProfile) SetAverageLoad () error {
  //parameters: ProfileHandle AverageLoad Units
- //AgtBurstProfile SetAverageLoad, m.Object, m.Name);
+ //AgtBurstProfile SetAverageLoad
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *BurstProfile) GetAverageLoad ()(string, error) {
 
 func(np *BurstProfile) SetMode () error {
  //parameters: ProfileHandle Mode
- //AgtBurstProfile SetMode, m.Object, m.Name);
+ //AgtBurstProfile SetMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *BurstProfile) GetMode ()(string, error) {
 
 func(np *BurstProfile) SetNumberOfPacketsToInject () error {
  //parameters: ProfileHandle NumberOfPackets
- //AgtBurstProfile SetNumberOfPacketsToInject, m.Object, m.Name);
+ //AgtBurstProfile SetNumberOfPacketsToInject
  return nil
 }
 
@@ -78,13 +78,13 @@ func(np *BurstProfile) GetNumberOfPacketsToInject ()(string, error) {
 
 func(np *BurstProfile) SendSingleInjection () error {
  //parameters: ProfileHandle
- //AgtBurstProfile SendSingleInjection, m.Object, m.Name);
+ //AgtBurstProfile SendSingleInjection
  return nil
 }
 
 func(np *BurstProfile) IsSendSingleInjectionInProgress () error {
  //parameters: ProfileHandle
- //AgtBurstProfile IsSendSingleInjectionInProgress, m.Object, m.Name);
+ //AgtBurstProfile IsSendSingleInjectionInProgress
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *BurstProfile) ListStreamGroups ()(string, error) {
 
 func(np *BurstProfile) AddStreamGroups () error {
  //parameters: ProfileHandle Count psaStreamGroupHandles
- //AgtBurstProfile AddStreamGroups, m.Object, m.Name);
+ //AgtBurstProfile AddStreamGroups
  return nil
 }
 
@@ -120,25 +120,25 @@ func(np *BurstProfile) GetInterdepartureValueResolution ()(string, error) {
 
 func(np *BurstProfile) Enable () error {
  //parameters: ProfileHandle
- //AgtBurstProfile Enable, m.Object, m.Name);
+ //AgtBurstProfile Enable
  return nil
 }
 
 func(np *BurstProfile) Disable () error {
  //parameters: ProfileHandle
- //AgtBurstProfile Disable, m.Object, m.Name);
+ //AgtBurstProfile Disable
  return nil
 }
 
 func(np *BurstProfile) IsEnabled () error {
  //parameters: ProfileHandle
- //AgtBurstProfile IsEnabled, m.Object, m.Name);
+ //AgtBurstProfile IsEnabled
  return nil
 }
 
 func(np *BurstProfile) SetBurstLoad () error {
  //parameters: ProfileHandle BurstLoad Units
- //AgtBurstProfile SetBurstLoad, m.Object, m.Name);
+ //AgtBurstProfile SetBurstLoad
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *BurstProfile) GetBurstLoad ()(string, error) {
 
 func(np *BurstProfile) SetBurstLength () error {
  //parameters: ProfileHandle BurstLength
- //AgtBurstProfile SetBurstLength, m.Object, m.Name);
+ //AgtBurstProfile SetBurstLength
  return nil
 }
 
@@ -162,25 +162,25 @@ func(np *BurstProfile) GetBurstLength ()(string, error) {
 
 func(np *BurstProfile) IsContiguousBurstsSupported () error {
  //parameters: PortHandle
- //AgtBurstProfile IsContiguousBurstsSupported, m.Object, m.Name);
+ //AgtBurstProfile IsContiguousBurstsSupported
  return nil
 }
 
 func(np *BurstProfile) IsContiguousBurstsEnabled () error {
  //parameters: ProfileHandle
- //AgtBurstProfile IsContiguousBurstsEnabled, m.Object, m.Name);
+ //AgtBurstProfile IsContiguousBurstsEnabled
  return nil
 }
 
 func(np *BurstProfile) EnableContiguousBursts () error {
  //parameters: ProfileHandle
- //AgtBurstProfile EnableContiguousBursts, m.Object, m.Name);
+ //AgtBurstProfile EnableContiguousBursts
  return nil
 }
 
 func(np *BurstProfile) DisableContiguousBursts () error {
  //parameters: ProfileHandle
- //AgtBurstProfile DisableContiguousBursts, m.Object, m.Name);
+ //AgtBurstProfile DisableContiguousBursts
  return nil
 }
 

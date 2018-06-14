@@ -6,7 +6,7 @@ type MsdpSession struct {
 
 func(np *MsdpSession) SetSutIpAddress () error {
  //parameters: SessionHandle SutIpAddress
- //AgtMsdpSession SetSutIpAddress, m.Object, m.Name);
+ //AgtMsdpSession SetSutIpAddress
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *MsdpSession) GetSutIpAddress ()(string, error) {
 
 func(np *MsdpSession) SetInterfaceIpAddress () error {
  //parameters: SessionHandle TesterIpAddress TesterIpAddressPrefix
- //AgtMsdpSession SetInterfaceIpAddress, m.Object, m.Name);
+ //AgtMsdpSession SetInterfaceIpAddress
  return nil
 }
 
 func(np *MsdpSession) SetMsdpTimer () error {
  //parameters: SessionHandle TimerType Period
- //AgtMsdpSession SetMsdpTimer, m.Object, m.Name);
+ //AgtMsdpSession SetMsdpTimer
  return nil
 }
 
@@ -36,13 +36,13 @@ func(np *MsdpSession) GetMsdpTimer ()(string, error) {
 
 func(np *MsdpSession) AddMembershipPools () error {
  //parameters: SessionHandle GroupPoolHandles
- //AgtMsdpSession AddMembershipPools, m.Object, m.Name);
+ //AgtMsdpSession AddMembershipPools
  return nil
 }
 
 func(np *MsdpSession) SetPoolRpAddress () error {
  //parameters: SessionHandle MembershipPoolHandle RpIpAddress
- //AgtMsdpSession SetPoolRpAddress, m.Object, m.Name);
+ //AgtMsdpSession SetPoolRpAddress
  return nil
 }
 
@@ -60,31 +60,31 @@ func(np *MsdpSession) GetLastError ()(string, error) {
 
 func(np *MsdpSession) SetRouterId () error {
  //parameters: SessionHandle RouterId
- //AgtMsdpSession SetRouterId, m.Object, m.Name);
+ //AgtMsdpSession SetRouterId
  return nil
 }
 
 func(np *MsdpSession) Enable () error {
  //parameters: SessionHandle
- //AgtMsdpSession Enable, m.Object, m.Name);
+ //AgtMsdpSession Enable
  return nil
 }
 
 func(np *MsdpSession) Disable () error {
  //parameters: SessionHandle
- //AgtMsdpSession Disable, m.Object, m.Name);
+ //AgtMsdpSession Disable
  return nil
 }
 
 func(np *MsdpSession) EnableAll () error {
  //parameters: 
- //AgtMsdpSession EnableAll, m.Object, m.Name);
+ //AgtMsdpSession EnableAll
  return nil
 }
 
 func(np *MsdpSession) DisableAll () error {
  //parameters: 
- //AgtMsdpSession DisableAll, m.Object, m.Name);
+ //AgtMsdpSession DisableAll
  return nil
 }
 
@@ -120,13 +120,13 @@ func(np *MsdpSession) GetNumberOfSourceAddresses ()(string, error) {
 
 func(np *MsdpSession) RemoveMembershipPools () error {
  //parameters: SessionHandle Count psaMembershipPoolHandles
- //AgtMsdpSession RemoveMembershipPools, m.Object, m.Name);
+ //AgtMsdpSession RemoveMembershipPools
  return nil
 }
 
 func(np *MsdpSession) RemoveAllMembershipPools () error {
  //parameters: SessionHandle
- //AgtMsdpSession RemoveAllMembershipPools, m.Object, m.Name);
+ //AgtMsdpSession RemoveAllMembershipPools
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *MsdpSession) ListMembershipPools ()(string, error) {
 
 func(np *MsdpSession) SetGroupPoolHandle () error {
  //parameters: SessionHandle MembershipPoolHandle GroupPoolHandle
- //AgtMsdpSession SetGroupPoolHandle, m.Object, m.Name);
+ //AgtMsdpSession SetGroupPoolHandle
  return nil
 }
 
@@ -150,19 +150,19 @@ func(np *MsdpSession) GetGroupPoolHandle ()(string, error) {
 
 func(np *MsdpSession) AddSourcePools () error {
  //parameters: SessionHandle MembershipPoolHandle NumSources psaSourcePoolHandles
- //AgtMsdpSession AddSourcePools, m.Object, m.Name);
+ //AgtMsdpSession AddSourcePools
  return nil
 }
 
 func(np *MsdpSession) RemoveSourcePools () error {
  //parameters: SessionHandle MembershipPoolHandle Count psaSourcePoolHandles
- //AgtMsdpSession RemoveSourcePools, m.Object, m.Name);
+ //AgtMsdpSession RemoveSourcePools
  return nil
 }
 
 func(np *MsdpSession) RemoveAllSourcePools () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtMsdpSession RemoveAllSourcePools, m.Object, m.Name);
+ //AgtMsdpSession RemoveAllSourcePools
  return nil
 }
 

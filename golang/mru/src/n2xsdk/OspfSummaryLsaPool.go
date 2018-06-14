@@ -6,7 +6,7 @@ type OspfSummaryLsaPool struct {
 
 func(np *OspfSummaryLsaPool) SetAdvertisingRouter () error {
  //parameters: LsaHandle RouterId
- //AgtOspfSummaryLsaPool SetAdvertisingRouter, m.Object, m.Name);
+ //AgtOspfSummaryLsaPool SetAdvertisingRouter
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *OspfSummaryLsaPool) GetAdvertisingRouter ()(string, error) {
 
 func(np *OspfSummaryLsaPool) Advertise () error {
  //parameters: LsaHandle
- //AgtOspfSummaryLsaPool Advertise, m.Object, m.Name);
+ //AgtOspfSummaryLsaPool Advertise
  return nil
 }
 
 func(np *OspfSummaryLsaPool) Withdraw () error {
  //parameters: LsaHandle
- //AgtOspfSummaryLsaPool Withdraw, m.Object, m.Name);
+ //AgtOspfSummaryLsaPool Withdraw
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *OspfSummaryLsaPool) GetAdvertiseFlag ()(string, error) {
 
 func(np *OspfSummaryLsaPool) SetRoutes () error {
  //parameters: LsaHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfSummaryLsaPool SetRoutes, m.Object, m.Name);
+ //AgtOspfSummaryLsaPool SetRoutes
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *OspfSummaryLsaPool) GetRoutes ()(string, error) {
 
 func(np *OspfSummaryLsaPool) SetMetric () error {
  //parameters: LsaHandle Metric
- //AgtOspfSummaryLsaPool SetMetric, m.Object, m.Name);
+ //AgtOspfSummaryLsaPool SetMetric
  return nil
 }
 

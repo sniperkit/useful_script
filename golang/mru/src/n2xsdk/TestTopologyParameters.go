@@ -12,31 +12,31 @@ func(np *TestTopologyParameters) GetLinkLayers ()(string, error) {
 
 func(np *TestTopologyParameters) SetLinkLayers () error {
  //parameters: SessionHandle EAgtTopologyParameterCategories
- //AgtTestTopologyParameters SetLinkLayers, m.Object, m.Name);
+ //AgtTestTopologyParameters SetLinkLayers
  return nil
 }
 
 func(np *TestTopologyParameters) SelectParameter () error {
  //parameters: SessionHandle Category Parameter
- //AgtTestTopologyParameters SelectParameter, m.Object, m.Name);
+ //AgtTestTopologyParameters SelectParameter
  return nil
 }
 
 func(np *TestTopologyParameters) DeselectParameter () error {
  //parameters: SessionHandle Category Parameter
- //AgtTestTopologyParameters DeselectParameter, m.Object, m.Name);
+ //AgtTestTopologyParameters DeselectParameter
  return nil
 }
 
 func(np *TestTopologyParameters) IsParameterSelected () error {
  //parameters: SessionHandle Category Parameter
- //AgtTestTopologyParameters IsParameterSelected, m.Object, m.Name);
+ //AgtTestTopologyParameters IsParameterSelected
  return nil
 }
 
 func(np *TestTopologyParameters) SetParameterValue () error {
  //parameters: SessionHandle Category Parameter Value
- //AgtTestTopologyParameters SetParameterValue, m.Object, m.Name);
+ //AgtTestTopologyParameters SetParameterValue
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *TestTopologyParameters) GetParameterValue ()(string, error) {
 
 func(np *TestTopologyParameters) SetParameterValueFixed () error {
  //parameters: SessionHandle Category Parameter Value
- //AgtTestTopologyParameters SetParameterValueFixed, m.Object, m.Name);
+ //AgtTestTopologyParameters SetParameterValueFixed
  return nil
 }
 
 func(np *TestTopologyParameters) SetIncrementingParameterValue () error {
  //parameters: SessionHandle Category Parameter StartValue Repeat Increment
- //AgtTestTopologyParameters SetIncrementingParameterValue, m.Object, m.Name);
+ //AgtTestTopologyParameters SetIncrementingParameterValue
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *TestTopologyParameters) GetIncrementingParameterValue ()(string, error)
 
 func(np *TestTopologyParameters) SetIncrementingParameterValueAndCount () error {
  //parameters: SessionHandle Category Parameter StartValue Repeat Increment Count
- //AgtTestTopologyParameters SetIncrementingParameterValueAndCount, m.Object, m.Name);
+ //AgtTestTopologyParameters SetIncrementingParameterValueAndCount
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *TestTopologyParameters) GetIncrementingParameterValueAndCount ()(string
 
 func(np *TestTopologyParameters) SetIncrementingParameterValueAndOffset () error {
  //parameters: SessionHandle Category Parameter StartValue Repeat Increment Offset
- //AgtTestTopologyParameters SetIncrementingParameterValueAndOffset, m.Object, m.Name);
+ //AgtTestTopologyParameters SetIncrementingParameterValueAndOffset
  return nil
 }
 

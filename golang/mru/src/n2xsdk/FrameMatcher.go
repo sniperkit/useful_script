@@ -6,13 +6,13 @@ type FrameMatcher struct {
 
 func(np *FrameMatcher) AddFrameFlags () error {
  //parameters: FrameMatcherHandle FlagCount psaFrameFlags
- //AgtFrameMatcher AddFrameFlags, m.Object, m.Name);
+ //AgtFrameMatcher AddFrameFlags
  return nil
 }
 
 func(np *FrameMatcher) RemoveFrameFlags () error {
  //parameters: FrameMatcherHandle FlagCount psaFrameFlags
- //AgtFrameMatcher RemoveFrameFlags, m.Object, m.Name);
+ //AgtFrameMatcher RemoveFrameFlags
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *FrameMatcher) ListFrameFlags ()(string, error) {
 
 func(np *FrameMatcher) AddPatterns () error {
  //parameters: FrameMatcherHandle PatternCount psaPatternHandles
- //AgtFrameMatcher AddPatterns, m.Object, m.Name);
+ //AgtFrameMatcher AddPatterns
  return nil
 }
 
 func(np *FrameMatcher) RemovePatterns () error {
  //parameters: FrameMatcherHandle PatternCount psaPatternHandles
- //AgtFrameMatcher RemovePatterns, m.Object, m.Name);
+ //AgtFrameMatcher RemovePatterns
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *FrameMatcher) GetFreePatterns ()(string, error) {
 
 func(np *FrameMatcher) AddStreamMatch () error {
  //parameters: FrameMatcherHandle StreamGroupHandle StreamIndex
- //AgtFrameMatcher AddStreamMatch, m.Object, m.Name);
+ //AgtFrameMatcher AddStreamMatch
  return nil
 }
 
 func(np *FrameMatcher) RemoveStreamMatch () error {
  //parameters: FrameMatcherHandle StreamGroupHandle StreamIndex
- //AgtFrameMatcher RemoveStreamMatch, m.Object, m.Name);
+ //AgtFrameMatcher RemoveStreamMatch
  return nil
 }
 

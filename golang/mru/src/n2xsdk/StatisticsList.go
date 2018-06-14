@@ -6,31 +6,31 @@ type StatisticsList struct {
 
 func(np *StatisticsLis) Add () error {
  //parameters: Type
- //AgtStatisticsList Add, m.Object, m.Name);
+ //AgtStatisticsList Add
  return nil
 }
 
 func(np *StatisticsLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtStatisticsList AddItems, m.Object, m.Name);
+ //AgtStatisticsList AddItems
  return nil
 }
 
 func(np *StatisticsLis) Remove () error {
  //parameters: Handle
- //AgtStatisticsList Remove, m.Object, m.Name);
+ //AgtStatisticsList Remove
  return nil
 }
 
 func(np *StatisticsLis) Copy () error {
  //parameters: Handle
- //AgtStatisticsList Copy, m.Object, m.Name);
+ //AgtStatisticsList Copy
  return nil
 }
 
 func(np *StatisticsLis) SetName () error {
  //parameters: Handle Name
- //AgtStatisticsList SetName, m.Object, m.Name);
+ //AgtStatisticsList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *StatisticsLis) GetType ()(string, error) {
 
 func(np *StatisticsLis) LockItem () error {
  //parameters: Handle
- //AgtStatisticsList LockItem, m.Object, m.Name);
+ //AgtStatisticsList LockItem
  return nil
 }
 
 func(np *StatisticsLis) UnlockItem () error {
  //parameters: Handle
- //AgtStatisticsList UnlockItem, m.Object, m.Name);
+ //AgtStatisticsList UnlockItem
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *StatisticsLis) GetLockCount ()(string, error) {
 
 func(np *StatisticsLis) AddGuiStatistics () error {
  //parameters: 
- //AgtStatisticsList AddGuiStatistics, m.Object, m.Name);
+ //AgtStatisticsList AddGuiStatistics
  return nil
 }
 

@@ -6,37 +6,37 @@ type StpSession struct {
 
 func(np *StpSession) OpenActive () error {
  //parameters: SessionInstanceHandle
- //AgtStpSession OpenActive, m.Object, m.Name);
+ //AgtStpSession OpenActive
  return nil
 }
 
 func(np *StpSession) OpenPassive () error {
  //parameters: SessionInstanceHandle
- //AgtStpSession OpenPassive, m.Object, m.Name);
+ //AgtStpSession OpenPassive
  return nil
 }
 
 func(np *StpSession) Close () error {
  //parameters: SessionInstanceHandle
- //AgtStpSession Close, m.Object, m.Name);
+ //AgtStpSession Close
  return nil
 }
 
 func(np *StpSession) Reset () error {
  //parameters: SessionInstanceHandle
- //AgtStpSession Reset, m.Object, m.Name);
+ //AgtStpSession Reset
  return nil
 }
 
 func(np *StpSession) ResetMeasurements () error {
  //parameters: SessionInstanceHandle
- //AgtStpSession ResetMeasurements, m.Object, m.Name);
+ //AgtStpSession ResetMeasurements
  return nil
 }
 
 func(np *StpSession) SignalTopologyChange () error {
  //parameters: SessionInstanceHandle
- //AgtStpSession SignalTopologyChange, m.Object, m.Name);
+ //AgtStpSession SignalTopologyChange
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *StpSession) GetIdentifierEncoding ()(string, error) {
 
 func(np *StpSession) SetIdentifierEncoding () error {
  //parameters: SessionPoolHandle IdentifierEncoding
- //AgtStpSession SetIdentifierEncoding, m.Object, m.Name);
+ //AgtStpSession SetIdentifierEncoding
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *StpSession) GetBridgeIdentifier ()(string, error) {
 
 func(np *StpSession) SetBridgeIdentifier () error {
  //parameters: SessionPoolHandle Priority MacAddress
- //AgtStpSession SetBridgeIdentifier, m.Object, m.Name);
+ //AgtStpSession SetBridgeIdentifier
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *StpSession) GetPortIdentifier ()(string, error) {
 
 func(np *StpSession) SetPortIdentifier () error {
  //parameters: SessionPoolHandle Priority Number
- //AgtStpSession SetPortIdentifier, m.Object, m.Name);
+ //AgtStpSession SetPortIdentifier
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *StpSession) GetPathCostMode ()(string, error) {
 
 func(np *StpSession) SetPathCostMode () error {
  //parameters: SessionPoolHandle PathCostMode
- //AgtStpSession SetPathCostMode, m.Object, m.Name);
+ //AgtStpSession SetPathCostMode
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *StpSession) GetPathCostValue ()(string, error) {
 
 func(np *StpSession) SetPathCostValue () error {
  //parameters: SessionPoolHandle PathCost
- //AgtStpSession SetPathCostValue, m.Object, m.Name);
+ //AgtStpSession SetPathCostValue
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *StpSession) GetRootIdentifier ()(string, error) {
 
 func(np *StpSession) SetRootIdentifier () error {
  //parameters: SessionPoolHandle Priority MacAddress
- //AgtStpSession SetRootIdentifier, m.Object, m.Name);
+ //AgtStpSession SetRootIdentifier
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *StpSession) GetRootPathCost ()(string, error) {
 
 func(np *StpSession) SetRootPathCost () error {
  //parameters: SessionPoolHandle RootPathCost
- //AgtStpSession SetRootPathCost, m.Object, m.Name);
+ //AgtStpSession SetRootPathCost
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *StpSession) GetTime ()(string, error) {
 
 func(np *StpSession) SetTime () error {
  //parameters: SessionPoolHandle TimeParameter Time
- //AgtStpSession SetTime, m.Object, m.Name);
+ //AgtStpSession SetTime
  return nil
 }
 
@@ -144,13 +144,13 @@ func(np *StpSession) GetOperationalModifier ()(string, error) {
 
 func(np *StpSession) SetOperationalModifier () error {
  //parameters: SessionPoolHandle OperationalParameter Value
- //AgtStpSession SetOperationalModifier, m.Object, m.Name);
+ //AgtStpSession SetOperationalModifier
  return nil
 }
 
 func(np *StpSession) SetIncrementingParameter () error {
  //parameters: SessionPoolHandle IncrementingParameter Value Repeat Increment
- //AgtStpSession SetIncrementingParameter, m.Object, m.Name);
+ //AgtStpSession SetIncrementingParameter
  return nil
 }
 
@@ -168,25 +168,25 @@ func(np *StpSession) GetBridgeGroupAddressType ()(string, error) {
 
 func(np *StpSession) SetBridgeGroupAddressType () error {
  //parameters: SessionPoolHandle BridgeGroupAddressType
- //AgtStpSession SetBridgeGroupAddressType, m.Object, m.Name);
+ //AgtStpSession SetBridgeGroupAddressType
  return nil
 }
 
 func(np *StpSession) EnablePvstPlus () error {
  //parameters: SessionPoolHandle
- //AgtStpSession EnablePvstPlus, m.Object, m.Name);
+ //AgtStpSession EnablePvstPlus
  return nil
 }
 
 func(np *StpSession) DisablePvstPlus () error {
  //parameters: SessionPoolHandle
- //AgtStpSession DisablePvstPlus, m.Object, m.Name);
+ //AgtStpSession DisablePvstPlus
  return nil
 }
 
 func(np *StpSession) IsPvstPlusEnabled () error {
  //parameters: SessionPoolHandle
- //AgtStpSession IsPvstPlusEnabled, m.Object, m.Name);
+ //AgtStpSession IsPvstPlusEnabled
  return nil
 }
 

@@ -6,7 +6,7 @@ type IcmpStatistics struct {
 
 func(np *IcmpStatistics) SelectPorts () error {
  //parameters: Count saPorts
- //AgtIcmpStatistics SelectPorts, m.Object, m.Name);
+ //AgtIcmpStatistics SelectPorts
  return nil
 }
 

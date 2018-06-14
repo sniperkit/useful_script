@@ -6,31 +6,31 @@ type Bgp4MVrfPool struct {
 
 func(np *Bgp4MVrfPool) QueryMVrfType1Entry () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget PmsiTunnelEndPoint
- //AgtBgp4MVrfPool QueryMVrfType1Entry, m.Object, m.Name);
+ //AgtBgp4MVrfPool QueryMVrfType1Entry
  return nil
 }
 
 func(np *Bgp4MVrfPool) QueryMVrfType4Entry () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget PmsiTunnelEndPoint SourceAddress GroupAddress
- //AgtBgp4MVrfPool QueryMVrfType4Entry, m.Object, m.Name);
+ //AgtBgp4MVrfPool QueryMVrfType4Entry
  return nil
 }
 
 func(np *Bgp4MVrfPool) QueryMVrfType5Entry () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget SourceAddress GroupAddress
- //AgtBgp4MVrfPool QueryMVrfType5Entry, m.Object, m.Name);
+ //AgtBgp4MVrfPool QueryMVrfType5Entry
  return nil
 }
 
 func(np *Bgp4MVrfPool) QueryMVrfType7Entry () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget SourceAddress GroupAddress
- //AgtBgp4MVrfPool QueryMVrfType7Entry, m.Object, m.Name);
+ //AgtBgp4MVrfPool QueryMVrfType7Entry
  return nil
 }
 
 func(np *Bgp4MVrfPool) SetPmsiTunnelType () error {
  //parameters: VrfPoolHandle PmsiTunnelType
- //AgtBgp4MVrfPool SetPmsiTunnelType, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetPmsiTunnelType
  return nil
 }
 
@@ -42,25 +42,25 @@ func(np *Bgp4MVrfPool) GetPmsiTunnelType ()(string, error) {
 
 func(np *Bgp4MVrfPool) EnableSourceActiveFlag () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool EnableSourceActiveFlag, m.Object, m.Name);
+ //AgtBgp4MVrfPool EnableSourceActiveFlag
  return nil
 }
 
 func(np *Bgp4MVrfPool) DisableSourceActiveFlag () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool DisableSourceActiveFlag, m.Object, m.Name);
+ //AgtBgp4MVrfPool DisableSourceActiveFlag
  return nil
 }
 
 func(np *Bgp4MVrfPool) IsSourceActiveFlagEnabled () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool IsSourceActiveFlagEnabled, m.Object, m.Name);
+ //AgtBgp4MVrfPool IsSourceActiveFlagEnabled
  return nil
 }
 
 func(np *Bgp4MVrfPool) SetImportCMcastRtPeAddressIncrementingRange () error {
  //parameters: VrfPoolHandle FirstRouteTarget PrefixLength RouteTargetIncrement RouteTargetRepeat PercentOverlap
- //AgtBgp4MVrfPool SetImportCMcastRtPeAddressIncrementingRange, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportCMcastRtPeAddressIncrementingRange
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *Bgp4MVrfPool) GetImportCMcastRtPeAddressList ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportCMcastRtPeAddress () error {
  //parameters: VrfPoolHandle RouteTarget
- //AgtBgp4MVrfPool SetImportCMcastRtPeAddress, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportCMcastRtPeAddress
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *Bgp4MVrfPool) GetImportCMcastRtPeAddress ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportCMcastRtVrfIdIncrementingRange () error {
  //parameters: VrfPoolHandle FirstRouteTargetId RouteTargetIncrement PercentOverlap
- //AgtBgp4MVrfPool SetImportCMcastRtVrfIdIncrementingRange, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportCMcastRtVrfIdIncrementingRange
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *Bgp4MVrfPool) GetImportCMcastRtVrfIdList ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportCMcastRtVrfId () error {
  //parameters: VrfPoolHandle RouteTargetId
- //AgtBgp4MVrfPool SetImportCMcastRtVrfId, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportCMcastRtVrfId
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *Bgp4MVrfPool) GetImportCMcastRtVrfId ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportLeafADRtIncrementingRange () error {
  //parameters: VrfPoolHandle FirstRouteTarget RouteTargetIncrement RouteTargetRepeat PercentOverlap
- //AgtBgp4MVrfPool SetImportLeafADRtIncrementingRange, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportLeafADRtIncrementingRange
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *Bgp4MVrfPool) GetImportLeafADRtList ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportLeafADRt () error {
  //parameters: VrfPoolHandle RouteTarget
- //AgtBgp4MVrfPool SetImportLeafADRt, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportLeafADRt
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *Bgp4MVrfPool) GetImportRouteTargetList ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportRouteTarget () error {
  //parameters: VrfPoolHandle RouteTargetType RouteTarget
- //AgtBgp4MVrfPool SetImportRouteTarget, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportRouteTarget
  return nil
 }
 
@@ -192,79 +192,79 @@ func(np *Bgp4MVrfPool) GetImportRouteTarget ()(string, error) {
 
 func(np *Bgp4MVrfPool) WithdrawAllType4Routes () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool WithdrawAllType4Routes, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawAllType4Routes
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawType4RoutesInRt () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget PmsiTunnelEndPoint
- //AgtBgp4MVrfPool WithdrawType4RoutesInRt, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawType4RoutesInRt
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawType4Route () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget PmsiTunnelEndPoint SourceAddress GroupAddress
- //AgtBgp4MVrfPool WithdrawType4Route, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawType4Route
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawAllType5Routes () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool WithdrawAllType5Routes, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawAllType5Routes
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawType5RoutesInRt () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget
- //AgtBgp4MVrfPool WithdrawType5RoutesInRt, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawType5RoutesInRt
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawType5Route () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget SourceAddress GroupAddress
- //AgtBgp4MVrfPool WithdrawType5Route, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawType5Route
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawAllType7Routes () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool WithdrawAllType7Routes, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawAllType7Routes
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawType7RoutesInRt () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget
- //AgtBgp4MVrfPool WithdrawType7RoutesInRt, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawType7RoutesInRt
  return nil
 }
 
 func(np *Bgp4MVrfPool) WithdrawType7Route () error {
  //parameters: VrfPoolHandle VrfIndex RouteTargetType RouteTarget SourceAddress GroupAddress
- //AgtBgp4MVrfPool WithdrawType7Route, m.Object, m.Name);
+ //AgtBgp4MVrfPool WithdrawType7Route
  return nil
 }
 
 func(np *Bgp4MVrfPool) Enable () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool Enable, m.Object, m.Name);
+ //AgtBgp4MVrfPool Enable
  return nil
 }
 
 func(np *Bgp4MVrfPool) Disable () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool Disable, m.Object, m.Name);
+ //AgtBgp4MVrfPool Disable
  return nil
 }
 
 func(np *Bgp4MVrfPool) IsEnabled () error {
  //parameters: VrfPoolHandle
- //AgtBgp4MVrfPool IsEnabled, m.Object, m.Name);
+ //AgtBgp4MVrfPool IsEnabled
  return nil
 }
 
 func(np *Bgp4MVrfPool) SetImportRouteTargetIncrementingRange () error {
  //parameters: VrfPoolHandle RouteTargetType FirstRouteTarget RouteTargetIncrement RouteTargetRepeat PercentOverlap
- //AgtBgp4MVrfPool SetImportRouteTargetIncrementingRange, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportRouteTargetIncrementingRange
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *Bgp4MVrfPool) GetImportRouteTargetIncrementingRange ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetImportRouteTargetType () error {
  //parameters: VrfPoolHandle RouteTargetTypeValue
- //AgtBgp4MVrfPool SetImportRouteTargetType, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetImportRouteTargetType
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *Bgp4MVrfPool) GetImportRouteTargetType ()(string, error) {
 
 func(np *Bgp4MVrfPool) SetVpnsPerPeer () error {
  //parameters: VrfPoolHandle NumVpnsPerPeer
- //AgtBgp4MVrfPool SetVpnsPerPeer, m.Object, m.Name);
+ //AgtBgp4MVrfPool SetVpnsPerPeer
  return nil
 }
 

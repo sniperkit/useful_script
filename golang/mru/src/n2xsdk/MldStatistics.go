@@ -24,7 +24,7 @@ func(np *MldStatistics) GetSessionAccumulatedSpecifiedValues ()(string, error) {
 
 func(np *MldStatistics) ClearStatistics () error {
  //parameters: SessionList
- //AgtMldStatistics ClearStatistics, m.Object, m.Name);
+ //AgtMldStatistics ClearStatistics
  return nil
 }
 

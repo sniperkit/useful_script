@@ -6,7 +6,7 @@ type PtpSlaveEthernetClockPool struct {
 
 func(np *PtpSlaveEthernetClockPool) SetAnnounceReceiptTimeout () error {
  //parameters: SessionPoolHandle AnnounceTimeout
- //AgtPtpSlaveEthernetClockPool SetAnnounceReceiptTimeout, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetAnnounceReceiptTimeout
  return nil
 }
 
@@ -18,25 +18,25 @@ func(np *PtpSlaveEthernetClockPool) GetAnnounceReceiptTimeout ()(string, error) 
 
 func(np *PtpSlaveEthernetClockPool) EnableDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool EnableDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool EnableDelayRequest
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) DisableDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool DisableDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool DisableDelayRequest
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) IsEnabledDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool IsEnabledDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool IsEnabledDelayRequest
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) SetDelayRequestAttributes () error {
  //parameters: SessionPoolHandle IntervalMode LogMessageInterval RandomDistributionEnabled
- //AgtPtpSlaveEthernetClockPool SetDelayRequestAttributes, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetDelayRequestAttributes
  return nil
 }
 
@@ -48,43 +48,43 @@ func(np *PtpSlaveEthernetClockPool) GetDelayRequestAttributes ()(string, error) 
 
 func(np *PtpSlaveEthernetClockPool) EnableActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool EnableActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool EnableActivityTrace
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) DisableActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool DisableActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool DisableActivityTrace
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) IsEnabledActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool IsEnabledActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool IsEnabledActivityTrace
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) EnableActivityTraceFilter () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool EnableActivityTraceFilter, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool EnableActivityTraceFilter
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) DisableActivityTraceFilter () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool DisableActivityTraceFilter, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool DisableActivityTraceFilter
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) IsEnabledActivityTraceFilter () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool IsEnabledActivityTraceFilter, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool IsEnabledActivityTraceFilter
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) SetActivityTraceAttributes () error {
  //parameters: SessionPoolHandle InstanceNumber
- //AgtPtpSlaveEthernetClockPool SetActivityTraceAttributes, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetActivityTraceAttributes
  return nil
 }
 
@@ -96,13 +96,13 @@ func(np *PtpSlaveEthernetClockPool) GetActivityTraceAttributes ()(string, error)
 
 func(np *PtpSlaveEthernetClockPool) RefreshActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool RefreshActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool RefreshActivityTrace
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) ClearActivityTrace () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool ClearActivityTrace, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool ClearActivityTrace
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *PtpSlaveEthernetClockPool) GetActivityTraceRow ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetDomainNumber () error {
  //parameters: SessionPoolHandle DomainNumber
- //AgtPtpSlaveEthernetClockPool SetDomainNumber, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetDomainNumber
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *PtpSlaveEthernetClockPool) GetDomainNumber ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetPortNumber () error {
  //parameters: SessionPoolHandle PortNumber
- //AgtPtpSlaveEthernetClockPool SetPortNumber, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetPortNumber
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *PtpSlaveEthernetClockPool) GetPortNumber ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetClockId () error {
  //parameters: SessionPoolHandle ClockId
- //AgtPtpSlaveEthernetClockPool SetClockId, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetClockId
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *PtpSlaveEthernetClockPool) GetClockId ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetClockIdIncrementingRange () error {
  //parameters: SessionPoolHandle FirstClockId Repeat Increment
- //AgtPtpSlaveEthernetClockPool SetClockIdIncrementingRange, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetClockIdIncrementingRange
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *PtpSlaveEthernetClockPool) GetClockIdList ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetPathDelayMode () error {
  //parameters: SessionPoolHandle PathDelayMode
- //AgtPtpSlaveEthernetClockPool SetPathDelayMode, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetPathDelayMode
  return nil
 }
 
@@ -192,61 +192,61 @@ func(np *PtpSlaveEthernetClockPool) GetPathDelayMode ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) EnablePeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool EnablePeerDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool EnablePeerDelayRequest
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) DisablePeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool DisablePeerDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool DisablePeerDelayRequest
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) IsEnabledPeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool IsEnabledPeerDelayRequest, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool IsEnabledPeerDelayRequest
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) EnablePeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool EnablePeerDelayResponse, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool EnablePeerDelayResponse
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) DisablePeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool DisablePeerDelayResponse, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool DisablePeerDelayResponse
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) IsEnabledPeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool IsEnabledPeerDelayResponse, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool IsEnabledPeerDelayResponse
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) EnablePeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool EnablePeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool EnablePeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) DisablePeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool DisablePeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool DisablePeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) IsEnabledPeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpSlaveEthernetClockPool IsEnabledPeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool IsEnabledPeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) SetPeerToPeerPathDelayAttributes () error {
  //parameters: SessionPoolHandle LogMessageInterval TwoStepFlagMode FollowUpDelay
- //AgtPtpSlaveEthernetClockPool SetPeerToPeerPathDelayAttributes, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetPeerToPeerPathDelayAttributes
  return nil
 }
 
@@ -258,7 +258,7 @@ func(np *PtpSlaveEthernetClockPool) GetPeerToPeerPathDelayAttributes ()(string, 
 
 func(np *PtpSlaveEthernetClockPool) SetTimestampCalibration () error {
  //parameters: SessionPoolHandle TxOffset RxOffset
- //AgtPtpSlaveEthernetClockPool SetTimestampCalibration, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetTimestampCalibration
  return nil
 }
 
@@ -276,13 +276,13 @@ func(np *PtpSlaveEthernetClockPool) GetVlanPriority ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtPtpSlaveEthernetClockPool SetVlanPriority, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetVlanPriority
  return nil
 }
 
 func(np *PtpSlaveEthernetClockPool) SetDestinationMacAddress () error {
  //parameters: SessionPoolHandle DestinationMac
- //AgtPtpSlaveEthernetClockPool SetDestinationMacAddress, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetDestinationMacAddress
  return nil
 }
 
@@ -294,7 +294,7 @@ func(np *PtpSlaveEthernetClockPool) GetDestinationMacAddress ()(string, error) {
 
 func(np *PtpSlaveEthernetClockPool) SetPeerMacAddress () error {
  //parameters: SessionPoolHandle PeerMac
- //AgtPtpSlaveEthernetClockPool SetPeerMacAddress, m.Object, m.Name);
+ //AgtPtpSlaveEthernetClockPool SetPeerMacAddress
  return nil
 }
 

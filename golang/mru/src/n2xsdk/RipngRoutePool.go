@@ -6,7 +6,7 @@ type RipngRoutePool struct {
 
 func(np *RipngRoutePool) SetRoutes () error {
  //parameters: RoutePoolHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtRipngRoutePool SetRoutes, m.Object, m.Name);
+ //AgtRipngRoutePool SetRoutes
  return nil
 }
 
@@ -18,37 +18,37 @@ func(np *RipngRoutePool) GetRoutes ()(string, error) {
 
 func(np *RipngRoutePool) EnableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtRipngRoutePool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtRipngRoutePool EnableTrafficDestinations
  return nil
 }
 
 func(np *RipngRoutePool) DisableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtRipngRoutePool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtRipngRoutePool DisableTrafficDestinations
  return nil
 }
 
 func(np *RipngRoutePool) IsTrafficDestinationEnabled () error {
  //parameters: RoutePoolHandle
- //AgtRipngRoutePool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtRipngRoutePool IsTrafficDestinationEnabled
  return nil
 }
 
 func(np *RipngRoutePool) SetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtRipngRoutePool SetRoutePoolFlag, m.Object, m.Name);
+ //AgtRipngRoutePool SetRoutePoolFlag
  return nil
 }
 
 func(np *RipngRoutePool) UnsetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtRipngRoutePool UnsetRoutePoolFlag, m.Object, m.Name);
+ //AgtRipngRoutePool UnsetRoutePoolFlag
  return nil
 }
 
 func(np *RipngRoutePool) IsRoutePoolFlagSet () error {
  //parameters: RoutePoolHandle Flag
- //AgtRipngRoutePool IsRoutePoolFlagSet, m.Object, m.Name);
+ //AgtRipngRoutePool IsRoutePoolFlagSet
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *RipngRoutePool) GetNthRoute ()(string, error) {
 
 func(np *RipngRoutePool) SetResourceClasses () error {
  //parameters: RoutePoolHandle Count psaClasses
- //AgtRipngRoutePool SetResourceClasses, m.Object, m.Name);
+ //AgtRipngRoutePool SetResourceClasses
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *RipngRoutePool) GetResourceClasses ()(string, error) {
 
 func(np *RipngRoutePool) SetMetric () error {
  //parameters: hRoutePool Metric
- //AgtRipngRoutePool SetMetric, m.Object, m.Name);
+ //AgtRipngRoutePool SetMetric
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *RipngRoutePool) GetMetric ()(string, error) {
 
 func(np *RipngRoutePool) SetRouteTag () error {
  //parameters: hRoutePool RouteTag
- //AgtRipngRoutePool SetRouteTag, m.Object, m.Name);
+ //AgtRipngRoutePool SetRouteTag
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *RipngRoutePool) GetRouteTag ()(string, error) {
 
 func(np *RipngRoutePool) SetAddressFamily () error {
  //parameters: hRoutePool AddressFamily
- //AgtRipngRoutePool SetAddressFamily, m.Object, m.Name);
+ //AgtRipngRoutePool SetAddressFamily
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *RipngRoutePool) GetAddressFamily ()(string, error) {
 
 func(np *RipngRoutePool) SetNextHop () error {
  //parameters: hRoutePool NextHop
- //AgtRipngRoutePool SetNextHop, m.Object, m.Name);
+ //AgtRipngRoutePool SetNextHop
  return nil
 }
 
@@ -126,25 +126,25 @@ func(np *RipngRoutePool) GetNextHop ()(string, error) {
 
 func(np *RipngRoutePool) Advertise () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool Advertise, m.Object, m.Name);
+ //AgtRipngRoutePool Advertise
  return nil
 }
 
 func(np *RipngRoutePool) Withdraw () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool Withdraw, m.Object, m.Name);
+ //AgtRipngRoutePool Withdraw
  return nil
 }
 
 func(np *RipngRoutePool) AdvertisePools () error {
  //parameters: Count saRoutePools
- //AgtRipngRoutePool AdvertisePools, m.Object, m.Name);
+ //AgtRipngRoutePool AdvertisePools
  return nil
 }
 
 func(np *RipngRoutePool) WithdrawPools () error {
  //parameters: Count saRoutePools
- //AgtRipngRoutePool WithdrawPools, m.Object, m.Name);
+ //AgtRipngRoutePool WithdrawPools
  return nil
 }
 
@@ -156,37 +156,37 @@ func(np *RipngRoutePool) GetSessionHandle ()(string, error) {
 
 func(np *RipngRoutePool) Enable () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool Enable, m.Object, m.Name);
+ //AgtRipngRoutePool Enable
  return nil
 }
 
 func(np *RipngRoutePool) Disable () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool Disable, m.Object, m.Name);
+ //AgtRipngRoutePool Disable
  return nil
 }
 
 func(np *RipngRoutePool) IsEnabled () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool IsEnabled, m.Object, m.Name);
+ //AgtRipngRoutePool IsEnabled
  return nil
 }
 
 func(np *RipngRoutePool) SelectNextHop () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool SelectNextHop, m.Object, m.Name);
+ //AgtRipngRoutePool SelectNextHop
  return nil
 }
 
 func(np *RipngRoutePool) DeselectNextHop () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool DeselectNextHop, m.Object, m.Name);
+ //AgtRipngRoutePool DeselectNextHop
  return nil
 }
 
 func(np *RipngRoutePool) IsNextHopSelected () error {
  //parameters: hRoutePool
- //AgtRipngRoutePool IsNextHopSelected, m.Object, m.Name);
+ //AgtRipngRoutePool IsNextHopSelected
  return nil
 }
 

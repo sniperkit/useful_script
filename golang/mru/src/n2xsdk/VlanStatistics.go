@@ -30,7 +30,7 @@ func(np *VlanStatistics) ListSelectedPorts ()(string, error) {
 
 func(np *VlanStatistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts PortHandles
- //AgtVlanStatistics SelectPorts, m.Object, m.Name);
+ //AgtVlanStatistics SelectPorts
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *VlanStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *VlanStatistics) LockItem () error {
  //parameters: StatisticsHandle
- //AgtVlanStatistics LockItem, m.Object, m.Name);
+ //AgtVlanStatistics LockItem
  return nil
 }
 
 func(np *VlanStatistics) UnlockItem () error {
  //parameters: StatisticsHandle
- //AgtVlanStatistics UnlockItem, m.Object, m.Name);
+ //AgtVlanStatistics UnlockItem
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *VlanStatistics) ListSelectedStatistics ()(string, error) {
 
 func(np *VlanStatistics) SelectStatistics () error {
  //parameters: Handle NumStatistics Statistics
- //AgtVlanStatistics SelectStatistics, m.Object, m.Name);
+ //AgtVlanStatistics SelectStatistics
  return nil
 }
 

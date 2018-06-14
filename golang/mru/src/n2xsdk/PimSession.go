@@ -6,7 +6,7 @@ type PimSession struct {
 
 func(np *PimSession) SetPimMode () error {
  //parameters: SessionHandle PimMode
- //AgtPimSession SetPimMode, m.Object, m.Name);
+ //AgtPimSession SetPimMode
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *PimSession) GetPimMode ()(string, error) {
 
 func(np *PimSession) SetRouterId () error {
  //parameters: SessionHandle RouterId
- //AgtPimSession SetRouterId, m.Object, m.Name);
+ //AgtPimSession SetRouterId
  return nil
 }
 
 func(np *PimSession) RemoveAllNeighborIpAddresses () error {
  //parameters: SessionHandle
- //AgtPimSession RemoveAllNeighborIpAddresses, m.Object, m.Name);
+ //AgtPimSession RemoveAllNeighborIpAddresses
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *PimSession) GetNeighborIpAddress ()(string, error) {
 
 func(np *PimSession) AddMembershipPools () error {
  //parameters: SessionHandle PoolMode GroupPoolHandles
- //AgtPimSession AddMembershipPools, m.Object, m.Name);
+ //AgtPimSession AddMembershipPools
  return nil
 }
 
 func(np *PimSession) SetMembershipPoolMode () error {
  //parameters: SessionHandle MembershipPoolHandle PoolMode
- //AgtPimSession SetMembershipPoolMode, m.Object, m.Name);
+ //AgtPimSession SetMembershipPoolMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *PimSession) ListMembershipPoolsByMode ()(string, error) {
 
 func(np *PimSession) SetPoolRpAddress () error {
  //parameters: SessionHandle MembershipPoolHandle RpIpAddress
- //AgtPimSession SetPoolRpAddress, m.Object, m.Name);
+ //AgtPimSession SetPoolRpAddress
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *PimSession) GetPoolRpAddress ()(string, error) {
 
 func(np *PimSession) SetPimTimer () error {
  //parameters: SessionHandle TimerType Period
- //AgtPimSession SetPimTimer, m.Object, m.Name);
+ //AgtPimSession SetPimTimer
  return nil
 }
 
@@ -90,19 +90,19 @@ func(np *PimSession) GetPimTimer ()(string, error) {
 
 func(np *PimSession) AddHelloTlv () error {
  //parameters: SessionHandle Type Length Value
- //AgtPimSession AddHelloTlv, m.Object, m.Name);
+ //AgtPimSession AddHelloTlv
  return nil
 }
 
 func(np *PimSession) RemoveHelloTlv () error {
  //parameters: SessionHandle TlvHandle
- //AgtPimSession RemoveHelloTlv, m.Object, m.Name);
+ //AgtPimSession RemoveHelloTlv
  return nil
 }
 
 func(np *PimSession) RemoveAllHelloTlvs () error {
  //parameters: SessionHandle
- //AgtPimSession RemoveAllHelloTlvs, m.Object, m.Name);
+ //AgtPimSession RemoveAllHelloTlvs
  return nil
 }
 
@@ -138,55 +138,55 @@ func(np *PimSession) GetPimv4StateSummary ()(string, error) {
 
 func(np *PimSession) Enable () error {
  //parameters: SessionHandle
- //AgtPimSession Enable, m.Object, m.Name);
+ //AgtPimSession Enable
  return nil
 }
 
 func(np *PimSession) Disable () error {
  //parameters: SessionHandle
- //AgtPimSession Disable, m.Object, m.Name);
+ //AgtPimSession Disable
  return nil
 }
 
 func(np *PimSession) EnableGreTunnel () error {
  //parameters: SessionHandle
- //AgtPimSession EnableGreTunnel, m.Object, m.Name);
+ //AgtPimSession EnableGreTunnel
  return nil
 }
 
 func(np *PimSession) DisableGreTunnel () error {
  //parameters: SessionHandle
- //AgtPimSession DisableGreTunnel, m.Object, m.Name);
+ //AgtPimSession DisableGreTunnel
  return nil
 }
 
 func(np *PimSession) IsGreTunnelEnabled () error {
  //parameters: SessionHandle
- //AgtPimSession IsGreTunnelEnabled, m.Object, m.Name);
+ //AgtPimSession IsGreTunnelEnabled
  return nil
 }
 
 func(np *PimSession) EnableGreTunnelChecksumField () error {
  //parameters: SessionHandle
- //AgtPimSession EnableGreTunnelChecksumField, m.Object, m.Name);
+ //AgtPimSession EnableGreTunnelChecksumField
  return nil
 }
 
 func(np *PimSession) DisableGreTunnelChecksumField () error {
  //parameters: SessionHandle
- //AgtPimSession DisableGreTunnelChecksumField, m.Object, m.Name);
+ //AgtPimSession DisableGreTunnelChecksumField
  return nil
 }
 
 func(np *PimSession) IsGreTunnelChecksumFieldEnabled () error {
  //parameters: SessionHandle
- //AgtPimSession IsGreTunnelChecksumFieldEnabled, m.Object, m.Name);
+ //AgtPimSession IsGreTunnelChecksumFieldEnabled
  return nil
 }
 
 func(np *PimSession) SetGreTunnelLocalAddress () error {
  //parameters: SessionHandle IpAddress
- //AgtPimSession SetGreTunnelLocalAddress, m.Object, m.Name);
+ //AgtPimSession SetGreTunnelLocalAddress
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *PimSession) GetGreTunnelLocalAddress ()(string, error) {
 
 func(np *PimSession) SetGreTunnelRemoteAddress () error {
  //parameters: SessionHandle IpAddress
- //AgtPimSession SetGreTunnelRemoteAddress, m.Object, m.Name);
+ //AgtPimSession SetGreTunnelRemoteAddress
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *PimSession) GetGreTunnelRemoteAddress ()(string, error) {
 
 func(np *PimSession) SetPimTos () error {
  //parameters: SessionHandle Tos
- //AgtPimSession SetPimTos, m.Object, m.Name);
+ //AgtPimSession SetPimTos
  return nil
 }
 
@@ -222,7 +222,7 @@ func(np *PimSession) GetPimTos ()(string, error) {
 
 func(np *PimSession) SetGreTunnelTos () error {
  //parameters: SessionHandle Tos
- //AgtPimSession SetGreTunnelTos, m.Object, m.Name);
+ //AgtPimSession SetGreTunnelTos
  return nil
 }
 
@@ -234,31 +234,31 @@ func(np *PimSession) GetGreTunnelTos ()(string, error) {
 
 func(np *PimSession) EnablePimSmSimulatedRendezvousPoint () error {
  //parameters: SessionHandle
- //AgtPimSession EnablePimSmSimulatedRendezvousPoint, m.Object, m.Name);
+ //AgtPimSession EnablePimSmSimulatedRendezvousPoint
  return nil
 }
 
 func(np *PimSession) DisablePimSmSimulatedRendezvousPoint () error {
  //parameters: SessionHandle
- //AgtPimSession DisablePimSmSimulatedRendezvousPoint, m.Object, m.Name);
+ //AgtPimSession DisablePimSmSimulatedRendezvousPoint
  return nil
 }
 
 func(np *PimSession) EnableAll () error {
  //parameters: 
- //AgtPimSession EnableAll, m.Object, m.Name);
+ //AgtPimSession EnableAll
  return nil
 }
 
 func(np *PimSession) DisableAll () error {
  //parameters: 
- //AgtPimSession DisableAll, m.Object, m.Name);
+ //AgtPimSession DisableAll
  return nil
 }
 
 func(np *PimSession) SetInterfaceIpAddress () error {
  //parameters: 
- //AgtPimSession SetInterfaceIpAddress, m.Object, m.Name);
+ //AgtPimSession SetInterfaceIpAddress
  return nil
 }
 
@@ -294,13 +294,13 @@ func(np *PimSession) GetNumberOfSourceAddresses ()(string, error) {
 
 func(np *PimSession) RemoveMembershipPools () error {
  //parameters: SessionHandle Count psaMembershipPoolHandles
- //AgtPimSession RemoveMembershipPools, m.Object, m.Name);
+ //AgtPimSession RemoveMembershipPools
  return nil
 }
 
 func(np *PimSession) RemoveAllMembershipPools () error {
  //parameters: SessionHandle
- //AgtPimSession RemoveAllMembershipPools, m.Object, m.Name);
+ //AgtPimSession RemoveAllMembershipPools
  return nil
 }
 
@@ -312,7 +312,7 @@ func(np *PimSession) ListMembershipPools ()(string, error) {
 
 func(np *PimSession) SetGroupPoolHandle () error {
  //parameters: SessionHandle MembershipPoolHandle GroupPoolHandle
- //AgtPimSession SetGroupPoolHandle, m.Object, m.Name);
+ //AgtPimSession SetGroupPoolHandle
  return nil
 }
 
@@ -324,19 +324,19 @@ func(np *PimSession) GetGroupPoolHandle ()(string, error) {
 
 func(np *PimSession) AddSourcePools () error {
  //parameters: SessionHandle MembershipPoolHandle NumSources psaSourcePoolHandles
- //AgtPimSession AddSourcePools, m.Object, m.Name);
+ //AgtPimSession AddSourcePools
  return nil
 }
 
 func(np *PimSession) RemoveSourcePools () error {
  //parameters: SessionHandle MembershipPoolHandle Count psaSourcePoolHandles
- //AgtPimSession RemoveSourcePools, m.Object, m.Name);
+ //AgtPimSession RemoveSourcePools
  return nil
 }
 
 func(np *PimSession) RemoveAllSourcePools () error {
  //parameters: SessionHandle MembershipPoolHandle
- //AgtPimSession RemoveAllSourcePools, m.Object, m.Name);
+ //AgtPimSession RemoveAllSourcePools
  return nil
 }
 
@@ -378,13 +378,13 @@ func(np *PimSession) GetMulticastRoutingProtocol ()(string, error) {
 
 func(np *PimSession) AddNeighborIpAddresses () error {
  //parameters: 
- //AgtPimSession AddNeighborIpAddresses, m.Object, m.Name);
+ //AgtPimSession AddNeighborIpAddresses
  return nil
 }
 
 func(np *PimSession) RemoveNeighborIpAddresses () error {
  //parameters: 
- //AgtPimSession RemoveNeighborIpAddresses, m.Object, m.Name);
+ //AgtPimSession RemoveNeighborIpAddresses
  return nil
 }
 

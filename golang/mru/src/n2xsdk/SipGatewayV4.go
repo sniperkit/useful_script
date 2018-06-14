@@ -6,25 +6,25 @@ type SipGatewayV4 struct {
 
 func(np *SipGatewayV4) IsNetworkAddressTranslationEnabled () error {
  //parameters: DeviceHandle
- //AgtSipGatewayV4 IsNetworkAddressTranslationEnabled, m.Object, m.Name);
+ //AgtSipGatewayV4 IsNetworkAddressTranslationEnabled
  return nil
 }
 
 func(np *SipGatewayV4) EnableNetworkAddressTranslation () error {
  //parameters: DeviceHandle
- //AgtSipGatewayV4 EnableNetworkAddressTranslation, m.Object, m.Name);
+ //AgtSipGatewayV4 EnableNetworkAddressTranslation
  return nil
 }
 
 func(np *SipGatewayV4) DisableNetworkAddressTranslation () error {
  //parameters: DeviceHandle
- //AgtSipGatewayV4 DisableNetworkAddressTranslation, m.Object, m.Name);
+ //AgtSipGatewayV4 DisableNetworkAddressTranslation
  return nil
 }
 
 func(np *SipGatewayV4) SetNatedInternaIpv4AddressRange () error {
  //parameters: DeviceHandle Ipv4Address Increment Repeat
- //AgtSipGatewayV4 SetNatedInternaIpv4AddressRange, m.Object, m.Name);
+ //AgtSipGatewayV4 SetNatedInternaIpv4AddressRange
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *SipGatewayV4) GetNatedInternaIpv4AddressRange ()(string, error) {
 
 func(np *SipGatewayV4) SetNatedExternalIpv4AddressRange () error {
  //parameters: DeviceHandle Ipv4Address Increment Repeat
- //AgtSipGatewayV4 SetNatedExternalIpv4AddressRange, m.Object, m.Name);
+ //AgtSipGatewayV4 SetNatedExternalIpv4AddressRange
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *SipGatewayV4) GetNatedExternalIpv4AddressRange ()(string, error) {
 
 func(np *SipGatewayV4) SetNatedExternalIpv4Address () error {
  //parameters: DeviceHandle Ipv4Address
- //AgtSipGatewayV4 SetNatedExternalIpv4Address, m.Object, m.Name);
+ //AgtSipGatewayV4 SetNatedExternalIpv4Address
  return nil
 }
 

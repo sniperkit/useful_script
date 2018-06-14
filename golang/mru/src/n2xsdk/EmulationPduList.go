@@ -6,25 +6,25 @@ type EmulationPduList struct {
 
 func(np *EmulationPduLis) AddPdu () error {
  //parameters: Count ProtocolList
- //AgtEmulationPduList AddPdu, m.Object, m.Name);
+ //AgtEmulationPduList AddPdu
  return nil
 }
 
 func(np *EmulationPduLis) AddPduWithPacketType () error {
  //parameters: OuterProtocol PacketType
- //AgtEmulationPduList AddPduWithPacketType, m.Object, m.Name);
+ //AgtEmulationPduList AddPduWithPacketType
  return nil
 }
 
 func(np *EmulationPduLis) RemovePdu () error {
  //parameters: EmulationPduHandle
- //AgtEmulationPduList RemovePdu, m.Object, m.Name);
+ //AgtEmulationPduList RemovePdu
  return nil
 }
 
 func(np *EmulationPduLis) SetName () error {
  //parameters: EmulationPduHandle Name
- //AgtEmulationPduList SetName, m.Object, m.Name);
+ //AgtEmulationPduList SetName
  return nil
 }
 

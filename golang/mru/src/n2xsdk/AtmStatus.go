@@ -18,7 +18,7 @@ func(np *mStatus) GetStatusDescription ()(string, error) {
 
 func(np *mStatus) SaveStatus () error {
  //parameters: PortHandle LogFile
- //AgtAtmStatus SaveStatus, m.Object, m.Name);
+ //AgtAtmStatus SaveStatus
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *mStatus) GetStatusSummaryDescription ()(string, error) {
 
 func(np *mStatus) SaveStatusSummary () error {
  //parameters: LogFile
- //AgtAtmStatus SaveStatusSummary, m.Object, m.Name);
+ //AgtAtmStatus SaveStatusSummary
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *mStatus) GetStatusHistoryDescription ()(string, error) {
 
 func(np *mStatus) SaveStatusHistory () error {
  //parameters: LogFile
- //AgtAtmStatus SaveStatusHistory, m.Object, m.Name);
+ //AgtAtmStatus SaveStatusHistory
  return nil
 }
 
 func(np *mStatus) ClearHistory () error {
  //parameters: 
- //AgtAtmStatus ClearHistory, m.Object, m.Name);
+ //AgtAtmStatus ClearHistory
  return nil
 }
 
 func(np *mStatus) SetHistorySize () error {
  //parameters: HistorySize
- //AgtAtmStatus SetHistorySize, m.Object, m.Name);
+ //AgtAtmStatus SetHistorySize
  return nil
 }
 

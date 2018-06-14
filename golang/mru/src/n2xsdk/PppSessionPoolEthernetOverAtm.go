@@ -6,37 +6,37 @@ type PppSessionPoolEthernetOverAtm struct {
 
 func(np *PppSessionPoolEthernetOverAtm) SetAtmEncapsulation () error {
  //parameters: SessionPoolHandle Encapsulation
- //AgtPppSessionPoolEthernetOverAtm SetAtmEncapsulation, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetAtmEncapsulation
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetNumberOfSessionsPerSrcMacAddr () error {
  //parameters: SessionPoolHandle SessionsPerMacAddr
- //AgtPppSessionPoolEthernetOverAtm SetNumberOfSessionsPerSrcMacAddr, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetNumberOfSessionsPerSrcMacAddr
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetInitialAckTimeout () error {
  //parameters: SessionPoolHandle Timeout
- //AgtPppSessionPoolEthernetOverAtm SetInitialAckTimeout, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetInitialAckTimeout
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetMaxTxRetries () error {
  //parameters: SessionPoolHandle Retries
- //AgtPppSessionPoolEthernetOverAtm SetMaxTxRetries, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetMaxTxRetries
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetServiceName () error {
  //parameters: SessionPoolHandle ServiceName
- //AgtPppSessionPoolEthernetOverAtm SetServiceName, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetServiceName
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetAccessConcentratorName () error {
  //parameters: SessionPoolHandle AccessConcentratorName
- //AgtPppSessionPoolEthernetOverAtm SetAccessConcentratorName, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetAccessConcentratorName
  return nil
 }
 
@@ -48,43 +48,43 @@ func(np *PppSessionPoolEthernetOverAtm) GetAccessConcentratorName ()(string, err
 
 func(np *PppSessionPoolEthernetOverAtm) EnableEchoVendorSpecificTag () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm EnableEchoVendorSpecificTag, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableEchoVendorSpecificTag
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableEchoVendorSpecificTag () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm DisableEchoVendorSpecificTag, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableEchoVendorSpecificTag
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) IsEchoVendorSpecificTagEnabled () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm IsEchoVendorSpecificTagEnabled, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm IsEchoVendorSpecificTagEnabled
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetStartingSourceMacAddress () error {
  //parameters: SessionPoolHandle MacAddress
- //AgtPppSessionPoolEthernetOverAtm SetStartingSourceMacAddress, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetStartingSourceMacAddress
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetSourceMacAddressIncrement () error {
  //parameters: SessionPoolHandle Increment
- //AgtPppSessionPoolEthernetOverAtm SetSourceMacAddressIncrement, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetSourceMacAddressIncrement
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetStartingVpiVci () error {
  //parameters: SessionPoolHandle VpiStart VciStart
- //AgtPppSessionPoolEthernetOverAtm SetStartingVpiVci, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetStartingVpiVci
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetVpiVciIncrement () error {
  //parameters: SessionPoolHandle VpiIncrement VciIncrement
- //AgtPppSessionPoolEthernetOverAtm SetVpiVciIncrement, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetVpiVciIncrement
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetVpiVciCountOverride ()(string, error)
 
 func(np *PppSessionPoolEthernetOverAtm) SetVpiVciCountOverride () error {
  //parameters: SessionPoolHandle IsVpiCountOverride IsVciCountOverride
- //AgtPppSessionPoolEthernetOverAtm SetVpiVciCountOverride, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetVpiVciCountOverride
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetVpiVciRange ()(string, error) {
 
 func(np *PppSessionPoolEthernetOverAtm) SetVpiVciRange () error {
  //parameters: SessionPoolHandle VpiStart VpiCount VpiIncrement VpiRepeat VciStart VciCount VciIncrement VciRepeat
- //AgtPppSessionPoolEthernetOverAtm SetVpiVciRange, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetVpiVciRange
  return nil
 }
 
@@ -198,97 +198,97 @@ func(np *PppSessionPoolEthernetOverAtm) GetVpiVciIncrement ()(string, error) {
 
 func(np *PppSessionPoolEthernetOverAtm) Enable () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm Enable, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm Enable
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) Disable () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm Disable, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm Disable
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetNumberOfSessions () error {
  //parameters: SessionPoolHandle NumSessions
- //AgtPppSessionPoolEthernetOverAtm SetNumberOfSessions, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetNumberOfSessions
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetSessionLifetime () error {
  //parameters: SessionPoolHandle MinLifetime MaxLifetime
- //AgtPppSessionPoolEthernetOverAtm SetSessionLifetime, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetSessionLifetime
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetSessionInitiationRate () error {
  //parameters: SessionPoolHandle NumSessions Period
- //AgtPppSessionPoolEthernetOverAtm SetSessionInitiationRate, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetSessionInitiationRate
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetLcpOption () error {
  //parameters: SessionPoolHandle LcpOption Value
- //AgtPppSessionPoolEthernetOverAtm SetLcpOption, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetLcpOption
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) EnableAccm () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm EnableAccm, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableAccm
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableAccm () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm DisableAccm, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableAccm
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) EnableAddressControlFieldCompression () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm EnableAddressControlFieldCompression, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableAddressControlFieldCompression
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableAddressControlFieldCompression () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm DisableAddressControlFieldCompression, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableAddressControlFieldCompression
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetMode () error {
  //parameters: SessionPoolHandle Mode
- //AgtPppSessionPoolEthernetOverAtm SetMode, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetMode
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetAuthenticationProtocol () error {
  //parameters: SessionPoolHandle Protocol
- //AgtPppSessionPoolEthernetOverAtm SetAuthenticationProtocol, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetAuthenticationProtocol
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetAuthenticationParameter () error {
  //parameters: SessionPoolHandle Parameter Value
- //AgtPppSessionPoolEthernetOverAtm SetAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetAuthenticationParameter
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) EnableUniqueAuthenticationParameter () error {
  //parameters: SessionPoolHandle Parameter
- //AgtPppSessionPoolEthernetOverAtm EnableUniqueAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableUniqueAuthenticationParameter
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableUniqueAuthenticationParameter () error {
  //parameters: SessionPoolHandle Parameter
- //AgtPppSessionPoolEthernetOverAtm DisableUniqueAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableUniqueAuthenticationParameter
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetAuthenticationParameterStartValue () error {
  //parameters: SessionPoolHandle Parameter StartValue
- //AgtPppSessionPoolEthernetOverAtm SetAuthenticationParameterStartValue, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetAuthenticationParameterStartValue
  return nil
 }
 
@@ -300,7 +300,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetAuthenticationParameter ()(string, er
 
 func(np *PppSessionPoolEthernetOverAtm) SetPeerAuthenticationParameter () error {
  //parameters: SessionPoolHandle PeerParameter Value
- //AgtPppSessionPoolEthernetOverAtm SetPeerAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetPeerAuthenticationParameter
  return nil
 }
 
@@ -312,25 +312,25 @@ func(np *PppSessionPoolEthernetOverAtm) GetPeerAuthenticationParameter ()(string
 
 func(np *PppSessionPoolEthernetOverAtm) EnableAcceptAllAuthenticationValues () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm EnableAcceptAllAuthenticationValues, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableAcceptAllAuthenticationValues
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableAcceptAllAuthenticationValues () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm DisableAcceptAllAuthenticationValues, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableAcceptAllAuthenticationValues
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) IsAcceptAllAuthenticationValuesEnabled () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm IsAcceptAllAuthenticationValuesEnabled, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm IsAcceptAllAuthenticationValuesEnabled
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetUserToDomainRatio () error {
  //parameters: SessionPoolHandle UserToDomainRatio
- //AgtPppSessionPoolEthernetOverAtm SetUserToDomainRatio, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetUserToDomainRatio
  return nil
 }
 
@@ -342,7 +342,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetUserToDomainRatio ()(string, error) {
 
 func(np *PppSessionPoolEthernetOverAtm) SetPasswordIncrementMethod () error {
  //parameters: SessionPoolHandle PasswordIncrementMethod
- //AgtPppSessionPoolEthernetOverAtm SetPasswordIncrementMethod, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetPasswordIncrementMethod
  return nil
 }
 
@@ -354,7 +354,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetPasswordIncrementMethod ()(string, er
 
 func(np *PppSessionPoolEthernetOverAtm) SetDomainCountLimit () error {
  //parameters: SessionPoolHandle DomainCountLimit
- //AgtPppSessionPoolEthernetOverAtm SetDomainCountLimit, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetDomainCountLimit
  return nil
 }
 
@@ -366,25 +366,25 @@ func(np *PppSessionPoolEthernetOverAtm) GetDomainCountLimit ()(string, error) {
 
 func(np *PppSessionPoolEthernetOverAtm) EnableDomainNameIncrementAfterExtension () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm EnableDomainNameIncrementAfterExtension, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableDomainNameIncrementAfterExtension
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableDomainNameIncrementAfterExtension () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm DisableDomainNameIncrementAfterExtension, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableDomainNameIncrementAfterExtension
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) IsDomainNameIncrementAfterExtensionEnabled () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm IsDomainNameIncrementAfterExtensionEnabled, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm IsDomainNameIncrementAfterExtensionEnabled
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetAcceptedAuthenticationParameter () error {
  //parameters: SessionPoolHandle AcceptedParameter Value
- //AgtPppSessionPoolEthernetOverAtm SetAcceptedAuthenticationParameter, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetAcceptedAuthenticationParameter
  return nil
 }
 
@@ -396,19 +396,19 @@ func(np *PppSessionPoolEthernetOverAtm) GetAcceptedAuthenticationParameter ()(st
 
 func(np *PppSessionPoolEthernetOverAtm) SetStartingSourceIpAddress () error {
  //parameters: SessionPoolHandle IpAddress
- //AgtPppSessionPoolEthernetOverAtm SetStartingSourceIpAddress, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetStartingSourceIpAddress
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetSourceIpAddressModifier () error {
  //parameters: SessionPoolHandle Modifier
- //AgtPppSessionPoolEthernetOverAtm SetSourceIpAddressModifier, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetSourceIpAddressModifier
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) SetMaxConnectionAttempts () error {
  //parameters: SessionPoolHandle MaxConnectionAttempts
- //AgtPppSessionPoolEthernetOverAtm SetMaxConnectionAttempts, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetMaxConnectionAttempts
  return nil
 }
 
@@ -420,7 +420,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetMaxConnectionAttempts ()(string, erro
 
 func(np *PppSessionPoolEthernetOverAtm) RetryConnections () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm RetryConnections, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm RetryConnections
  return nil
 }
 
@@ -432,7 +432,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetConnectionAttempts ()(string, error) 
 
 func(np *PppSessionPoolEthernetOverAtm) Cancel () error {
  //parameters: SessionPoolHandle
- //AgtPppSessionPoolEthernetOverAtm Cancel, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm Cancel
  return nil
 }
 
@@ -486,7 +486,7 @@ func(np *PppSessionPoolEthernetOverAtm) GetName ()(string, error) {
 
 func(np *PppSessionPoolEthernetOverAtm) SetName () error {
  //parameters: SessionPoolHandle Name
- //AgtPppSessionPoolEthernetOverAtm SetName, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm SetName
  return nil
 }
 
@@ -564,13 +564,13 @@ func(np *PppSessionPoolEthernetOverAtm) GetUniqueAuthenticationParameterFlag ()(
 
 func(np *PppSessionPoolEthernetOverAtm) EnableAllSessions () error {
  //parameters: 
- //AgtPppSessionPoolEthernetOverAtm EnableAllSessions, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm EnableAllSessions
  return nil
 }
 
 func(np *PppSessionPoolEthernetOverAtm) DisableAllSessions () error {
  //parameters: 
- //AgtPppSessionPoolEthernetOverAtm DisableAllSessions, m.Object, m.Name);
+ //AgtPppSessionPoolEthernetOverAtm DisableAllSessions
  return nil
 }
 

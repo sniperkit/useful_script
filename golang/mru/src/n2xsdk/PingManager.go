@@ -6,7 +6,7 @@ type PingManager struct {
 
 func(np *PingManager) SetSourcePort () error {
  //parameters: PortHandle
- //AgtPingManager SetSourcePort, m.Object, m.Name);
+ //AgtPingManager SetSourcePort
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *PingManager) GetSourcePort ()(string, error) {
 
 func(np *PingManager) SetDestinationPorts () error {
  //parameters: Count psaPortHandles
- //AgtPingManager SetDestinationPorts, m.Object, m.Name);
+ //AgtPingManager SetDestinationPorts
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *PingManager) ListDestinationPorts ()(string, error) {
 
 func(np *PingManager) SetDestinationAddresses () error {
  //parameters: Count psaIpAddresses
- //AgtPingManager SetDestinationAddresses, m.Object, m.Name);
+ //AgtPingManager SetDestinationAddresses
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *PingManager) ListDestinationAddresses ()(string, error) {
 
 func(np *PingManager) SetParameter () error {
  //parameters: Parameter Value
- //AgtPingManager SetParameter, m.Object, m.Name);
+ //AgtPingManager SetParameter
  return nil
 }
 
@@ -54,25 +54,25 @@ func(np *PingManager) GetParameter ()(string, error) {
 
 func(np *PingManager) SetPingMode () error {
  //parameters: Mode
- //AgtPingManager SetPingMode, m.Object, m.Name);
+ //AgtPingManager SetPingMode
  return nil
 }
 
 func(np *PingManager) StartEchoRequests () error {
  //parameters: 
- //AgtPingManager StartEchoRequests, m.Object, m.Name);
+ //AgtPingManager StartEchoRequests
  return nil
 }
 
 func(np *PingManager) StopEchoRequests () error {
  //parameters: 
- //AgtPingManager StopEchoRequests, m.Object, m.Name);
+ //AgtPingManager StopEchoRequests
  return nil
 }
 
 func(np *PingManager) IsRunning () error {
  //parameters: 
- //AgtPingManager IsRunning, m.Object, m.Name);
+ //AgtPingManager IsRunning
  return nil
 }
 

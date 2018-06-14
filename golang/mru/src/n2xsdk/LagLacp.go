@@ -6,7 +6,7 @@ type LagLacp struct {
 
 func(np *LagLacp) SetPrimaryPort () error {
  //parameters: LagHandle PortHandle
- //AgtLagLacp SetPrimaryPort, m.Object, m.Name);
+ //AgtLagLacp SetPrimaryPort
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *LagLacp) GetPrimaryPort ()(string, error) {
 
 func(np *LagLacp) SetTransmitPort () error {
  //parameters: LagHandle PortHandle
- //AgtLagLacp SetTransmitPort, m.Object, m.Name);
+ //AgtLagLacp SetTransmitPort
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *LagLacp) GetTransmitPort ()(string, error) {
 
 func(np *LagLacp) SetLinkedPorts () error {
  //parameters: LagHandle PortHandleList
- //AgtLagLacp SetLinkedPorts, m.Object, m.Name);
+ //AgtLagLacp SetLinkedPorts
  return nil
 }
 
@@ -42,37 +42,37 @@ func(np *LagLacp) ListLinkedPorts ()(string, error) {
 
 func(np *LagLacp) StartAll () error {
  //parameters: LagHandle
- //AgtLagLacp StartAll, m.Object, m.Name);
+ //AgtLagLacp StartAll
  return nil
 }
 
 func(np *LagLacp) StopAll () error {
  //parameters: LagHandle
- //AgtLagLacp StopAll, m.Object, m.Name);
+ //AgtLagLacp StopAll
  return nil
 }
 
 func(np *LagLacp) StartPort () error {
  //parameters: LagHandle PortHandle
- //AgtLagLacp StartPort, m.Object, m.Name);
+ //AgtLagLacp StartPort
  return nil
 }
 
 func(np *LagLacp) StopPort () error {
  //parameters: LagHandle PortHandle
- //AgtLagLacp StopPort, m.Object, m.Name);
+ //AgtLagLacp StopPort
  return nil
 }
 
 func(np *LagLacp) ClearAllStatistics () error {
  //parameters: LagHandle
- //AgtLagLacp ClearAllStatistics, m.Object, m.Name);
+ //AgtLagLacp ClearAllStatistics
  return nil
 }
 
 func(np *LagLacp) ClearPortStatistics () error {
  //parameters: LagHandle PortHandle
- //AgtLagLacp ClearPortStatistics, m.Object, m.Name);
+ //AgtLagLacp ClearPortStatistics
  return nil
 }
 

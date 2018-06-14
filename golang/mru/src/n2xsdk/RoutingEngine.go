@@ -6,13 +6,13 @@ type RoutingEngine struct {
 
 func(np *RoutingEngine) Start () error {
  //parameters: 
- //AgtRoutingEngine Start, m.Object, m.Name);
+ //AgtRoutingEngine Start
  return nil
 }
 
 func(np *RoutingEngine) Stop () error {
  //parameters: 
- //AgtRoutingEngine Stop, m.Object, m.Name);
+ //AgtRoutingEngine Stop
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *RoutingEngine) GetState ()(string, error) {
 
 func(np *RoutingEngine) SetTraceLogLevel () error {
  //parameters: LogLevel
- //AgtRoutingEngine SetTraceLogLevel, m.Object, m.Name);
+ //AgtRoutingEngine SetTraceLogLevel
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *RoutingEngine) GetTraceLogLevel ()(string, error) {
 
 func(np *RoutingEngine) SetTraceLogFile () error {
  //parameters: FileName
- //AgtRoutingEngine SetTraceLogFile, m.Object, m.Name);
+ //AgtRoutingEngine SetTraceLogFile
  return nil
 }
 

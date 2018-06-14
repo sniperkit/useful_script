@@ -6,19 +6,19 @@ type ArpHostPool struct {
 
 func(np *rpHostPool) EnableAutoSendRequests () error {
  //parameters: DevicePoolHandle
- //AgtArpHostPool EnableAutoSendRequests, m.Object, m.Name);
+ //AgtArpHostPool EnableAutoSendRequests
  return nil
 }
 
 func(np *rpHostPool) DisableAutoSendRequests () error {
  //parameters: DevicePoolHandle
- //AgtArpHostPool DisableAutoSendRequests, m.Object, m.Name);
+ //AgtArpHostPool DisableAutoSendRequests
  return nil
 }
 
 func(np *rpHostPool) IsAutoSendRequestsEnabled () error {
  //parameters: DevicePoolHandle
- //AgtArpHostPool IsAutoSendRequestsEnabled, m.Object, m.Name);
+ //AgtArpHostPool IsAutoSendRequestsEnabled
  return nil
 }
 
@@ -30,19 +30,19 @@ func(np *rpHostPool) GetCustomState ()(string, error) {
 
 func(np *rpHostPool) SendRequests () error {
  //parameters: DevicePoolHandle
- //AgtArpHostPool SendRequests, m.Object, m.Name);
+ //AgtArpHostPool SendRequests
  return nil
 }
 
 func(np *rpHostPool) Reset () error {
  //parameters: DevicePoolHandle
- //AgtArpHostPool Reset, m.Object, m.Name);
+ //AgtArpHostPool Reset
  return nil
 }
 
 func(np *rpHostPool) CancelRequests () error {
  //parameters: DevicePoolHandle
- //AgtArpHostPool CancelRequests, m.Object, m.Name);
+ //AgtArpHostPool CancelRequests
  return nil
 }
 
@@ -54,43 +54,43 @@ func(np *rpHostPool) GetRemoteMacAddress ()(string, error) {
 
 func(np *rpHostPool) SendRequestsByPort () error {
  //parameters: PortHandle
- //AgtArpHostPool SendRequestsByPort, m.Object, m.Name);
+ //AgtArpHostPool SendRequestsByPort
  return nil
 }
 
 func(np *rpHostPool) ResetByPort () error {
  //parameters: PortHandle
- //AgtArpHostPool ResetByPort, m.Object, m.Name);
+ //AgtArpHostPool ResetByPort
  return nil
 }
 
 func(np *rpHostPool) CancelRequestsByPort () error {
  //parameters: PortHandle
- //AgtArpHostPool CancelRequestsByPort, m.Object, m.Name);
+ //AgtArpHostPool CancelRequestsByPort
  return nil
 }
 
 func(np *rpHostPool) SendAllRequests () error {
  //parameters: 
- //AgtArpHostPool SendAllRequests, m.Object, m.Name);
+ //AgtArpHostPool SendAllRequests
  return nil
 }
 
 func(np *rpHostPool) ResetAll () error {
  //parameters: 
- //AgtArpHostPool ResetAll, m.Object, m.Name);
+ //AgtArpHostPool ResetAll
  return nil
 }
 
 func(np *rpHostPool) CancelAllRequests () error {
  //parameters: 
- //AgtArpHostPool CancelAllRequests, m.Object, m.Name);
+ //AgtArpHostPool CancelAllRequests
  return nil
 }
 
 func(np *rpHostPool) SetRateControl () error {
  //parameters: PortHandle RateControlMode
- //AgtArpHostPool SetRateControl, m.Object, m.Name);
+ //AgtArpHostPool SetRateControl
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *rpHostPool) GetRateControl ()(string, error) {
 
 func(np *rpHostPool) SetFixedRateProfile () error {
  //parameters: PortHandle FixedRate MaxBurstSize
- //AgtArpHostPool SetFixedRateProfile, m.Object, m.Name);
+ //AgtArpHostPool SetFixedRateProfile
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *rpHostPool) GetFixedRateProfile ()(string, error) {
 
 func(np *rpHostPool) SetSelfPacedProfile () error {
  //parameters: PortHandle MaxPackets MaxRetries RetryTimeout
- //AgtArpHostPool SetSelfPacedProfile, m.Object, m.Name);
+ //AgtArpHostPool SetSelfPacedProfile
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *rpHostPool) GetVlanPriority ()(string, error) {
 
 func(np *rpHostPool) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtArpHostPool SetVlanPriority, m.Object, m.Name);
+ //AgtArpHostPool SetVlanPriority
  return nil
 }
 

@@ -6,13 +6,13 @@ type LmpSession struct {
 
 func(np *LmpSession) NegotiateHelloConfig () error {
  //parameters: SessionHandle
- //AgtLmpSession NegotiateHelloConfig, m.Object, m.Name);
+ //AgtLmpSession NegotiateHelloConfig
  return nil
 }
 
 func(np *LmpSession) SetLocalNodeId () error {
  //parameters: SessionHandle NodeId
- //AgtLmpSession SetLocalNodeId, m.Object, m.Name);
+ //AgtLmpSession SetLocalNodeId
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *LmpSession) GetLocalNodeId ()(string, error) {
 
 func(np *LmpSession) SetRemoteNodeId () error {
  //parameters: SessionHandle NodeId
- //AgtLmpSession SetRemoteNodeId, m.Object, m.Name);
+ //AgtLmpSession SetRemoteNodeId
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *LmpSession) GetRemoteNodeId ()(string, error) {
 
 func(np *LmpSession) SetTesterIpccAddress () error {
  //parameters: SessionHandle LocalIpccAddress
- //AgtLmpSession SetTesterIpccAddress, m.Object, m.Name);
+ //AgtLmpSession SetTesterIpccAddress
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *LmpSession) GetTesterIpccAddress ()(string, error) {
 
 func(np *LmpSession) SetSutIpccAddress () error {
  //parameters: SessionHandle RemoteIpccAddress
- //AgtLmpSession SetSutIpccAddress, m.Object, m.Name);
+ //AgtLmpSession SetSutIpccAddress
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *LmpSession) GetSutIpccAddress ()(string, error) {
 
 func(np *LmpSession) SetCcId () error {
  //parameters: SessionHandle CcId
- //AgtLmpSession SetCcId, m.Object, m.Name);
+ //AgtLmpSession SetCcId
  return nil
 }
 
@@ -72,37 +72,37 @@ func(np *LmpSession) GetCcId ()(string, error) {
 
 func(np *LmpSession) Enable () error {
  //parameters: SessionHandle
- //AgtLmpSession Enable, m.Object, m.Name);
+ //AgtLmpSession Enable
  return nil
 }
 
 func(np *LmpSession) Disable () error {
  //parameters: SessionHandle
- //AgtLmpSession Disable, m.Object, m.Name);
+ //AgtLmpSession Disable
  return nil
 }
 
 func(np *LmpSession) EnableGreTunnel () error {
  //parameters: SessionHandle
- //AgtLmpSession EnableGreTunnel, m.Object, m.Name);
+ //AgtLmpSession EnableGreTunnel
  return nil
 }
 
 func(np *LmpSession) DisableGreTunnel () error {
  //parameters: SessionHandle
- //AgtLmpSession DisableGreTunnel, m.Object, m.Name);
+ //AgtLmpSession DisableGreTunnel
  return nil
 }
 
 func(np *LmpSession) IsGreTunnelEnabled () error {
  //parameters: SessionHandle
- //AgtLmpSession IsGreTunnelEnabled, m.Object, m.Name);
+ //AgtLmpSession IsGreTunnelEnabled
  return nil
 }
 
 func(np *LmpSession) SetGreTunnelLocalAddress () error {
  //parameters: SessionHandle LocalAddr
- //AgtLmpSession SetGreTunnelLocalAddress, m.Object, m.Name);
+ //AgtLmpSession SetGreTunnelLocalAddress
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *LmpSession) GetGreTunnelLocalAddress ()(string, error) {
 
 func(np *LmpSession) SetGreTunnelRemoteAddress () error {
  //parameters: SessionHandle RemoteAddr
- //AgtLmpSession SetGreTunnelRemoteAddress, m.Object, m.Name);
+ //AgtLmpSession SetGreTunnelRemoteAddress
  return nil
 }
 
@@ -126,25 +126,25 @@ func(np *LmpSession) GetGreTunnelRemoteAddress ()(string, error) {
 
 func(np *LmpSession) EnableGreTunnelChecksumField () error {
  //parameters: SessionHandle
- //AgtLmpSession EnableGreTunnelChecksumField, m.Object, m.Name);
+ //AgtLmpSession EnableGreTunnelChecksumField
  return nil
 }
 
 func(np *LmpSession) DisableGreTunnelChecksumField () error {
  //parameters: SessionHandle
- //AgtLmpSession DisableGreTunnelChecksumField, m.Object, m.Name);
+ //AgtLmpSession DisableGreTunnelChecksumField
  return nil
 }
 
 func(np *LmpSession) IsGreTunnelChecksumFieldEnabled () error {
  //parameters: SessionHandle
- //AgtLmpSession IsGreTunnelChecksumFieldEnabled, m.Object, m.Name);
+ //AgtLmpSession IsGreTunnelChecksumFieldEnabled
  return nil
 }
 
 func(np *LmpSession) SetConfigRetransmitInterval () error {
  //parameters: SessionHandle Interval
- //AgtLmpSession SetConfigRetransmitInterval, m.Object, m.Name);
+ //AgtLmpSession SetConfigRetransmitInterval
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *LmpSession) GetConfigRetransmitInterval ()(string, error) {
 
 func(np *LmpSession) SetHelloInterval () error {
  //parameters: SessionHandle HelloInterval
- //AgtLmpSession SetHelloInterval, m.Object, m.Name);
+ //AgtLmpSession SetHelloInterval
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *LmpSession) GetHelloInterval ()(string, error) {
 
 func(np *LmpSession) SetHelloDeadInterval () error {
  //parameters: SessionHandle HelloDeadInterval
- //AgtLmpSession SetHelloDeadInterval, m.Object, m.Name);
+ //AgtLmpSession SetHelloDeadInterval
  return nil
 }
 
@@ -180,61 +180,61 @@ func(np *LmpSession) GetHelloDeadInterval ()(string, error) {
 
 func(np *LmpSession) EnableHelloConfigNegotiable () error {
  //parameters: SessionHandle
- //AgtLmpSession EnableHelloConfigNegotiable, m.Object, m.Name);
+ //AgtLmpSession EnableHelloConfigNegotiable
  return nil
 }
 
 func(np *LmpSession) DisableHelloConfigNegotiable () error {
  //parameters: SessionHandle
- //AgtLmpSession DisableHelloConfigNegotiable, m.Object, m.Name);
+ //AgtLmpSession DisableHelloConfigNegotiable
  return nil
 }
 
 func(np *LmpSession) IsHelloConfigNegotiable () error {
  //parameters: SessionHandle
- //AgtLmpSession IsHelloConfigNegotiable, m.Object, m.Name);
+ //AgtLmpSession IsHelloConfigNegotiable
  return nil
 }
 
 func(np *LmpSession) SetActiveConfig () error {
  //parameters: SessionHandle
- //AgtLmpSession SetActiveConfig, m.Object, m.Name);
+ //AgtLmpSession SetActiveConfig
  return nil
 }
 
 func(np *LmpSession) SetPassiveConfig () error {
  //parameters: SessionHandle
- //AgtLmpSession SetPassiveConfig, m.Object, m.Name);
+ //AgtLmpSession SetPassiveConfig
  return nil
 }
 
 func(np *LmpSession) IsActiveConfig () error {
  //parameters: SessionHandle
- //AgtLmpSession IsActiveConfig, m.Object, m.Name);
+ //AgtLmpSession IsActiveConfig
  return nil
 }
 
 func(np *LmpSession) Open () error {
  //parameters: SessionHandle
- //AgtLmpSession Open, m.Object, m.Name);
+ //AgtLmpSession Open
  return nil
 }
 
 func(np *LmpSession) OpenAllSessions () error {
  //parameters: 
- //AgtLmpSession OpenAllSessions, m.Object, m.Name);
+ //AgtLmpSession OpenAllSessions
  return nil
 }
 
 func(np *LmpSession) Close () error {
  //parameters: SessionHandle
- //AgtLmpSession Close, m.Object, m.Name);
+ //AgtLmpSession Close
  return nil
 }
 
 func(np *LmpSession) CloseAllSessions () error {
  //parameters: 
- //AgtLmpSession CloseAllSessions, m.Object, m.Name);
+ //AgtLmpSession CloseAllSessions
  return nil
 }
 
@@ -252,7 +252,7 @@ func(np *LmpSession) GetStateSummary ()(string, error) {
 
 func(np *LmpSession) SetTeLinkCorrelationMode () error {
  //parameters: SessionHandle TeLinkCorrelationMode
- //AgtLmpSession SetTeLinkCorrelationMode, m.Object, m.Name);
+ //AgtLmpSession SetTeLinkCorrelationMode
  return nil
 }
 
@@ -264,13 +264,13 @@ func(np *LmpSession) GetTeLinkCorrelationMode ()(string, error) {
 
 func(np *LmpSession) AddTeLink () error {
  //parameters: SessionHandle EmulationPduHandle
- //AgtLmpSession AddTeLink, m.Object, m.Name);
+ //AgtLmpSession AddTeLink
  return nil
 }
 
 func(np *LmpSession) RemoveTeLink () error {
  //parameters: SessionHandle TeLinkHandle
- //AgtLmpSession RemoveTeLink, m.Object, m.Name);
+ //AgtLmpSession RemoveTeLink
  return nil
 }
 
@@ -282,13 +282,13 @@ func(np *LmpSession) ListTeLinks ()(string, error) {
 
 func(np *LmpSession) EnableAllSessions () error {
  //parameters: 
- //AgtLmpSession EnableAllSessions, m.Object, m.Name);
+ //AgtLmpSession EnableAllSessions
  return nil
 }
 
 func(np *LmpSession) DisableAllSessions () error {
  //parameters: 
- //AgtLmpSession DisableAllSessions, m.Object, m.Name);
+ //AgtLmpSession DisableAllSessions
  return nil
 }
 

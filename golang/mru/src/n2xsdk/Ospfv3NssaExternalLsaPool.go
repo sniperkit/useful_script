@@ -6,7 +6,7 @@ type Ospfv3NssaExternalLsaPool struct {
 
 func(np *Ospfv3NssaExternalLsaPool) SetAdvertisingRouter () error {
  //parameters: LsaHandle RouterId
- //AgtOspfv3NssaExternalLsaPool SetAdvertisingRouter, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetAdvertisingRouter
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *Ospfv3NssaExternalLsaPool) GetAdvertisingRouter ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) Advertise () error {
  //parameters: LsaHandle
- //AgtOspfv3NssaExternalLsaPool Advertise, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool Advertise
  return nil
 }
 
 func(np *Ospfv3NssaExternalLsaPool) Withdraw () error {
  //parameters: LsaHandle
- //AgtOspfv3NssaExternalLsaPool Withdraw, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool Withdraw
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetAdvertiseFlag ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetRoutes () error {
  //parameters: LsaHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfv3NssaExternalLsaPool SetRoutes, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetRoutes
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetRoutes ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetMetric () error {
  //parameters: LsaHandle Metric
- //AgtOspfv3NssaExternalLsaPool SetMetric, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetMetric
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetMetric ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetEbit () error {
  //parameters: LsaHandle EbitFlag
- //AgtOspfv3NssaExternalLsaPool SetEbit, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetEbit
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetEbit ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetPrefixOptions () error {
  //parameters: LsaHandle PrefixOptions
- //AgtOspfv3NssaExternalLsaPool SetPrefixOptions, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetPrefixOptions
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetPrefixOptions ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetReferencedLsType () error {
  //parameters: LsaHandle RefType
- //AgtOspfv3NssaExternalLsaPool SetReferencedLsType, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetReferencedLsType
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetReferencedLsType ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetFbit () error {
  //parameters: LsaHandle FbitFlag
- //AgtOspfv3NssaExternalLsaPool SetFbit, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetFbit
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetFbit ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetForwardingAddress () error {
  //parameters: LsaHandle ForwardingAddress
- //AgtOspfv3NssaExternalLsaPool SetForwardingAddress, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetForwardingAddress
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetForwardingAddress ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetTbit () error {
  //parameters: LsaHandle TbitFlag
- //AgtOspfv3NssaExternalLsaPool SetTbit, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetTbit
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetTbit ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetExternalRouteTag () error {
  //parameters: LsaHandle RouteTag
- //AgtOspfv3NssaExternalLsaPool SetExternalRouteTag, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetExternalRouteTag
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetExternalRouteTag ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetReferencedLinkStateId () error {
  //parameters: LsaHandle RefLsId
- //AgtOspfv3NssaExternalLsaPool SetReferencedLinkStateId, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetReferencedLinkStateId
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *Ospfv3NssaExternalLsaPool) GetReferencedLinkStateId ()(string, error) {
 
 func(np *Ospfv3NssaExternalLsaPool) SetPbit () error {
  //parameters: LsaHandle PbitFlag
- //AgtOspfv3NssaExternalLsaPool SetPbit, m.Object, m.Name);
+ //AgtOspfv3NssaExternalLsaPool SetPbit
  return nil
 }
 

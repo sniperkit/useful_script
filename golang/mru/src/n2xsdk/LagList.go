@@ -6,19 +6,19 @@ type LagList struct {
 
 func(np *LagLis) Add () error {
  //parameters: Type
- //AgtLagList Add, m.Object, m.Name);
+ //AgtLagList Add
  return nil
 }
 
 func(np *LagLis) Remove () error {
  //parameters: Handle
- //AgtLagList Remove, m.Object, m.Name);
+ //AgtLagList Remove
  return nil
 }
 
 func(np *LagLis) SetName () error {
  //parameters: Handle Name
- //AgtLagList SetName, m.Object, m.Name);
+ //AgtLagList SetName
  return nil
 }
 

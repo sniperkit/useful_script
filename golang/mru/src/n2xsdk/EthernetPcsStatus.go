@@ -18,7 +18,7 @@ func(np *EthernetPcsStatus) GetStatusDescription ()(string, error) {
 
 func(np *EthernetPcsStatus) SaveStatus () error {
  //parameters: PortHandle LogFile
- //AgtEthernetPcsStatus SaveStatus, m.Object, m.Name);
+ //AgtEthernetPcsStatus SaveStatus
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *EthernetPcsStatus) GetStatusSummaryDescription ()(string, error) {
 
 func(np *EthernetPcsStatus) SaveStatusSummary () error {
  //parameters: LogFile
- //AgtEthernetPcsStatus SaveStatusSummary, m.Object, m.Name);
+ //AgtEthernetPcsStatus SaveStatusSummary
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *EthernetPcsStatus) GetStatusHistoryDescription ()(string, error) {
 
 func(np *EthernetPcsStatus) SaveStatusHistory () error {
  //parameters: LogFile
- //AgtEthernetPcsStatus SaveStatusHistory, m.Object, m.Name);
+ //AgtEthernetPcsStatus SaveStatusHistory
  return nil
 }
 
 func(np *EthernetPcsStatus) ClearHistory () error {
  //parameters: 
- //AgtEthernetPcsStatus ClearHistory, m.Object, m.Name);
+ //AgtEthernetPcsStatus ClearHistory
  return nil
 }
 
 func(np *EthernetPcsStatus) SetHistorySize () error {
  //parameters: HistorySize
- //AgtEthernetPcsStatus SetHistorySize, m.Object, m.Name);
+ //AgtEthernetPcsStatus SetHistorySize
  return nil
 }
 

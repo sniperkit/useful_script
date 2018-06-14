@@ -6,25 +6,25 @@ type IptvTestScenario struct {
 
 func(np *IptvTestScenario) Enable () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario Enable, m.Object, m.Name);
+ //AgtIptvTestScenario Enable
  return nil
 }
 
 func(np *IptvTestScenario) Disable () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario Disable, m.Object, m.Name);
+ //AgtIptvTestScenario Disable
  return nil
 }
 
 func(np *IptvTestScenario) IsEnabled () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario IsEnabled, m.Object, m.Name);
+ //AgtIptvTestScenario IsEnabled
  return nil
 }
 
 func(np *IptvTestScenario) IsIncludeInReportEnabled () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario IsIncludeInReportEnabled, m.Object, m.Name);
+ //AgtIptvTestScenario IsIncludeInReportEnabled
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *IptvTestScenario) GetStatus ()(string, error) {
 
 func(np *IptvTestScenario) SetStartDelayIncrementingRange () error {
  //parameters: ScenarioHandle TestStartDelay Increment Repeat
- //AgtIptvTestScenario SetStartDelayIncrementingRange, m.Object, m.Name);
+ //AgtIptvTestScenario SetStartDelayIncrementingRange
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *IptvTestScenario) GetStartDelayIncrementingRange ()(string, error) {
 
 func(np *IptvTestScenario) SetTestDurationInMs () error {
  //parameters: ScenarioHandle TestDuration
- //AgtIptvTestScenario SetTestDurationInMs, m.Object, m.Name);
+ //AgtIptvTestScenario SetTestDurationInMs
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *IptvTestScenario) GetMaxNumberOfChannelsPerSubscriber ()(string, error)
 
 func(np *IptvTestScenario) SetWatchTimeMode () error {
  //parameters: ScenarioHandle WatchTimeMode
- //AgtIptvTestScenario SetWatchTimeMode, m.Object, m.Name);
+ //AgtIptvTestScenario SetWatchTimeMode
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *IptvTestScenario) GetWatchTimeMode ()(string, error) {
 
 func(np *IptvTestScenario) SetRandomSeed () error {
  //parameters: ScenarioHandle RandomSeed
- //AgtIptvTestScenario SetRandomSeed, m.Object, m.Name);
+ //AgtIptvTestScenario SetRandomSeed
  return nil
 }
 
@@ -108,19 +108,19 @@ func(np *IptvTestScenario) ListAvailableGroupPoolsForChannels ()(string, error) 
 
 func(np *IptvTestScenario) AddChannelPools () error {
  //parameters: ScenarioHandle GroupPoolHandles
- //AgtIptvTestScenario AddChannelPools, m.Object, m.Name);
+ //AgtIptvTestScenario AddChannelPools
  return nil
 }
 
 func(np *IptvTestScenario) RemoveChannelPools () error {
  //parameters: ScenarioHandle GroupPoolHandles
- //AgtIptvTestScenario RemoveChannelPools, m.Object, m.Name);
+ //AgtIptvTestScenario RemoveChannelPools
  return nil
 }
 
 func(np *IptvTestScenario) RemoveAllChannelPools () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario RemoveAllChannelPools, m.Object, m.Name);
+ //AgtIptvTestScenario RemoveAllChannelPools
  return nil
 }
 
@@ -138,13 +138,13 @@ func(np *IptvTestScenario) GetAssignedChannels ()(string, error) {
 
 func(np *IptvTestScenario) StartTest () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario StartTest, m.Object, m.Name);
+ //AgtIptvTestScenario StartTest
  return nil
 }
 
 func(np *IptvTestScenario) StopTest () error {
  //parameters: ScenarioHandle
- //AgtIptvTestScenario StopTest, m.Object, m.Name);
+ //AgtIptvTestScenario StopTest
  return nil
 }
 

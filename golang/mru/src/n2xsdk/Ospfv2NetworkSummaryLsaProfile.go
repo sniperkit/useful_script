@@ -12,7 +12,7 @@ func(np *Ospfv2NetworkSummaryLsaProfile) GetType ()(string, error) {
 
 func(np *Ospfv2NetworkSummaryLsaProfile) SetName () error {
  //parameters: LsaProfileHandle LsaProfileName
- //AgtOspfv2NetworkSummaryLsaProfile SetName, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile SetName
  return nil
 }
 
@@ -24,37 +24,37 @@ func(np *Ospfv2NetworkSummaryLsaProfile) GetName ()(string, error) {
 
 func(np *Ospfv2NetworkSummaryLsaProfile) Enable () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2NetworkSummaryLsaProfile Enable, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile Enable
  return nil
 }
 
 func(np *Ospfv2NetworkSummaryLsaProfile) Disable () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2NetworkSummaryLsaProfile Disable, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile Disable
  return nil
 }
 
 func(np *Ospfv2NetworkSummaryLsaProfile) IsEnabled () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2NetworkSummaryLsaProfile IsEnabled, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile IsEnabled
  return nil
 }
 
 func(np *Ospfv2NetworkSummaryLsaProfile) EnableTrafficDestination () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2NetworkSummaryLsaProfile EnableTrafficDestination, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile EnableTrafficDestination
  return nil
 }
 
 func(np *Ospfv2NetworkSummaryLsaProfile) DisableTrafficDestination () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2NetworkSummaryLsaProfile DisableTrafficDestination, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile DisableTrafficDestination
  return nil
 }
 
 func(np *Ospfv2NetworkSummaryLsaProfile) IsTrafficDestinationsEnabled () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2NetworkSummaryLsaProfile IsTrafficDestinationsEnabled, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile IsTrafficDestinationsEnabled
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Ospfv2NetworkSummaryLsaProfile) GetNumberOfRouters ()(string, error) {
 
 func(np *Ospfv2NetworkSummaryLsaProfile) SetNumberOfRoutesPerRouter () error {
  //parameters: LsaProfileHandle NumberOfRoutes
- //AgtOspfv2NetworkSummaryLsaProfile SetNumberOfRoutesPerRouter, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile SetNumberOfRoutesPerRouter
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *Ospfv2NetworkSummaryLsaProfile) GetTotalNumberOfRoutes ()(string, error
 
 func(np *Ospfv2NetworkSummaryLsaProfile) SetLsIdIncrementingRange () error {
  //parameters: LsaProfileHandle FirstLinkStateId Increment PercentOverlap
- //AgtOspfv2NetworkSummaryLsaProfile SetLsIdIncrementingRange, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile SetLsIdIncrementingRange
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *Ospfv2NetworkSummaryLsaProfile) GetLsIdIncrementingRange ()(string, err
 
 func(np *Ospfv2NetworkSummaryLsaProfile) SetNetworkMask () error {
  //parameters: LsaProfileHandle NetworkMask
- //AgtOspfv2NetworkSummaryLsaProfile SetNetworkMask, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile SetNetworkMask
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *Ospfv2NetworkSummaryLsaProfile) GetNetworkMask ()(string, error) {
 
 func(np *Ospfv2NetworkSummaryLsaProfile) SetMetric () error {
  //parameters: LsaProfileHandle Metric
- //AgtOspfv2NetworkSummaryLsaProfile SetMetric, m.Object, m.Name);
+ //AgtOspfv2NetworkSummaryLsaProfile SetMetric
  return nil
 }
 

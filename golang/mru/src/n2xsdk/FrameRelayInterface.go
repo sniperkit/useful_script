@@ -6,43 +6,43 @@ type FrameRelayInterface struct {
 
 func(np *FrameRelayInterface) ScramblerOn () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface ScramblerOn, m.Object, m.Name);
+ //AgtFrameRelayInterface ScramblerOn
  return nil
 }
 
 func(np *FrameRelayInterface) ScramblerOff () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface ScramblerOff, m.Object, m.Name);
+ //AgtFrameRelayInterface ScramblerOff
  return nil
 }
 
 func(np *FrameRelayInterface) IsScramblerOn () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface IsScramblerOn, m.Object, m.Name);
+ //AgtFrameRelayInterface IsScramblerOn
  return nil
 }
 
 func(np *FrameRelayInterface) DescramblerOn () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface DescramblerOn, m.Object, m.Name);
+ //AgtFrameRelayInterface DescramblerOn
  return nil
 }
 
 func(np *FrameRelayInterface) DescramblerOff () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface DescramblerOff, m.Object, m.Name);
+ //AgtFrameRelayInterface DescramblerOff
  return nil
 }
 
 func(np *FrameRelayInterface) IsDescramblerOn () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface IsDescramblerOn, m.Object, m.Name);
+ //AgtFrameRelayInterface IsDescramblerOn
  return nil
 }
 
 func(np *FrameRelayInterface) SetFcsLength () error {
  //parameters: PortHandle FcsLength
- //AgtFrameRelayInterface SetFcsLength, m.Object, m.Name);
+ //AgtFrameRelayInterface SetFcsLength
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *FrameRelayInterface) GetFcsLength ()(string, error) {
 
 func(np *FrameRelayInterface) SetMinimumInterFrameGap () error {
  //parameters: PortHandle InterFrameGap
- //AgtFrameRelayInterface SetMinimumInterFrameGap, m.Object, m.Name);
+ //AgtFrameRelayInterface SetMinimumInterFrameGap
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *FrameRelayInterface) GetSupportedMinimumInterFrameGaps ()(string, error
 
 func(np *FrameRelayInterface) SetMtuSize () error {
  //parameters: PortHandle MtuSize
- //AgtFrameRelayInterface SetMtuSize, m.Object, m.Name);
+ //AgtFrameRelayInterface SetMtuSize
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *FrameRelayInterface) GetMtuSize ()(string, error) {
 
 func(np *FrameRelayInterface) SetMplsEncapsulation () error {
  //parameters: PortHandle Encapsulation
- //AgtFrameRelayInterface SetMplsEncapsulation, m.Object, m.Name);
+ //AgtFrameRelayInterface SetMplsEncapsulation
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *FrameRelayInterface) GetMplsEncapsulation ()(string, error) {
 
 func(np *FrameRelayInterface) IsFrameRelaySupported () error {
  //parameters: PortHandle
- //AgtFrameRelayInterface IsFrameRelaySupported, m.Object, m.Name);
+ //AgtFrameRelayInterface IsFrameRelaySupported
  return nil
 }
 

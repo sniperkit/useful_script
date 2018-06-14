@@ -6,7 +6,7 @@ type OspfTopology struct {
 
 func(np *OspfTopology) Add () error {
  //parameters: DatabaseHandle Type
- //AgtOspfTopology Add, m.Object, m.Name);
+ //AgtOspfTopology Add
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *OspfTopology) GetType ()(string, error) {
 
 func(np *OspfTopology) Remove () error {
  //parameters: ObjectHandle
- //AgtOspfTopology Remove, m.Object, m.Name);
+ //AgtOspfTopology Remove
  return nil
 }
 
 func(np *OspfTopology) RemoveAllObjects () error {
  //parameters: DatabaseHandle
- //AgtOspfTopology RemoveAllObjects, m.Object, m.Name);
+ //AgtOspfTopology RemoveAllObjects
  return nil
 }
 

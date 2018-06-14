@@ -18,25 +18,25 @@ func(np *RawPdu) GetPduBytes ()(string, error) {
 
 func(np *RawPdu) SetAllPduBytes () error {
  //parameters: PduHandle PduBytes
- //AgtRawPdu SetAllPduBytes, m.Object, m.Name);
+ //AgtRawPdu SetAllPduBytes
  return nil
 }
 
 func(np *RawPdu) SetPduBytes () error {
  //parameters: PduHandle Offset Length PduBytes
- //AgtRawPdu SetPduBytes, m.Object, m.Name);
+ //AgtRawPdu SetPduBytes
  return nil
 }
 
 func(np *RawPdu) InsertPduBytes () error {
  //parameters: PduHandle Offset PduBytes
- //AgtRawPdu InsertPduBytes, m.Object, m.Name);
+ //AgtRawPdu InsertPduBytes
  return nil
 }
 
 func(np *RawPdu) UnsetAllPduBytes () error {
  //parameters: PduHandle
- //AgtRawPdu UnsetAllPduBytes, m.Object, m.Name);
+ //AgtRawPdu UnsetAllPduBytes
  return nil
 }
 

@@ -30,7 +30,7 @@ func(np *IpStatistics) ListSelectedPorts ()(string, error) {
 
 func(np *IpStatistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts PortHandles
- //AgtIpStatistics SelectPorts, m.Object, m.Name);
+ //AgtIpStatistics SelectPorts
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *IpStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *IpStatistics) LockItem () error {
  //parameters: StatisticsHandle
- //AgtIpStatistics LockItem, m.Object, m.Name);
+ //AgtIpStatistics LockItem
  return nil
 }
 
 func(np *IpStatistics) UnlockItem () error {
  //parameters: StatisticsHandle
- //AgtIpStatistics UnlockItem, m.Object, m.Name);
+ //AgtIpStatistics UnlockItem
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *IpStatistics) ListSelectedStatistics ()(string, error) {
 
 func(np *IpStatistics) SelectStatistics () error {
  //parameters: Handle NumStatistics Statistics
- //AgtIpStatistics SelectStatistics, m.Object, m.Name);
+ //AgtIpStatistics SelectStatistics
  return nil
 }
 

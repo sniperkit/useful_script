@@ -6,19 +6,19 @@ type SipSubscriberPool struct {
 
 func(np *SipSubscriberPool) Enable () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool Enable, m.Object, m.Name);
+ //AgtSipSubscriberPool Enable
  return nil
 }
 
 func(np *SipSubscriberPool) Disable () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool Disable, m.Object, m.Name);
+ //AgtSipSubscriberPool Disable
  return nil
 }
 
 func(np *SipSubscriberPool) SetSubscriberPerGatewayCount () error {
  //parameters: EmulationHandle SipSubscriberPerGateway
- //AgtSipSubscriberPool SetSubscriberPerGatewayCount, m.Object, m.Name);
+ //AgtSipSubscriberPool SetSubscriberPerGatewayCount
  return nil
 }
 
@@ -48,43 +48,43 @@ func(np *SipSubscriberPool) GetCustomStateCount ()(string, error) {
 
 func(np *SipSubscriberPool) EstablishSession () error {
  //parameters: DeviceOrSession
- //AgtSipSubscriberPool EstablishSession, m.Object, m.Name);
+ //AgtSipSubscriberPool EstablishSession
  return nil
 }
 
 func(np *SipSubscriberPool) TerminateSession () error {
  //parameters: DeviceOrSession
- //AgtSipSubscriberPool TerminateSession, m.Object, m.Name);
+ //AgtSipSubscriberPool TerminateSession
  return nil
 }
 
 func(np *SipSubscriberPool) RegisterSession () error {
  //parameters: DeviceOrSession
- //AgtSipSubscriberPool RegisterSession, m.Object, m.Name);
+ //AgtSipSubscriberPool RegisterSession
  return nil
 }
 
 func(np *SipSubscriberPool) DeregisterSession () error {
  //parameters: DeviceOrSession
- //AgtSipSubscriberPool DeregisterSession, m.Object, m.Name);
+ //AgtSipSubscriberPool DeregisterSession
  return nil
 }
 
 func(np *SipSubscriberPool) SetLocalUsernamePrefix () error {
  //parameters: EmulationHandle LocalUserNamePrefix
- //AgtSipSubscriberPool SetLocalUsernamePrefix, m.Object, m.Name);
+ //AgtSipSubscriberPool SetLocalUsernamePrefix
  return nil
 }
 
 func(np *SipSubscriberPool) SetLocalUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle LocalUserNameSuffix Increment Repeat
- //AgtSipSubscriberPool SetLocalUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipSubscriberPool SetLocalUsernameSuffixIncrementingRange
  return nil
 }
 
 func(np *SipSubscriberPool) SetLocalDomain () error {
  //parameters: EmulationHandle LocalDomain
- //AgtSipSubscriberPool SetLocalDomain, m.Object, m.Name);
+ //AgtSipSubscriberPool SetLocalDomain
  return nil
 }
 
@@ -108,31 +108,31 @@ func(np *SipSubscriberPool) GetLocalUsernameSuffixIncrementingRange ()(string, e
 
 func(np *SipSubscriberPool) IsUseRemoteAddressOfRecordEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsUseRemoteAddressOfRecordEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsUseRemoteAddressOfRecordEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableUseRemoteAddressOfRecord () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableUseRemoteAddressOfRecord, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableUseRemoteAddressOfRecord
  return nil
 }
 
 func(np *SipSubscriberPool) DisableUseRemoteAddressOfRecord () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableUseRemoteAddressOfRecord, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableUseRemoteAddressOfRecord
  return nil
 }
 
 func(np *SipSubscriberPool) SetRemoteUsernamePrefix () error {
  //parameters: EmulationHandle RemoteUserNamePrefix
- //AgtSipSubscriberPool SetRemoteUsernamePrefix, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRemoteUsernamePrefix
  return nil
 }
 
 func(np *SipSubscriberPool) SetRemoteUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle RemoteUserNameSuffix Increment Repeat
- //AgtSipSubscriberPool SetRemoteUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRemoteUsernameSuffixIncrementingRange
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *SipSubscriberPool) GetRemoteUsernameSuffixIncrementingRange ()(string, 
 
 func(np *SipSubscriberPool) SetRemoteDomain () error {
  //parameters: EmulationHandle RemoteDomain
- //AgtSipSubscriberPool SetRemoteDomain, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRemoteDomain
  return nil
 }
 
@@ -162,13 +162,13 @@ func(np *SipSubscriberPool) GetRemoteDomain ()(string, error) {
 
 func(np *SipSubscriberPool) SetRemoteHostAddressV4IncrementingRange () error {
  //parameters: EmulationHandle Ipv4Address Increment Repeat
- //AgtSipSubscriberPool SetRemoteHostAddressV4IncrementingRange, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRemoteHostAddressV4IncrementingRange
  return nil
 }
 
 func(np *SipSubscriberPool) SetRemoteHostL3AddressFamily () error {
  //parameters: EmulationHandle RegistrarAddressType
- //AgtSipSubscriberPool SetRemoteHostL3AddressFamily, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRemoteHostL3AddressFamily
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *SipSubscriberPool) GetRemoteHostAddressV4IncrementingRange ()(string, e
 
 func(np *SipSubscriberPool) SetRemoteHostAddressV6IncrementingRange () error {
  //parameters: EmulationHandle Ipv6Address Increment Repeat
- //AgtSipSubscriberPool SetRemoteHostAddressV6IncrementingRange, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRemoteHostAddressV6IncrementingRange
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *SipSubscriberPool) GetRemoteHostAddressV6IncrementingRange ()(string, e
 
 func(np *SipSubscriberPool) SetMediaPayloadType () error {
  //parameters: EmulationHandle MediaPayloadType
- //AgtSipSubscriberPool SetMediaPayloadType, m.Object, m.Name);
+ //AgtSipSubscriberPool SetMediaPayloadType
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *SipSubscriberPool) GetMediaPayloadType ()(string, error) {
 
 func(np *SipSubscriberPool) SetMediaPort () error {
  //parameters: EmulationHandle Port
- //AgtSipSubscriberPool SetMediaPort, m.Object, m.Name);
+ //AgtSipSubscriberPool SetMediaPort
  return nil
 }
 
@@ -222,7 +222,7 @@ func(np *SipSubscriberPool) GetMediaPort ()(string, error) {
 
 func(np *SipSubscriberPool) SetSipPort () error {
  //parameters: EmulationHandle Port
- //AgtSipSubscriberPool SetSipPort, m.Object, m.Name);
+ //AgtSipSubscriberPool SetSipPort
  return nil
 }
 
@@ -234,25 +234,25 @@ func(np *SipSubscriberPool) GetSipPort ()(string, error) {
 
 func(np *SipSubscriberPool) IsRegistrarEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsRegistrarEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsRegistrarEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableRegistrar () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableRegistrar, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableRegistrar
  return nil
 }
 
 func(np *SipSubscriberPool) DisableRegistrar () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableRegistrar, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableRegistrar
  return nil
 }
 
 func(np *SipSubscriberPool) SetRegistrarIpv4Address () error {
  //parameters: EmulationHandle Ipv4Address
- //AgtSipSubscriberPool SetRegistrarIpv4Address, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRegistrarIpv4Address
  return nil
 }
 
@@ -264,7 +264,7 @@ func(np *SipSubscriberPool) GetRegistrarIpv4Address ()(string, error) {
 
 func(np *SipSubscriberPool) SetRegistrarIpv6Address () error {
  //parameters: EmulationHandle Ipv6Address
- //AgtSipSubscriberPool SetRegistrarIpv6Address, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRegistrarIpv6Address
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *SipSubscriberPool) GetRegistrarIpv6Address ()(string, error) {
 
 func(np *SipSubscriberPool) SetRegistrarL3AddressFamily () error {
  //parameters: EmulationHandle L3AddressFamily
- //AgtSipSubscriberPool SetRegistrarL3AddressFamily, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRegistrarL3AddressFamily
  return nil
 }
 
@@ -288,7 +288,7 @@ func(np *SipSubscriberPool) GetRegistrarL3AddressFamily ()(string, error) {
 
 func(np *SipSubscriberPool) SetRegistrarHostname () error {
  //parameters: EmulationHandle RegistrarHostname
- //AgtSipSubscriberPool SetRegistrarHostname, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRegistrarHostname
  return nil
 }
 
@@ -300,25 +300,25 @@ func(np *SipSubscriberPool) GetRegistrarHostname ()(string, error) {
 
 func(np *SipSubscriberPool) IsAutomaticRegistrationEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsAutomaticRegistrationEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsAutomaticRegistrationEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableAutomaticRegistration () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableAutomaticRegistration, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableAutomaticRegistration
  return nil
 }
 
 func(np *SipSubscriberPool) DisableAutomaticRegistration () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableAutomaticRegistration, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableAutomaticRegistration
  return nil
 }
 
 func(np *SipSubscriberPool) SetDesiredRegistrationExpiryTime () error {
  //parameters: EmulationHandle DesiredRegistrationExpiryTime
- //AgtSipSubscriberPool SetDesiredRegistrationExpiryTime, m.Object, m.Name);
+ //AgtSipSubscriberPool SetDesiredRegistrationExpiryTime
  return nil
 }
 
@@ -330,7 +330,7 @@ func(np *SipSubscriberPool) GetDesiredRegistrationExpiryTime ()(string, error) {
 
 func(np *SipSubscriberPool) SetMaxRegistrationAttempts () error {
  //parameters: EmulationHandle MaxRegistrationAttempts
- //AgtSipSubscriberPool SetMaxRegistrationAttempts, m.Object, m.Name);
+ //AgtSipSubscriberPool SetMaxRegistrationAttempts
  return nil
 }
 
@@ -342,7 +342,7 @@ func(np *SipSubscriberPool) GetMaxRegistrationAttempts ()(string, error) {
 
 func(np *SipSubscriberPool) SetRegistrationAttemptDelayTime () error {
  //parameters: EmulationHandle RegistrationAttemptDelayTime
- //AgtSipSubscriberPool SetRegistrationAttemptDelayTime, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRegistrationAttemptDelayTime
  return nil
 }
 
@@ -354,19 +354,19 @@ func(np *SipSubscriberPool) GetRegistrationAttemptDelayTime ()(string, error) {
 
 func(np *SipSubscriberPool) SetTransactionTimerT1 () error {
  //parameters: EmulationHandle Time
- //AgtSipSubscriberPool SetTransactionTimerT1, m.Object, m.Name);
+ //AgtSipSubscriberPool SetTransactionTimerT1
  return nil
 }
 
 func(np *SipSubscriberPool) SetTransactionTimerT2 () error {
  //parameters: EmulationHandle Time
- //AgtSipSubscriberPool SetTransactionTimerT2, m.Object, m.Name);
+ //AgtSipSubscriberPool SetTransactionTimerT2
  return nil
 }
 
 func(np *SipSubscriberPool) SetTransactionTimerT4 () error {
  //parameters: EmulationHandle Time
- //AgtSipSubscriberPool SetTransactionTimerT4, m.Object, m.Name);
+ //AgtSipSubscriberPool SetTransactionTimerT4
  return nil
 }
 
@@ -390,25 +390,25 @@ func(np *SipSubscriberPool) GetTransactionTimerT4 ()(string, error) {
 
 func(np *SipSubscriberPool) IsResourcePriorityEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsResourcePriorityEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsResourcePriorityEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableResourcePriority () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableResourcePriority, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableResourcePriority
  return nil
 }
 
 func(np *SipSubscriberPool) DisableResourcePriority () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableResourcePriority, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableResourcePriority
  return nil
 }
 
 func(np *SipSubscriberPool) SetResourcePriority () error {
  //parameters: EmulationHandle ResourcePriority
- //AgtSipSubscriberPool SetResourcePriority, m.Object, m.Name);
+ //AgtSipSubscriberPool SetResourcePriority
  return nil
 }
 
@@ -420,25 +420,25 @@ func(np *SipSubscriberPool) GetResourcePriority ()(string, error) {
 
 func(np *SipSubscriberPool) IsSessionRefreshTimerEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsSessionRefreshTimerEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsSessionRefreshTimerEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableSessionRefreshTimer () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableSessionRefreshTimer, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableSessionRefreshTimer
  return nil
 }
 
 func(np *SipSubscriberPool) DisableSessionRefreshTimer () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableSessionRefreshTimer, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableSessionRefreshTimer
  return nil
 }
 
 func(np *SipSubscriberPool) SetDesiredSessionInterval () error {
  //parameters: EmulationHandle DesiredSessionInterval
- //AgtSipSubscriberPool SetDesiredSessionInterval, m.Object, m.Name);
+ //AgtSipSubscriberPool SetDesiredSessionInterval
  return nil
 }
 
@@ -456,13 +456,13 @@ func(np *SipSubscriberPool) GetMinimumSessionInterval ()(string, error) {
 
 func(np *SipSubscriberPool) SetMinimumSessionInterval () error {
  //parameters: EmulationHandle MinimumSessionInterval
- //AgtSipSubscriberPool SetMinimumSessionInterval, m.Object, m.Name);
+ //AgtSipSubscriberPool SetMinimumSessionInterval
  return nil
 }
 
 func(np *SipSubscriberPool) SetRoundTripDelay () error {
  //parameters: EmulationHandle RoundTripInterval
- //AgtSipSubscriberPool SetRoundTripDelay, m.Object, m.Name);
+ //AgtSipSubscriberPool SetRoundTripDelay
  return nil
 }
 
@@ -474,7 +474,7 @@ func(np *SipSubscriberPool) GetRoundTripDelay ()(string, error) {
 
 func(np *SipSubscriberPool) SetSessionRefresher () error {
  //parameters: EmulationHandle UserAgentType
- //AgtSipSubscriberPool SetSessionRefresher, m.Object, m.Name);
+ //AgtSipSubscriberPool SetSessionRefresher
  return nil
 }
 
@@ -486,25 +486,25 @@ func(np *SipSubscriberPool) GetSessionRefresher ()(string, error) {
 
 func(np *SipSubscriberPool) IsCallAcceptDelayEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsCallAcceptDelayEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsCallAcceptDelayEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableCallAcceptDelay () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableCallAcceptDelay, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableCallAcceptDelay
  return nil
 }
 
 func(np *SipSubscriberPool) DisableCallAcceptDelay () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableCallAcceptDelay, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableCallAcceptDelay
  return nil
 }
 
 func(np *SipSubscriberPool) SetResponseDelayInterval () error {
  //parameters: EmulationHandle Time
- //AgtSipSubscriberPool SetResponseDelayInterval, m.Object, m.Name);
+ //AgtSipSubscriberPool SetResponseDelayInterval
  return nil
 }
 
@@ -516,25 +516,25 @@ func(np *SipSubscriberPool) GetResponseDelayInterval ()(string, error) {
 
 func(np *SipSubscriberPool) IsPrivacyHeaderEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsPrivacyHeaderEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsPrivacyHeaderEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnablePrivacyHeader () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnablePrivacyHeader, m.Object, m.Name);
+ //AgtSipSubscriberPool EnablePrivacyHeader
  return nil
 }
 
 func(np *SipSubscriberPool) DisablePrivacyHeader () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisablePrivacyHeader, m.Object, m.Name);
+ //AgtSipSubscriberPool DisablePrivacyHeader
  return nil
 }
 
 func(np *SipSubscriberPool) SetPrivacyType () error {
  //parameters: EmulationHandle PrivacyType
- //AgtSipSubscriberPool SetPrivacyType, m.Object, m.Name);
+ //AgtSipSubscriberPool SetPrivacyType
  return nil
 }
 
@@ -546,61 +546,61 @@ func(np *SipSubscriberPool) GetPrivacyType ()(string, error) {
 
 func(np *SipSubscriberPool) IsAuthenticationEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsAuthenticationEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsAuthenticationEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableAuthentication () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableAuthentication, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableAuthentication
  return nil
 }
 
 func(np *SipSubscriberPool) DisableAuthentication () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableAuthentication, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableAuthentication
  return nil
 }
 
 func(np *SipSubscriberPool) IsAuthenticationCredentialEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsAuthenticationCredentialEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsAuthenticationCredentialEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableAuthenticationCredential () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableAuthenticationCredential, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableAuthenticationCredential
  return nil
 }
 
 func(np *SipSubscriberPool) DisableAuthenticationCredential () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableAuthenticationCredential, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableAuthenticationCredential
  return nil
 }
 
 func(np *SipSubscriberPool) IsCredentialInDialogEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsCredentialInDialogEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsCredentialInDialogEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableCredentialInDialog () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableCredentialInDialog, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableCredentialInDialog
  return nil
 }
 
 func(np *SipSubscriberPool) DisableCredentialInDialog () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableCredentialInDialog, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableCredentialInDialog
  return nil
 }
 
 func(np *SipSubscriberPool) SetAuthCredentialUsernamePrefix () error {
  //parameters: EmulationHandle AuthCredentialUsernamePrefix
- //AgtSipSubscriberPool SetAuthCredentialUsernamePrefix, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthCredentialUsernamePrefix
  return nil
 }
 
@@ -612,7 +612,7 @@ func(np *SipSubscriberPool) GetAuthCredentialUsernamePrefix ()(string, error) {
 
 func(np *SipSubscriberPool) SetAuthCredentialUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle AuthCredentialUsernameSuffix Increment Repeat
- //AgtSipSubscriberPool SetAuthCredentialUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthCredentialUsernameSuffixIncrementingRange
  return nil
 }
 
@@ -624,7 +624,7 @@ func(np *SipSubscriberPool) GetAuthCredentialUsernameSuffixIncrementingRange ()(
 
 func(np *SipSubscriberPool) SetAuthCredentialPassword () error {
  //parameters: EmulationHandle AuthCredentialPassword
- //AgtSipSubscriberPool SetAuthCredentialPassword, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthCredentialPassword
  return nil
 }
 
@@ -636,7 +636,7 @@ func(np *SipSubscriberPool) GetAuthCredentialPassword ()(string, error) {
 
 func(np *SipSubscriberPool) SetAuthCredentialPasswordModifier () error {
  //parameters: EmulationHandle AuthCredentialPasswordModifier Increment Repeat
- //AgtSipSubscriberPool SetAuthCredentialPasswordModifier, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthCredentialPasswordModifier
  return nil
 }
 
@@ -648,19 +648,19 @@ func(np *SipSubscriberPool) GetAuthCredentialPasswordModifier ()(string, error) 
 
 func(np *SipSubscriberPool) IsAuthenticationChallengeEnabled () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool IsAuthenticationChallengeEnabled, m.Object, m.Name);
+ //AgtSipSubscriberPool IsAuthenticationChallengeEnabled
  return nil
 }
 
 func(np *SipSubscriberPool) EnableAuthenticationChallenge () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool EnableAuthenticationChallenge, m.Object, m.Name);
+ //AgtSipSubscriberPool EnableAuthenticationChallenge
  return nil
 }
 
 func(np *SipSubscriberPool) DisableAuthenticationChallenge () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool DisableAuthenticationChallenge, m.Object, m.Name);
+ //AgtSipSubscriberPool DisableAuthenticationChallenge
  return nil
 }
 
@@ -672,7 +672,7 @@ func(np *SipSubscriberPool) GetChallengeAuthenticationScheme ()(string, error) {
 
 func(np *SipSubscriberPool) SetChallengeAuthenticationRealm () error {
  //parameters: EmulationHandle ChallengeAuthenticationRealm
- //AgtSipSubscriberPool SetChallengeAuthenticationRealm, m.Object, m.Name);
+ //AgtSipSubscriberPool SetChallengeAuthenticationRealm
  return nil
 }
 
@@ -684,7 +684,7 @@ func(np *SipSubscriberPool) GetChallengeAuthenticationRealm ()(string, error) {
 
 func(np *SipSubscriberPool) SetAuthChallengeUsernamePrefix () error {
  //parameters: EmulationHandle AuthChallengeUsernamePrefix
- //AgtSipSubscriberPool SetAuthChallengeUsernamePrefix, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthChallengeUsernamePrefix
  return nil
 }
 
@@ -696,7 +696,7 @@ func(np *SipSubscriberPool) GetAuthChallengeUsernamePrefix ()(string, error) {
 
 func(np *SipSubscriberPool) SetAuthChallengeUsernameSuffixIncrementingRange () error {
  //parameters: EmulationHandle AuthChallengeUsernameSuffix Increment Repeat
- //AgtSipSubscriberPool SetAuthChallengeUsernameSuffixIncrementingRange, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthChallengeUsernameSuffixIncrementingRange
  return nil
 }
 
@@ -708,7 +708,7 @@ func(np *SipSubscriberPool) GetAuthChallengeUsernameSuffixIncrementingRange ()(s
 
 func(np *SipSubscriberPool) SetAuthChallengePassword () error {
  //parameters: EmulationHandle AuthChallengePassword
- //AgtSipSubscriberPool SetAuthChallengePassword, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthChallengePassword
  return nil
 }
 
@@ -720,7 +720,7 @@ func(np *SipSubscriberPool) GetAuthChallengePassword ()(string, error) {
 
 func(np *SipSubscriberPool) SetAuthChallengePasswordModifier () error {
  //parameters: EmulationHandle AuthChallengePasswordModifier Increment Repeat
- //AgtSipSubscriberPool SetAuthChallengePasswordModifier, m.Object, m.Name);
+ //AgtSipSubscriberPool SetAuthChallengePasswordModifier
  return nil
 }
 
@@ -732,7 +732,7 @@ func(np *SipSubscriberPool) GetAuthChallengePasswordModifier ()(string, error) {
 
 func(np *SipSubscriberPool) SetChallengeOpaque () error {
  //parameters: EmulationHandle ChallengeOpaque
- //AgtSipSubscriberPool SetChallengeOpaque, m.Object, m.Name);
+ //AgtSipSubscriberPool SetChallengeOpaque
  return nil
 }
 
@@ -744,7 +744,7 @@ func(np *SipSubscriberPool) GetChallengeOpaque ()(string, error) {
 
 func(np *SipSubscriberPool) SetChallengeAlgorithm () error {
  //parameters: EmulationHandle ChallengeAlgorithm
- //AgtSipSubscriberPool SetChallengeAlgorithm, m.Object, m.Name);
+ //AgtSipSubscriberPool SetChallengeAlgorithm
  return nil
 }
 
@@ -756,7 +756,7 @@ func(np *SipSubscriberPool) GetChallengeAlgorithm ()(string, error) {
 
 func(np *SipSubscriberPool) SetChallengeQop () error {
  //parameters: EmulationHandle ChallengeQop
- //AgtSipSubscriberPool SetChallengeQop, m.Object, m.Name);
+ //AgtSipSubscriberPool SetChallengeQop
  return nil
 }
 
@@ -768,7 +768,7 @@ func(np *SipSubscriberPool) GetChallengeQop ()(string, error) {
 
 func(np *SipSubscriberPool) SetNonceExpireTime () error {
  //parameters: EmulationHandle NonceExpireTime
- //AgtSipSubscriberPool SetNonceExpireTime, m.Object, m.Name);
+ //AgtSipSubscriberPool SetNonceExpireTime
  return nil
 }
 
@@ -780,7 +780,7 @@ func(np *SipSubscriberPool) GetNonceExpireTime ()(string, error) {
 
 func(np *SipSubscriberPool) SetMaximumChallengeAttempts () error {
  //parameters: EmulationHandle MaximumChallengeAttempts
- //AgtSipSubscriberPool SetMaximumChallengeAttempts, m.Object, m.Name);
+ //AgtSipSubscriberPool SetMaximumChallengeAttempts
  return nil
 }
 
@@ -792,13 +792,13 @@ func(np *SipSubscriberPool) GetMaximumChallengeAttempts ()(string, error) {
 
 func(np *SipSubscriberPool) SendTrafficParams () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool SendTrafficParams, m.Object, m.Name);
+ //AgtSipSubscriberPool SendTrafficParams
  return nil
 }
 
 func(np *SipSubscriberPool) ResetTrafficParams () error {
  //parameters: EmulationHandle
- //AgtSipSubscriberPool ResetTrafficParams, m.Object, m.Name);
+ //AgtSipSubscriberPool ResetTrafficParams
  return nil
 }
 

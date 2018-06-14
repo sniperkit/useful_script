@@ -6,7 +6,7 @@ type RipngRouteList struct {
 
 func(np *RipngRouteLis) AddRoutePools () error {
  //parameters: SessionHandle PfxCount saPrefixLengths RouteCount saRoutes
- //AgtRipngRouteList AddRoutePools, m.Object, m.Name);
+ //AgtRipngRouteList AddRoutePools
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *RipngRouteLis) ListRoutePools ()(string, error) {
 
 func(np *RipngRouteLis) RemoveRoutePools () error {
  //parameters: SessionHandle Count saRoutePools
- //AgtRipngRouteList RemoveRoutePools, m.Object, m.Name);
+ //AgtRipngRouteList RemoveRoutePools
  return nil
 }
 
 func(np *RipngRouteLis) ClearRoutePools () error {
  //parameters: SessionHandle
- //AgtRipngRouteList ClearRoutePools, m.Object, m.Name);
+ //AgtRipngRouteList ClearRoutePools
  return nil
 }
 

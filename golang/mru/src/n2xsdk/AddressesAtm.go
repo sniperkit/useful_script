@@ -6,7 +6,7 @@ type AddressesAtm struct {
 
 func(np *ddressesAtm) SetAtmEncapsulation () error {
  //parameters: DeviceHandle EncapsulationType
- //AgtAddressesAtm SetAtmEncapsulation, m.Object, m.Name);
+ //AgtAddressesAtm SetAtmEncapsulation
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *ddressesAtm) GetAtmEncapsulation ()(string, error) {
 
 func(np *ddressesAtm) SetVpiIncrementingRange () error {
  //parameters: DeviceHandle FirstVirtualIdentifier VirtualIdentifierIncrement VirtualIdentifierRepeat
- //AgtAddressesAtm SetVpiIncrementingRange, m.Object, m.Name);
+ //AgtAddressesAtm SetVpiIncrementingRange
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *ddressesAtm) GetVpiList ()(string, error) {
 
 func(np *ddressesAtm) SetVpi () error {
  //parameters: DeviceHandle VirtualIdentifier
- //AgtAddressesAtm SetVpi, m.Object, m.Name);
+ //AgtAddressesAtm SetVpi
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *ddressesAtm) GetVpi ()(string, error) {
 
 func(np *ddressesAtm) SetVciIncrementingRange () error {
  //parameters: DeviceHandle FirstVirtualIdentifier VirtualIdentifierIncrement VirtualIdentifierRepeat
- //AgtAddressesAtm SetVciIncrementingRange, m.Object, m.Name);
+ //AgtAddressesAtm SetVciIncrementingRange
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *ddressesAtm) GetVciList ()(string, error) {
 
 func(np *ddressesAtm) SetVci () error {
  //parameters: DeviceHandle VirtualIdentifier
- //AgtAddressesAtm SetVci, m.Object, m.Name);
+ //AgtAddressesAtm SetVci
  return nil
 }
 

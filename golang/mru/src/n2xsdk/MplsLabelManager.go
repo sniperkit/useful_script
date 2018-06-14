@@ -6,7 +6,7 @@ type MplsLabelManager struct {
 
 func(np *MplsLabelManager) SetLabelRange () error {
  //parameters: hPort Minimum Maximum Increment
- //AgtMplsLabelManager SetLabelRange, m.Object, m.Name);
+ //AgtMplsLabelManager SetLabelRange
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *MplsLabelManager) GetLabelRange ()(string, error) {
 
 func(np *MplsLabelManager) SetSutImplicitNullLabel () error {
  //parameters: hPort Label
- //AgtMplsLabelManager SetSutImplicitNullLabel, m.Object, m.Name);
+ //AgtMplsLabelManager SetSutImplicitNullLabel
  return nil
 }
 
@@ -30,19 +30,19 @@ func(np *MplsLabelManager) GetSutImplicitNullLabel ()(string, error) {
 
 func(np *MplsLabelManager) EnableSutImplicitNullLabel () error {
  //parameters: hPort
- //AgtMplsLabelManager EnableSutImplicitNullLabel, m.Object, m.Name);
+ //AgtMplsLabelManager EnableSutImplicitNullLabel
  return nil
 }
 
 func(np *MplsLabelManager) DisableSutImplicitNullLabel () error {
  //parameters: hPort
- //AgtMplsLabelManager DisableSutImplicitNullLabel, m.Object, m.Name);
+ //AgtMplsLabelManager DisableSutImplicitNullLabel
  return nil
 }
 
 func(np *MplsLabelManager) IsSutImplicitNullLabelEnabled () error {
  //parameters: hPort
- //AgtMplsLabelManager IsSutImplicitNullLabelEnabled, m.Object, m.Name);
+ //AgtMplsLabelManager IsSutImplicitNullLabelEnabled
  return nil
 }
 

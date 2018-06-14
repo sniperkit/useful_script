@@ -6,13 +6,13 @@ type PppAddresses struct {
 
 func(np *PppAddresses) SetSutIpAddress () error {
  //parameters: PortHandle SutIpAddress PrefixLength
- //AgtPppAddresses SetSutIpAddress, m.Object, m.Name);
+ //AgtPppAddresses SetSutIpAddress
  return nil
 }
 
 func(np *PppAddresses) SetSutAndTesterIpAddresses () error {
  //parameters: PortHandle SutIpAddress TesterIpAddress PrefixLength
- //AgtPppAddresses SetSutAndTesterIpAddresses, m.Object, m.Name);
+ //AgtPppAddresses SetSutAndTesterIpAddresses
  return nil
 }
 
@@ -30,19 +30,19 @@ func(np *PppAddresses) GetTesterIpAddress ()(string, error) {
 
 func(np *PppAddresses) IsTesterIpAddressCalculated () error {
  //parameters: PortHandle
- //AgtPppAddresses IsTesterIpAddressCalculated, m.Object, m.Name);
+ //AgtPppAddresses IsTesterIpAddressCalculated
  return nil
 }
 
 func(np *PppAddresses) SetSutIpv6Address () error {
  //parameters: PortHandle SutIpv6Address PrefixLength
- //AgtPppAddresses SetSutIpv6Address, m.Object, m.Name);
+ //AgtPppAddresses SetSutIpv6Address
  return nil
 }
 
 func(np *PppAddresses) SetSutAndTesterIpv6Addresses () error {
  //parameters: PortHandle SutIpv6Address TesterIpv6Address PrefixLength
- //AgtPppAddresses SetSutAndTesterIpv6Addresses, m.Object, m.Name);
+ //AgtPppAddresses SetSutAndTesterIpv6Addresses
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *PppAddresses) GetTesterIpv6Address ()(string, error) {
 
 func(np *PppAddresses) IsTesterIpv6AddressCalculated () error {
  //parameters: PortHandle
- //AgtPppAddresses IsTesterIpv6AddressCalculated, m.Object, m.Name);
+ //AgtPppAddresses IsTesterIpv6AddressCalculated
  return nil
 }
 

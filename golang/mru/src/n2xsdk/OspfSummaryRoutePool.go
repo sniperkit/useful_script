@@ -6,7 +6,7 @@ type OspfSummaryRoutePool struct {
 
 func(np *OspfSummaryRoutePool) SetRoutes () error {
  //parameters: RoutePoolHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfSummaryRoutePool SetRoutes, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool SetRoutes
  return nil
 }
 
@@ -18,37 +18,37 @@ func(np *OspfSummaryRoutePool) GetRoutes ()(string, error) {
 
 func(np *OspfSummaryRoutePool) EnableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtOspfSummaryRoutePool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool EnableTrafficDestinations
  return nil
 }
 
 func(np *OspfSummaryRoutePool) DisableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtOspfSummaryRoutePool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool DisableTrafficDestinations
  return nil
 }
 
 func(np *OspfSummaryRoutePool) IsTrafficDestinationEnabled () error {
  //parameters: RoutePoolHandle
- //AgtOspfSummaryRoutePool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool IsTrafficDestinationEnabled
  return nil
 }
 
 func(np *OspfSummaryRoutePool) SetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfSummaryRoutePool SetRoutePoolFlag, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool SetRoutePoolFlag
  return nil
 }
 
 func(np *OspfSummaryRoutePool) UnsetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfSummaryRoutePool UnsetRoutePoolFlag, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool UnsetRoutePoolFlag
  return nil
 }
 
 func(np *OspfSummaryRoutePool) IsRoutePoolFlagSet () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfSummaryRoutePool IsRoutePoolFlagSet, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool IsRoutePoolFlagSet
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *OspfSummaryRoutePool) GetNthRoute ()(string, error) {
 
 func(np *OspfSummaryRoutePool) SetResourceClasses () error {
  //parameters: RoutePoolHandle Count psaClasses
- //AgtOspfSummaryRoutePool SetResourceClasses, m.Object, m.Name);
+ //AgtOspfSummaryRoutePool SetResourceClasses
  return nil
 }
 

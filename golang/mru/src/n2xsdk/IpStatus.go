@@ -18,7 +18,7 @@ func(np *IpStatus) GetStatusDescription ()(string, error) {
 
 func(np *IpStatus) SaveStatus () error {
  //parameters: PortHandle LogFile
- //AgtIpStatus SaveStatus, m.Object, m.Name);
+ //AgtIpStatus SaveStatus
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *IpStatus) GetStatusSummaryDescription ()(string, error) {
 
 func(np *IpStatus) SaveStatusSummary () error {
  //parameters: LogFile
- //AgtIpStatus SaveStatusSummary, m.Object, m.Name);
+ //AgtIpStatus SaveStatusSummary
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *IpStatus) GetStatusHistoryDescription ()(string, error) {
 
 func(np *IpStatus) SaveStatusHistory () error {
  //parameters: LogFile
- //AgtIpStatus SaveStatusHistory, m.Object, m.Name);
+ //AgtIpStatus SaveStatusHistory
  return nil
 }
 
 func(np *IpStatus) ClearHistory () error {
  //parameters: 
- //AgtIpStatus ClearHistory, m.Object, m.Name);
+ //AgtIpStatus ClearHistory
  return nil
 }
 
 func(np *IpStatus) SetHistorySize () error {
  //parameters: HistorySize
- //AgtIpStatus SetHistorySize, m.Object, m.Name);
+ //AgtIpStatus SetHistorySize
  return nil
 }
 

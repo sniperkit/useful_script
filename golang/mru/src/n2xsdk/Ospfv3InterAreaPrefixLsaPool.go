@@ -6,7 +6,7 @@ type Ospfv3InterAreaPrefixLsaPool struct {
 
 func(np *Ospfv3InterAreaPrefixLsaPool) SetAdvertisingRouter () error {
  //parameters: LsaHandle RouterId
- //AgtOspfv3InterAreaPrefixLsaPool SetAdvertisingRouter, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixLsaPool SetAdvertisingRouter
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *Ospfv3InterAreaPrefixLsaPool) GetAdvertisingRouter ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixLsaPool) Advertise () error {
  //parameters: LsaHandle
- //AgtOspfv3InterAreaPrefixLsaPool Advertise, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixLsaPool Advertise
  return nil
 }
 
 func(np *Ospfv3InterAreaPrefixLsaPool) Withdraw () error {
  //parameters: LsaHandle
- //AgtOspfv3InterAreaPrefixLsaPool Withdraw, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixLsaPool Withdraw
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *Ospfv3InterAreaPrefixLsaPool) GetAdvertiseFlag ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixLsaPool) SetRoutes () error {
  //parameters: LsaHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfv3InterAreaPrefixLsaPool SetRoutes, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixLsaPool SetRoutes
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *Ospfv3InterAreaPrefixLsaPool) GetRoutes ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixLsaPool) SetMetric () error {
  //parameters: LsaHandle Metric
- //AgtOspfv3InterAreaPrefixLsaPool SetMetric, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixLsaPool SetMetric
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Ospfv3InterAreaPrefixLsaPool) GetPrefixOptions ()(string, error) {
 
 func(np *Ospfv3InterAreaPrefixLsaPool) SetPrefixOptions () error {
  //parameters: LsaHandle PrefixOptions
- //AgtOspfv3InterAreaPrefixLsaPool SetPrefixOptions, m.Object, m.Name);
+ //AgtOspfv3InterAreaPrefixLsaPool SetPrefixOptions
  return nil
 }
 

@@ -6,13 +6,13 @@ type Bgp4AutoTransmit struct {
 
 func(np *Bgp4AutoTransmi) AddPdus () error {
  //parameters: PeerPoolHandle PduHandleList
- //AgtBgp4AutoTransmit AddPdus, m.Object, m.Name);
+ //AgtBgp4AutoTransmit AddPdus
  return nil
 }
 
 func(np *Bgp4AutoTransmi) RemovePdus () error {
  //parameters: PeerPoolHandle PduHandleList
- //AgtBgp4AutoTransmit RemovePdus, m.Object, m.Name);
+ //AgtBgp4AutoTransmit RemovePdus
  return nil
 }
 

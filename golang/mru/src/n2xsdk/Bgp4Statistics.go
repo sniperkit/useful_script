@@ -6,7 +6,7 @@ type Bgp4Statistics struct {
 
 func(np *Bgp4Statistics) SelectPorts () error {
  //parameters: Count saPorts
- //AgtBgp4Statistics SelectPorts, m.Object, m.Name);
+ //AgtBgp4Statistics SelectPorts
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *Bgp4Statistics) ListSelectedSessions ()(string, error) {
 
 func(np *Bgp4Statistics) SelectSessions () error {
  //parameters: Count psaSessions
- //AgtBgp4Statistics SelectSessions, m.Object, m.Name);
+ //AgtBgp4Statistics SelectSessions
  return nil
 }
 
 func(np *Bgp4Statistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtBgp4Statistics DeselectSession, m.Object, m.Name);
+ //AgtBgp4Statistics DeselectSession
  return nil
 }
 

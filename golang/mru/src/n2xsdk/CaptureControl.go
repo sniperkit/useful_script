@@ -6,7 +6,7 @@ type CaptureControl struct {
 
 func(np *CaptureControl) SetPortGroup () error {
  //parameters: NumPorts psaPortHandles
- //AgtCaptureControl SetPortGroup, m.Object, m.Name);
+ //AgtCaptureControl SetPortGroup
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *CaptureControl) ListPortGroup ()(string, error) {
 
 func(np *CaptureControl) SetCaptureMode () error {
  //parameters: CaptureMode
- //AgtCaptureControl SetCaptureMode, m.Object, m.Name);
+ //AgtCaptureControl SetCaptureMode
  return nil
 }
 
@@ -30,19 +30,19 @@ func(np *CaptureControl) GetCaptureMode ()(string, error) {
 
 func(np *CaptureControl) StartCapture () error {
  //parameters: 
- //AgtCaptureControl StartCapture, m.Object, m.Name);
+ //AgtCaptureControl StartCapture
  return nil
 }
 
 func(np *CaptureControl) StopCapture () error {
  //parameters: 
- //AgtCaptureControl StopCapture, m.Object, m.Name);
+ //AgtCaptureControl StopCapture
  return nil
 }
 
 func(np *CaptureControl) ArmCaptureStart () error {
  //parameters: 
- //AgtCaptureControl ArmCaptureStart, m.Object, m.Name);
+ //AgtCaptureControl ArmCaptureStart
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *CaptureControl) GetCaptureCount ()(string, error) {
 
 func(np *CaptureControl) SetCaptureBufferSize () error {
  //parameters: PortHandle MBytes
- //AgtCaptureControl SetCaptureBufferSize, m.Object, m.Name);
+ //AgtCaptureControl SetCaptureBufferSize
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *CaptureControl) GetMaximumCaptureBufferSize ()(string, error) {
 
 func(np *CaptureControl) SetCaptureCenteringDepth () error {
  //parameters: PortHandle Octets
- //AgtCaptureControl SetCaptureCenteringDepth, m.Object, m.Name);
+ //AgtCaptureControl SetCaptureCenteringDepth
  return nil
 }
 

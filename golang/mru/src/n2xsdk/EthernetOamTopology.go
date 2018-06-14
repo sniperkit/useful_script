@@ -6,7 +6,7 @@ type EthernetOamTopology struct {
 
 func(np *EthernetOamTopology) SetStandard () error {
  //parameters: DeviceHandle Standard
- //AgtEthernetOamTopology SetStandard, m.Object, m.Name);
+ //AgtEthernetOamTopology SetStandard
  return nil
 }
 
@@ -18,61 +18,61 @@ func(np *EthernetOamTopology) GetStandard ()(string, error) {
 
 func(np *EthernetOamTopology) DisableLoopback () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableLoopback, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableLoopback
  return nil
 }
 
 func(np *EthernetOamTopology) EnableLoopback () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableLoopback, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableLoopback
  return nil
 }
 
 func(np *EthernetOamTopology) IsLoopbackEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsLoopbackEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsLoopbackEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) DisableLinkTrace () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableLinkTrace, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableLinkTrace
  return nil
 }
 
 func(np *EthernetOamTopology) EnableLinkTrace () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableLinkTrace, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableLinkTrace
  return nil
 }
 
 func(np *EthernetOamTopology) IsLinkTraceEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsLinkTraceEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsLinkTraceEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) DisableContinuityCheck () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableContinuityCheck, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableContinuityCheck
  return nil
 }
 
 func(np *EthernetOamTopology) EnableContinuityCheck () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableContinuityCheck, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableContinuityCheck
  return nil
 }
 
 func(np *EthernetOamTopology) IsContinuityCheckEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsContinuityCheckEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsContinuityCheckEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetCcmBurstSize () error {
  //parameters: DeviceHandle BurstSize
- //AgtEthernetOamTopology SetCcmBurstSize, m.Object, m.Name);
+ //AgtEthernetOamTopology SetCcmBurstSize
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *EthernetOamTopology) GetCcmBurstSize ()(string, error) {
 
 func(np *EthernetOamTopology) SetCcmBurstDelay () error {
  //parameters: DeviceHandle BurstDelay
- //AgtEthernetOamTopology SetCcmBurstDelay, m.Object, m.Name);
+ //AgtEthernetOamTopology SetCcmBurstDelay
  return nil
 }
 
@@ -96,25 +96,25 @@ func(np *EthernetOamTopology) GetCcmBurstDelay ()(string, error) {
 
 func(np *EthernetOamTopology) DisableRdi () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableRdi, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableRdi
  return nil
 }
 
 func(np *EthernetOamTopology) EnableRdi () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableRdi, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableRdi
  return nil
 }
 
 func(np *EthernetOamTopology) IsRdiEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsRdiEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsRdiEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetReplyLatency () error {
  //parameters: DeviceHandle ReplyLatency
- //AgtEthernetOamTopology SetReplyLatency, m.Object, m.Name);
+ //AgtEthernetOamTopology SetReplyLatency
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *EthernetOamTopology) GetReplyLatency ()(string, error) {
 
 func(np *EthernetOamTopology) SetContinuityCheckInterval () error {
  //parameters: DeviceHandle CcInterval
- //AgtEthernetOamTopology SetContinuityCheckInterval, m.Object, m.Name);
+ //AgtEthernetOamTopology SetContinuityCheckInterval
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *EthernetOamTopology) GetContinuityCheckInterval ()(string, error) {
 
 func(np *EthernetOamTopology) SetCcmDestinationAddressType () error {
  //parameters: DeviceHandle DestinationAddressType
- //AgtEthernetOamTopology SetCcmDestinationAddressType, m.Object, m.Name);
+ //AgtEthernetOamTopology SetCcmDestinationAddressType
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *EthernetOamTopology) GetCcmDestinationAddressType ()(string, error) {
 
 func(np *EthernetOamTopology) SetCcmUnicastDestinationMacAddress () error {
  //parameters: DeviceHandle MacAddress
- //AgtEthernetOamTopology SetCcmUnicastDestinationMacAddress, m.Object, m.Name);
+ //AgtEthernetOamTopology SetCcmUnicastDestinationMacAddress
  return nil
 }
 
@@ -162,7 +162,7 @@ func(np *EthernetOamTopology) GetCcmUnicastDestinationMacAddress ()(string, erro
 
 func(np *EthernetOamTopology) SetAlarmsInterval () error {
  //parameters: DeviceHandle SignalInterval
- //AgtEthernetOamTopology SetAlarmsInterval, m.Object, m.Name);
+ //AgtEthernetOamTopology SetAlarmsInterval
  return nil
 }
 
@@ -174,79 +174,79 @@ func(np *EthernetOamTopology) GetAlarmsInterval ()(string, error) {
 
 func(np *EthernetOamTopology) EnableAis () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableAis, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableAis
  return nil
 }
 
 func(np *EthernetOamTopology) DisableAis () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableAis, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableAis
  return nil
 }
 
 func(np *EthernetOamTopology) IsAisEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsAisEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsAisEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) EnableLck () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableLck, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableLck
  return nil
 }
 
 func(np *EthernetOamTopology) DisableLck () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableLck, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableLck
  return nil
 }
 
 func(np *EthernetOamTopology) IsLckEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsLckEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsLckEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) EnableStpIntegration () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableStpIntegration, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableStpIntegration
  return nil
 }
 
 func(np *EthernetOamTopology) DisableStpIntegration () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableStpIntegration, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableStpIntegration
  return nil
 }
 
 func(np *EthernetOamTopology) IsStpIntegrationEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsStpIntegrationEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsStpIntegrationEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) EnableSenderIdTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableSenderIdTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableSenderIdTlv
  return nil
 }
 
 func(np *EthernetOamTopology) DisableSenderIdTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableSenderIdTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableSenderIdTlv
  return nil
 }
 
 func(np *EthernetOamTopology) IsSenderIdTlvEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsSenderIdTlvEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsSenderIdTlvEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetSenderIdTlv () error {
  //parameters: DeviceHandle ChassisIdLength ChassisIdSubType ChassisID ManagementAddressDomainLength ManagementAddressDomain ManagementAddressLength ManagementAddress
- //AgtEthernetOamTopology SetSenderIdTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology SetSenderIdTlv
  return nil
 }
 
@@ -258,25 +258,25 @@ func(np *EthernetOamTopology) GetSenderIdTlv ()(string, error) {
 
 func(np *EthernetOamTopology) EnableOrganizationSpecificTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableOrganizationSpecificTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableOrganizationSpecificTlv
  return nil
 }
 
 func(np *EthernetOamTopology) DisableOrganizationSpecificTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableOrganizationSpecificTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableOrganizationSpecificTlv
  return nil
 }
 
 func(np *EthernetOamTopology) IsOrganizationSpecificTlvEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsOrganizationSpecificTlvEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsOrganizationSpecificTlvEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetOrganizationSpecificTlv () error {
  //parameters: DeviceHandle OrganizationSpecificTlvLength OrganizationallyUniqueIdentifier OrganizationSpecificTlvSubType OrganizationSpecificTlvValue
- //AgtEthernetOamTopology SetOrganizationSpecificTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology SetOrganizationSpecificTlv
  return nil
 }
 
@@ -288,25 +288,25 @@ func(np *EthernetOamTopology) GetOrganizationSpecificTlv ()(string, error) {
 
 func(np *EthernetOamTopology) EnablePortStatusTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnablePortStatusTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology EnablePortStatusTlv
  return nil
 }
 
 func(np *EthernetOamTopology) DisablePortStatusTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisablePortStatusTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology DisablePortStatusTlv
  return nil
 }
 
 func(np *EthernetOamTopology) IsPortStatusTlvEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsPortStatusTlvEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsPortStatusTlvEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetPortStatusTlv () error {
  //parameters: DeviceHandle PortStatus
- //AgtEthernetOamTopology SetPortStatusTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology SetPortStatusTlv
  return nil
 }
 
@@ -318,25 +318,25 @@ func(np *EthernetOamTopology) GetPortStatusTlv ()(string, error) {
 
 func(np *EthernetOamTopology) EnableInterfaceStatusTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableInterfaceStatusTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableInterfaceStatusTlv
  return nil
 }
 
 func(np *EthernetOamTopology) DisableInterfaceStatusTlv () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableInterfaceStatusTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableInterfaceStatusTlv
  return nil
 }
 
 func(np *EthernetOamTopology) IsInterfaceStatusTlvEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsInterfaceStatusTlvEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsInterfaceStatusTlvEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetInterfaceStatusTlv () error {
  //parameters: DeviceHandle InterfaceStatus
- //AgtEthernetOamTopology SetInterfaceStatusTlv, m.Object, m.Name);
+ //AgtEthernetOamTopology SetInterfaceStatusTlv
  return nil
 }
 
@@ -348,7 +348,7 @@ func(np *EthernetOamTopology) GetInterfaceStatusTlv ()(string, error) {
 
 func(np *EthernetOamTopology) SetNumberOfMips () error {
  //parameters: DeviceHandle NumberOfMips
- //AgtEthernetOamTopology SetNumberOfMips, m.Object, m.Name);
+ //AgtEthernetOamTopology SetNumberOfMips
  return nil
 }
 
@@ -360,7 +360,7 @@ func(np *EthernetOamTopology) GetNumberOfMips ()(string, error) {
 
 func(np *EthernetOamTopology) SetNumberOfMeps () error {
  //parameters: DeviceHandle NumberOfMeps
- //AgtEthernetOamTopology SetNumberOfMeps, m.Object, m.Name);
+ //AgtEthernetOamTopology SetNumberOfMeps
  return nil
 }
 
@@ -372,7 +372,7 @@ func(np *EthernetOamTopology) GetNumberOfMeps ()(string, error) {
 
 func(np *EthernetOamTopology) SetMepId () error {
  //parameters: DeviceHandle MepId
- //AgtEthernetOamTopology SetMepId, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMepId
  return nil
 }
 
@@ -384,7 +384,7 @@ func(np *EthernetOamTopology) GetMepId ()(string, error) {
 
 func(np *EthernetOamTopology) SetMepPortBehavior () error {
  //parameters: DeviceHandle MepPortBehavior
- //AgtEthernetOamTopology SetMepPortBehavior, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMepPortBehavior
  return nil
 }
 
@@ -396,25 +396,25 @@ func(np *EthernetOamTopology) GetMepPortBehavior ()(string, error) {
 
 func(np *EthernetOamTopology) EnableGroupPairs () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableGroupPairs, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableGroupPairs
  return nil
 }
 
 func(np *EthernetOamTopology) DisableGroupPairs () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology DisableGroupPairs, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableGroupPairs
  return nil
 }
 
 func(np *EthernetOamTopology) IsGroupPairsEnabled () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology IsGroupPairsEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsGroupPairsEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetMdLevel () error {
  //parameters: DeviceHandle Level
- //AgtEthernetOamTopology SetMdLevel, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMdLevel
  return nil
 }
 
@@ -426,25 +426,25 @@ func(np *EthernetOamTopology) GetMdLevel ()(string, error) {
 
 func(np *EthernetOamTopology) SetMdNameFormat () error {
  //parameters: DeviceHandle MdNameFormat
- //AgtEthernetOamTopology SetMdNameFormat, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMdNameFormat
  return nil
 }
 
 func(np *EthernetOamTopology) SetMdNameString () error {
  //parameters: DeviceHandle MdName Length
- //AgtEthernetOamTopology SetMdNameString, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMdNameString
  return nil
 }
 
 func(np *EthernetOamTopology) SetMdNameMacAddrTwoOct () error {
  //parameters: DeviceHandle MacAddress Integer
- //AgtEthernetOamTopology SetMdNameMacAddrTwoOct, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMdNameMacAddrTwoOct
  return nil
 }
 
 func(np *EthernetOamTopology) SetMdNameCharString () error {
  //parameters: DeviceHandle MdName Length
- //AgtEthernetOamTopology SetMdNameCharString, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMdNameCharString
  return nil
 }
 
@@ -474,31 +474,31 @@ func(np *EthernetOamTopology) GetMdNameCharString ()(string, error) {
 
 func(np *EthernetOamTopology) SetSmaNameFormat () error {
  //parameters: DeviceHandle SmaNameFormat
- //AgtEthernetOamTopology SetSmaNameFormat, m.Object, m.Name);
+ //AgtEthernetOamTopology SetSmaNameFormat
  return nil
 }
 
 func(np *EthernetOamTopology) SetSmaNamePriVid () error {
  //parameters: DeviceHandle VlanId
- //AgtEthernetOamTopology SetSmaNamePriVid, m.Object, m.Name);
+ //AgtEthernetOamTopology SetSmaNamePriVid
  return nil
 }
 
 func(np *EthernetOamTopology) SetSmaNameCharString () error {
  //parameters: DeviceHandle SmaName Length
- //AgtEthernetOamTopology SetSmaNameCharString, m.Object, m.Name);
+ //AgtEthernetOamTopology SetSmaNameCharString
  return nil
 }
 
 func(np *EthernetOamTopology) SetSmaNameTwoOct () error {
  //parameters: DeviceHandle Integer
- //AgtEthernetOamTopology SetSmaNameTwoOct, m.Object, m.Name);
+ //AgtEthernetOamTopology SetSmaNameTwoOct
  return nil
 }
 
 func(np *EthernetOamTopology) SetSmaNameVpnId () error {
  //parameters: DeviceHandle VpnId
- //AgtEthernetOamTopology SetSmaNameVpnId, m.Object, m.Name);
+ //AgtEthernetOamTopology SetSmaNameVpnId
  return nil
 }
 
@@ -534,7 +534,7 @@ func(np *EthernetOamTopology) GetSmaNameVpnId ()(string, error) {
 
 func(np *EthernetOamTopology) SetMegLevel () error {
  //parameters: DeviceHandle Level
- //AgtEthernetOamTopology SetMegLevel, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMegLevel
  return nil
 }
 
@@ -546,7 +546,7 @@ func(np *EthernetOamTopology) GetMegLevel ()(string, error) {
 
 func(np *EthernetOamTopology) SetMegIdFormat () error {
  //parameters: DeviceHandle MegIdFormat
- //AgtEthernetOamTopology SetMegIdFormat, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMegIdFormat
  return nil
 }
 
@@ -558,7 +558,7 @@ func(np *EthernetOamTopology) GetMegIdFormat ()(string, error) {
 
 func(np *EthernetOamTopology) SetMegIdValue () error {
  //parameters: DeviceHandle MegId
- //AgtEthernetOamTopology SetMegIdValue, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMegIdValue
  return nil
 }
 
@@ -570,13 +570,13 @@ func(np *EthernetOamTopology) GetMegIdValue ()(string, error) {
 
 func(np *EthernetOamTopology) AddMultiLevel () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology AddMultiLevel, m.Object, m.Name);
+ //AgtEthernetOamTopology AddMultiLevel
  return nil
 }
 
 func(np *EthernetOamTopology) RemoveMultiLevel () error {
  //parameters: DeviceHandle TableRowIndex
- //AgtEthernetOamTopology RemoveMultiLevel, m.Object, m.Name);
+ //AgtEthernetOamTopology RemoveMultiLevel
  return nil
 }
 
@@ -588,7 +588,7 @@ func(np *EthernetOamTopology) ListMultiLevels ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiMdLevel () error {
  //parameters: DeviceHandle TableRowIndex Level
- //AgtEthernetOamTopology SetMultiMdLevel, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMdLevel
  return nil
 }
 
@@ -600,25 +600,25 @@ func(np *EthernetOamTopology) GetMultiMdLevel ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiMdNameFormat () error {
  //parameters: DeviceHandle TableRowIndex MdNameFormat
- //AgtEthernetOamTopology SetMultiMdNameFormat, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMdNameFormat
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiMdNameString () error {
  //parameters: DeviceHandle TableRowIndex MdName Length
- //AgtEthernetOamTopology SetMultiMdNameString, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMdNameString
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiMdNameMacAddrTwoOct () error {
  //parameters: DeviceHandle TableRowIndex MacAddress Integer
- //AgtEthernetOamTopology SetMultiMdNameMacAddrTwoOct, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMdNameMacAddrTwoOct
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiMdNameCharString () error {
  //parameters: DeviceHandle TableRowIndex MdName Length
- //AgtEthernetOamTopology SetMultiMdNameCharString, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMdNameCharString
  return nil
 }
 
@@ -648,31 +648,31 @@ func(np *EthernetOamTopology) GetMultiMdNameCharString ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiSmaNameFormat () error {
  //parameters: DeviceHandle TableRowIndex SmaNameFormat
- //AgtEthernetOamTopology SetMultiSmaNameFormat, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiSmaNameFormat
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiSmaNamePriVid () error {
  //parameters: DeviceHandle TableRowIndex VlanId
- //AgtEthernetOamTopology SetMultiSmaNamePriVid, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiSmaNamePriVid
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiSmaNameCharString () error {
  //parameters: DeviceHandle TableRowIndex SmaName Length
- //AgtEthernetOamTopology SetMultiSmaNameCharString, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiSmaNameCharString
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiSmaNameTwoOct () error {
  //parameters: DeviceHandle TableRowIndex SmaName
- //AgtEthernetOamTopology SetMultiSmaNameTwoOct, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiSmaNameTwoOct
  return nil
 }
 
 func(np *EthernetOamTopology) SetMultiSmaNameVpnId () error {
  //parameters: DeviceHandle TableRowIndex VpnId
- //AgtEthernetOamTopology SetMultiSmaNameVpnId, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiSmaNameVpnId
  return nil
 }
 
@@ -708,7 +708,7 @@ func(np *EthernetOamTopology) GetMultiSmaNameVpnId ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiMegLevel () error {
  //parameters: DeviceHandle TableRowIndex Level
- //AgtEthernetOamTopology SetMultiMegLevel, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMegLevel
  return nil
 }
 
@@ -720,7 +720,7 @@ func(np *EthernetOamTopology) GetMultiMegLevel ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiMegIdFormat () error {
  //parameters: DeviceHandle TableRowIndex MegIdFormat
- //AgtEthernetOamTopology SetMultiMegIdFormat, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMegIdFormat
  return nil
 }
 
@@ -732,7 +732,7 @@ func(np *EthernetOamTopology) GetMultiMegIdFormat ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiMegIdValue () error {
  //parameters: DeviceHandle TableRowIndex MegId
- //AgtEthernetOamTopology SetMultiMegIdValue, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMegIdValue
  return nil
 }
 
@@ -744,7 +744,7 @@ func(np *EthernetOamTopology) GetMultiMegIdValue ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiNumberOfMips () error {
  //parameters: DeviceHandle TableRowIndex NumberOfMips
- //AgtEthernetOamTopology SetMultiNumberOfMips, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiNumberOfMips
  return nil
 }
 
@@ -756,7 +756,7 @@ func(np *EthernetOamTopology) GetMultiNumberOfMips ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiMepId () error {
  //parameters: DeviceHandle TableRowIndex MepId
- //AgtEthernetOamTopology SetMultiMepId, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiMepId
  return nil
 }
 
@@ -768,25 +768,25 @@ func(np *EthernetOamTopology) GetMultiMepId ()(string, error) {
 
 func(np *EthernetOamTopology) EnableMultiGroupPairs () error {
  //parameters: DeviceHandle TableRowIndex
- //AgtEthernetOamTopology EnableMultiGroupPairs, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableMultiGroupPairs
  return nil
 }
 
 func(np *EthernetOamTopology) DisableMultiGroupPairs () error {
  //parameters: DeviceHandle TableRowIndex
- //AgtEthernetOamTopology DisableMultiGroupPairs, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableMultiGroupPairs
  return nil
 }
 
 func(np *EthernetOamTopology) IsMultiGroupPairsEnabled () error {
  //parameters: DeviceHandle TableRowIndex
- //AgtEthernetOamTopology IsMultiGroupPairsEnabled, m.Object, m.Name);
+ //AgtEthernetOamTopology IsMultiGroupPairsEnabled
  return nil
 }
 
 func(np *EthernetOamTopology) SetIncrementingParameter () error {
  //parameters: DeviceHandle IncrementingParameter Value Repeat Increment
- //AgtEthernetOamTopology SetIncrementingParameter, m.Object, m.Name);
+ //AgtEthernetOamTopology SetIncrementingParameter
  return nil
 }
 
@@ -798,7 +798,7 @@ func(np *EthernetOamTopology) GetIncrementingParameter ()(string, error) {
 
 func(np *EthernetOamTopology) SetMultiLevelIncrementingParameter () error {
  //parameters: DeviceHandle TableRowIndex MultiLevelIncrementingParameter Value Repeat Increment
- //AgtEthernetOamTopology SetMultiLevelIncrementingParameter, m.Object, m.Name);
+ //AgtEthernetOamTopology SetMultiLevelIncrementingParameter
  return nil
 }
 
@@ -822,37 +822,37 @@ func(np *EthernetOamTopology) GetTopologyStructure ()(string, error) {
 
 func(np *EthernetOamTopology) DisableLink () error {
  //parameters: DeviceHandle Level LinkNumber
- //AgtEthernetOamTopology DisableLink, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableLink
  return nil
 }
 
 func(np *EthernetOamTopology) DisableTerminatingLink () error {
  //parameters: DeviceHandle NumberOfMeps MacAddress
- //AgtEthernetOamTopology DisableTerminatingLink, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableTerminatingLink
  return nil
 }
 
 func(np *EthernetOamTopology) DisableMultipleTerminatingLinks () error {
  //parameters: DeviceHandle NumberOfMeps MacAddress Repeat Increment
- //AgtEthernetOamTopology DisableMultipleTerminatingLinks, m.Object, m.Name);
+ //AgtEthernetOamTopology DisableMultipleTerminatingLinks
  return nil
 }
 
 func(np *EthernetOamTopology) EnableAllLinks () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology EnableAllLinks, m.Object, m.Name);
+ //AgtEthernetOamTopology EnableAllLinks
  return nil
 }
 
 func(np *EthernetOamTopology) LockLink () error {
  //parameters: DeviceHandle Level LinkNumber
- //AgtEthernetOamTopology LockLink, m.Object, m.Name);
+ //AgtEthernetOamTopology LockLink
  return nil
 }
 
 func(np *EthernetOamTopology) UnlockAllLinks () error {
  //parameters: DeviceHandle
- //AgtEthernetOamTopology UnlockAllLinks, m.Object, m.Name);
+ //AgtEthernetOamTopology UnlockAllLinks
  return nil
 }
 
@@ -864,7 +864,7 @@ func(np *EthernetOamTopology) GetVlanPriority ()(string, error) {
 
 func(np *EthernetOamTopology) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtEthernetOamTopology SetVlanPriority, m.Object, m.Name);
+ //AgtEthernetOamTopology SetVlanPriority
  return nil
 }
 

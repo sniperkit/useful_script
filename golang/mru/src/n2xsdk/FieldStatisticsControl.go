@@ -6,7 +6,7 @@ type FieldStatisticsControl struct {
 
 func(np *FieldStatisticsControl) SetIndexField () error {
  //parameters: NumPorts pPortHandles Field
- //AgtFieldStatisticsControl SetIndexField, m.Object, m.Name);
+ //AgtFieldStatisticsControl SetIndexField
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *FieldStatisticsControl) ListAvailableFieldsOnPort ()(string, error) {
 
 func(np *FieldStatisticsControl) SetFrameFilter () error {
  //parameters: NumPorts pPortHandles FrameFilter
- //AgtFieldStatisticsControl SetFrameFilter, m.Object, m.Name);
+ //AgtFieldStatisticsControl SetFrameFilter
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *FieldStatisticsControl) GetFrameFilter ()(string, error) {
 
 func(np *FieldStatisticsControl) SetFieldPageOffset () error {
  //parameters: NumPorts pPortHandles NumPageOffsets pFieldPageOffsets
- //AgtFieldStatisticsControl SetFieldPageOffset, m.Object, m.Name);
+ //AgtFieldStatisticsControl SetFieldPageOffset
  return nil
 }
 

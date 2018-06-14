@@ -24,7 +24,7 @@ func(np *PortSelector) GetModuleDescription ()(string, error) {
 
 func(np *PortSelector) IsChassisBlade () error {
  //parameters: ModuleNumber
- //AgtPortSelector IsChassisBlade, m.Object, m.Name);
+ //AgtPortSelector IsChassisBlade
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *PortSelector) GetModuleType ()(string, error) {
 
 func(np *PortSelector) SetModuleType () error {
  //parameters: ModuleNumber ModuleType
- //AgtPortSelector SetModuleType, m.Object, m.Name);
+ //AgtPortSelector SetModuleType
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *PortSelector) GetModuleLimit ()(string, error) {
 
 func(np *PortSelector) IsModuleSupported () error {
  //parameters: ModuleNumber
- //AgtPortSelector IsModuleSupported, m.Object, m.Name);
+ //AgtPortSelector IsModuleSupported
  return nil
 }
 
@@ -186,31 +186,31 @@ func(np *PortSelector) ListAvailableModuleSet ()(string, error) {
 
 func(np *PortSelector) AddPort () error {
  //parameters: ModuleNumber portNumber
- //AgtPortSelector AddPort, m.Object, m.Name);
+ //AgtPortSelector AddPort
  return nil
 }
 
 func(np *PortSelector) AddPorts () error {
  //parameters: LabelCount PortLabels
- //AgtPortSelector AddPorts, m.Object, m.Name);
+ //AgtPortSelector AddPorts
  return nil
 }
 
 func(np *PortSelector) AddPortsWithLock () error {
  //parameters: LabelCount PortLabels ModuleCount ModuleNumbers
- //AgtPortSelector AddPortsWithLock, m.Object, m.Name);
+ //AgtPortSelector AddPortsWithLock
  return nil
 }
 
 func(np *PortSelector) RemovePort () error {
  //parameters: PortHandle
- //AgtPortSelector RemovePort, m.Object, m.Name);
+ //AgtPortSelector RemovePort
  return nil
 }
 
 func(np *PortSelector) RemovePorts () error {
  //parameters: PortCount PortHandles
- //AgtPortSelector RemovePorts, m.Object, m.Name);
+ //AgtPortSelector RemovePorts
  return nil
 }
 
@@ -222,13 +222,13 @@ func(np *PortSelector) ListPorts ()(string, error) {
 
 func(np *PortSelector) FindPortHandle () error {
  //parameters: ModuleNumber portNumber
- //AgtPortSelector FindPortHandle, m.Object, m.Name);
+ //AgtPortSelector FindPortHandle
  return nil
 }
 
 func(np *PortSelector) FindPortHandleFromLabel () error {
  //parameters: portLabel
- //AgtPortSelector FindPortHandleFromLabel, m.Object, m.Name);
+ //AgtPortSelector FindPortHandleFromLabel
  return nil
 }
 
@@ -246,13 +246,13 @@ func(np *PortSelector) GetPortLabelFromHandle ()(string, error) {
 
 func(np *PortSelector) IsDummyPort () error {
  //parameters: PortHandle
- //AgtPortSelector IsDummyPort, m.Object, m.Name);
+ //AgtPortSelector IsDummyPort
  return nil
 }
 
 func(np *PortSelector) SetPortComment () error {
  //parameters: PortHandle PortComment
- //AgtPortSelector SetPortComment, m.Object, m.Name);
+ //AgtPortSelector SetPortComment
  return nil
 }
 
@@ -264,13 +264,13 @@ func(np *PortSelector) GetPortComment ()(string, error) {
 
 func(np *PortSelector) AddGroup () error {
  //parameters: Count PortHandles
- //AgtPortSelector AddGroup, m.Object, m.Name);
+ //AgtPortSelector AddGroup
  return nil
 }
 
 func(np *PortSelector) RemoveGroup () error {
  //parameters: GroupHandle
- //AgtPortSelector RemoveGroup, m.Object, m.Name);
+ //AgtPortSelector RemoveGroup
  return nil
 }
 
@@ -288,13 +288,13 @@ func(np *PortSelector) ListPortsInGroup ()(string, error) {
 
 func(np *PortSelector) AddModule () error {
  //parameters: ModuleType
- //AgtPortSelector AddModule, m.Object, m.Name);
+ //AgtPortSelector AddModule
  return nil
 }
 
 func(np *PortSelector) RemoveModule () error {
  //parameters: ModuleNumber
- //AgtPortSelector RemoveModule, m.Object, m.Name);
+ //AgtPortSelector RemoveModule
  return nil
 }
 
@@ -312,7 +312,7 @@ func(np *PortSelector) GetPortClass ()(string, error) {
 
 func(np *PortSelector) IsPerPortPersonalitySupported () error {
  //parameters: ModuleNumber
- //AgtPortSelector IsPerPortPersonalitySupported, m.Object, m.Name);
+ //AgtPortSelector IsPerPortPersonalitySupported
  return nil
 }
 
@@ -330,7 +330,7 @@ func(np *PortSelector) GetPortPersonality ()(string, error) {
 
 func(np *PortSelector) SetPortPersonality () error {
  //parameters: ModuleNumber portNumber Personality
- //AgtPortSelector SetPortPersonality, m.Object, m.Name);
+ //AgtPortSelector SetPortPersonality
  return nil
 }
 
@@ -348,7 +348,7 @@ func(np *PortSelector) GetModulePersonality ()(string, error) {
 
 func(np *PortSelector) SetModulePersonality () error {
  //parameters: ModuleNumber Personality
- //AgtPortSelector SetModulePersonality, m.Object, m.Name);
+ //AgtPortSelector SetModulePersonality
  return nil
 }
 
@@ -384,13 +384,13 @@ func(np *PortSelector) ListAvailablePortsOnModule ()(string, error) {
 
 func(np *PortSelector) IsMultiUserChassisSystem () error {
  //parameters: 
- //AgtPortSelector IsMultiUserChassisSystem, m.Object, m.Name);
+ //AgtPortSelector IsMultiUserChassisSystem
  return nil
 }
 
 func(np *PortSelector) SetNextPortHandle () error {
  //parameters: NextAvailablePort
- //AgtPortSelector SetNextPortHandle, m.Object, m.Name);
+ //AgtPortSelector SetNextPortHandle
  return nil
 }
 
@@ -420,7 +420,7 @@ func(np *PortSelector) ListMasterPorts ()(string, error) {
 
 func(np *PortSelector) SetPersonality () error {
  //parameters: ModuleNumber MasterPortNumber Personality
- //AgtPortSelector SetPersonality, m.Object, m.Name);
+ //AgtPortSelector SetPersonality
  return nil
 }
 

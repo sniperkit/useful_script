@@ -6,13 +6,13 @@ type DeviceList struct {
 
 func(np *DeviceLis) Add () error {
  //parameters: PortHandle
- //AgtDeviceList Add, m.Object, m.Name);
+ //AgtDeviceList Add
  return nil
 }
 
 func(np *DeviceLis) Remove () error {
  //parameters: DeviceHandle
- //AgtDeviceList Remove, m.Object, m.Name);
+ //AgtDeviceList Remove
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *DeviceLis) ListHandlesWithEmulation ()(string, error) {
 
 func(np *DeviceLis) SetName () error {
  //parameters: DeviceHandle DeviceName
- //AgtDeviceList SetName, m.Object, m.Name);
+ //AgtDeviceList SetName
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *DeviceLis) GetName ()(string, error) {
 
 func(np *DeviceLis) SetLinkDefaults () error {
  //parameters: LinkDefaults
- //AgtDeviceList SetLinkDefaults, m.Object, m.Name);
+ //AgtDeviceList SetLinkDefaults
  return nil
 }
 

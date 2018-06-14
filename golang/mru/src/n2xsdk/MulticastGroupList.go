@@ -6,31 +6,31 @@ type MulticastGroupList struct {
 
 func(np *MulticastGroupLis) Add () error {
  //parameters: Type
- //AgtMulticastGroupList Add, m.Object, m.Name);
+ //AgtMulticastGroupList Add
  return nil
 }
 
 func(np *MulticastGroupLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtMulticastGroupList AddItems, m.Object, m.Name);
+ //AgtMulticastGroupList AddItems
  return nil
 }
 
 func(np *MulticastGroupLis) Remove () error {
  //parameters: Handle
- //AgtMulticastGroupList Remove, m.Object, m.Name);
+ //AgtMulticastGroupList Remove
  return nil
 }
 
 func(np *MulticastGroupLis) Copy () error {
  //parameters: Handle
- //AgtMulticastGroupList Copy, m.Object, m.Name);
+ //AgtMulticastGroupList Copy
  return nil
 }
 
 func(np *MulticastGroupLis) SetName () error {
  //parameters: Handle Name
- //AgtMulticastGroupList SetName, m.Object, m.Name);
+ //AgtMulticastGroupList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *MulticastGroupLis) GetType ()(string, error) {
 
 func(np *MulticastGroupLis) LockItem () error {
  //parameters: Handle
- //AgtMulticastGroupList LockItem, m.Object, m.Name);
+ //AgtMulticastGroupList LockItem
  return nil
 }
 
 func(np *MulticastGroupLis) UnlockItem () error {
  //parameters: Handle
- //AgtMulticastGroupList UnlockItem, m.Object, m.Name);
+ //AgtMulticastGroupList UnlockItem
  return nil
 }
 

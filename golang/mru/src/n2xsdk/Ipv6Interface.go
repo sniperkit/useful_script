@@ -6,7 +6,7 @@ type Ipv6Interface struct {
 
 func(np *Ipv6Interface) IsAvailable () error {
  //parameters: hPort
- //AgtIpv6Interface IsAvailable, m.Object, m.Name);
+ //AgtIpv6Interface IsAvailable
  return nil
 }
 

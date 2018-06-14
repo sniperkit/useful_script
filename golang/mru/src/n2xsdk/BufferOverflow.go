@@ -12,13 +12,13 @@ func(np *BufferOverflow) GetOverflowHistory ()(string, error) {
 
 func(np *BufferOverflow) ClearHistory () error {
  //parameters: 
- //AgtBufferOverflow ClearHistory, m.Object, m.Name);
+ //AgtBufferOverflow ClearHistory
  return nil
 }
 
 func(np *BufferOverflow) SetHistorySize () error {
  //parameters: HistorySize
- //AgtBufferOverflow SetHistorySize, m.Object, m.Name);
+ //AgtBufferOverflow SetHistorySize
  return nil
 }
 

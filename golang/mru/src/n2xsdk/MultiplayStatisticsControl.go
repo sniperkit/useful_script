@@ -6,49 +6,49 @@ type MultiplayStatisticsControl struct {
 
 func(np *MultiplayStatisticsControl) Enable () error {
  //parameters: NumPorts pPortHandles
- //AgtMultiplayStatisticsControl Enable, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl Enable
  return nil
 }
 
 func(np *MultiplayStatisticsControl) Disable () error {
  //parameters: NumPorts pPortHandles
- //AgtMultiplayStatisticsControl Disable, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl Disable
  return nil
 }
 
 func(np *MultiplayStatisticsControl) IsEnabled () error {
  //parameters: PortHandle
- //AgtMultiplayStatisticsControl IsEnabled, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl IsEnabled
  return nil
 }
 
 func(np *MultiplayStatisticsControl) IsMultiplayStatisticsSupported () error {
  //parameters: PortHandle
- //AgtMultiplayStatisticsControl IsMultiplayStatisticsSupported, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl IsMultiplayStatisticsSupported
  return nil
 }
 
 func(np *MultiplayStatisticsControl) EnableDualMode () error {
  //parameters: NumPorts pPortHandles
- //AgtMultiplayStatisticsControl EnableDualMode, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl EnableDualMode
  return nil
 }
 
 func(np *MultiplayStatisticsControl) DisableDualMode () error {
  //parameters: NumPorts pPortHandles
- //AgtMultiplayStatisticsControl DisableDualMode, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl DisableDualMode
  return nil
 }
 
 func(np *MultiplayStatisticsControl) IsDualModeEnabled () error {
  //parameters: PortHandle
- //AgtMultiplayStatisticsControl IsDualModeEnabled, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl IsDualModeEnabled
  return nil
 }
 
 func(np *MultiplayStatisticsControl) SetFieldConfiguration () error {
  //parameters: NumPorts pPortHandles FieldConfig
- //AgtMultiplayStatisticsControl SetFieldConfiguration, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl SetFieldConfiguration
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *MultiplayStatisticsControl) GetMaximumNumberOfGroups ()(string, error) 
 
 func(np *MultiplayStatisticsControl) SetGroupBaseAddress () error {
  //parameters: PortHandle AddressField GroupAddress
- //AgtMultiplayStatisticsControl SetGroupBaseAddress, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl SetGroupBaseAddress
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *MultiplayStatisticsControl) GetGroupAddressRange ()(string, error) {
 
 func(np *MultiplayStatisticsControl) SetInitialVlanValue () error {
  //parameters: PortHandle VlanField VlanId
- //AgtMultiplayStatisticsControl SetInitialVlanValue, m.Object, m.Name);
+ //AgtMultiplayStatisticsControl SetInitialVlanValue
  return nil
 }
 

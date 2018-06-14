@@ -6,7 +6,7 @@ type AddressesIp struct {
 
 func(np *ddressesIp) SetLocalIpAddressIncrementingRange () error {
  //parameters: DeviceHandle AddressFamily FirstIpAddress IpAddressPrefixLength IpAddressIncrement IpAddressRepeat
- //AgtAddressesIp SetLocalIpAddressIncrementingRange, m.Object, m.Name);
+ //AgtAddressesIp SetLocalIpAddressIncrementingRange
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *ddressesIp) GetLocalIpAddressIncrementingRange ()(string, error) {
 
 func(np *ddressesIp) SetLocalIpAddressSubRangeOffsets () error {
  //parameters: DeviceHandle AddressFamily FirstIpAddress MsbOffsetList
- //AgtAddressesIp SetLocalIpAddressSubRangeOffsets, m.Object, m.Name);
+ //AgtAddressesIp SetLocalIpAddressSubRangeOffsets
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *ddressesIp) GetLocalIpAddressSubRangeOffsets ()(string, error) {
 
 func(np *ddressesIp) SetLocalIpAddressSubRange () error {
  //parameters: DeviceHandle AddressFamily SubRangeInstance IpAddressIncrement IpAddressCount IpAddressRepeat
- //AgtAddressesIp SetLocalIpAddressSubRange, m.Object, m.Name);
+ //AgtAddressesIp SetLocalIpAddressSubRange
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *ddressesIp) GetLocalIpAddressList ()(string, error) {
 
 func(np *ddressesIp) SetLocalIpAddress () error {
  //parameters: DeviceHandle AddressFamily IpAddress
- //AgtAddressesIp SetLocalIpAddress, m.Object, m.Name);
+ //AgtAddressesIp SetLocalIpAddress
  return nil
 }
 
@@ -66,25 +66,25 @@ func(np *ddressesIp) GetLocalIpAddress ()(string, error) {
 
 func(np *ddressesIp) EnableRemoteIpAddress () error {
  //parameters: DeviceHandle AddressFamily
- //AgtAddressesIp EnableRemoteIpAddress, m.Object, m.Name);
+ //AgtAddressesIp EnableRemoteIpAddress
  return nil
 }
 
 func(np *ddressesIp) DisableRemoteIpAddress () error {
  //parameters: DeviceHandle AddressFamily
- //AgtAddressesIp DisableRemoteIpAddress, m.Object, m.Name);
+ //AgtAddressesIp DisableRemoteIpAddress
  return nil
 }
 
 func(np *ddressesIp) IsRemoteIpAddressEnabled () error {
  //parameters: DeviceHandle AddressFamily
- //AgtAddressesIp IsRemoteIpAddressEnabled, m.Object, m.Name);
+ //AgtAddressesIp IsRemoteIpAddressEnabled
  return nil
 }
 
 func(np *ddressesIp) SetRemoteIpAddressIncrementingRange () error {
  //parameters: DeviceHandle AddressFamily FirstIpAddress IpAddressPrefixLength IpAddressIncrement IpAddressRepeat
- //AgtAddressesIp SetRemoteIpAddressIncrementingRange, m.Object, m.Name);
+ //AgtAddressesIp SetRemoteIpAddressIncrementingRange
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *ddressesIp) GetRemoteIpAddressList ()(string, error) {
 
 func(np *ddressesIp) SetRemoteIpAddress () error {
  //parameters: DeviceHandle AddressFamily IpAddress
- //AgtAddressesIp SetRemoteIpAddress, m.Object, m.Name);
+ //AgtAddressesIp SetRemoteIpAddress
  return nil
 }
 
@@ -168,25 +168,25 @@ func(np *ddressesIp) GetRemoteLinkLocalIpv6Address ()(string, error) {
 
 func(np *ddressesIp) EnableGatewayIpAddress () error {
  //parameters: DeviceHandle AddressFamily
- //AgtAddressesIp EnableGatewayIpAddress, m.Object, m.Name);
+ //AgtAddressesIp EnableGatewayIpAddress
  return nil
 }
 
 func(np *ddressesIp) DisableGatewayIpAddress () error {
  //parameters: DeviceHandle AddressFamily
- //AgtAddressesIp DisableGatewayIpAddress, m.Object, m.Name);
+ //AgtAddressesIp DisableGatewayIpAddress
  return nil
 }
 
 func(np *ddressesIp) IsGatewayIpAddressEnabled () error {
  //parameters: DeviceHandle AddressFamily
- //AgtAddressesIp IsGatewayIpAddressEnabled, m.Object, m.Name);
+ //AgtAddressesIp IsGatewayIpAddressEnabled
  return nil
 }
 
 func(np *ddressesIp) SetGatewayIpAddressIncrementingRange () error {
  //parameters: DeviceHandle AddressFamily FirstIpAddress IpAddressPrefixLength IpAddressIncrement IpAddressRepeat
- //AgtAddressesIp SetGatewayIpAddressIncrementingRange, m.Object, m.Name);
+ //AgtAddressesIp SetGatewayIpAddressIncrementingRange
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *ddressesIp) GetGatewayIpAddressList ()(string, error) {
 
 func(np *ddressesIp) SetGatewayIpAddress () error {
  //parameters: DeviceHandle AddressFamily IpAddress
- //AgtAddressesIp SetGatewayIpAddress, m.Object, m.Name);
+ //AgtAddressesIp SetGatewayIpAddress
  return nil
 }
 

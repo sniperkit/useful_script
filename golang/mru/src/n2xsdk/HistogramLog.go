@@ -6,25 +6,25 @@ type HistogramLog struct {
 
 func(np *HistogramLo) EnableLogging () error {
  //parameters: 
- //AgtHistogramLog EnableLogging, m.Object, m.Name);
+ //AgtHistogramLog EnableLogging
  return nil
 }
 
 func(np *HistogramLo) DisableLogging () error {
  //parameters: 
- //AgtHistogramLog DisableLogging, m.Object, m.Name);
+ //AgtHistogramLog DisableLogging
  return nil
 }
 
 func(np *HistogramLo) IsLoggingEnabled () error {
  //parameters: 
- //AgtHistogramLog IsLoggingEnabled, m.Object, m.Name);
+ //AgtHistogramLog IsLoggingEnabled
  return nil
 }
 
 func(np *HistogramLo) SetLogFile () error {
  //parameters: LogFile
- //AgtHistogramLog SetLogFile, m.Object, m.Name);
+ //AgtHistogramLog SetLogFile
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *HistogramLo) GetLogFile ()(string, error) {
 
 func(np *HistogramLo) SetLoggingInterval () error {
  //parameters: Multiple
- //AgtHistogramLog SetLoggingInterval, m.Object, m.Name);
+ //AgtHistogramLog SetLoggingInterval
  return nil
 }
 

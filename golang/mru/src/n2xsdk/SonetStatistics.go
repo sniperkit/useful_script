@@ -30,7 +30,7 @@ func(np *SonetStatistics) ListSelectedPorts ()(string, error) {
 
 func(np *SonetStatistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts PortHandles
- //AgtSonetStatistics SelectPorts, m.Object, m.Name);
+ //AgtSonetStatistics SelectPorts
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *SonetStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *SonetStatistics) LockItem () error {
  //parameters: StatisticsHandle
- //AgtSonetStatistics LockItem, m.Object, m.Name);
+ //AgtSonetStatistics LockItem
  return nil
 }
 
 func(np *SonetStatistics) UnlockItem () error {
  //parameters: StatisticsHandle
- //AgtSonetStatistics UnlockItem, m.Object, m.Name);
+ //AgtSonetStatistics UnlockItem
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *SonetStatistics) ListSelectedStatistics ()(string, error) {
 
 func(np *SonetStatistics) SelectStatistics () error {
  //parameters: Handle NumStatistics Statistics
- //AgtSonetStatistics SelectStatistics, m.Object, m.Name);
+ //AgtSonetStatistics SelectStatistics
  return nil
 }
 

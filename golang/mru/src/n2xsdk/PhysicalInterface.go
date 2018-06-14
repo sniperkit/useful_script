@@ -18,7 +18,7 @@ func(np *PhysicalInterface) ListAvailablePortModesByMediaType ()(string, error) 
 
 func(np *PhysicalInterface) SetPortMode () error {
  //parameters: PortHandle PortMode
- //AgtPhysicalInterface SetPortMode, m.Object, m.Name);
+ //AgtPhysicalInterface SetPortMode
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *PhysicalInterface) ListAvailableClockSources ()(string, error) {
 
 func(np *PhysicalInterface) SetClockSource () error {
  //parameters: PortHandle ClockSource
- //AgtPhysicalInterface SetClockSource, m.Object, m.Name);
+ //AgtPhysicalInterface SetClockSource
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *PhysicalInterface) GetClockState ()(string, error) {
 
 func(np *PhysicalInterface) IsPluginMediaSupported () error {
  //parameters: PortHandle
- //AgtPhysicalInterface IsPluginMediaSupported, m.Object, m.Name);
+ //AgtPhysicalInterface IsPluginMediaSupported
  return nil
 }
 
 func(np *PhysicalInterface) IsPluginMediaInserted () error {
  //parameters: PortHandle
- //AgtPhysicalInterface IsPluginMediaInserted, m.Object, m.Name);
+ //AgtPhysicalInterface IsPluginMediaInserted
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *PhysicalInterface) ListAvailableMediaTypes ()(string, error) {
 
 func(np *PhysicalInterface) SetMediaType () error {
  //parameters: PortHandle MediaType
- //AgtPhysicalInterface SetMediaType, m.Object, m.Name);
+ //AgtPhysicalInterface SetMediaType
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *PhysicalInterface) GetMediaType ()(string, error) {
 
 func(np *PhysicalInterface) IsMediaTypeSelectionSupported () error {
  //parameters: PortHandle MediaType
- //AgtPhysicalInterface IsMediaTypeSelectionSupported, m.Object, m.Name);
+ //AgtPhysicalInterface IsMediaTypeSelectionSupported
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *PhysicalInterface) ListAvailableExternalClockRates ()(string, error) {
 
 func(np *PhysicalInterface) SetExternalClockRate () error {
  //parameters: PortHandle Rate
- //AgtPhysicalInterface SetExternalClockRate, m.Object, m.Name);
+ //AgtPhysicalInterface SetExternalClockRate
  return nil
 }
 

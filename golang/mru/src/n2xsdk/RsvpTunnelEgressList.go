@@ -6,31 +6,31 @@ type RsvpTunnelEgressList struct {
 
 func(np *RsvpTunnelEgressLis) EnableEgress () error {
  //parameters: SessionHandle
- //AgtRsvpTunnelEgressList EnableEgress, m.Object, m.Name);
+ //AgtRsvpTunnelEgressList EnableEgress
  return nil
 }
 
 func(np *RsvpTunnelEgressLis) EnableAllEgress () error {
  //parameters: 
- //AgtRsvpTunnelEgressList EnableAllEgress, m.Object, m.Name);
+ //AgtRsvpTunnelEgressList EnableAllEgress
  return nil
 }
 
 func(np *RsvpTunnelEgressLis) DisableEgress () error {
  //parameters: SessionHandle
- //AgtRsvpTunnelEgressList DisableEgress, m.Object, m.Name);
+ //AgtRsvpTunnelEgressList DisableEgress
  return nil
 }
 
 func(np *RsvpTunnelEgressLis) DisableAllEgress () error {
  //parameters: 
- //AgtRsvpTunnelEgressList DisableAllEgress, m.Object, m.Name);
+ //AgtRsvpTunnelEgressList DisableAllEgress
  return nil
 }
 
 func(np *RsvpTunnelEgressLis) IsEgressEnabled () error {
  //parameters: SessionHandle
- //AgtRsvpTunnelEgressList IsEgressEnabled, m.Object, m.Name);
+ //AgtRsvpTunnelEgressList IsEgressEnabled
  return nil
 }
 

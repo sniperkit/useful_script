@@ -6,31 +6,31 @@ type ProfileList struct {
 
 func(np *ProfileLis) Add () error {
  //parameters: Type
- //AgtProfileList Add, m.Object, m.Name);
+ //AgtProfileList Add
  return nil
 }
 
 func(np *ProfileLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtProfileList AddItems, m.Object, m.Name);
+ //AgtProfileList AddItems
  return nil
 }
 
 func(np *ProfileLis) Remove () error {
  //parameters: Handle
- //AgtProfileList Remove, m.Object, m.Name);
+ //AgtProfileList Remove
  return nil
 }
 
 func(np *ProfileLis) Copy () error {
  //parameters: Handle
- //AgtProfileList Copy, m.Object, m.Name);
+ //AgtProfileList Copy
  return nil
 }
 
 func(np *ProfileLis) SetName () error {
  //parameters: Handle Name
- //AgtProfileList SetName, m.Object, m.Name);
+ //AgtProfileList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *ProfileLis) GetType ()(string, error) {
 
 func(np *ProfileLis) LockItem () error {
  //parameters: Handle
- //AgtProfileList LockItem, m.Object, m.Name);
+ //AgtProfileList LockItem
  return nil
 }
 
 func(np *ProfileLis) UnlockItem () error {
  //parameters: Handle
- //AgtProfileList UnlockItem, m.Object, m.Name);
+ //AgtProfileList UnlockItem
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *ProfileLis) GetLockCount ()(string, error) {
 
 func(np *ProfileLis) AddProfile () error {
  //parameters: SourcePortHandle Type
- //AgtProfileList AddProfile, m.Object, m.Name);
+ //AgtProfileList AddProfile
  return nil
 }
 

@@ -6,19 +6,19 @@ type TestTopology struct {
 
 func(np *TestTopology) EnableSession () error {
  //parameters: SessionHandle
- //AgtTestTopology EnableSession, m.Object, m.Name);
+ //AgtTestTopology EnableSession
  return nil
 }
 
 func(np *TestTopology) DisableSession () error {
  //parameters: SessionHandle
- //AgtTestTopology DisableSession, m.Object, m.Name);
+ //AgtTestTopology DisableSession
  return nil
 }
 
 func(np *TestTopology) ResetSession () error {
  //parameters: SessionHandle
- //AgtTestTopology ResetSession, m.Object, m.Name);
+ //AgtTestTopology ResetSession
  return nil
 }
 
@@ -30,25 +30,25 @@ func(np *TestTopology) ListSessionTypes ()(string, error) {
 
 func(np *TestTopology) AddSession () error {
  //parameters: HandleLen pInterfaceHandle SessionType
- //AgtTestTopology AddSession, m.Object, m.Name);
+ //AgtTestTopology AddSession
  return nil
 }
 
 func(np *TestTopology) RemoveSession () error {
  //parameters: SessionHandle
- //AgtTestTopology RemoveSession, m.Object, m.Name);
+ //AgtTestTopology RemoveSession
  return nil
 }
 
 func(np *TestTopology) IsRoutingEngineRequired () error {
  //parameters: SessionType
- //AgtTestTopology IsRoutingEngineRequired, m.Object, m.Name);
+ //AgtTestTopology IsRoutingEngineRequired
  return nil
 }
 
 func(np *TestTopology) SetSessionPoolSize () error {
  //parameters: SessionHandle PoolSize
- //AgtTestTopology SetSessionPoolSize, m.Object, m.Name);
+ //AgtTestTopology SetSessionPoolSize
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *TestTopology) GetSessionPoolSize ()(string, error) {
 
 func(np *TestTopology) SetSessionName () error {
  //parameters: SessionHandle SessionName
- //AgtTestTopology SetSessionName, m.Object, m.Name);
+ //AgtTestTopology SetSessionName
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *TestTopology) GetSessionInterface ()(string, error) {
 
 func(np *TestTopology) SetSessionInterface () error {
  //parameters: SessionHandle HandleLen pInterfaceHandle
- //AgtTestTopology SetSessionInterface, m.Object, m.Name);
+ //AgtTestTopology SetSessionInterface
  return nil
 }
 
@@ -192,19 +192,19 @@ func(np *TestTopology) GetSessionPoolInterfaces ()(string, error) {
 
 func(np *TestTopology) SetSessionPoolInterfaces () error {
  //parameters: SessionPoolHandle HandleLen pInterfaceHandleSet
- //AgtTestTopology SetSessionPoolInterfaces, m.Object, m.Name);
+ //AgtTestTopology SetSessionPoolInterfaces
  return nil
 }
 
 func(np *TestTopology) IsIpv4VirtualInterfaceSupported () error {
  //parameters: SessionType
- //AgtTestTopology IsIpv4VirtualInterfaceSupported, m.Object, m.Name);
+ //AgtTestTopology IsIpv4VirtualInterfaceSupported
  return nil
 }
 
 func(np *TestTopology) IsIpv6VirtualInterfaceSupported () error {
  //parameters: SessionType
- //AgtTestTopology IsIpv6VirtualInterfaceSupported, m.Object, m.Name);
+ //AgtTestTopology IsIpv6VirtualInterfaceSupported
  return nil
 }
 
@@ -258,19 +258,19 @@ func(np *TestTopology) GetVirtualInterfaceSutIpv6Address ()(string, error) {
 
 func(np *TestTopology) ResetSessionStatistics () error {
  //parameters: SessionHandle
- //AgtTestTopology ResetSessionStatistics, m.Object, m.Name);
+ //AgtTestTopology ResetSessionStatistics
  return nil
 }
 
 func(np *TestTopology) ResetEmulationStatistics () error {
  //parameters: SessionHandle EmulationName CustomState
- //AgtTestTopology ResetEmulationStatistics, m.Object, m.Name);
+ //AgtTestTopology ResetEmulationStatistics
  return nil
 }
 
 func(np *TestTopology) ResetEmulation () error {
  //parameters: SessionHandle EmulationName CustomState
- //AgtTestTopology ResetEmulation, m.Object, m.Name);
+ //AgtTestTopology ResetEmulation
  return nil
 }
 

@@ -6,31 +6,31 @@ type StreamGroupList struct {
 
 func(np *StreamGroupLis) Add () error {
  //parameters: Type
- //AgtStreamGroupList Add, m.Object, m.Name);
+ //AgtStreamGroupList Add
  return nil
 }
 
 func(np *StreamGroupLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtStreamGroupList AddItems, m.Object, m.Name);
+ //AgtStreamGroupList AddItems
  return nil
 }
 
 func(np *StreamGroupLis) Remove () error {
  //parameters: Handle
- //AgtStreamGroupList Remove, m.Object, m.Name);
+ //AgtStreamGroupList Remove
  return nil
 }
 
 func(np *StreamGroupLis) Copy () error {
  //parameters: Handle
- //AgtStreamGroupList Copy, m.Object, m.Name);
+ //AgtStreamGroupList Copy
  return nil
 }
 
 func(np *StreamGroupLis) SetName () error {
  //parameters: Handle Name
- //AgtStreamGroupList SetName, m.Object, m.Name);
+ //AgtStreamGroupList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *StreamGroupLis) GetType ()(string, error) {
 
 func(np *StreamGroupLis) LockItem () error {
  //parameters: Handle
- //AgtStreamGroupList LockItem, m.Object, m.Name);
+ //AgtStreamGroupList LockItem
  return nil
 }
 
 func(np *StreamGroupLis) UnlockItem () error {
  //parameters: Handle
- //AgtStreamGroupList UnlockItem, m.Object, m.Name);
+ //AgtStreamGroupList UnlockItem
  return nil
 }
 
@@ -102,31 +102,31 @@ func(np *StreamGroupLis) GetLockCount ()(string, error) {
 
 func(np *StreamGroupLis) AddStreamGroups () error {
  //parameters: SourcePortHandle Type NumberOfStreamGroups
- //AgtStreamGroupList AddStreamGroups, m.Object, m.Name);
+ //AgtStreamGroupList AddStreamGroups
  return nil
 }
 
 func(np *StreamGroupLis) AddStreamGroupsWithExistingProfile () error {
  //parameters: ProfileHandle Type NumberOfStreamGroups
- //AgtStreamGroupList AddStreamGroupsWithExistingProfile, m.Object, m.Name);
+ //AgtStreamGroupList AddStreamGroupsWithExistingProfile
  return nil
 }
 
 func(np *StreamGroupLis) AddStreamGroupsWithNewProfile () error {
  //parameters: SourcePortHandle Type NumberOfStreamGroups
- //AgtStreamGroupList AddStreamGroupsWithNewProfile, m.Object, m.Name);
+ //AgtStreamGroupList AddStreamGroupsWithNewProfile
  return nil
 }
 
 func(np *StreamGroupLis) Clear () error {
  //parameters: 
- //AgtStreamGroupList Clear, m.Object, m.Name);
+ //AgtStreamGroupList Clear
  return nil
 }
 
 func(np *StreamGroupLis) SetGlobalRandomSeed () error {
  //parameters: GlobalRandomSeed
- //AgtStreamGroupList SetGlobalRandomSeed, m.Object, m.Name);
+ //AgtStreamGroupList SetGlobalRandomSeed
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *StreamGroupLis) GetGlobalRandomSeed ()(string, error) {
 
 func(np *StreamGroupLis) SetPayloadProtection () error {
  //parameters: SourcePortHandle PayloadType CustomByteOffset
- //AgtStreamGroupList SetPayloadProtection, m.Object, m.Name);
+ //AgtStreamGroupList SetPayloadProtection
  return nil
 }
 

@@ -6,31 +6,31 @@ type AnalysisSource struct {
 
 func(np *nalysisSource) SaveCaptureData () error {
  //parameters: PortHandle StartPacket EndPacket FilterHandle FileName Description
- //AgtAnalysisSource SaveCaptureData, m.Object, m.Name);
+ //AgtAnalysisSource SaveCaptureData
  return nil
 }
 
 func(np *nalysisSource) IsCaptureSaveInProgress () error {
  //parameters: SourceHandle
- //AgtAnalysisSource IsCaptureSaveInProgress, m.Object, m.Name);
+ //AgtAnalysisSource IsCaptureSaveInProgress
  return nil
 }
 
 func(np *nalysisSource) WaitForCaptureSave () error {
  //parameters: SourceHandle
- //AgtAnalysisSource WaitForCaptureSave, m.Object, m.Name);
+ //AgtAnalysisSource WaitForCaptureSave
  return nil
 }
 
 func(np *nalysisSource) OpenCaptureFile () error {
  //parameters: FileName
- //AgtAnalysisSource OpenCaptureFile, m.Object, m.Name);
+ //AgtAnalysisSource OpenCaptureFile
  return nil
 }
 
 func(np *nalysisSource) CloseCaptureFile () error {
  //parameters: SourceHandle
- //AgtAnalysisSource CloseCaptureFile, m.Object, m.Name);
+ //AgtAnalysisSource CloseCaptureFile
  return nil
 }
 
@@ -42,19 +42,19 @@ func(np *nalysisSource) ListOpenCaptureFiles ()(string, error) {
 
 func(np *nalysisSource) MergeCaptureData () error {
  //parameters: NumSources psaSourceHandles
- //AgtAnalysisSource MergeCaptureData, m.Object, m.Name);
+ //AgtAnalysisSource MergeCaptureData
  return nil
 }
 
 func(np *nalysisSource) IsMergeCaptureDataInProgress () error {
  //parameters: MergeRequestID
- //AgtAnalysisSource IsMergeCaptureDataInProgress, m.Object, m.Name);
+ //AgtAnalysisSource IsMergeCaptureDataInProgress
  return nil
 }
 
 func(np *nalysisSource) WaitForMergeCaptureData () error {
  //parameters: MergeRequestID
- //AgtAnalysisSource WaitForMergeCaptureData, m.Object, m.Name);
+ //AgtAnalysisSource WaitForMergeCaptureData
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *nalysisSource) GetMergeCaptureSourceHandleByRequestID ()(string, error)
 
 func(np *nalysisSource) RemoveMergeCaptureSource () error {
  //parameters: SourceHandle
- //AgtAnalysisSource RemoveMergeCaptureSource, m.Object, m.Name);
+ //AgtAnalysisSource RemoveMergeCaptureSource
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *nalysisSource) GetSourceType ()(string, error) {
 
 func(np *nalysisSource) WaitForSourceData () error {
  //parameters: SourceHandle
- //AgtAnalysisSource WaitForSourceData, m.Object, m.Name);
+ //AgtAnalysisSource WaitForSourceData
  return nil
 }
 
@@ -132,25 +132,25 @@ func(np *nalysisSource) ListCapturePortInfo ()(string, error) {
 
 func(np *nalysisSource) RequestPacketsByRange () error {
  //parameters: SourceHandle RangeStart RangeEnd SearchBackwards FilterHandle MaxPackets MaxOctets
- //AgtAnalysisSource RequestPacketsByRange, m.Object, m.Name);
+ //AgtAnalysisSource RequestPacketsByRange
  return nil
 }
 
 func(np *nalysisSource) RequestPacketsByTime () error {
  //parameters: NumSources psaSourceHandles StartTimestampSeconds StartTimestampNanoseconds FilterHandle MaxPackets MaxOctets
- //AgtAnalysisSource RequestPacketsByTime, m.Object, m.Name);
+ //AgtAnalysisSource RequestPacketsByTime
  return nil
 }
 
 func(np *nalysisSource) RequestAnalysis () error {
  //parameters: SourceHandle FilterHandle Width
- //AgtAnalysisSource RequestAnalysis, m.Object, m.Name);
+ //AgtAnalysisSource RequestAnalysis
  return nil
 }
 
 func(np *nalysisSource) CancelAnalysis () error {
  //parameters: SourceHandle
- //AgtAnalysisSource CancelAnalysis, m.Object, m.Name);
+ //AgtAnalysisSource CancelAnalysis
  return nil
 }
 

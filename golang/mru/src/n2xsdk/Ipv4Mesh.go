@@ -24,25 +24,25 @@ func(np *Ipv4Mesh) GetLockCount ()(string, error) {
 
 func(np *Ipv4Mesh) Enable () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh Enable, m.Object, m.Name);
+ //AgtIpv4Mesh Enable
  return nil
 }
 
 func(np *Ipv4Mesh) Disable () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh Disable, m.Object, m.Name);
+ //AgtIpv4Mesh Disable
  return nil
 }
 
 func(np *Ipv4Mesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh IsEnabled, m.Object, m.Name);
+ //AgtIpv4Mesh IsEnabled
  return nil
 }
 
 func(np *Ipv4Mesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtIpv4Mesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtIpv4Mesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Ipv4Mesh) GetTrafficOrientation ()(string, error) {
 
 func(np *Ipv4Mesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtIpv4Mesh SetLengthMode, m.Object, m.Name);
+ //AgtIpv4Mesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Ipv4Mesh) GetLengthMode ()(string, error) {
 
 func(np *Ipv4Mesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtIpv4Mesh SetLength, m.Object, m.Name);
+ //AgtIpv4Mesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *Ipv4Mesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *Ipv4Mesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtIpv4Mesh EnableStreamGeneration
  return nil
 }
 
 func(np *Ipv4Mesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtIpv4Mesh DisableStreamGeneration
  return nil
 }
 
 func(np *Ipv4Mesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtIpv4Mesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *Ipv4Mesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtIpv4Mesh SetAverageLoad, m.Object, m.Name);
+ //AgtIpv4Mesh SetAverageLoad
  return nil
 }
 
@@ -138,37 +138,37 @@ func(np *Ipv4Mesh) GetAverageLoad ()(string, error) {
 
 func(np *Ipv4Mesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtIpv4Mesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *Ipv4Mesh) AddSources () error {
  //parameters: MeshHandle Count psaSourcePorts
- //AgtIpv4Mesh AddSources, m.Object, m.Name);
+ //AgtIpv4Mesh AddSources
  return nil
 }
 
 func(np *Ipv4Mesh) RemoveSources () error {
  //parameters: MeshHandle Count psaSourcePorts
- //AgtIpv4Mesh RemoveSources, m.Object, m.Name);
+ //AgtIpv4Mesh RemoveSources
  return nil
 }
 
 func(np *Ipv4Mesh) AddDestinations () error {
  //parameters: MeshHandle Count psaDestinationPorts
- //AgtIpv4Mesh AddDestinations, m.Object, m.Name);
+ //AgtIpv4Mesh AddDestinations
  return nil
 }
 
 func(np *Ipv4Mesh) RemoveDestinations () error {
  //parameters: MeshHandle Count psaDestinationPorts
- //AgtIpv4Mesh RemoveDestinations, m.Object, m.Name);
+ //AgtIpv4Mesh RemoveDestinations
  return nil
 }
 
 func(np *Ipv4Mesh) SetTrafficDistribution () error {
  //parameters: MeshHandle Distribution
- //AgtIpv4Mesh SetTrafficDistribution, m.Object, m.Name);
+ //AgtIpv4Mesh SetTrafficDistribution
  return nil
 }
 
@@ -204,7 +204,7 @@ func(np *Ipv4Mesh) GetRoutePoolForStreamGroup ()(string, error) {
 
 func(np *Ipv4Mesh) SetSourceVirtualInterface () error {
  //parameters: MeshHandle Count psaInterfaceHandles
- //AgtIpv4Mesh SetSourceVirtualInterface, m.Object, m.Name);
+ //AgtIpv4Mesh SetSourceVirtualInterface
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *Ipv4Mesh) GetSourceVirtualInterface ()(string, error) {
 
 func(np *Ipv4Mesh) SetVirtualInterfaces () error {
  //parameters: MeshHandle Port Count psaVirtualInterfaces
- //AgtIpv4Mesh SetVirtualInterfaces, m.Object, m.Name);
+ //AgtIpv4Mesh SetVirtualInterfaces
  return nil
 }
 
@@ -246,7 +246,7 @@ func(np *Ipv4Mesh) GetTotalDestinationRoutesInUse ()(string, error) {
 
 func(np *Ipv4Mesh) UpdateStreamGroups () error {
  //parameters: MeshHandle
- //AgtIpv4Mesh UpdateStreamGroups, m.Object, m.Name);
+ //AgtIpv4Mesh UpdateStreamGroups
  return nil
 }
 

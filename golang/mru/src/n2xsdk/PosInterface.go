@@ -6,7 +6,7 @@ type PosInterface struct {
 
 func(np *PosInterface) SetFramingMode () error {
  //parameters: PortHandle Framing
- //AgtPosInterface SetFramingMode, m.Object, m.Name);
+ //AgtPosInterface SetFramingMode
  return nil
 }
 
@@ -24,49 +24,49 @@ func(np *PosInterface) GetSupportedFramingModes ()(string, error) {
 
 func(np *PosInterface) ScramblerOn () error {
  //parameters: PortHandle
- //AgtPosInterface ScramblerOn, m.Object, m.Name);
+ //AgtPosInterface ScramblerOn
  return nil
 }
 
 func(np *PosInterface) ScramblerOff () error {
  //parameters: PortHandle
- //AgtPosInterface ScramblerOff, m.Object, m.Name);
+ //AgtPosInterface ScramblerOff
  return nil
 }
 
 func(np *PosInterface) IsScramblerOn () error {
  //parameters: PortHandle
- //AgtPosInterface IsScramblerOn, m.Object, m.Name);
+ //AgtPosInterface IsScramblerOn
  return nil
 }
 
 func(np *PosInterface) DescramblerOn () error {
  //parameters: PortHandle
- //AgtPosInterface DescramblerOn, m.Object, m.Name);
+ //AgtPosInterface DescramblerOn
  return nil
 }
 
 func(np *PosInterface) DescramblerOff () error {
  //parameters: PortHandle
- //AgtPosInterface DescramblerOff, m.Object, m.Name);
+ //AgtPosInterface DescramblerOff
  return nil
 }
 
 func(np *PosInterface) IsDescramblerOn () error {
  //parameters: PortHandle
- //AgtPosInterface IsDescramblerOn, m.Object, m.Name);
+ //AgtPosInterface IsDescramblerOn
  return nil
 }
 
 func(np *PosInterface) IsPosSupported () error {
  //parameters: PortHandle
- //AgtPosInterface IsPosSupported, m.Object, m.Name);
+ //AgtPosInterface IsPosSupported
  return nil
 }
 
 func(np *PosInterface) SetMinimumInterFrameGap () error {
  //parameters: PortHandle InterFrameGap
- //AgtPosInterface SetMinimumInterFrameGap, m.Object, m.Name);
+ //AgtPosInterface SetMinimumInterFrameGap
  return nil
 }
 

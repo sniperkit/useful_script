@@ -6,25 +6,25 @@ type IsisLspDatabase struct {
 
 func(np *IsisLspDatabase) AdvertiseLsp () error {
  //parameters: LspHandle
- //AgtIsisLspDatabase AdvertiseLsp, m.Object, m.Name);
+ //AgtIsisLspDatabase AdvertiseLsp
  return nil
 }
 
 func(np *IsisLspDatabase) WithdrawLsp () error {
  //parameters: LspHandle
- //AgtIsisLspDatabase WithdrawLsp, m.Object, m.Name);
+ //AgtIsisLspDatabase WithdrawLsp
  return nil
 }
 
 func(np *IsisLspDatabase) AdvertiseAll () error {
  //parameters: DatabaseHandle
- //AgtIsisLspDatabase AdvertiseAll, m.Object, m.Name);
+ //AgtIsisLspDatabase AdvertiseAll
  return nil
 }
 
 func(np *IsisLspDatabase) WithdrawAll () error {
  //parameters: DatabaseHandle
- //AgtIsisLspDatabase WithdrawAll, m.Object, m.Name);
+ //AgtIsisLspDatabase WithdrawAll
  return nil
 }
 

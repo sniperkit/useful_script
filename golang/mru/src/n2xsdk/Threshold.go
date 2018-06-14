@@ -6,7 +6,7 @@ type Threshold struct {
 
 func(np *Threshold) SetLatencyThreshold () error {
  //parameters: PortHandle LatencyThreshold ThresholdType
- //AgtThreshold SetLatencyThreshold, m.Object, m.Name);
+ //AgtThreshold SetLatencyThreshold
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *Threshold) GetLatencyThreshold ()(string, error) {
 
 func(np *Threshold) SetRateThreshold () error {
  //parameters: PortHandle ThresholdType Source FrameMatcherHandle RateThreshold MaximumBurstSize
- //AgtThreshold SetRateThreshold, m.Object, m.Name);
+ //AgtThreshold SetRateThreshold
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *Threshold) GetRateThreshold ()(string, error) {
 
 func(np *Threshold) ClearRateThreshold () error {
  //parameters: PortHandle
- //AgtThreshold ClearRateThreshold, m.Object, m.Name);
+ //AgtThreshold ClearRateThreshold
  return nil
 }
 
 func(np *Threshold) SetCountThreshold () error {
  //parameters: PortHandle Source FrameMatcherHandle CountThreshold
- //AgtThreshold SetCountThreshold, m.Object, m.Name);
+ //AgtThreshold SetCountThreshold
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *Threshold) GetCountThreshold ()(string, error) {
 
 func(np *Threshold) ClearCountThreshold () error {
  //parameters: PortHandle
- //AgtThreshold ClearCountThreshold, m.Object, m.Name);
+ //AgtThreshold ClearCountThreshold
  return nil
 }
 

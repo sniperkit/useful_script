@@ -24,7 +24,7 @@ func(np *SourceAddressPool) GetLockCount ()(string, error) {
 
 func(np *SourceAddressPool) SetSourceAddressRange () error {
  //parameters: PoolHandle FirstSourceAddress PrefixLength NumAddresses Modifier
- //AgtSourceAddressPool SetSourceAddressRange, m.Object, m.Name);
+ //AgtSourceAddressPool SetSourceAddressRange
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *SourceAddressPool) GetSourceAddressRange ()(string, error) {
 
 func(np *SourceAddressPool) SetSourceAddressPoolVirtualInterface () error {
  //parameters: PoolHandle Count pInterfaceHandles
- //AgtSourceAddressPool SetSourceAddressPoolVirtualInterface, m.Object, m.Name);
+ //AgtSourceAddressPool SetSourceAddressPoolVirtualInterface
  return nil
 }
 

@@ -6,19 +6,19 @@ type CaptureTrigger struct {
 
 func(np *CaptureTrigger) ClearAllTriggers () error {
  //parameters: PortHandle NumActions psaTriggerActions
- //AgtCaptureTrigger ClearAllTriggers, m.Object, m.Name);
+ //AgtCaptureTrigger ClearAllTriggers
  return nil
 }
 
 func(np *CaptureTrigger) AddFrameMatcherTriggers () error {
  //parameters: PortHandle FrameMatcherHandleCount psaFrameMatcherHandles TriggerAction
- //AgtCaptureTrigger AddFrameMatcherTriggers, m.Object, m.Name);
+ //AgtCaptureTrigger AddFrameMatcherTriggers
  return nil
 }
 
 func(np *CaptureTrigger) RemoveFrameMatcherTriggers () error {
  //parameters: PortHandle FrameMatcherHandleCount psaFrameMatcherHandles TriggerAction
- //AgtCaptureTrigger RemoveFrameMatcherTriggers, m.Object, m.Name);
+ //AgtCaptureTrigger RemoveFrameMatcherTriggers
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *CaptureTrigger) ListFrameMatcherTriggers ()(string, error) {
 
 func(np *CaptureTrigger) AddStatusTriggers () error {
  //parameters: PortHandle StatusCount psaStatusTriggers TriggerAction
- //AgtCaptureTrigger AddStatusTriggers, m.Object, m.Name);
+ //AgtCaptureTrigger AddStatusTriggers
  return nil
 }
 
 func(np *CaptureTrigger) RemoveStatusTriggers () error {
  //parameters: PortHandle StatusCount psaStatusTriggers TriggerAction
- //AgtCaptureTrigger RemoveStatusTriggers, m.Object, m.Name);
+ //AgtCaptureTrigger RemoveStatusTriggers
  return nil
 }
 

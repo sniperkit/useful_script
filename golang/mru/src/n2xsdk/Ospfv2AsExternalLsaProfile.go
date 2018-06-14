@@ -12,7 +12,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetType ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetName () error {
  //parameters: LsaProfileHandle LsaProfileName
- //AgtOspfv2AsExternalLsaProfile SetName, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetName
  return nil
 }
 
@@ -24,37 +24,37 @@ func(np *Ospfv2AsExternalLsaProfile) GetName ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) Enable () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2AsExternalLsaProfile Enable, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile Enable
  return nil
 }
 
 func(np *Ospfv2AsExternalLsaProfile) Disable () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2AsExternalLsaProfile Disable, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile Disable
  return nil
 }
 
 func(np *Ospfv2AsExternalLsaProfile) IsEnabled () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2AsExternalLsaProfile IsEnabled, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile IsEnabled
  return nil
 }
 
 func(np *Ospfv2AsExternalLsaProfile) EnableTrafficDestination () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2AsExternalLsaProfile EnableTrafficDestination, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile EnableTrafficDestination
  return nil
 }
 
 func(np *Ospfv2AsExternalLsaProfile) DisableTrafficDestination () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2AsExternalLsaProfile DisableTrafficDestination, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile DisableTrafficDestination
  return nil
 }
 
 func(np *Ospfv2AsExternalLsaProfile) IsTrafficDestinationsEnabled () error {
  //parameters: LsaProfileHandle
- //AgtOspfv2AsExternalLsaProfile IsTrafficDestinationsEnabled, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile IsTrafficDestinationsEnabled
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetNumberOfRouters ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetNumberOfRoutesPerRouter () error {
  //parameters: LsaProfileHandle NumberOfRoutes
- //AgtOspfv2AsExternalLsaProfile SetNumberOfRoutesPerRouter, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetNumberOfRoutesPerRouter
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetTotalNumberOfRoutes ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetLsIdIncrementingRange () error {
  //parameters: LsaProfileHandle FirstLinkStateId Increment PercentOverlap
- //AgtOspfv2AsExternalLsaProfile SetLsIdIncrementingRange, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetLsIdIncrementingRange
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetLsIdIncrementingRange ()(string, error) 
 
 func(np *Ospfv2AsExternalLsaProfile) SetNetworkMask () error {
  //parameters: LsaProfileHandle NetworkMask
- //AgtOspfv2AsExternalLsaProfile SetNetworkMask, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetNetworkMask
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetNetworkMask ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetMetricType () error {
  //parameters: LsaProfileHandle MetricType
- //AgtOspfv2AsExternalLsaProfile SetMetricType, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetMetricType
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetMetricType ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetMetric () error {
  //parameters: LsaProfileHandle Metric
- //AgtOspfv2AsExternalLsaProfile SetMetric, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetMetric
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetMetric ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetForwardingAddress () error {
  //parameters: LsaProfileHandle ForwardingAddress
- //AgtOspfv2AsExternalLsaProfile SetForwardingAddress, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetForwardingAddress
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetForwardingAddress ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetForwardingAddressIncrementingRange () error {
  //parameters: LsaProfileHandle FirstForwardingAddress Increment Repeat
- //AgtOspfv2AsExternalLsaProfile SetForwardingAddressIncrementingRange, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetForwardingAddressIncrementingRange
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetForwardingAddressIncrementingRange ()(st
 
 func(np *Ospfv2AsExternalLsaProfile) SetExternalRouteTag () error {
  //parameters: LsaProfileHandle ExternalRouteTag
- //AgtOspfv2AsExternalLsaProfile SetExternalRouteTag, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetExternalRouteTag
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *Ospfv2AsExternalLsaProfile) GetExternalRouteTag ()(string, error) {
 
 func(np *Ospfv2AsExternalLsaProfile) SetExternalRouteTagIncrementingRange () error {
  //parameters: LsaProfileHandle FirstExternalRouteTag Increment Repeat
- //AgtOspfv2AsExternalLsaProfile SetExternalRouteTagIncrementingRange, m.Object, m.Name);
+ //AgtOspfv2AsExternalLsaProfile SetExternalRouteTagIncrementingRange
  return nil
 }
 

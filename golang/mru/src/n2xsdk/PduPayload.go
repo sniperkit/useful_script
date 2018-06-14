@@ -12,7 +12,7 @@ func(np *PduPayload) GetPayloadBytes ()(string, error) {
 
 func(np *PduPayload) SetPayloadBytes () error {
  //parameters: PduHandle PayloadBytes
- //AgtPduPayload SetPayloadBytes, m.Object, m.Name);
+ //AgtPduPayload SetPayloadBytes
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *PduPayload) GetPayloadFill ()(string, error) {
 
 func(np *PduPayload) SetPayloadFill () error {
  //parameters: PduHandle FillType PayloadData
- //AgtPduPayload SetPayloadFill, m.Object, m.Name);
+ //AgtPduPayload SetPayloadFill
  return nil
 }
 

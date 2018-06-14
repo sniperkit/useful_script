@@ -24,25 +24,25 @@ func(np *RsvpMesh) GetLockCount ()(string, error) {
 
 func(np *RsvpMesh) Enable () error {
  //parameters: MeshHandle
- //AgtRsvpMesh Enable, m.Object, m.Name);
+ //AgtRsvpMesh Enable
  return nil
 }
 
 func(np *RsvpMesh) Disable () error {
  //parameters: MeshHandle
- //AgtRsvpMesh Disable, m.Object, m.Name);
+ //AgtRsvpMesh Disable
  return nil
 }
 
 func(np *RsvpMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtRsvpMesh IsEnabled, m.Object, m.Name);
+ //AgtRsvpMesh IsEnabled
  return nil
 }
 
 func(np *RsvpMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtRsvpMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtRsvpMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *RsvpMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *RsvpMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtRsvpMesh SetLengthMode, m.Object, m.Name);
+ //AgtRsvpMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *RsvpMesh) GetLengthMode ()(string, error) {
 
 func(np *RsvpMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtRsvpMesh SetLength, m.Object, m.Name);
+ //AgtRsvpMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *RsvpMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *RsvpMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtRsvpMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtRsvpMesh EnableStreamGeneration
  return nil
 }
 
 func(np *RsvpMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtRsvpMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtRsvpMesh DisableStreamGeneration
  return nil
 }
 
 func(np *RsvpMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtRsvpMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtRsvpMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *RsvpMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtRsvpMesh SetAverageLoad, m.Object, m.Name);
+ //AgtRsvpMesh SetAverageLoad
  return nil
 }
 
@@ -138,31 +138,31 @@ func(np *RsvpMesh) GetAverageLoad ()(string, error) {
 
 func(np *RsvpMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtRsvpMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtRsvpMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *RsvpMesh) AddIngressLsps () error {
  //parameters: MeshHandle PoolHandleCount PoolHandles PoolIndexCount PoolIndices PortCount DestinationPorts
- //AgtRsvpMesh AddIngressLsps, m.Object, m.Name);
+ //AgtRsvpMesh AddIngressLsps
  return nil
 }
 
 func(np *RsvpMesh) AddIngressLspPools () error {
  //parameters: MeshHandle PoolHandleCount PoolHandles PortCount DestinationPorts
- //AgtRsvpMesh AddIngressLspPools, m.Object, m.Name);
+ //AgtRsvpMesh AddIngressLspPools
  return nil
 }
 
 func(np *RsvpMesh) RemoveIngressLsps () error {
  //parameters: MeshHandle PoolHandleCount PoolHandles PoolIndexCount PoolIndices
- //AgtRsvpMesh RemoveIngressLsps, m.Object, m.Name);
+ //AgtRsvpMesh RemoveIngressLsps
  return nil
 }
 
 func(np *RsvpMesh) RemoveIngressLspPools () error {
  //parameters: MeshHandle Count PoolHandles
- //AgtRsvpMesh RemoveIngressLspPools, m.Object, m.Name);
+ //AgtRsvpMesh RemoveIngressLspPools
  return nil
 }
 

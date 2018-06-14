@@ -18,7 +18,7 @@ func(np *BfdStatistics) GetStatistic ()(string, error) {
 
 func(np *BfdStatistics) ClearSessionStatistics () error {
  //parameters: SessionPoolHandle
- //AgtBfdStatistics ClearSessionStatistics, m.Object, m.Name);
+ //AgtBfdStatistics ClearSessionStatistics
  return nil
 }
 

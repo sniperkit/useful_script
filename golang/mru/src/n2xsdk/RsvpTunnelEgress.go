@@ -6,13 +6,13 @@ type RsvpTunnelEgress struct {
 
 func(np *RsvpTunnelEgress) CloseInstance () error {
  //parameters: TunnelHandle LspId
- //AgtRsvpTunnelEgress CloseInstance, m.Object, m.Name);
+ //AgtRsvpTunnelEgress CloseInstance
  return nil
 }
 
 func(np *RsvpTunnelEgress) CloseTunnel () error {
  //parameters: TunnelHandle
- //AgtRsvpTunnelEgress CloseTunnel, m.Object, m.Name);
+ //AgtRsvpTunnelEgress CloseTunnel
  return nil
 }
 

@@ -6,31 +6,31 @@ type LacpSession struct {
 
 func(np *LacpSession) SelectPort () error {
  //parameters: SessionHandle
- //AgtLacpSession SelectPort, m.Object, m.Name);
+ //AgtLacpSession SelectPort
  return nil
 }
 
 func(np *LacpSession) UnselectPort () error {
  //parameters: SessionHandle
- //AgtLacpSession UnselectPort, m.Object, m.Name);
+ //AgtLacpSession UnselectPort
  return nil
 }
 
 func(np *LacpSession) StandbyPort () error {
  //parameters: SessionHandle
- //AgtLacpSession StandbyPort, m.Object, m.Name);
+ //AgtLacpSession StandbyPort
  return nil
 }
 
 func(np *LacpSession) ReadyPort () error {
  //parameters: SessionHandle
- //AgtLacpSession ReadyPort, m.Object, m.Name);
+ //AgtLacpSession ReadyPort
  return nil
 }
 
 func(np *LacpSession) UnreadyPort () error {
  //parameters: SessionHandle
- //AgtLacpSession UnreadyPort, m.Object, m.Name);
+ //AgtLacpSession UnreadyPort
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *LacpSession) ListUpdateSelectedActions ()(string, error) {
 
 func(np *LacpSession) SetUpdateSelectedActions () error {
  //parameters: SessionHandle UpdateSelectedActions
- //AgtLacpSession SetUpdateSelectedActions, m.Object, m.Name);
+ //AgtLacpSession SetUpdateSelectedActions
  return nil
 }
 
 func(np *LacpSession) SetDefaultSelectedValue () error {
  //parameters: SessionHandle Selected
- //AgtLacpSession SetDefaultSelectedValue, m.Object, m.Name);
+ //AgtLacpSession SetDefaultSelectedValue
  return nil
 }
 
@@ -66,25 +66,25 @@ func(np *LacpSession) GetSelectedValue ()(string, error) {
 
 func(np *LacpSession) EnableDefaultReadyFlag () error {
  //parameters: SessionHandle
- //AgtLacpSession EnableDefaultReadyFlag, m.Object, m.Name);
+ //AgtLacpSession EnableDefaultReadyFlag
  return nil
 }
 
 func(np *LacpSession) DisableDefaultReadyFlag () error {
  //parameters: SessionHandle
- //AgtLacpSession DisableDefaultReadyFlag, m.Object, m.Name);
+ //AgtLacpSession DisableDefaultReadyFlag
  return nil
 }
 
 func(np *LacpSession) IsDefaultReadyFlagEnabled () error {
  //parameters: SessionHandle
- //AgtLacpSession IsDefaultReadyFlagEnabled, m.Object, m.Name);
+ //AgtLacpSession IsDefaultReadyFlagEnabled
  return nil
 }
 
 func(np *LacpSession) IsReadyFlagEnabled () error {
  //parameters: SessionHandle
- //AgtLacpSession IsReadyFlagEnabled, m.Object, m.Name);
+ //AgtLacpSession IsReadyFlagEnabled
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *LacpSession) GetReceiveState ()(string, error) {
 
 func(np *LacpSession) SetTimerValue () error {
  //parameters: SessionHandle Timer Seconds
- //AgtLacpSession SetTimerValue, m.Object, m.Name);
+ //AgtLacpSession SetTimerValue
  return nil
 }
 
@@ -120,13 +120,13 @@ func(np *LacpSession) GetCollectorMaxDelay ()(string, error) {
 
 func(np *LacpSession) SetCollectorMaxDelay () error {
  //parameters: SessionHandle TensOfMicroSeconds
- //AgtLacpSession SetCollectorMaxDelay, m.Object, m.Name);
+ //AgtLacpSession SetCollectorMaxDelay
  return nil
 }
 
 func(np *LacpSession) SetActorPortAggregatorId () error {
  //parameters: SessionHandle Id
- //AgtLacpSession SetActorPortAggregatorId, m.Object, m.Name);
+ //AgtLacpSession SetActorPortAggregatorId
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *LacpSession) GetActorAdminParameter ()(string, error) {
 
 func(np *LacpSession) SetActorAdminParameter () error {
  //parameters: SessionHandle ParameterType ParameterValue
- //AgtLacpSession SetActorAdminParameter, m.Object, m.Name);
+ //AgtLacpSession SetActorAdminParameter
  return nil
 }
 
@@ -156,37 +156,37 @@ func(np *LacpSession) GetPartnerParameter ()(string, error) {
 
 func(np *LacpSession) EnablePartnerAdminParametersLearning () error {
  //parameters: SessionHandle
- //AgtLacpSession EnablePartnerAdminParametersLearning, m.Object, m.Name);
+ //AgtLacpSession EnablePartnerAdminParametersLearning
  return nil
 }
 
 func(np *LacpSession) DisablePartnerAdminParametersLearning () error {
  //parameters: SessionHandle
- //AgtLacpSession DisablePartnerAdminParametersLearning, m.Object, m.Name);
+ //AgtLacpSession DisablePartnerAdminParametersLearning
  return nil
 }
 
 func(np *LacpSession) IsPartnerAdminParametersLearningEnabled () error {
  //parameters: SessionHandle
- //AgtLacpSession IsPartnerAdminParametersLearningEnabled, m.Object, m.Name);
+ //AgtLacpSession IsPartnerAdminParametersLearningEnabled
  return nil
 }
 
 func(np *LacpSession) EnablePartnerAdminParametersRelearning () error {
  //parameters: SessionHandle
- //AgtLacpSession EnablePartnerAdminParametersRelearning, m.Object, m.Name);
+ //AgtLacpSession EnablePartnerAdminParametersRelearning
  return nil
 }
 
 func(np *LacpSession) DisablePartnerAdminParametersRelearning () error {
  //parameters: SessionHandle
- //AgtLacpSession DisablePartnerAdminParametersRelearning, m.Object, m.Name);
+ //AgtLacpSession DisablePartnerAdminParametersRelearning
  return nil
 }
 
 func(np *LacpSession) IsPartnerAdminParametersRelearningEnabled () error {
  //parameters: SessionHandle
- //AgtLacpSession IsPartnerAdminParametersRelearningEnabled, m.Object, m.Name);
+ //AgtLacpSession IsPartnerAdminParametersRelearningEnabled
  return nil
 }
 
@@ -198,55 +198,55 @@ func(np *LacpSession) GetPartnerAdminParameter ()(string, error) {
 
 func(np *LacpSession) SetPartnerAdminParameter () error {
  //parameters: SessionHandle ParameterType ParameterValue
- //AgtLacpSession SetPartnerAdminParameter, m.Object, m.Name);
+ //AgtLacpSession SetPartnerAdminParameter
  return nil
 }
 
 func(np *LacpSession) IsActorPortStateFlagEnabled () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession IsActorPortStateFlagEnabled, m.Object, m.Name);
+ //AgtLacpSession IsActorPortStateFlagEnabled
  return nil
 }
 
 func(np *LacpSession) EnableActorAdminPortStateFlag () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession EnableActorAdminPortStateFlag, m.Object, m.Name);
+ //AgtLacpSession EnableActorAdminPortStateFlag
  return nil
 }
 
 func(np *LacpSession) DisableActorAdminPortStateFlag () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession DisableActorAdminPortStateFlag, m.Object, m.Name);
+ //AgtLacpSession DisableActorAdminPortStateFlag
  return nil
 }
 
 func(np *LacpSession) IsActorAdminPortStateFlagEnabled () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession IsActorAdminPortStateFlagEnabled, m.Object, m.Name);
+ //AgtLacpSession IsActorAdminPortStateFlagEnabled
  return nil
 }
 
 func(np *LacpSession) IsPartnerPortStateFlagEnabled () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession IsPartnerPortStateFlagEnabled, m.Object, m.Name);
+ //AgtLacpSession IsPartnerPortStateFlagEnabled
  return nil
 }
 
 func(np *LacpSession) EnablePartnerAdminPortStateFlag () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession EnablePartnerAdminPortStateFlag, m.Object, m.Name);
+ //AgtLacpSession EnablePartnerAdminPortStateFlag
  return nil
 }
 
 func(np *LacpSession) DisablePartnerAdminPortStateFlag () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession DisablePartnerAdminPortStateFlag, m.Object, m.Name);
+ //AgtLacpSession DisablePartnerAdminPortStateFlag
  return nil
 }
 
 func(np *LacpSession) IsPartnerAdminPortStateFlagEnabled () error {
  //parameters: SessionHandle StateFlag
- //AgtLacpSession IsPartnerAdminPortStateFlagEnabled, m.Object, m.Name);
+ //AgtLacpSession IsPartnerAdminPortStateFlagEnabled
  return nil
 }
 

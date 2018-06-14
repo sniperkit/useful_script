@@ -24,7 +24,7 @@ func(np *Statistics) GetLockCount ()(string, error) {
 
 func(np *Statistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts psaDestinationPortHandles
- //AgtStatistics SelectPorts, m.Object, m.Name);
+ //AgtStatistics SelectPorts
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *Statistics) ListPortsWithStreamsSelected ()(string, error) {
 
 func(np *Statistics) SelectStatisticsSet () error {
  //parameters: StatisticsHandle StatisticsSet
- //AgtStatistics SelectStatisticsSet, m.Object, m.Name);
+ //AgtStatistics SelectStatisticsSet
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Statistics) GetSelectedStatisticsSet ()(string, error) {
 
 func(np *Statistics) SelectStreamGroups () error {
  //parameters: StatisticsHandle Count psaStreamGroupHandles
- //AgtStatistics SelectStreamGroups, m.Object, m.Name);
+ //AgtStatistics SelectStreamGroups
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Statistics) ListSelectedStreamGroups ()(string, error) {
 
 func(np *Statistics) SelectStreams () error {
  //parameters: StatisticsHandle NumStreamGroupHandles psaStreamGroupHandles NumStreamIndexes psaStreamIndexes NumDestinationPortHandles psaDestinationPortHandles
- //AgtStatistics SelectStreams, m.Object, m.Name);
+ //AgtStatistics SelectStreams
  return nil
 }
 
@@ -78,31 +78,31 @@ func(np *Statistics) ListSelectedStreams ()(string, error) {
 
 func(np *Statistics) ClearSelectedStreams () error {
  //parameters: StatisticsHandle
- //AgtStatistics ClearSelectedStreams, m.Object, m.Name);
+ //AgtStatistics ClearSelectedStreams
  return nil
 }
 
 func(np *Statistics) SelectConnectionGroups () error {
  //parameters: StatisticsHandle Count psaConnectionGroupHandles
- //AgtStatistics SelectConnectionGroups, m.Object, m.Name);
+ //AgtStatistics SelectConnectionGroups
  return nil
 }
 
 func(np *Statistics) SelectConnectionGroupsByPorts () error {
  //parameters: StatisticsHandle NumPortHandles psaPortHandles
- //AgtStatistics SelectConnectionGroupsByPorts, m.Object, m.Name);
+ //AgtStatistics SelectConnectionGroupsByPorts
  return nil
 }
 
 func(np *Statistics) SelectConnectionGroupsByCategories () error {
  //parameters: StatisticsHandle NumCategoryClasses psaCategoryClasses NumCategoryData psaCategoryData
- //AgtStatistics SelectConnectionGroupsByCategories, m.Object, m.Name);
+ //AgtStatistics SelectConnectionGroupsByCategories
  return nil
 }
 
 func(np *Statistics) ClearSelectedConnectionGroups () error {
  //parameters: StatisticsHandle
- //AgtStatistics ClearSelectedConnectionGroups, m.Object, m.Name);
+ //AgtStatistics ClearSelectedConnectionGroups
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *Statistics) ListAvailableStatistics ()(string, error) {
 
 func(np *Statistics) SelectStatistics () error {
  //parameters: StatisticsHandle NumStatistics psaStatistics
- //AgtStatistics SelectStatistics, m.Object, m.Name);
+ //AgtStatistics SelectStatistics
  return nil
 }
 
@@ -192,13 +192,13 @@ func(np *Statistics) GetAccumulatedValues ()(string, error) {
 
 func(np *Statistics) IsStatisticsSupported () error {
  //parameters: DestinationPortHandle
- //AgtStatistics IsStatisticsSupported, m.Object, m.Name);
+ //AgtStatistics IsStatisticsSupported
  return nil
 }
 
 func(np *Statistics) SelectFieldValues () error {
  //parameters: StatisticsHandle NumFieldInitialValues psaFieldInitialValues NumFieldValueCounts psaFieldValueCounts NumFieldValueIncrements psaFieldValueIncrements NumDestinationPortHandles psaDestinationPortHandles
- //AgtStatistics SelectFieldValues, m.Object, m.Name);
+ //AgtStatistics SelectFieldValues
  return nil
 }
 

@@ -6,43 +6,43 @@ type SonetInterface struct {
 
 func(np *SonetInterface) ScramblerOn () error {
  //parameters: PortHandle
- //AgtSonetInterface ScramblerOn, m.Object, m.Name);
+ //AgtSonetInterface ScramblerOn
  return nil
 }
 
 func(np *SonetInterface) ScramblerOff () error {
  //parameters: PortHandle
- //AgtSonetInterface ScramblerOff, m.Object, m.Name);
+ //AgtSonetInterface ScramblerOff
  return nil
 }
 
 func(np *SonetInterface) IsScramblerOn () error {
  //parameters: PortHandle
- //AgtSonetInterface IsScramblerOn, m.Object, m.Name);
+ //AgtSonetInterface IsScramblerOn
  return nil
 }
 
 func(np *SonetInterface) DescramblerOn () error {
  //parameters: PortHandle
- //AgtSonetInterface DescramblerOn, m.Object, m.Name);
+ //AgtSonetInterface DescramblerOn
  return nil
 }
 
 func(np *SonetInterface) DescramblerOff () error {
  //parameters: PortHandle
- //AgtSonetInterface DescramblerOff, m.Object, m.Name);
+ //AgtSonetInterface DescramblerOff
  return nil
 }
 
 func(np *SonetInterface) IsDescramblerOn () error {
  //parameters: PortHandle
- //AgtSonetInterface IsDescramblerOn, m.Object, m.Name);
+ //AgtSonetInterface IsDescramblerOn
  return nil
 }
 
 func(np *SonetInterface) SetFramingMode () error {
  //parameters: PortHandle FramingMode
- //AgtSonetInterface SetFramingMode, m.Object, m.Name);
+ //AgtSonetInterface SetFramingMode
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *SonetInterface) GetFramingMode ()(string, error) {
 
 func(np *SonetInterface) IsSonetSupported () error {
  //parameters: PortHandle
- //AgtSonetInterface IsSonetSupported, m.Object, m.Name);
+ //AgtSonetInterface IsSonetSupported
  return nil
 }
 
 func(np *SonetInterface) SetRate () error {
  //parameters: PortHandle Rate
- //AgtSonetInterface SetRate, m.Object, m.Name);
+ //AgtSonetInterface SetRate
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *SonetInterface) GetClockOffsetStep ()(string, error) {
 
 func(np *SonetInterface) SetClockOffset () error {
  //parameters: PortHandle ClockOffset
- //AgtSonetInterface SetClockOffset, m.Object, m.Name);
+ //AgtSonetInterface SetClockOffset
  return nil
 }
 

@@ -24,25 +24,25 @@ func(np *Bgp4MplsVpnMesh) GetLockCount ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) Enable () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh Enable, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh Enable
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) Disable () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh Disable, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh Disable
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh IsEnabled, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh IsEnabled
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtBgp4MplsVpnMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Bgp4MplsVpnMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtBgp4MplsVpnMesh SetLengthMode, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *Bgp4MplsVpnMesh) GetLengthMode ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtBgp4MplsVpnMesh SetLength, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *Bgp4MplsVpnMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh EnableStreamGeneration
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh DisableStreamGeneration
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtBgp4MplsVpnMesh SetAverageLoad, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetAverageLoad
  return nil
 }
 
@@ -138,13 +138,13 @@ func(np *Bgp4MplsVpnMesh) GetAverageLoad ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) SetSourceSite () error {
  //parameters: MeshHandle Count psaSiteHandle
- //AgtBgp4MplsVpnMesh SetSourceSite, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetSourceSite
  return nil
 }
 
@@ -156,13 +156,13 @@ func(np *Bgp4MplsVpnMesh) GetSourceSite ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) AddDestinationAddressPool () error {
  //parameters: MeshHandle DestinationPort FirstIpAddress PrefixLength NumAddresses Modifier
- //AgtBgp4MplsVpnMesh AddDestinationAddressPool, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh AddDestinationAddressPool
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) RemoveDestinationAddressPool () error {
  //parameters: MeshHandle AddressPoolHandle
- //AgtBgp4MplsVpnMesh RemoveDestinationAddressPool, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh RemoveDestinationAddressPool
  return nil
 }
 
@@ -192,13 +192,13 @@ func(np *Bgp4MplsVpnMesh) GetStreamGroup ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) SetIngressTrafficTunnelLdp () error {
  //parameters: MeshHandle
- //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelLdp, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelLdp
  return nil
 }
 
 func(np *Bgp4MplsVpnMesh) SetIngressTrafficTunnelRsvp () error {
  //parameters: MeshHandle IngressTunnel
- //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelRsvp, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelRsvp
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *Bgp4MplsVpnMesh) GetIngressTrafficTunnelRsvp ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) SetIngressTrafficTunnelStatic () error {
  //parameters: MeshHandle StaticLabel
- //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelStatic, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelStatic
  return nil
 }
 
@@ -222,7 +222,7 @@ func(np *Bgp4MplsVpnMesh) GetIngressTrafficTunnelStatic ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) SetIngressTrafficTunnelProtocols () error {
  //parameters: MeshHandle Count psaProtocols
- //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelProtocols, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetIngressTrafficTunnelProtocols
  return nil
 }
 
@@ -258,7 +258,7 @@ func(np *Bgp4MplsVpnMesh) GetIngressMplsVpnLabelState ()(string, error) {
 
 func(np *Bgp4MplsVpnMesh) SetIngressIntermediateMplsLabels () error {
  //parameters: MeshHandle Count psaIntermediateLabels
- //AgtBgp4MplsVpnMesh SetIngressIntermediateMplsLabels, m.Object, m.Name);
+ //AgtBgp4MplsVpnMesh SetIngressIntermediateMplsLabels
  return nil
 }
 

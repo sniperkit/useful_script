@@ -6,7 +6,7 @@ type TestController struct {
 
 func(np *TestController) SetTestMode () error {
  //parameters: TestMode
- //AgtTestController SetTestMode, m.Object, m.Name);
+ //AgtTestController SetTestMode
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *TestController) GetTestMode ()(string, error) {
 
 func(np *TestController) SetTestDuration () error {
  //parameters: Duration
- //AgtTestController SetTestDuration, m.Object, m.Name);
+ //AgtTestController SetTestDuration
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *TestController) GetTestDurationLimits ()(string, error) {
 
 func(np *TestController) SetSamplingInterval () error {
  //parameters: SamplingInterval
- //AgtTestController SetSamplingInterval, m.Object, m.Name);
+ //AgtTestController SetSamplingInterval
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *TestController) GetSamplingIntervalLimits ()(string, error) {
 
 func(np *TestController) SetTrickleTime () error {
  //parameters: TrickleTime
- //AgtTestController SetTrickleTime, m.Object, m.Name);
+ //AgtTestController SetTrickleTime
  return nil
 }
 
@@ -72,37 +72,37 @@ func(np *TestController) GetTrickleTimeLimits ()(string, error) {
 
 func(np *TestController) EnableTrickleTime () error {
  //parameters: 
- //AgtTestController EnableTrickleTime, m.Object, m.Name);
+ //AgtTestController EnableTrickleTime
  return nil
 }
 
 func(np *TestController) DisableTrickleTime () error {
  //parameters: 
- //AgtTestController DisableTrickleTime, m.Object, m.Name);
+ //AgtTestController DisableTrickleTime
  return nil
 }
 
 func(np *TestController) IsTrickleTimeEnabled () error {
  //parameters: 
- //AgtTestController IsTrickleTimeEnabled, m.Object, m.Name);
+ //AgtTestController IsTrickleTimeEnabled
  return nil
 }
 
 func(np *TestController) StartTest () error {
  //parameters: 
- //AgtTestController StartTest, m.Object, m.Name);
+ //AgtTestController StartTest
  return nil
 }
 
 func(np *TestController) StopTest () error {
  //parameters: 
- //AgtTestController StopTest, m.Object, m.Name);
+ //AgtTestController StopTest
  return nil
 }
 
 func(np *TestController) WaitUntilTestStops () error {
  //parameters: 
- //AgtTestController WaitUntilTestStops, m.Object, m.Name);
+ //AgtTestController WaitUntilTestStops
  return nil
 }
 

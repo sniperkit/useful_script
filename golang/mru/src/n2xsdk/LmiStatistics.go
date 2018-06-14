@@ -6,7 +6,7 @@ type LmiStatistics struct {
 
 func(np *LmiStatistics) SelectPorts () error {
  //parameters: Count psaPorts
- //AgtLmiStatistics SelectPorts, m.Object, m.Name);
+ //AgtLmiStatistics SelectPorts
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *LmiStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *LmiStatistics) ClearPortStatistics () error {
  //parameters: PortHandle
- //AgtLmiStatistics ClearPortStatistics, m.Object, m.Name);
+ //AgtLmiStatistics ClearPortStatistics
  return nil
 }
 

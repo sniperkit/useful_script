@@ -6,7 +6,7 @@ type OspfSession struct {
 
 func(np *OspfSession) SetAreaId () error {
  //parameters: SessionHandle AreaId
- //AgtOspfSession SetAreaId, m.Object, m.Name);
+ //AgtOspfSession SetAreaId
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *OspfSession) GetAreaId ()(string, error) {
 
 func(np *OspfSession) SetNetworkType () error {
  //parameters: SessionHandle NetType
- //AgtOspfSession SetNetworkType, m.Object, m.Name);
+ //AgtOspfSession SetNetworkType
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *OspfSession) GetNetworkType ()(string, error) {
 
 func(np *OspfSession) SetMaxLsasPerPacket () error {
  //parameters: SessionHandle MaxLsas
- //AgtOspfSession SetMaxLsasPerPacket, m.Object, m.Name);
+ //AgtOspfSession SetMaxLsasPerPacket
  return nil
 }
 
@@ -42,31 +42,31 @@ func(np *OspfSession) GetMaxLsasPerPacket ()(string, error) {
 
 func(np *OspfSession) EnableNeighborDiscovery () error {
  //parameters: SessionHandle
- //AgtOspfSession EnableNeighborDiscovery, m.Object, m.Name);
+ //AgtOspfSession EnableNeighborDiscovery
  return nil
 }
 
 func(np *OspfSession) DisableNeighborDiscovery () error {
  //parameters: SessionHandle
- //AgtOspfSession DisableNeighborDiscovery, m.Object, m.Name);
+ //AgtOspfSession DisableNeighborDiscovery
  return nil
 }
 
 func(np *OspfSession) IsNeighborDiscoveryEnabled () error {
  //parameters: SessionHandle
- //AgtOspfSession IsNeighborDiscoveryEnabled, m.Object, m.Name);
+ //AgtOspfSession IsNeighborDiscoveryEnabled
  return nil
 }
 
 func(np *OspfSession) EnableLsaDiscardMode () error {
  //parameters: SessionHandle
- //AgtOspfSession EnableLsaDiscardMode, m.Object, m.Name);
+ //AgtOspfSession EnableLsaDiscardMode
  return nil
 }
 
 func(np *OspfSession) DisableLsaDiscardMode () error {
  //parameters: SessionHandle
- //AgtOspfSession DisableLsaDiscardMode, m.Object, m.Name);
+ //AgtOspfSession DisableLsaDiscardMode
  return nil
 }
 
@@ -78,31 +78,31 @@ func(np *OspfSession) GetLsaDiscardModeFlag ()(string, error) {
 
 func(np *OspfSession) EnableAutoLsaRefreshMode () error {
  //parameters: SessionHandle
- //AgtOspfSession EnableAutoLsaRefreshMode, m.Object, m.Name);
+ //AgtOspfSession EnableAutoLsaRefreshMode
  return nil
 }
 
 func(np *OspfSession) DisableAutoLsaRefreshMode () error {
  //parameters: SessionHandle
- //AgtOspfSession DisableAutoLsaRefreshMode, m.Object, m.Name);
+ //AgtOspfSession DisableAutoLsaRefreshMode
  return nil
 }
 
 func(np *OspfSession) IsLsaRefreshModeEnabled () error {
  //parameters: SessionHandle
- //AgtOspfSession IsLsaRefreshModeEnabled, m.Object, m.Name);
+ //AgtOspfSession IsLsaRefreshModeEnabled
  return nil
 }
 
 func(np *OspfSession) EnableGracefulRestart () error {
  //parameters: SessionHandle
- //AgtOspfSession EnableGracefulRestart, m.Object, m.Name);
+ //AgtOspfSession EnableGracefulRestart
  return nil
 }
 
 func(np *OspfSession) DisableGracefulRestart () error {
  //parameters: SessionHandle
- //AgtOspfSession DisableGracefulRestart, m.Object, m.Name);
+ //AgtOspfSession DisableGracefulRestart
  return nil
 }
 
@@ -168,19 +168,19 @@ func(np *OspfSession) GetLastError ()(string, error) {
 
 func(np *OspfSession) AddNeighbor () error {
  //parameters: SessionHandle
- //AgtOspfSession AddNeighbor, m.Object, m.Name);
+ //AgtOspfSession AddNeighbor
  return nil
 }
 
 func(np *OspfSession) RemoveNeighbor () error {
  //parameters: SessionHandle NeighborHandle
- //AgtOspfSession RemoveNeighbor, m.Object, m.Name);
+ //AgtOspfSession RemoveNeighbor
  return nil
 }
 
 func(np *OspfSession) RemoveAllNeighbors () error {
  //parameters: SessionHandle
- //AgtOspfSession RemoveAllNeighbors, m.Object, m.Name);
+ //AgtOspfSession RemoveAllNeighbors
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *OspfSession) GetLsaReAssertMode ()(string, error) {
 
 func(np *OspfSession) SetLsaReAssertMode () error {
  //parameters: SessionHandle LsaReAssertMode
- //AgtOspfSession SetLsaReAssertMode, m.Object, m.Name);
+ //AgtOspfSession SetLsaReAssertMode
  return nil
 }
 
@@ -264,73 +264,73 @@ func(np *OspfSession) GetKeyIdentifier ()(string, error) {
 
 func(np *OspfSession) IsGreTunnelChecksumFieldEnabled () error {
  //parameters: SessionHandle
- //AgtOspfSession IsGreTunnelChecksumFieldEnabled, m.Object, m.Name);
+ //AgtOspfSession IsGreTunnelChecksumFieldEnabled
  return nil
 }
 
 func(np *OspfSession) Restart () error {
  //parameters: 
- //AgtOspfSession Restart, m.Object, m.Name);
+ //AgtOspfSession Restart
  return nil
 }
 
 func(np *OspfSession) RestartAllSessions () error {
  //parameters: 
- //AgtOspfSession RestartAllSessions, m.Object, m.Name);
+ //AgtOspfSession RestartAllSessions
  return nil
 }
 
 func(np *OspfSession) EnableBehaviorOverride () error {
  //parameters: SessionHandle BehaviorOverride
- //AgtOspfSession EnableBehaviorOverride, m.Object, m.Name);
+ //AgtOspfSession EnableBehaviorOverride
  return nil
 }
 
 func(np *OspfSession) DisableBehaviorOverride () error {
  //parameters: SessionHandle BehaviorOverride
- //AgtOspfSession DisableBehaviorOverride, m.Object, m.Name);
+ //AgtOspfSession DisableBehaviorOverride
  return nil
 }
 
 func(np *OspfSession) EnableAllSessions () error {
  //parameters: 
- //AgtOspfSession EnableAllSessions, m.Object, m.Name);
+ //AgtOspfSession EnableAllSessions
  return nil
 }
 
 func(np *OspfSession) EnableAllOspfv2Sessions () error {
  //parameters: 
- //AgtOspfSession EnableAllOspfv2Sessions, m.Object, m.Name);
+ //AgtOspfSession EnableAllOspfv2Sessions
  return nil
 }
 
 func(np *OspfSession) EnableAllOspfv3Sessions () error {
  //parameters: 
- //AgtOspfSession EnableAllOspfv3Sessions, m.Object, m.Name);
+ //AgtOspfSession EnableAllOspfv3Sessions
  return nil
 }
 
 func(np *OspfSession) DisableAllSessions () error {
  //parameters: 
- //AgtOspfSession DisableAllSessions, m.Object, m.Name);
+ //AgtOspfSession DisableAllSessions
  return nil
 }
 
 func(np *OspfSession) DisableAllOspfv2Sessions () error {
  //parameters: 
- //AgtOspfSession DisableAllOspfv2Sessions, m.Object, m.Name);
+ //AgtOspfSession DisableAllOspfv2Sessions
  return nil
 }
 
 func(np *OspfSession) DisableAllOspfv3Sessions () error {
  //parameters: 
- //AgtOspfSession DisableAllOspfv3Sessions, m.Object, m.Name);
+ //AgtOspfSession DisableAllOspfv3Sessions
  return nil
 }
 
 func(np *OspfSession) SetInterfaceAddress () error {
  //parameters: 
- //AgtOspfSession SetInterfaceAddress, m.Object, m.Name);
+ //AgtOspfSession SetInterfaceAddress
  return nil
 }
 
@@ -342,25 +342,25 @@ func(np *OspfSession) GetInterfaceAddress ()(string, error) {
 
 func(np *OspfSession) Enable () error {
  //parameters: 
- //AgtOspfSession Enable, m.Object, m.Name);
+ //AgtOspfSession Enable
  return nil
 }
 
 func(np *OspfSession) Disable () error {
  //parameters: 
- //AgtOspfSession Disable, m.Object, m.Name);
+ //AgtOspfSession Disable
  return nil
 }
 
 func(np *OspfSession) IsEnabled () error {
  //parameters: SessionHandle
- //AgtOspfSession IsEnabled, m.Object, m.Name);
+ //AgtOspfSession IsEnabled
  return nil
 }
 
 func(np *OspfSession) SetInterfaceParameter () error {
  //parameters: 
- //AgtOspfSession SetInterfaceParameter, m.Object, m.Name);
+ //AgtOspfSession SetInterfaceParameter
  return nil
 }
 
@@ -372,43 +372,43 @@ func(np *OspfSession) GetInterfaceParameter ()(string, error) {
 
 func(np *OspfSession) SetInternalMessageExchangeFlag () error {
  //parameters: 
- //AgtOspfSession SetInternalMessageExchangeFlag, m.Object, m.Name);
+ //AgtOspfSession SetInternalMessageExchangeFlag
  return nil
 }
 
 func(np *OspfSession) EnableHostRoute () error {
  //parameters: 
- //AgtOspfSession EnableHostRoute, m.Object, m.Name);
+ //AgtOspfSession EnableHostRoute
  return nil
 }
 
 func(np *OspfSession) DisableHostRoute () error {
  //parameters: 
- //AgtOspfSession DisableHostRoute, m.Object, m.Name);
+ //AgtOspfSession DisableHostRoute
  return nil
 }
 
 func(np *OspfSession) IsGreTunnelEnabled () error {
  //parameters: SessionHandle
- //AgtOspfSession IsGreTunnelEnabled, m.Object, m.Name);
+ //AgtOspfSession IsGreTunnelEnabled
  return nil
 }
 
 func(np *OspfSession) EnableGreTunnel () error {
  //parameters: 
- //AgtOspfSession EnableGreTunnel, m.Object, m.Name);
+ //AgtOspfSession EnableGreTunnel
  return nil
 }
 
 func(np *OspfSession) DisableGreTunnel () error {
  //parameters: 
- //AgtOspfSession DisableGreTunnel, m.Object, m.Name);
+ //AgtOspfSession DisableGreTunnel
  return nil
 }
 
 func(np *OspfSession) SetGreTunnelLocalAddress () error {
  //parameters: 
- //AgtOspfSession SetGreTunnelLocalAddress, m.Object, m.Name);
+ //AgtOspfSession SetGreTunnelLocalAddress
  return nil
 }
 
@@ -420,7 +420,7 @@ func(np *OspfSession) GetGreTunnelLocalAddress ()(string, error) {
 
 func(np *OspfSession) SetGreTunnelRemoteAddress () error {
  //parameters: 
- //AgtOspfSession SetGreTunnelRemoteAddress, m.Object, m.Name);
+ //AgtOspfSession SetGreTunnelRemoteAddress
  return nil
 }
 
@@ -432,25 +432,25 @@ func(np *OspfSession) GetGreTunnelRemoteAddress ()(string, error) {
 
 func(np *OspfSession) EnableGreTunnelChecksumField () error {
  //parameters: 
- //AgtOspfSession EnableGreTunnelChecksumField, m.Object, m.Name);
+ //AgtOspfSession EnableGreTunnelChecksumField
  return nil
 }
 
 func(np *OspfSession) DisableGreTunnelChecksumField () error {
  //parameters: 
- //AgtOspfSession DisableGreTunnelChecksumField, m.Object, m.Name);
+ //AgtOspfSession DisableGreTunnelChecksumField
  return nil
 }
 
 func(np *OspfSession) IsGracefulRestartEnabled () error {
  //parameters: SessionHandle
- //AgtOspfSession IsGracefulRestartEnabled, m.Object, m.Name);
+ //AgtOspfSession IsGracefulRestartEnabled
  return nil
 }
 
 func(np *OspfSession) IsBehaviorOverrideEnabled () error {
  //parameters: SessionHandle BehaviorOverride
- //AgtOspfSession IsBehaviorOverrideEnabled, m.Object, m.Name);
+ //AgtOspfSession IsBehaviorOverrideEnabled
  return nil
 }
 

@@ -6,43 +6,43 @@ type AtmInterface struct {
 
 func(np *mInterface) ScramblerOn () error {
  //parameters: PortHandle
- //AgtAtmInterface ScramblerOn, m.Object, m.Name);
+ //AgtAtmInterface ScramblerOn
  return nil
 }
 
 func(np *mInterface) ScramblerOff () error {
  //parameters: PortHandle
- //AgtAtmInterface ScramblerOff, m.Object, m.Name);
+ //AgtAtmInterface ScramblerOff
  return nil
 }
 
 func(np *mInterface) IsScramblerOn () error {
  //parameters: PortHandle
- //AgtAtmInterface IsScramblerOn, m.Object, m.Name);
+ //AgtAtmInterface IsScramblerOn
  return nil
 }
 
 func(np *mInterface) DescramblerOn () error {
  //parameters: PortHandle
- //AgtAtmInterface DescramblerOn, m.Object, m.Name);
+ //AgtAtmInterface DescramblerOn
  return nil
 }
 
 func(np *mInterface) DescramblerOff () error {
  //parameters: PortHandle
- //AgtAtmInterface DescramblerOff, m.Object, m.Name);
+ //AgtAtmInterface DescramblerOff
  return nil
 }
 
 func(np *mInterface) IsDescramblerOn () error {
  //parameters: PortHandle
- //AgtAtmInterface IsDescramblerOn, m.Object, m.Name);
+ //AgtAtmInterface IsDescramblerOn
  return nil
 }
 
 func(np *mInterface) SetTimestampLocation () error {
  //parameters: PortHandle Location
- //AgtAtmInterface SetTimestampLocation, m.Object, m.Name);
+ //AgtAtmInterface SetTimestampLocation
  return nil
 }
 
@@ -54,31 +54,31 @@ func(np *mInterface) GetTimestampLocation ()(string, error) {
 
 func(np *mInterface) IsAtmSupported () error {
  //parameters: PortHandle
- //AgtAtmInterface IsAtmSupported, m.Object, m.Name);
+ //AgtAtmInterface IsAtmSupported
  return nil
 }
 
 func(np *mInterface) EnableReassembly () error {
  //parameters: PortHandle
- //AgtAtmInterface EnableReassembly, m.Object, m.Name);
+ //AgtAtmInterface EnableReassembly
  return nil
 }
 
 func(np *mInterface) DisableReassembly () error {
  //parameters: PortHandle
- //AgtAtmInterface DisableReassembly, m.Object, m.Name);
+ //AgtAtmInterface DisableReassembly
  return nil
 }
 
 func(np *mInterface) IsReassemblyEnabled () error {
  //parameters: PortHandle
- //AgtAtmInterface IsReassemblyEnabled, m.Object, m.Name);
+ //AgtAtmInterface IsReassemblyEnabled
  return nil
 }
 
 func(np *mInterface) SetMplsEncapsulation () error {
  //parameters: PortHandle Encapsulation
- //AgtAtmInterface SetMplsEncapsulation, m.Object, m.Name);
+ //AgtAtmInterface SetMplsEncapsulation
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *mInterface) GetMplsEncapsulation ()(string, error) {
 
 func(np *mInterface) SetCellIgnoreMode () error {
  //parameters: PortHandle CellIgnoreMode
- //AgtAtmInterface SetCellIgnoreMode, m.Object, m.Name);
+ //AgtAtmInterface SetCellIgnoreMode
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *mInterface) GetCellIgnoreMode ()(string, error) {
 
 func(np *mInterface) SetNetworkInterface () error {
  //parameters: PortHandle NetworkInterface
- //AgtAtmInterface SetNetworkInterface, m.Object, m.Name);
+ //AgtAtmInterface SetNetworkInterface
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *mInterface) GetNetworkInterface ()(string, error) {
 
 func(np *mInterface) SetMTUSize () error {
  //parameters: PortHandle MTUSize
- //AgtAtmInterface SetMTUSize, m.Object, m.Name);
+ //AgtAtmInterface SetMTUSize
  return nil
 }
 
@@ -126,7 +126,7 @@ func(np *mInterface) GetMTUSize ()(string, error) {
 
 func(np *mInterface) SetFillerCellType () error {
  //parameters: PortHandle FillerCellType
- //AgtAtmInterface SetFillerCellType, m.Object, m.Name);
+ //AgtAtmInterface SetFillerCellType
  return nil
 }
 

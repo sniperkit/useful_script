@@ -6,7 +6,7 @@ type IntEmuMisc struct {
 
 func(np *IntEmuMisc) Initialize () error {
  //parameters: 
- //IntEmuMisc Initialize, m.Object, m.Name);
+ //IntEmuMisc Initialize
  return nil
 }
 

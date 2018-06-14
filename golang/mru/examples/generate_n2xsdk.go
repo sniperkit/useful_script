@@ -66,7 +66,7 @@ func main() {
 			if strings.Contains(m.Name, "Get") || strings.Contains(m.Name, "List") {
 				util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte(fmt.Sprintf("func(np *%s) %s ()(string, error) {\n //parameters: %s\n //%s %s\n return \"\", nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
 			} else {
-				util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte(fmt.Sprintf("func(np *%s) %s () error {\n //parameters: %s\n //%s %s, m.Object, m.Name);\n return nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
+				util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte(fmt.Sprintf("func(np *%s) %s () error {\n //parameters: %s\n //%s %s\n return nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
 			}
 		}
 	}

@@ -30,7 +30,7 @@ func(np *MplsStatistics) ListSelectedPorts ()(string, error) {
 
 func(np *MplsStatistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts PortHandles
- //AgtMplsStatistics SelectPorts, m.Object, m.Name);
+ //AgtMplsStatistics SelectPorts
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *MplsStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *MplsStatistics) LockItem () error {
  //parameters: StatisticsHandle
- //AgtMplsStatistics LockItem, m.Object, m.Name);
+ //AgtMplsStatistics LockItem
  return nil
 }
 
 func(np *MplsStatistics) UnlockItem () error {
  //parameters: StatisticsHandle
- //AgtMplsStatistics UnlockItem, m.Object, m.Name);
+ //AgtMplsStatistics UnlockItem
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *MplsStatistics) ListSelectedStatistics ()(string, error) {
 
 func(np *MplsStatistics) SelectStatistics () error {
  //parameters: Handle NumStatistics Statistics
- //AgtMplsStatistics SelectStatistics, m.Object, m.Name);
+ //AgtMplsStatistics SelectStatistics
  return nil
 }
 

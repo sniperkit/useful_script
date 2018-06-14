@@ -6,19 +6,19 @@ type NdpNeighborDiscoveryHostPool struct {
 
 func(np *NdpNeighborDiscoveryHostPool) EnableAutoSendNeighborSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool EnableAutoSendNeighborSolicitations, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool EnableAutoSendNeighborSolicitations
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) DisableAutoSendNeighborSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool DisableAutoSendNeighborSolicitations, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool DisableAutoSendNeighborSolicitations
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) IsAutoSendNeighborSolicitationsEnabled () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool IsAutoSendNeighborSolicitationsEnabled, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool IsAutoSendNeighborSolicitationsEnabled
  return nil
 }
 
@@ -30,19 +30,19 @@ func(np *NdpNeighborDiscoveryHostPool) GetCustomState ()(string, error) {
 
 func(np *NdpNeighborDiscoveryHostPool) SendNeighborSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool SendNeighborSolicitations, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SendNeighborSolicitations
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) Reset () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool Reset, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool Reset
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) CancelNeighborSolicitations () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool CancelNeighborSolicitations, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool CancelNeighborSolicitations
  return nil
 }
 
@@ -54,25 +54,25 @@ func(np *NdpNeighborDiscoveryHostPool) GetRemoteMacAddress ()(string, error) {
 
 func(np *NdpNeighborDiscoveryHostPool) EnableStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool EnableStatelessTransmit, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool EnableStatelessTransmit
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) DisableStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool DisableStatelessTransmit, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool DisableStatelessTransmit
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) IsStatelessTransmitEnabled () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool IsStatelessTransmitEnabled, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool IsStatelessTransmitEnabled
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitPacketType () error {
  //parameters: DevicePoolHandle PacketType
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitPacketType, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitPacketType
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitPacketType ()(string,
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitPacket () error {
  //parameters: DeviceHandle Packet
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitPacket, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitPacket
  return nil
 }
 
@@ -96,19 +96,19 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitPacket ()(string, err
 
 func(np *NdpNeighborDiscoveryHostPool) StartStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool StartStatelessTransmit, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool StartStatelessTransmit
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) StopStatelessTransmit () error {
  //parameters: DevicePoolHandle
- //AgtNdpNeighborDiscoveryHostPool StopStatelessTransmit, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool StopStatelessTransmit
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitStartEventState () error {
  //parameters: DeviceHandle StartEventState
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStartEventState, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStartEventState
  return nil
 }
 
@@ -120,43 +120,43 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitStartEventState ()(st
 
 func(np *NdpNeighborDiscoveryHostPool) SendNeighborSolicitationsByPort () error {
  //parameters: PortHandle
- //AgtNdpNeighborDiscoveryHostPool SendNeighborSolicitationsByPort, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SendNeighborSolicitationsByPort
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) ResetByPort () error {
  //parameters: PortHandle
- //AgtNdpNeighborDiscoveryHostPool ResetByPort, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool ResetByPort
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) CancelNeighborSolicitationsByPort () error {
  //parameters: PortHandle
- //AgtNdpNeighborDiscoveryHostPool CancelNeighborSolicitationsByPort, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool CancelNeighborSolicitationsByPort
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) SendAllNeighborSolicitations () error {
  //parameters: 
- //AgtNdpNeighborDiscoveryHostPool SendAllNeighborSolicitations, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SendAllNeighborSolicitations
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) ResetAll () error {
  //parameters: 
- //AgtNdpNeighborDiscoveryHostPool ResetAll, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool ResetAll
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) CancelAllNeighborSolicitations () error {
  //parameters: 
- //AgtNdpNeighborDiscoveryHostPool CancelAllNeighborSolicitations, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool CancelAllNeighborSolicitations
  return nil
 }
 
 func(np *NdpNeighborDiscoveryHostPool) SetRateControl () error {
  //parameters: PortHandle RateControlMode
- //AgtNdpNeighborDiscoveryHostPool SetRateControl, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetRateControl
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetRateControl ()(string, error) {
 
 func(np *NdpNeighborDiscoveryHostPool) SetFixedRateProfile () error {
  //parameters: PortHandle FixedRate MaxBurstSize
- //AgtNdpNeighborDiscoveryHostPool SetFixedRateProfile, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetFixedRateProfile
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetFixedRateProfile ()(string, error) {
 
 func(np *NdpNeighborDiscoveryHostPool) SetSelfPacedProfile () error {
  //parameters: PortHandle MaxPackets MaxRetries RetryTimeout
- //AgtNdpNeighborDiscoveryHostPool SetSelfPacedProfile, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetSelfPacedProfile
  return nil
 }
 
@@ -192,7 +192,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetSelfPacedProfile ()(string, error) {
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitStartEvent () error {
  //parameters: DeviceHandle StartEvent
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStartEvent, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStartEvent
  return nil
 }
 
@@ -204,7 +204,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitStartEvent ()(string,
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitStopEvent () error {
  //parameters: DeviceHandle StopEvent
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStopEvent, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStopEvent
  return nil
 }
 
@@ -216,7 +216,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitStopEvent ()(string, 
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitStopEventCount () error {
  //parameters: DeviceHandle StopEventCount
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStopEventCount, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStopEventCount
  return nil
 }
 
@@ -228,7 +228,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitStopEventCount ()(str
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitStopEventTime () error {
  //parameters: DeviceHandle TimeUnits Time
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStopEventTime, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitStopEventTime
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *NdpNeighborDiscoveryHostPool) GetStatelessTransmitStopEventTime ()(stri
 
 func(np *NdpNeighborDiscoveryHostPool) SetStatelessTransmitRate () error {
  //parameters: DeviceHandle BurstSize PeriodUnits Period
- //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitRate, m.Object, m.Name);
+ //AgtNdpNeighborDiscoveryHostPool SetStatelessTransmitRate
  return nil
 }
 

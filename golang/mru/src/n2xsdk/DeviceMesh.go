@@ -24,25 +24,25 @@ func(np *DeviceMesh) GetLockCount ()(string, error) {
 
 func(np *DeviceMesh) Enable () error {
  //parameters: MeshHandle
- //AgtDeviceMesh Enable, m.Object, m.Name);
+ //AgtDeviceMesh Enable
  return nil
 }
 
 func(np *DeviceMesh) Disable () error {
  //parameters: MeshHandle
- //AgtDeviceMesh Disable, m.Object, m.Name);
+ //AgtDeviceMesh Disable
  return nil
 }
 
 func(np *DeviceMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtDeviceMesh IsEnabled, m.Object, m.Name);
+ //AgtDeviceMesh IsEnabled
  return nil
 }
 
 func(np *DeviceMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtDeviceMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtDeviceMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *DeviceMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *DeviceMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtDeviceMesh SetLengthMode, m.Object, m.Name);
+ //AgtDeviceMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *DeviceMesh) GetLengthMode ()(string, error) {
 
 func(np *DeviceMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtDeviceMesh SetLength, m.Object, m.Name);
+ //AgtDeviceMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *DeviceMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *DeviceMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtDeviceMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtDeviceMesh EnableStreamGeneration
  return nil
 }
 
 func(np *DeviceMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtDeviceMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtDeviceMesh DisableStreamGeneration
  return nil
 }
 
 func(np *DeviceMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtDeviceMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtDeviceMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *DeviceMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtDeviceMesh SetAverageLoad, m.Object, m.Name);
+ //AgtDeviceMesh SetAverageLoad
  return nil
 }
 
@@ -138,13 +138,13 @@ func(np *DeviceMesh) GetAverageLoad ()(string, error) {
 
 func(np *DeviceMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtDeviceMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtDeviceMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *DeviceMesh) SetEndpointTypes () error {
  //parameters: MeshHandle SourceType DestinationType
- //AgtDeviceMesh SetEndpointTypes, m.Object, m.Name);
+ //AgtDeviceMesh SetEndpointTypes
  return nil
 }
 
@@ -156,25 +156,25 @@ func(np *DeviceMesh) GetEndpointTypes ()(string, error) {
 
 func(np *DeviceMesh) EnableManualSelectionOfAddressTypes () error {
  //parameters: MeshHandle
- //AgtDeviceMesh EnableManualSelectionOfAddressTypes, m.Object, m.Name);
+ //AgtDeviceMesh EnableManualSelectionOfAddressTypes
  return nil
 }
 
 func(np *DeviceMesh) DisableManualSelectionOfAddressTypes () error {
  //parameters: MeshHandle
- //AgtDeviceMesh DisableManualSelectionOfAddressTypes, m.Object, m.Name);
+ //AgtDeviceMesh DisableManualSelectionOfAddressTypes
  return nil
 }
 
 func(np *DeviceMesh) IsManualSelectionOfAddressTypesEnabled () error {
  //parameters: MeshHandle
- //AgtDeviceMesh IsManualSelectionOfAddressTypesEnabled, m.Object, m.Name);
+ //AgtDeviceMesh IsManualSelectionOfAddressTypesEnabled
  return nil
 }
 
 func(np *DeviceMesh) SetEndpointAddressTypes () error {
  //parameters: MeshHandle SourceAddressType DestinationAddressType
- //AgtDeviceMesh SetEndpointAddressTypes, m.Object, m.Name);
+ //AgtDeviceMesh SetEndpointAddressTypes
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *DeviceMesh) ListSupportedEndpointAddressTypes ()(string, error) {
 
 func(np *DeviceMesh) SetTrafficDistribution () error {
  //parameters: MeshHandle Distribution
- //AgtDeviceMesh SetTrafficDistribution, m.Object, m.Name);
+ //AgtDeviceMesh SetTrafficDistribution
  return nil
 }
 
@@ -210,7 +210,7 @@ func(np *DeviceMesh) GetTrafficDistribution ()(string, error) {
 
 func(np *DeviceMesh) SetDeviceUnderTestType () error {
  //parameters: MeshHandle DutType
- //AgtDeviceMesh SetDeviceUnderTestType, m.Object, m.Name);
+ //AgtDeviceMesh SetDeviceUnderTestType
  return nil
 }
 
@@ -222,37 +222,37 @@ func(np *DeviceMesh) GetDeviceUnderTestType ()(string, error) {
 
 func(np *DeviceMesh) AddSources () error {
  //parameters: MeshHandle Count psaSources
- //AgtDeviceMesh AddSources, m.Object, m.Name);
+ //AgtDeviceMesh AddSources
  return nil
 }
 
 func(np *DeviceMesh) RemoveSources () error {
  //parameters: MeshHandle Count psaSources
- //AgtDeviceMesh RemoveSources, m.Object, m.Name);
+ //AgtDeviceMesh RemoveSources
  return nil
 }
 
 func(np *DeviceMesh) AddDestinations () error {
  //parameters: MeshHandle Count psaDestinations
- //AgtDeviceMesh AddDestinations, m.Object, m.Name);
+ //AgtDeviceMesh AddDestinations
  return nil
 }
 
 func(np *DeviceMesh) RemoveDestinations () error {
  //parameters: MeshHandle Count psaDestinations
- //AgtDeviceMesh RemoveDestinations, m.Object, m.Name);
+ //AgtDeviceMesh RemoveDestinations
  return nil
 }
 
 func(np *DeviceMesh) RemoveDestinationsForSources () error {
  //parameters: MeshHandle NumSources psaSources NumDestinations psaDestinations
- //AgtDeviceMesh RemoveDestinationsForSources, m.Object, m.Name);
+ //AgtDeviceMesh RemoveDestinationsForSources
  return nil
 }
 
 func(np *DeviceMesh) SetRemoteHostIpv6AddressSuffix () error {
  //parameters: MeshHandle Endpoint HostIpv6AddressSuffix
- //AgtDeviceMesh SetRemoteHostIpv6AddressSuffix, m.Object, m.Name);
+ //AgtDeviceMesh SetRemoteHostIpv6AddressSuffix
  return nil
 }
 
@@ -264,7 +264,7 @@ func(np *DeviceMesh) GetRemoteHostIpv6AddressSuffix ()(string, error) {
 
 func(np *DeviceMesh) SetRemoteHostCount () error {
  //parameters: MeshHandle Endpoint HostCountPerClient
- //AgtDeviceMesh SetRemoteHostCount, m.Object, m.Name);
+ //AgtDeviceMesh SetRemoteHostCount
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *DeviceMesh) GetRemoteHostCount ()(string, error) {
 
 func(np *DeviceMesh) Clear () error {
  //parameters: MeshHandle
- //AgtDeviceMesh Clear, m.Object, m.Name);
+ //AgtDeviceMesh Clear
  return nil
 }
 
@@ -312,13 +312,13 @@ func(np *DeviceMesh) ListDestinationsForSource ()(string, error) {
 
 func(np *DeviceMesh) UpdateStreamGroups () error {
  //parameters: MeshHandle
- //AgtDeviceMesh UpdateStreamGroups, m.Object, m.Name);
+ //AgtDeviceMesh UpdateStreamGroups
  return nil
 }
 
 func(np *DeviceMesh) SetStreamGenerationParameter () error {
  //parameters: MeshHandle Protocol ProtocolInstance Field
- //AgtDeviceMesh SetStreamGenerationParameter, m.Object, m.Name);
+ //AgtDeviceMesh SetStreamGenerationParameter
  return nil
 }
 
@@ -330,7 +330,7 @@ func(np *DeviceMesh) GetStreamGenerationParameter ()(string, error) {
 
 func(np *DeviceMesh) ResetPduHeaders () error {
  //parameters: MeshHandle
- //AgtDeviceMesh ResetPduHeaders, m.Object, m.Name);
+ //AgtDeviceMesh ResetPduHeaders
  return nil
 }
 

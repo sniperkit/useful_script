@@ -6,25 +6,25 @@ type Bgp4AdVplsRouteProfile struct {
 
 func(np *Bgp4AdVplsRouteProfile) EnableAutoPathAttribute () error {
  //parameters: RouteProfileHandle PathAttributeAuto
- //AgtBgp4AdVplsRouteProfile EnableAutoPathAttribute, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnableAutoPathAttribute
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisableAutoPathAttribute () error {
  //parameters: RouteProfileHandle PathAttributeAuto
- //AgtBgp4AdVplsRouteProfile DisableAutoPathAttribute, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisableAutoPathAttribute
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsAutoPathAttributeEnabled () error {
  //parameters: RouteProfileHandle PathAttributeAuto
- //AgtBgp4AdVplsRouteProfile IsAutoPathAttributeEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsAutoPathAttributeEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) SetExportVplsIdIncrementingRange () error {
  //parameters: RouteProfileHandle VplsIdType FirstVplsId VplsIdIncrement PercentOverlap
- //AgtBgp4AdVplsRouteProfile SetExportVplsIdIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetExportVplsIdIncrementingRange
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *Bgp4AdVplsRouteProfile) GetExportVplsIdIncrementingRange ()(string, err
 
 func(np *Bgp4AdVplsRouteProfile) SetNextHopIncrementingRange () error {
  //parameters: RouteProfileHandle FirstNextHop PrefixLength NextHopIncrement NextHopRepeat
- //AgtBgp4AdVplsRouteProfile SetNextHopIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetNextHopIncrementingRange
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *Bgp4AdVplsRouteProfile) GetNextHopList ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetNextHop () error {
  //parameters: RouteProfileHandle NextHop
- //AgtBgp4AdVplsRouteProfile SetNextHop, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetNextHop
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *Bgp4AdVplsRouteProfile) GetNextHopAuto ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetExportRouteTargetIncrementingRange () error {
  //parameters: RouteProfileHandle RouteTargetType FirstRouteTarget RouteTargetIncrement PercentOverlap
- //AgtBgp4AdVplsRouteProfile SetExportRouteTargetIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetExportRouteTargetIncrementingRange
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *Bgp4AdVplsRouteProfile) GetExportRouteTargetIncrementingRange ()(string
 
 func(np *Bgp4AdVplsRouteProfile) SetRouteDistinguisherIncrementingRange () error {
  //parameters: RouteProfileHandle RouteDistinguisherType FirstRouteDistinguisher RouteDistinguisherIncrement PercentOverlap
- //AgtBgp4AdVplsRouteProfile SetRouteDistinguisherIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetRouteDistinguisherIncrementingRange
  return nil
 }
 
@@ -120,91 +120,91 @@ func(np *Bgp4AdVplsRouteProfile) GetState ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) IsEnabled () error {
  //parameters: RouteProfileInstance
- //AgtBgp4AdVplsRouteProfile IsEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) EnableAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4AdVplsRouteProfile EnableAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnableAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Enable4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4AdVplsRouteProfile Enable4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Enable4ByteAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisableAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4AdVplsRouteProfile DisableAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisableAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Disable4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4AdVplsRouteProfile Disable4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Disable4ByteAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsAsPathEnabled () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4AdVplsRouteProfile IsAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsAsPathEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Is4ByteAsPathEnabled () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4AdVplsRouteProfile Is4ByteAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Is4ByteAsPathEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) EnableAutoAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4AdVplsRouteProfile EnableAutoAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnableAutoAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) EnableAuto4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4AdVplsRouteProfile EnableAuto4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnableAuto4ByteAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisableAutoAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4AdVplsRouteProfile DisableAutoAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisableAutoAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisableAuto4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4AdVplsRouteProfile DisableAuto4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisableAuto4ByteAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsAutoAsPathEnabled () error {
  //parameters: RouteProfileHandle AsPathAttributeType
- //AgtBgp4AdVplsRouteProfile IsAutoAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsAutoAsPathEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsAuto4ByteAsPathEnabled () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType
- //AgtBgp4AdVplsRouteProfile IsAuto4ByteAsPathEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsAuto4ByteAsPathEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) SetAsPathIncrementingRange () error {
  //parameters: RouteProfileHandle AsPathAttributeType FirstAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4AdVplsRouteProfile SetAsPathIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetAsPathIncrementingRange
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Set4ByteAsPathIncrementingRange () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType First4ByteAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4AdVplsRouteProfile Set4ByteAsPathIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Set4ByteAsPathIncrementingRange
  return nil
 }
 
@@ -246,13 +246,13 @@ func(np *Bgp4AdVplsRouteProfile) Get4ByteAsPathList ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetAsPath () error {
  //parameters: RouteProfileHandle AsPathAttributeType AsNumber
- //AgtBgp4AdVplsRouteProfile SetAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetAsPath
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Set4ByteAsPath () error {
  //parameters: RouteProfileHandle 4ByteAsPathAttributeType AsNumber
- //AgtBgp4AdVplsRouteProfile Set4ByteAsPath, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Set4ByteAsPath
  return nil
 }
 
@@ -336,25 +336,25 @@ func(np *Bgp4AdVplsRouteProfile) Get4ByteAsPathAutoWithFormat ()(string, error) 
 
 func(np *Bgp4AdVplsRouteProfile) EnablePathAttribute () error {
  //parameters: RouteProfileHandle PathAttribute
- //AgtBgp4AdVplsRouteProfile EnablePathAttribute, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnablePathAttribute
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisablePathAttribute () error {
  //parameters: RouteProfileHandle PathAttribute
- //AgtBgp4AdVplsRouteProfile DisablePathAttribute, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisablePathAttribute
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsPathAttributeEnabled () error {
  //parameters: RouteProfileHandle PathAttribute
- //AgtBgp4AdVplsRouteProfile IsPathAttributeEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsPathAttributeEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) SetOrigin () error {
  //parameters: RouteProfileHandle Origin
- //AgtBgp4AdVplsRouteProfile SetOrigin, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetOrigin
  return nil
 }
 
@@ -366,7 +366,7 @@ func(np *Bgp4AdVplsRouteProfile) GetOrigin ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetLocalPreference () error {
  //parameters: RouteProfileHandle LocalPreference
- //AgtBgp4AdVplsRouteProfile SetLocalPreference, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetLocalPreference
  return nil
 }
 
@@ -378,7 +378,7 @@ func(np *Bgp4AdVplsRouteProfile) GetLocalPreference ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetMultiExitDiscriminator () error {
  //parameters: RouteProfileHandle MultiExitDiscriminator
- //AgtBgp4AdVplsRouteProfile SetMultiExitDiscriminator, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetMultiExitDiscriminator
  return nil
 }
 
@@ -390,19 +390,19 @@ func(np *Bgp4AdVplsRouteProfile) GetMultiExitDiscriminator ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetAggregatorIncrementingRange () error {
  //parameters: RouteProfileHandle FirstAsNumber AsNumberIncrement AsNumberRepeat FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4AdVplsRouteProfile SetAggregatorIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetAggregatorIncrementingRange
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Set4ByteAsAggregatorIncrementingRange () error {
  //parameters: RouteProfileHandle First4ByteAsNumber AsNumberIncrement AsNumberRepeat FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregatorIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregatorIncrementingRange
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Set4ByteAsAggregatorIncrementingRangeWithFormat () error {
  //parameters: RouteProfileHandle FourByteFormatType First4ByteAsNumber AsNumberIncrement AsNumberRepeat FirstIpAddress PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregatorIncrementingRangeWithFormat, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregatorIncrementingRangeWithFormat
  return nil
 }
 
@@ -462,19 +462,19 @@ func(np *Bgp4AdVplsRouteProfile) Get4ByteAsAggregatorListWithFormat ()(string, e
 
 func(np *Bgp4AdVplsRouteProfile) SetAggregator () error {
  //parameters: RouteProfileHandle AsNumber IpAddress
- //AgtBgp4AdVplsRouteProfile SetAggregator, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetAggregator
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Set4ByteAsAggregator () error {
  //parameters: RouteProfileHandle AsNumber IpAddress
- //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregator, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregator
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Set4ByteAsAggregatorWithFormat () error {
  //parameters: RouteProfileHandle FourByteFormatType AsNumber IpAddress
- //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregatorWithFormat, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Set4ByteAsAggregatorWithFormat
  return nil
 }
 
@@ -516,7 +516,7 @@ func(np *Bgp4AdVplsRouteProfile) Get4ByteAggregatorAutoWithFormat ()(string, err
 
 func(np *Bgp4AdVplsRouteProfile) SetOriginatorIdIncrementingRange () error {
  //parameters: RouteProfileHandle FirstOriginatorId PrefixLength AddressIncrement AddressRepeat
- //AgtBgp4AdVplsRouteProfile SetOriginatorIdIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetOriginatorIdIncrementingRange
  return nil
 }
 
@@ -540,7 +540,7 @@ func(np *Bgp4AdVplsRouteProfile) GetOriginatorIdList ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetOriginatorId () error {
  //parameters: RouteProfileHandle OriginatorId
- //AgtBgp4AdVplsRouteProfile SetOriginatorId, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetOriginatorId
  return nil
 }
 
@@ -576,7 +576,7 @@ func(np *Bgp4AdVplsRouteProfile) GetClusterListAuto ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetCommunities () error {
  //parameters: RouteProfileHandle CommunitiesList
- //AgtBgp4AdVplsRouteProfile SetCommunities, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetCommunities
  return nil
 }
 
@@ -588,7 +588,7 @@ func(np *Bgp4AdVplsRouteProfile) GetCommunities ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetCommunitiesIncrementingRange () error {
  //parameters: RouteProfileHandle CommunitiesList CommunityIncrement CommunityRepeat
- //AgtBgp4AdVplsRouteProfile SetCommunitiesIncrementingRange, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetCommunitiesIncrementingRange
  return nil
 }
 
@@ -612,25 +612,25 @@ func(np *Bgp4AdVplsRouteProfile) GetCommunitiesList ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) EnableTrafficDestinations () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile EnableTrafficDestinations, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnableTrafficDestinations
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisableTrafficDestinations () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile DisableTrafficDestinations, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisableTrafficDestinations
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsTrafficDestinationsEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile IsTrafficDestinationsEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsTrafficDestinationsEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) SetFlapDistribution () error {
  //parameters: RouteProfileHandle FlapPercentage FlapOffset
- //AgtBgp4AdVplsRouteProfile SetFlapDistribution, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetFlapDistribution
  return nil
 }
 
@@ -642,31 +642,31 @@ func(np *Bgp4AdVplsRouteProfile) GetFlapDistribution ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) Advertise () error {
  //parameters: RouteProfileIdentifiers
- //AgtBgp4AdVplsRouteProfile Advertise, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Advertise
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Withdraw () error {
  //parameters: RouteProfileIdentifiers
- //AgtBgp4AdVplsRouteProfile Withdraw, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Withdraw
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Enable () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile Enable, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Enable
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) Disable () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile Disable, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile Disable
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) SetExportRouteTargetType () error {
  //parameters: RouteProfileHandle RouteTargetTypeValue
- //AgtBgp4AdVplsRouteProfile SetExportRouteTargetType, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetExportRouteTargetType
  return nil
 }
 
@@ -678,7 +678,7 @@ func(np *Bgp4AdVplsRouteProfile) GetExportRouteTargetType ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) SetRouteDistinguisherType () error {
  //parameters: RouteProfileHandle RouteDistinguisherTypeValue
- //AgtBgp4AdVplsRouteProfile SetRouteDistinguisherType, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetRouteDistinguisherType
  return nil
 }
 
@@ -690,25 +690,25 @@ func(np *Bgp4AdVplsRouteProfile) GetRouteDistinguisherType ()(string, error) {
 
 func(np *Bgp4AdVplsRouteProfile) EnableAutoRouteDistinguisher () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile EnableAutoRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile EnableAutoRouteDistinguisher
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) DisableAutoRouteDistinguisher () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile DisableAutoRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile DisableAutoRouteDistinguisher
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) IsAutoRouteDistinguisherEnabled () error {
  //parameters: RouteProfileHandle
- //AgtBgp4AdVplsRouteProfile IsAutoRouteDistinguisherEnabled, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile IsAutoRouteDistinguisherEnabled
  return nil
 }
 
 func(np *Bgp4AdVplsRouteProfile) SetVpnsPerPeer () error {
  //parameters: RouteProfileHandle NumVpnsPerPeer
- //AgtBgp4AdVplsRouteProfile SetVpnsPerPeer, m.Object, m.Name);
+ //AgtBgp4AdVplsRouteProfile SetVpnsPerPeer
  return nil
 }
 

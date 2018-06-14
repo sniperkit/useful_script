@@ -6,7 +6,7 @@ type IgmpSession struct {
 
 func(np *IgmpSession) SetInterfaceIpAddress () error {
  //parameters: SessionHandle TesterIpAddress
- //AgtIgmpSession SetInterfaceIpAddress, m.Object, m.Name);
+ //AgtIgmpSession SetInterfaceIpAddress
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *IgmpSession) GetInterfaceIpAddress ()(string, error) {
 
 func(np *IgmpSession) SetSutIpAddress () error {
  //parameters: SessionHandle SutIpAddress
- //AgtIgmpSession SetSutIpAddress, m.Object, m.Name);
+ //AgtIgmpSession SetSutIpAddress
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *IgmpSession) GetSutIpAddress ()(string, error) {
 
 func(np *IgmpSession) Enable () error {
  //parameters: SessionHandle
- //AgtIgmpSession Enable, m.Object, m.Name);
+ //AgtIgmpSession Enable
  return nil
 }
 
 func(np *IgmpSession) Disable () error {
  //parameters: SessionHandle
- //AgtIgmpSession Disable, m.Object, m.Name);
+ //AgtIgmpSession Disable
  return nil
 }
 
@@ -84,19 +84,19 @@ func(np *IgmpSession) ListIgmpReservedGroups ()(string, error) {
 
 func(np *IgmpSession) AddGroupPools () error {
  //parameters: SessionHandle GroupPoolHandles
- //AgtIgmpSession AddGroupPools, m.Object, m.Name);
+ //AgtIgmpSession AddGroupPools
  return nil
 }
 
 func(np *IgmpSession) RemoveGroupPools () error {
  //parameters: SessionHandle GroupPoolHandles
- //AgtIgmpSession RemoveGroupPools, m.Object, m.Name);
+ //AgtIgmpSession RemoveGroupPools
  return nil
 }
 
 func(np *IgmpSession) RemoveAllGroupPools () error {
  //parameters: SessionHandle
- //AgtIgmpSession RemoveAllGroupPools, m.Object, m.Name);
+ //AgtIgmpSession RemoveAllGroupPools
  return nil
 }
 
@@ -108,19 +108,19 @@ func(np *IgmpSession) ListGroupPools ()(string, error) {
 
 func(np *IgmpSession) AddSourcePools () error {
  //parameters: SessionHandle GroupPoolHandle SourcePoolHandles
- //AgtIgmpSession AddSourcePools, m.Object, m.Name);
+ //AgtIgmpSession AddSourcePools
  return nil
 }
 
 func(np *IgmpSession) RemoveSourcePools () error {
  //parameters: SessionHandle GroupPoolHandle SourcePoolHandles
- //AgtIgmpSession RemoveSourcePools, m.Object, m.Name);
+ //AgtIgmpSession RemoveSourcePools
  return nil
 }
 
 func(np *IgmpSession) RemoveAllSourcePools () error {
  //parameters: SessionHandle GroupPoolHandle
- //AgtIgmpSession RemoveAllSourcePools, m.Object, m.Name);
+ //AgtIgmpSession RemoveAllSourcePools
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *IgmpSession) ListSourcePools ()(string, error) {
 
 func(np *IgmpSession) SetGroupPoolFilter () error {
  //parameters: SessionHandle GroupPoolHandle IgmpFilter
- //AgtIgmpSession SetGroupPoolFilter, m.Object, m.Name);
+ //AgtIgmpSession SetGroupPoolFilter
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *IgmpSession) GetGroupPoolFilter ()(string, error) {
 
 func(np *IgmpSession) SetGroupPoolState () error {
  //parameters: SessionHandle GroupPoolHandle IgmpFilter SourcePoolHandles
- //AgtIgmpSession SetGroupPoolState, m.Object, m.Name);
+ //AgtIgmpSession SetGroupPoolState
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *IgmpSession) ListGroupPoolsInvalid ()(string, error) {
 
 func(np *IgmpSession) IsInvalid () error {
  //parameters: SessionHandle GroupPoolHandle
- //AgtIgmpSession IsInvalid, m.Object, m.Name);
+ //AgtIgmpSession IsInvalid
  return nil
 }
 
@@ -180,31 +180,31 @@ func(np *IgmpSession) ListGroupPoolsJoined ()(string, error) {
 
 func(np *IgmpSession) IsJoined () error {
  //parameters: SessionHandle GroupPoolHandle
- //AgtIgmpSession IsJoined, m.Object, m.Name);
+ //AgtIgmpSession IsJoined
  return nil
 }
 
 func(np *IgmpSession) JoinGroupPools () error {
  //parameters: SessionHandle GroupPoolHandles
- //AgtIgmpSession JoinGroupPools, m.Object, m.Name);
+ //AgtIgmpSession JoinGroupPools
  return nil
 }
 
 func(np *IgmpSession) JoinAllGroupPools () error {
  //parameters: SessionHandle
- //AgtIgmpSession JoinAllGroupPools, m.Object, m.Name);
+ //AgtIgmpSession JoinAllGroupPools
  return nil
 }
 
 func(np *IgmpSession) LeaveGroupPools () error {
  //parameters: SessionHandle GroupPoolHandles
- //AgtIgmpSession LeaveGroupPools, m.Object, m.Name);
+ //AgtIgmpSession LeaveGroupPools
  return nil
 }
 
 func(np *IgmpSession) LeaveAllGroupPools () error {
  //parameters: SessionHandle
- //AgtIgmpSession LeaveAllGroupPools, m.Object, m.Name);
+ //AgtIgmpSession LeaveAllGroupPools
  return nil
 }
 
@@ -216,19 +216,19 @@ func(np *IgmpSession) GetEnableFlag ()(string, error) {
 
 func(np *IgmpSession) SetPduBuffer () error {
  //parameters: SessionHandle MaxBufSize Cyclic
- //AgtIgmpSession SetPduBuffer, m.Object, m.Name);
+ //AgtIgmpSession SetPduBuffer
  return nil
 }
 
 func(np *IgmpSession) StartPduSave () error {
  //parameters: SessionHandle
- //AgtIgmpSession StartPduSave, m.Object, m.Name);
+ //AgtIgmpSession StartPduSave
  return nil
 }
 
 func(np *IgmpSession) StopPduSave () error {
  //parameters: SessionHandle
- //AgtIgmpSession StopPduSave, m.Object, m.Name);
+ //AgtIgmpSession StopPduSave
  return nil
 }
 
@@ -246,25 +246,25 @@ func(np *IgmpSession) GetPduDetails ()(string, error) {
 
 func(np *IgmpSession) DeleteAllPdusInSession () error {
  //parameters: SessionHandle
- //AgtIgmpSession DeleteAllPdusInSession, m.Object, m.Name);
+ //AgtIgmpSession DeleteAllPdusInSession
  return nil
 }
 
 func(np *IgmpSession) DeleteAllPdus () error {
  //parameters: 
- //AgtIgmpSession DeleteAllPdus, m.Object, m.Name);
+ //AgtIgmpSession DeleteAllPdus
  return nil
 }
 
 func(np *IgmpSession) CreateSessionPool () error {
  //parameters: SessionHandles
- //AgtIgmpSession CreateSessionPool, m.Object, m.Name);
+ //AgtIgmpSession CreateSessionPool
  return nil
 }
 
 func(np *IgmpSession) DeleteSessionPool () error {
  //parameters: SessionPoolHandle
- //AgtIgmpSession DeleteSessionPool, m.Object, m.Name);
+ //AgtIgmpSession DeleteSessionPool
  return nil
 }
 
@@ -282,67 +282,67 @@ func(np *IgmpSession) ListSessionPools ()(string, error) {
 
 func(np *IgmpSession) DisableSessionPoolUpdateInfo () error {
  //parameters: 
- //AgtIgmpSession DisableSessionPoolUpdateInfo, m.Object, m.Name);
+ //AgtIgmpSession DisableSessionPoolUpdateInfo
  return nil
 }
 
 func(np *IgmpSession) EnableSessionPoolUpdateInfo () error {
  //parameters: 
- //AgtIgmpSession EnableSessionPoolUpdateInfo, m.Object, m.Name);
+ //AgtIgmpSession EnableSessionPoolUpdateInfo
  return nil
 }
 
 func(np *IgmpSession) IsSessionPoolUpdateInfoEnabled () error {
  //parameters: 
- //AgtIgmpSession IsSessionPoolUpdateInfoEnabled, m.Object, m.Name);
+ //AgtIgmpSession IsSessionPoolUpdateInfoEnabled
  return nil
 }
 
 func(np *IgmpSession) SessionPoolJoinGroupPools () error {
  //parameters: SessionPoolHandle GroupPoolHandles Burst Delay
- //AgtIgmpSession SessionPoolJoinGroupPools, m.Object, m.Name);
+ //AgtIgmpSession SessionPoolJoinGroupPools
  return nil
 }
 
 func(np *IgmpSession) SessionPoolLeaveGroupPools () error {
  //parameters: SessionPoolHandle GroupPoolHandles Burst Delay
- //AgtIgmpSession SessionPoolLeaveGroupPools, m.Object, m.Name);
+ //AgtIgmpSession SessionPoolLeaveGroupPools
  return nil
 }
 
 func(np *IgmpSession) SessionPoolJoinAllGroupPools () error {
  //parameters: SessionPoolHandle Burst Delay
- //AgtIgmpSession SessionPoolJoinAllGroupPools, m.Object, m.Name);
+ //AgtIgmpSession SessionPoolJoinAllGroupPools
  return nil
 }
 
 func(np *IgmpSession) SessionPoolLeaveAllGroupPools () error {
  //parameters: SessionPoolHandle Burst Delay
- //AgtIgmpSession SessionPoolLeaveAllGroupPools, m.Object, m.Name);
+ //AgtIgmpSession SessionPoolLeaveAllGroupPools
  return nil
 }
 
 func(np *IgmpSession) EnableAllSessions () error {
  //parameters: 
- //AgtIgmpSession EnableAllSessions, m.Object, m.Name);
+ //AgtIgmpSession EnableAllSessions
  return nil
 }
 
 func(np *IgmpSession) DisableAllSessions () error {
  //parameters: 
- //AgtIgmpSession DisableAllSessions, m.Object, m.Name);
+ //AgtIgmpSession DisableAllSessions
  return nil
 }
 
 func(np *IgmpSession) SetParameter () error {
  //parameters: 
- //AgtIgmpSession SetParameter, m.Object, m.Name);
+ //AgtIgmpSession SetParameter
  return nil
 }
 
 func(np *IgmpSession) SessionPoolSetPduBuffer () error {
  //parameters: SessionPoolHandle MaxBufSize
- //AgtIgmpSession SessionPoolSetPduBuffer, m.Object, m.Name);
+ //AgtIgmpSession SessionPoolSetPduBuffer
  return nil
 }
 

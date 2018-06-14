@@ -6,7 +6,7 @@ type Bgp4MplsVpnSite struct {
 
 func(np *Bgp4MplsVpnSite) SetRouteDistinguisher () error {
  //parameters: SiteHandle Type Administrator AssignedNumber
- //AgtBgp4MplsVpnSite SetRouteDistinguisher, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite SetRouteDistinguisher
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *Bgp4MplsVpnSite) GetRouteDistinguisher ()(string, error) {
 
 func(np *Bgp4MplsVpnSite) SetName () error {
  //parameters: SiteHandle Name
- //AgtBgp4MplsVpnSite SetName, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite SetName
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *Bgp4MplsVpnSite) GetName ()(string, error) {
 
 func(np *Bgp4MplsVpnSite) AddVpns () error {
  //parameters: SiteHandle Count psaVpnHandles
- //AgtBgp4MplsVpnSite AddVpns, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite AddVpns
  return nil
 }
 
 func(np *Bgp4MplsVpnSite) RemoveVpns () error {
  //parameters: SiteHandle Count psaVpnHandles
- //AgtBgp4MplsVpnSite RemoveVpns, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite RemoveVpns
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *Bgp4MplsVpnSite) ListVpns ()(string, error) {
 
 func(np *Bgp4MplsVpnSite) ClearVpns () error {
  //parameters: SiteHandle
- //AgtBgp4MplsVpnSite ClearVpns, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite ClearVpns
  return nil
 }
 
@@ -72,31 +72,31 @@ func(np *Bgp4MplsVpnSite) GetVrfTable ()(string, error) {
 
 func(np *Bgp4MplsVpnSite) QueryVrfEntry () error {
  //parameters: SiteCount psaSiteHandle Prefix PrefixLength
- //AgtBgp4MplsVpnSite QueryVrfEntry, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite QueryVrfEntry
  return nil
 }
 
 func(np *Bgp4MplsVpnSite) QueryLspLabel () error {
  //parameters: SiteCount psaSiteHandle Destination
- //AgtBgp4MplsVpnSite QueryLspLabel, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite QueryLspLabel
  return nil
 }
 
 func(np *Bgp4MplsVpnSite) Enable () error {
  //parameters: SiteHandle
- //AgtBgp4MplsVpnSite Enable, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite Enable
  return nil
 }
 
 func(np *Bgp4MplsVpnSite) Disable () error {
  //parameters: SiteHandle
- //AgtBgp4MplsVpnSite Disable, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite Disable
  return nil
 }
 
 func(np *Bgp4MplsVpnSite) IsEnabled () error {
  //parameters: SiteHandle
- //AgtBgp4MplsVpnSite IsEnabled, m.Object, m.Name);
+ //AgtBgp4MplsVpnSite IsEnabled
  return nil
 }
 

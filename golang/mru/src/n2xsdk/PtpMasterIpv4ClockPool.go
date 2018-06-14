@@ -6,7 +6,7 @@ type PtpMasterIpv4ClockPool struct {
 
 func(np *PtpMasterIpv4ClockPool) SetClockQuality () error {
  //parameters: SessionPoolHandle ClockClass ClockAccuracy OffsetScaledLogVariance Priority1 Priority2 AlternateMasterFlag StepsRemoved TimeSource
- //AgtPtpMasterIpv4ClockPool SetClockQuality, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetClockQuality
  return nil
 }
 
@@ -18,25 +18,25 @@ func(np *PtpMasterIpv4ClockPool) GetClockQuality ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) EnableAnnounce () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnableAnnounce, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnableAnnounce
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisableAnnounce () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisableAnnounce, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisableAnnounce
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledAnnounce () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledAnnounce, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledAnnounce
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetAnnounceAttributes () error {
  //parameters: SessionPoolHandle LogMessageInterval ReceiptTimeout
- //AgtPtpMasterIpv4ClockPool SetAnnounceAttributes, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetAnnounceAttributes
  return nil
 }
 
@@ -48,25 +48,25 @@ func(np *PtpMasterIpv4ClockPool) GetAnnounceAttributes ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) EnableSync () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnableSync, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnableSync
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisableSync () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisableSync, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisableSync
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledSync () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledSync, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledSync
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetSyncAttributes () error {
  //parameters: SessionPoolHandle TwoStepFlagMode LogMessageInterval
- //AgtPtpMasterIpv4ClockPool SetSyncAttributes, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetSyncAttributes
  return nil
 }
 
@@ -78,25 +78,25 @@ func(np *PtpMasterIpv4ClockPool) GetSyncAttributes ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) EnableFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnableFollowUp, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnableFollowUp
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisableFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisableFollowUp, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisableFollowUp
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledFollowUp, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledFollowUp
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetFollowUpAttributes () error {
  //parameters: SessionPoolHandle FollowUpDelay
- //AgtPtpMasterIpv4ClockPool SetFollowUpAttributes, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetFollowUpAttributes
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *PtpMasterIpv4ClockPool) GetFollowUpAttributes ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) EnableDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnableDelayResponse, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnableDelayResponse
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisableDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisableDelayResponse, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisableDelayResponse
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledDelayResponse, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledDelayResponse
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetDelayResponseAttributes () error {
  //parameters: SessionPoolHandle LogMessageInterval
- //AgtPtpMasterIpv4ClockPool SetDelayResponseAttributes, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetDelayResponseAttributes
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *PtpMasterIpv4ClockPool) GetDelayResponseAttributes ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetDomainNumber () error {
  //parameters: SessionPoolHandle DomainNumber
- //AgtPtpMasterIpv4ClockPool SetDomainNumber, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetDomainNumber
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *PtpMasterIpv4ClockPool) GetDomainNumber ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetPortNumber () error {
  //parameters: SessionPoolHandle PortNumber
- //AgtPtpMasterIpv4ClockPool SetPortNumber, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetPortNumber
  return nil
 }
 
@@ -162,7 +162,7 @@ func(np *PtpMasterIpv4ClockPool) GetPortNumber ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetClockId () error {
  //parameters: SessionPoolHandle ClockId
- //AgtPtpMasterIpv4ClockPool SetClockId, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetClockId
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *PtpMasterIpv4ClockPool) GetClockId ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetClockIdIncrementingRange () error {
  //parameters: SessionPoolHandle FirstClockId Repeat Increment
- //AgtPtpMasterIpv4ClockPool SetClockIdIncrementingRange, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetClockIdIncrementingRange
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *PtpMasterIpv4ClockPool) GetClockIdList ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetPathDelayMode () error {
  //parameters: SessionPoolHandle PathDelayMode
- //AgtPtpMasterIpv4ClockPool SetPathDelayMode, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetPathDelayMode
  return nil
 }
 
@@ -210,61 +210,61 @@ func(np *PtpMasterIpv4ClockPool) GetPathDelayMode ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) EnablePeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnablePeerDelayRequest, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnablePeerDelayRequest
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisablePeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisablePeerDelayRequest, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisablePeerDelayRequest
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledPeerDelayRequest () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledPeerDelayRequest, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledPeerDelayRequest
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) EnablePeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnablePeerDelayResponse, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnablePeerDelayResponse
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisablePeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisablePeerDelayResponse, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisablePeerDelayResponse
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledPeerDelayResponse () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledPeerDelayResponse, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledPeerDelayResponse
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) EnablePeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnablePeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnablePeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisablePeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisablePeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisablePeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledPeerDelayResponseFollowUp () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledPeerDelayResponseFollowUp, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledPeerDelayResponseFollowUp
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetPeerToPeerPathDelayAttributes () error {
  //parameters: SessionPoolHandle LogMessageInterval TwoStepFlagMode FollowUpDelay
- //AgtPtpMasterIpv4ClockPool SetPeerToPeerPathDelayAttributes, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetPeerToPeerPathDelayAttributes
  return nil
 }
 
@@ -276,7 +276,7 @@ func(np *PtpMasterIpv4ClockPool) GetPeerToPeerPathDelayAttributes ()(string, err
 
 func(np *PtpMasterIpv4ClockPool) SetTimestampCalibration () error {
  //parameters: SessionPoolHandle TxOffset RxOffset
- //AgtPtpMasterIpv4ClockPool SetTimestampCalibration, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetTimestampCalibration
  return nil
 }
 
@@ -294,13 +294,13 @@ func(np *PtpMasterIpv4ClockPool) GetVlanPriority ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtPtpMasterIpv4ClockPool SetVlanPriority, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetVlanPriority
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetDestinationAddressType () error {
  //parameters: SessionPoolHandle AddressType
- //AgtPtpMasterIpv4ClockPool SetDestinationAddressType, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetDestinationAddressType
  return nil
 }
 
@@ -312,13 +312,13 @@ func(np *PtpMasterIpv4ClockPool) GetDestinationAddressType ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) IsIpv4PriorityNoCodePointFieldSelected () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsIpv4PriorityNoCodePointFieldSelected, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsIpv4PriorityNoCodePointFieldSelected
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SelectIpv4PriorityNoCodePointField () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool SelectIpv4PriorityNoCodePointField, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SelectIpv4PriorityNoCodePointField
  return nil
 }
 
@@ -330,19 +330,19 @@ func(np *PtpMasterIpv4ClockPool) GetIpv4Priority ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetIpv4Priority () error {
  //parameters: SessionPoolHandle Ipv4Priority
- //AgtPtpMasterIpv4ClockPool SetIpv4Priority, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetIpv4Priority
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsIpv4PriorityTypeOfServiceFieldSelected () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsIpv4PriorityTypeOfServiceFieldSelected, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsIpv4PriorityTypeOfServiceFieldSelected
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SelectIpv4PriorityTypeOfServiceField () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool SelectIpv4PriorityTypeOfServiceField, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SelectIpv4PriorityTypeOfServiceField
  return nil
 }
 
@@ -354,19 +354,19 @@ func(np *PtpMasterIpv4ClockPool) GetIpv4PriorityTypeOfServiceValue ()(string, er
 
 func(np *PtpMasterIpv4ClockPool) SetIpv4PriorityTypeOfServiceValue () error {
  //parameters: SessionPoolHandle TosCodePointField Value
- //AgtPtpMasterIpv4ClockPool SetIpv4PriorityTypeOfServiceValue, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetIpv4PriorityTypeOfServiceValue
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsIpv4PriorityDiffServFieldSelected () error {
  //parameters: SessionPoolHandle DiffServPerHopBehaviorGroup
- //AgtPtpMasterIpv4ClockPool IsIpv4PriorityDiffServFieldSelected, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsIpv4PriorityDiffServFieldSelected
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SelectIpv4PriorityDiffServField () error {
  //parameters: SessionPoolHandle DiffServPerHopBehaviorGroup
- //AgtPtpMasterIpv4ClockPool SelectIpv4PriorityDiffServField, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SelectIpv4PriorityDiffServField
  return nil
 }
 
@@ -378,13 +378,13 @@ func(np *PtpMasterIpv4ClockPool) GetIpv4PriorityDiffServValue ()(string, error) 
 
 func(np *PtpMasterIpv4ClockPool) SetIpv4PriorityDiffServValue () error {
  //parameters: SessionPoolHandle DiffServCodePointConfigurableField Value
- //AgtPtpMasterIpv4ClockPool SetIpv4PriorityDiffServValue, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetIpv4PriorityDiffServValue
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetDestinationAddress () error {
  //parameters: SessionPoolHandle FirstAddress
- //AgtPtpMasterIpv4ClockPool SetDestinationAddress, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetDestinationAddress
  return nil
 }
 
@@ -396,7 +396,7 @@ func(np *PtpMasterIpv4ClockPool) GetDestinationAddress ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetDestinationAddressIncrementingRange () error {
  //parameters: SessionPoolHandle FirstAddress PrefixLength Increment Repeat PercentageOverlap
- //AgtPtpMasterIpv4ClockPool SetDestinationAddressIncrementingRange, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetDestinationAddressIncrementingRange
  return nil
 }
 
@@ -420,7 +420,7 @@ func(np *PtpMasterIpv4ClockPool) GetDestinationAddressList ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetPeerDestinationAddress () error {
  //parameters: SessionPoolHandle PeerAddress
- //AgtPtpMasterIpv4ClockPool SetPeerDestinationAddress, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetPeerDestinationAddress
  return nil
 }
 
@@ -432,25 +432,25 @@ func(np *PtpMasterIpv4ClockPool) GetPeerDestinationAddress ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) EnableUnicastNegotiation () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool EnableUnicastNegotiation, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool EnableUnicastNegotiation
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) DisableUnicastNegotiation () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool DisableUnicastNegotiation, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool DisableUnicastNegotiation
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) IsEnabledUnicastNegotiation () error {
  //parameters: SessionPoolHandle
- //AgtPtpMasterIpv4ClockPool IsEnabledUnicastNegotiation, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool IsEnabledUnicastNegotiation
  return nil
 }
 
 func(np *PtpMasterIpv4ClockPool) SetUnicastGrantDuration () error {
  //parameters: SessionPoolHandle UnicastGrantDuration
- //AgtPtpMasterIpv4ClockPool SetUnicastGrantDuration, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetUnicastGrantDuration
  return nil
 }
 
@@ -462,7 +462,7 @@ func(np *PtpMasterIpv4ClockPool) GetUnicastGrantDuration ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetNumberOfUnicastDestinations () error {
  //parameters: SessionPoolHandle UnicastDestinationCount
- //AgtPtpMasterIpv4ClockPool SetNumberOfUnicastDestinations, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetNumberOfUnicastDestinations
  return nil
 }
 
@@ -474,7 +474,7 @@ func(np *PtpMasterIpv4ClockPool) GetNumberOfUnicastDestinations ()(string, error
 
 func(np *PtpMasterIpv4ClockPool) SetPeerPortNumber () error {
  //parameters: SessionPoolHandle PortNumber
- //AgtPtpMasterIpv4ClockPool SetPeerPortNumber, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetPeerPortNumber
  return nil
 }
 
@@ -486,7 +486,7 @@ func(np *PtpMasterIpv4ClockPool) GetPeerPortNumber ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetPeerClockId () error {
  //parameters: SessionPoolHandle ClockId
- //AgtPtpMasterIpv4ClockPool SetPeerClockId, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetPeerClockId
  return nil
 }
 
@@ -498,7 +498,7 @@ func(np *PtpMasterIpv4ClockPool) GetPeerClockId ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetUdpSourcePort () error {
  //parameters: SessionPoolHandle FirstPort
- //AgtPtpMasterIpv4ClockPool SetUdpSourcePort, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetUdpSourcePort
  return nil
 }
 
@@ -510,7 +510,7 @@ func(np *PtpMasterIpv4ClockPool) GetUdpSourcePort ()(string, error) {
 
 func(np *PtpMasterIpv4ClockPool) SetUdpSourcePortIncrementingRange () error {
  //parameters: SessionPoolHandle FirstPort Increment Repeat
- //AgtPtpMasterIpv4ClockPool SetUdpSourcePortIncrementingRange, m.Object, m.Name);
+ //AgtPtpMasterIpv4ClockPool SetUdpSourcePortIncrementingRange
  return nil
 }
 

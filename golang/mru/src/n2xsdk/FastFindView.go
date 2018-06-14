@@ -12,7 +12,7 @@ func(np *FastFindView) GetFastFindDataSet ()(string, error) {
 
 func(np *FastFindView) SetFastFindDataSet () error {
  //parameters: ViewHandle DataSetHandle
- //AgtFastFindView SetFastFindDataSet, m.Object, m.Name);
+ //AgtFastFindView SetFastFindDataSet
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *FastFindView) GetMeasurementType ()(string, error) {
 
 func(np *FastFindView) SetMeasurementType () error {
  //parameters: ViewHandle MeasurementType
- //AgtFastFindView SetMeasurementType, m.Object, m.Name);
+ //AgtFastFindView SetMeasurementType
  return nil
 }
 
 func(np *FastFindView) IsDataSourceValid () error {
  //parameters: ViewHandle
- //AgtFastFindView IsDataSourceValid, m.Object, m.Name);
+ //AgtFastFindView IsDataSourceValid
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *FastFindView) GetSortOrder ()(string, error) {
 
 func(np *FastFindView) SetSortOrder () error {
  //parameters: ViewHandle Columns Directions
- //AgtFastFindView SetSortOrder, m.Object, m.Name);
+ //AgtFastFindView SetSortOrder
  return nil
 }
 
 func(np *FastFindView) ClearSort () error {
  //parameters: ViewHandle
- //AgtFastFindView ClearSort, m.Object, m.Name);
+ //AgtFastFindView ClearSort
  return nil
 }
 
@@ -66,13 +66,13 @@ func(np *FastFindView) GetFilter ()(string, error) {
 
 func(np *FastFindView) SetFilter () error {
  //parameters: ViewHandle Filter
- //AgtFastFindView SetFilter, m.Object, m.Name);
+ //AgtFastFindView SetFilter
  return nil
 }
 
 func(np *FastFindView) ClearFilter () error {
  //parameters: ViewHandle
- //AgtFastFindView ClearFilter, m.Object, m.Name);
+ //AgtFastFindView ClearFilter
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *FastFindView) GetRows ()(string, error) {
 
 func(np *FastFindView) Export () error {
  //parameters: ViewHandle Format Filename
- //AgtFastFindView Export, m.Object, m.Name);
+ //AgtFastFindView Export
  return nil
 }
 

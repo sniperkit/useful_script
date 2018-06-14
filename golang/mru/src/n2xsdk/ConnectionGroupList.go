@@ -6,31 +6,31 @@ type ConnectionGroupList struct {
 
 func(np *ConnectionGroupLis) Add () error {
  //parameters: Type
- //AgtConnectionGroupList Add, m.Object, m.Name);
+ //AgtConnectionGroupList Add
  return nil
 }
 
 func(np *ConnectionGroupLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtConnectionGroupList AddItems, m.Object, m.Name);
+ //AgtConnectionGroupList AddItems
  return nil
 }
 
 func(np *ConnectionGroupLis) Remove () error {
  //parameters: Handle
- //AgtConnectionGroupList Remove, m.Object, m.Name);
+ //AgtConnectionGroupList Remove
  return nil
 }
 
 func(np *ConnectionGroupLis) Copy () error {
  //parameters: Handle
- //AgtConnectionGroupList Copy, m.Object, m.Name);
+ //AgtConnectionGroupList Copy
  return nil
 }
 
 func(np *ConnectionGroupLis) SetName () error {
  //parameters: Handle Name
- //AgtConnectionGroupList SetName, m.Object, m.Name);
+ //AgtConnectionGroupList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *ConnectionGroupLis) GetType ()(string, error) {
 
 func(np *ConnectionGroupLis) LockItem () error {
  //parameters: Handle
- //AgtConnectionGroupList LockItem, m.Object, m.Name);
+ //AgtConnectionGroupList LockItem
  return nil
 }
 
 func(np *ConnectionGroupLis) UnlockItem () error {
  //parameters: Handle
- //AgtConnectionGroupList UnlockItem, m.Object, m.Name);
+ //AgtConnectionGroupList UnlockItem
  return nil
 }
 
@@ -114,13 +114,13 @@ func(np *ConnectionGroupLis) ListSupportedApplicationTypesOnPort ()(string, erro
 
 func(np *ConnectionGroupLis) AddConnectionGroups () error {
  //parameters: ApplicationType NumberOfClientPortHandles psaClientPortHandles NumberOfServerPortHandles psaServerPortHandles
- //AgtConnectionGroupList AddConnectionGroups, m.Object, m.Name);
+ //AgtConnectionGroupList AddConnectionGroups
  return nil
 }
 
 func(np *ConnectionGroupLis) Clear () error {
  //parameters: 
- //AgtConnectionGroupList Clear, m.Object, m.Name);
+ //AgtConnectionGroupList Clear
  return nil
 }
 

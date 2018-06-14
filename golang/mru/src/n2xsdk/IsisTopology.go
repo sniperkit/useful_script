@@ -6,7 +6,7 @@ type IsisTopology struct {
 
 func(np *IsisTopology) Add () error {
  //parameters: DatabaseHandle Type
- //AgtIsisTopology Add, m.Object, m.Name);
+ //AgtIsisTopology Add
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *IsisTopology) GetType ()(string, error) {
 
 func(np *IsisTopology) Remove () error {
  //parameters: ObjectHandle
- //AgtIsisTopology Remove, m.Object, m.Name);
+ //AgtIsisTopology Remove
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *IsisTopology) ListHandlesByType ()(string, error) {
 
 func(np *IsisTopology) IsTopologyChangedOnRestore () error {
  //parameters: DatabaseHandle
- //AgtIsisTopology IsTopologyChangedOnRestore, m.Object, m.Name);
+ //AgtIsisTopology IsTopologyChangedOnRestore
  return nil
 }
 

@@ -6,19 +6,19 @@ type Device struct {
 
 func(np *Device) Enable () error {
  //parameters: DeviceHandle
- //AgtDevice Enable, m.Object, m.Name);
+ //AgtDevice Enable
  return nil
 }
 
 func(np *Device) Disable () error {
  //parameters: DeviceHandle
- //AgtDevice Disable, m.Object, m.Name);
+ //AgtDevice Disable
  return nil
 }
 
 func(np *Device) SetPoolSize () error {
  //parameters: DeviceHandle PoolSize
- //AgtDevice SetPoolSize, m.Object, m.Name);
+ //AgtDevice SetPoolSize
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *Device) GetPoolSize ()(string, error) {
 
 func(np *Device) ResetStatistics () error {
  //parameters: DeviceHandle
- //AgtDevice ResetStatistics, m.Object, m.Name);
+ //AgtDevice ResetStatistics
  return nil
 }
 
 func(np *Device) Reset () error {
  //parameters: DeviceHandle
- //AgtDevice Reset, m.Object, m.Name);
+ //AgtDevice Reset
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *Device) ListStreamGroups ()(string, error) {
 
 func(np *Device) RemoveAllStreamGroups () error {
  //parameters: DeviceHandle
- //AgtDevice RemoveAllStreamGroups, m.Object, m.Name);
+ //AgtDevice RemoveAllStreamGroups
  return nil
 }
 
@@ -66,25 +66,25 @@ func(np *Device) ListMeshes ()(string, error) {
 
 func(np *Device) RemoveAllMeshes () error {
  //parameters: DeviceHandle
- //AgtDevice RemoveAllMeshes, m.Object, m.Name);
+ //AgtDevice RemoveAllMeshes
  return nil
 }
 
 func(np *Device) AddEmulation () error {
  //parameters: DeviceHandle EmulationType
- //AgtDevice AddEmulation, m.Object, m.Name);
+ //AgtDevice AddEmulation
  return nil
 }
 
 func(np *Device) RemoveEmulation () error {
  //parameters: DeviceHandle EmulationType
- //AgtDevice RemoveEmulation, m.Object, m.Name);
+ //AgtDevice RemoveEmulation
  return nil
 }
 
 func(np *Device) RemoveAllEmulations () error {
  //parameters: DeviceHandle
- //AgtDevice RemoveAllEmulations, m.Object, m.Name);
+ //AgtDevice RemoveAllEmulations
  return nil
 }
 

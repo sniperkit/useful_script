@@ -6,49 +6,49 @@ type PppEmulation struct {
 
 func(np *PppEmulation) Enable () error {
  //parameters: PortHandle
- //AgtPppEmulation Enable, m.Object, m.Name);
+ //AgtPppEmulation Enable
  return nil
 }
 
 func(np *PppEmulation) Disable () error {
  //parameters: PortHandle
- //AgtPppEmulation Disable, m.Object, m.Name);
+ //AgtPppEmulation Disable
  return nil
 }
 
 func(np *PppEmulation) EnableNcp () error {
  //parameters: PortHandle NcpProtocol
- //AgtPppEmulation EnableNcp, m.Object, m.Name);
+ //AgtPppEmulation EnableNcp
  return nil
 }
 
 func(np *PppEmulation) DisableNcp () error {
  //parameters: PortHandle NcpProtocol
- //AgtPppEmulation DisableNcp, m.Object, m.Name);
+ //AgtPppEmulation DisableNcp
  return nil
 }
 
 func(np *PppEmulation) Open () error {
  //parameters: PortHandle
- //AgtPppEmulation Open, m.Object, m.Name);
+ //AgtPppEmulation Open
  return nil
 }
 
 func(np *PppEmulation) Close () error {
  //parameters: PortHandle
- //AgtPppEmulation Close, m.Object, m.Name);
+ //AgtPppEmulation Close
  return nil
 }
 
 func(np *PppEmulation) OpenNcp () error {
  //parameters: PortHandle NcpProtocol
- //AgtPppEmulation OpenNcp, m.Object, m.Name);
+ //AgtPppEmulation OpenNcp
  return nil
 }
 
 func(np *PppEmulation) CloseNcp () error {
  //parameters: PortHandle NcpProtocol
- //AgtPppEmulation CloseNcp, m.Object, m.Name);
+ //AgtPppEmulation CloseNcp
  return nil
 }
 
@@ -72,13 +72,13 @@ func(np *PppEmulation) GetLastError ()(string, error) {
 
 func(np *PppEmulation) IsPppSupported () error {
  //parameters: PortHandle
- //AgtPppEmulation IsPppSupported, m.Object, m.Name);
+ //AgtPppEmulation IsPppSupported
  return nil
 }
 
 func(np *PppEmulation) SetDefaultLcpConfigurationOption () error {
  //parameters: PortHandle LcpOption DefaultValue
- //AgtPppEmulation SetDefaultLcpConfigurationOption, m.Object, m.Name);
+ //AgtPppEmulation SetDefaultLcpConfigurationOption
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *PppEmulation) GetDefaultLcpConfigurationOption ()(string, error) {
 
 func(np *PppEmulation) SetLcpConfigurationOption () error {
  //parameters: PortHandle LcpOption DesiredValue
- //AgtPppEmulation SetLcpConfigurationOption, m.Object, m.Name);
+ //AgtPppEmulation SetLcpConfigurationOption
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *PppEmulation) GetRemoteLcpConfigurationValue ()(string, error) {
 
 func(np *PppEmulation) SetEmulationParameter () error {
  //parameters: PortHandle PppParameter Value
- //AgtPppEmulation SetEmulationParameter, m.Object, m.Name);
+ //AgtPppEmulation SetEmulationParameter
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *PppEmulation) GetRemoteIpcpConfigurationValue ()(string, error) {
 
 func(np *PppEmulation) SetDefaultNcpConfigurationOption () error {
  //parameters: PortHandle NcpProtocol NcpOption DefaultValue
- //AgtPppEmulation SetDefaultNcpConfigurationOption, m.Object, m.Name);
+ //AgtPppEmulation SetDefaultNcpConfigurationOption
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *PppEmulation) GetDefaultNcpConfigurationOption ()(string, error) {
 
 func(np *PppEmulation) SetNcpConfigurationOption () error {
  //parameters: PortHandle NcpProtocol NcpOption DesiredValue
- //AgtPppEmulation SetNcpConfigurationOption, m.Object, m.Name);
+ //AgtPppEmulation SetNcpConfigurationOption
  return nil
 }
 

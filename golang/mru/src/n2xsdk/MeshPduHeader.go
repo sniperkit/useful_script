@@ -6,13 +6,13 @@ type MeshPduHeader struct {
 
 func(np *MeshPduHeader) SetPduHeaders () error {
  //parameters: MeshHandle Count psaProtocolList
- //AgtMeshPduHeader SetPduHeaders, m.Object, m.Name);
+ //AgtMeshPduHeader SetPduHeaders
  return nil
 }
 
 func(np *MeshPduHeader) SetPduHeadersByPacketType () error {
  //parameters: MeshHandle L2Protocol PacketType
- //AgtMeshPduHeader SetPduHeadersByPacketType, m.Object, m.Name);
+ //AgtMeshPduHeader SetPduHeadersByPacketType
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *MeshPduHeader) GetFieldFixedValue ()(string, error) {
 
 func(np *MeshPduHeader) SetFieldFixedValue () error {
  //parameters: MeshHandle Protocol ProtocolInstance Field FieldValue
- //AgtMeshPduHeader SetFieldFixedValue, m.Object, m.Name);
+ //AgtMeshPduHeader SetFieldFixedValue
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *MeshPduHeader) GetFieldIncrementingValueRange ()(string, error) {
 
 func(np *MeshPduHeader) SetFieldIncrementingValueRange () error {
  //parameters: MeshHandle Protocol ProtocolInstance Field InFieldOffset StartValue NumValues StepSize
- //AgtMeshPduHeader SetFieldIncrementingValueRange, m.Object, m.Name);
+ //AgtMeshPduHeader SetFieldIncrementingValueRange
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *MeshPduHeader) GetFieldDecrementingValueRange ()(string, error) {
 
 func(np *MeshPduHeader) SetFieldDecrementingValueRange () error {
  //parameters: MeshHandle Protocol ProtocolInstance Field InFieldOffset StartValue NumValues StepSize
- //AgtMeshPduHeader SetFieldDecrementingValueRange, m.Object, m.Name);
+ //AgtMeshPduHeader SetFieldDecrementingValueRange
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *MeshPduHeader) GetFieldRandomValueRange ()(string, error) {
 
 func(np *MeshPduHeader) SetFieldRandomValueRange () error {
  //parameters: MeshHandle Protocol ProtocolInstance Field InFieldOffset MinValue MaxValue
- //AgtMeshPduHeader SetFieldRandomValueRange, m.Object, m.Name);
+ //AgtMeshPduHeader SetFieldRandomValueRange
  return nil
 }
 
@@ -84,19 +84,19 @@ func(np *MeshPduHeader) SetFieldValueList ()(string, error) {
 
 func(np *MeshPduHeader) EnableOptionalField () error {
  //parameters: MeshHandle Protocol ProtocolInstance OptionalField
- //AgtMeshPduHeader EnableOptionalField, m.Object, m.Name);
+ //AgtMeshPduHeader EnableOptionalField
  return nil
 }
 
 func(np *MeshPduHeader) DisableOptionalField () error {
  //parameters: MeshHandle Protocol ProtocolInstance OptionalField
- //AgtMeshPduHeader DisableOptionalField, m.Object, m.Name);
+ //AgtMeshPduHeader DisableOptionalField
  return nil
 }
 
 func(np *MeshPduHeader) IsOptionalFieldEnabled () error {
  //parameters: MeshHandle Protocol ProtocolInstance OptionalField
- //AgtMeshPduHeader IsOptionalFieldEnabled, m.Object, m.Name);
+ //AgtMeshPduHeader IsOptionalFieldEnabled
  return nil
 }
 

@@ -6,13 +6,13 @@ type LdpLspEgressPoolList struct {
 
 func(np *LdpLspEgressPoolLis) AddLspPool () error {
  //parameters: SessionHandle FecType NumLsps PoolType
- //AgtLdpLspEgressPoolList AddLspPool, m.Object, m.Name);
+ //AgtLdpLspEgressPoolList AddLspPool
  return nil
 }
 
 func(np *LdpLspEgressPoolLis) RemoveLspPool () error {
  //parameters: SessionHandle PoolHandle
- //AgtLdpLspEgressPoolList RemoveLspPool, m.Object, m.Name);
+ //AgtLdpLspEgressPoolList RemoveLspPool
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *LdpLspEgressPoolLis) ListLspPools ()(string, error) {
 
 func(np *LdpLspEgressPoolLis) ClearLspPools () error {
  //parameters: SessionHandle
- //AgtLdpLspEgressPoolList ClearLspPools, m.Object, m.Name);
+ //AgtLdpLspEgressPoolList ClearLspPools
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *LdpLspEgressPoolLis) IsEnabledPoolList ()(string, error) {
 
 func(np *LdpLspEgressPoolLis) OpenAllLdpLspPools () error {
  //parameters: 
- //AgtLdpLspEgressPoolList OpenAllLdpLspPools, m.Object, m.Name);
+ //AgtLdpLspEgressPoolList OpenAllLdpLspPools
  return nil
 }
 
 func(np *LdpLspEgressPoolLis) CloseAllLdpLspPools () error {
  //parameters: 
- //AgtLdpLspEgressPoolList CloseAllLdpLspPools, m.Object, m.Name);
+ //AgtLdpLspEgressPoolList CloseAllLdpLspPools
  return nil
 }
 

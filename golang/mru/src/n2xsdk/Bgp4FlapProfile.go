@@ -6,7 +6,7 @@ type Bgp4FlapProfile struct {
 
 func(np *Bgp4FlapProfile) SetRoutesPerUpdate () error {
  //parameters: PeerPoolHandle Routes
- //AgtBgp4FlapProfile SetRoutesPerUpdate, m.Object, m.Name);
+ //AgtBgp4FlapProfile SetRoutesPerUpdate
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *Bgp4FlapProfile) GetInterUpdateDelay ()(string, error) {
 
 func(np *Bgp4FlapProfile) SetInterUpdateDelay () error {
  //parameters: PeerPoolHandle Delay
- //AgtBgp4FlapProfile SetInterUpdateDelay, m.Object, m.Name);
+ //AgtBgp4FlapProfile SetInterUpdateDelay
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *Bgp4FlapProfile) GetAdvertiseToWithdrawDelay ()(string, error) {
 
 func(np *Bgp4FlapProfile) SetAdvertiseToWithdrawDelay () error {
  //parameters: PeerPoolHandle Delay
- //AgtBgp4FlapProfile SetAdvertiseToWithdrawDelay, m.Object, m.Name);
+ //AgtBgp4FlapProfile SetAdvertiseToWithdrawDelay
  return nil
 }
 
@@ -48,13 +48,13 @@ func(np *Bgp4FlapProfile) GetWithdrawToAdvertiseDelay ()(string, error) {
 
 func(np *Bgp4FlapProfile) SetWithdrawToAdvertiseDelay () error {
  //parameters: PeerPoolHandle Delay
- //AgtBgp4FlapProfile SetWithdrawToAdvertiseDelay, m.Object, m.Name);
+ //AgtBgp4FlapProfile SetWithdrawToAdvertiseDelay
  return nil
 }
 
 func(np *Bgp4FlapProfile) SetRoutePools () error {
  //parameters: PeerPoolHandle RoutePoolHandles
- //AgtBgp4FlapProfile SetRoutePools, m.Object, m.Name);
+ //AgtBgp4FlapProfile SetRoutePools
  return nil
 }
 
@@ -66,13 +66,13 @@ func(np *Bgp4FlapProfile) GetRoutePools ()(string, error) {
 
 func(np *Bgp4FlapProfile) StartFlap () error {
  //parameters: PeerPoolHandle
- //AgtBgp4FlapProfile StartFlap, m.Object, m.Name);
+ //AgtBgp4FlapProfile StartFlap
  return nil
 }
 
 func(np *Bgp4FlapProfile) StopFlap () error {
  //parameters: PeerPoolHandle
- //AgtBgp4FlapProfile StopFlap, m.Object, m.Name);
+ //AgtBgp4FlapProfile StopFlap
  return nil
 }
 

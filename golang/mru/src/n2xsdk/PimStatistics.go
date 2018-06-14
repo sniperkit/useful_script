@@ -12,13 +12,13 @@ func(np *PimStatistics) ListSelectedSessions ()(string, error) {
 
 func(np *PimStatistics) SelectSessions () error {
  //parameters: Count psaSessionHandles
- //AgtPimStatistics SelectSessions, m.Object, m.Name);
+ //AgtPimStatistics SelectSessions
  return nil
 }
 
 func(np *PimStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtPimStatistics DeselectSession, m.Object, m.Name);
+ //AgtPimStatistics DeselectSession
  return nil
 }
 

@@ -6,7 +6,7 @@ type Bgp4VpnIpv4RoutePool struct {
 
 func(np *Bgp4VpnIpv4RoutePool) SetRoutes () error {
  //parameters: RoutePoolHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtBgp4VpnIpv4RoutePool SetRoutes, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetRoutes
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetLabel ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetNextHop () error {
  //parameters: RoutePoolHandle NextHop
- //AgtBgp4VpnIpv4RoutePool SetNextHop, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetNextHop
  return nil
 }
 
@@ -30,13 +30,13 @@ func(np *Bgp4VpnIpv4RoutePool) GetNextHop ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetNextHops () error {
  //parameters: RoutePoolHandle NextHops
- //AgtBgp4VpnIpv4RoutePool SetNextHops, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetNextHops
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) SetOrigin () error {
  //parameters: RoutePoolHandle Origin
- //AgtBgp4VpnIpv4RoutePool SetOrigin, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetOrigin
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetOrigin ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetCommunities () error {
  //parameters: RoutePoolHandle CommunitiesList
- //AgtBgp4VpnIpv4RoutePool SetCommunities, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetCommunities
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetCommunities ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetPathAttributeString () error {
  //parameters: RoutePoolHandle PathAttribute PathAttributeString
- //AgtBgp4VpnIpv4RoutePool SetPathAttributeString, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetPathAttributeString
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetPathAttributeString ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetPathAttributeLong () error {
  //parameters: RoutePoolHandle PathAttribute PathAttributeLong
- //AgtBgp4VpnIpv4RoutePool SetPathAttributeLong, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetPathAttributeLong
  return nil
 }
 
@@ -84,19 +84,19 @@ func(np *Bgp4VpnIpv4RoutePool) GetPathAttributeLong ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) IsPathAttributeSelected () error {
  //parameters: RoutePoolHandle PathAttribute
- //AgtBgp4VpnIpv4RoutePool IsPathAttributeSelected, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool IsPathAttributeSelected
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) IsPathAttributeSet () error {
  //parameters: RoutePoolHandle PathAttribute
- //AgtBgp4VpnIpv4RoutePool IsPathAttributeSet, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool IsPathAttributeSet
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) SetAsPath () error {
  //parameters: RoutePoolHandle AsPathAttributeType AsNumber
- //AgtBgp4VpnIpv4RoutePool SetAsPath, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetAsPath
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetMaximumAsPathLength ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetAggregator () error {
  //parameters: RoutePoolHandle AsNumber IpAddress
- //AgtBgp4VpnIpv4RoutePool SetAggregator, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetAggregator
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetAggregator ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetOriginatorId () error {
  //parameters: RoutePoolHandle OriginatorId
- //AgtBgp4VpnIpv4RoutePool SetOriginatorId, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetOriginatorId
  return nil
 }
 
@@ -156,43 +156,43 @@ func(np *Bgp4VpnIpv4RoutePool) GetClusterList ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) Enable () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool Enable, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool Enable
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) Disable () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool Disable, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool Disable
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) IsEnabled () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool IsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool IsEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) Advertise () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool Advertise, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool Advertise
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) AdvertisePools () error {
  //parameters: RoutePoolHandles RoutesPerUpdate InterUpdateDelay
- //AgtBgp4VpnIpv4RoutePool AdvertisePools, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool AdvertisePools
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) Withdraw () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool Withdraw, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool Withdraw
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) WithdrawPools () error {
  //parameters: RoutePoolHandles RoutesPerUpdate InterUpdateDelay
- //AgtBgp4VpnIpv4RoutePool WithdrawPools, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool WithdrawPools
  return nil
 }
 
@@ -204,55 +204,55 @@ func(np *Bgp4VpnIpv4RoutePool) GetState ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SelectPathAttribute () error {
  //parameters: RoutePoolHandle PathAttribute
- //AgtBgp4VpnIpv4RoutePool SelectPathAttribute, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SelectPathAttribute
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) DeselectPathAttribute () error {
  //parameters: RoutePoolHandle PathAttribute
- //AgtBgp4VpnIpv4RoutePool DeselectPathAttribute, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool DeselectPathAttribute
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) EnableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool EnableTrafficDestinations
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) DisableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool DisableTrafficDestinations
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) EnableTraffic () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool EnableTraffic, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool EnableTraffic
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) DisableTraffic () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool DisableTraffic, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool DisableTraffic
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) SetRoutePoolFlag () error {
  //parameters: RoutePoolHandle RoutePoolFlag
- //AgtBgp4VpnIpv4RoutePool SetRoutePoolFlag, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetRoutePoolFlag
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) UnsetRoutePoolFlag () error {
  //parameters: RoutePoolHandle RoutePoolFlag
- //AgtBgp4VpnIpv4RoutePool UnsetRoutePoolFlag, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool UnsetRoutePoolFlag
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) SetResourceClasses () error {
  //parameters: RoutePoolHandle ResourceClasses
- //AgtBgp4VpnIpv4RoutePool SetResourceClasses, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetResourceClasses
  return nil
 }
 
@@ -270,7 +270,7 @@ func(np *Bgp4VpnIpv4RoutePool) GetNumWithdrawnRoutes ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) SetExportTarget () error {
  //parameters: RoutePoolHandle RouteTargetType Administrator AssignedNumber
- //AgtBgp4VpnIpv4RoutePool SetExportTarget, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool SetExportTarget
  return nil
 }
 
@@ -300,13 +300,13 @@ func(np *Bgp4VpnIpv4RoutePool) GetRoutes ()(string, error) {
 
 func(np *Bgp4VpnIpv4RoutePool) IsTrafficDestinationEnabled () error {
  //parameters: RoutePoolHandle
- //AgtBgp4VpnIpv4RoutePool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool IsTrafficDestinationEnabled
  return nil
 }
 
 func(np *Bgp4VpnIpv4RoutePool) IsRoutePoolFlagSet () error {
  //parameters: RoutePoolHandle Flag
- //AgtBgp4VpnIpv4RoutePool IsRoutePoolFlagSet, m.Object, m.Name);
+ //AgtBgp4VpnIpv4RoutePool IsRoutePoolFlagSet
  return nil
 }
 

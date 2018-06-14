@@ -6,7 +6,7 @@ type MldHostPool struct {
 
 func(np *MldHostPool) SetVersion () error {
  //parameters: DeviceHandle MldVersion
- //AgtMldHostPool SetVersion, m.Object, m.Name);
+ //AgtMldHostPool SetVersion
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *MldHostPool) GetVersion ()(string, error) {
 
 func(np *MldHostPool) SetParameter () error {
  //parameters: DeviceHandle Parameter Value
- //AgtMldHostPool SetParameter, m.Object, m.Name);
+ //AgtMldHostPool SetParameter
  return nil
 }
 
@@ -36,19 +36,19 @@ func(np *MldHostPool) GetInfo ()(string, error) {
 
 func(np *MldHostPool) AddGroupPools () error {
  //parameters: DeviceHandle GroupPoolHandles
- //AgtMldHostPool AddGroupPools, m.Object, m.Name);
+ //AgtMldHostPool AddGroupPools
  return nil
 }
 
 func(np *MldHostPool) RemoveGroupPools () error {
  //parameters: DeviceHandle GroupPoolHandles
- //AgtMldHostPool RemoveGroupPools, m.Object, m.Name);
+ //AgtMldHostPool RemoveGroupPools
  return nil
 }
 
 func(np *MldHostPool) RemoveAllGroupPools () error {
  //parameters: DeviceHandle
- //AgtMldHostPool RemoveAllGroupPools, m.Object, m.Name);
+ //AgtMldHostPool RemoveAllGroupPools
  return nil
 }
 
@@ -60,19 +60,19 @@ func(np *MldHostPool) ListGroupPools ()(string, error) {
 
 func(np *MldHostPool) AddSourcePools () error {
  //parameters: SessionList GroupPoolHandle SourcePoolHandles
- //AgtMldHostPool AddSourcePools, m.Object, m.Name);
+ //AgtMldHostPool AddSourcePools
  return nil
 }
 
 func(np *MldHostPool) RemoveSourcePools () error {
  //parameters: SessionList GroupPoolHandle SourcePoolHandles
- //AgtMldHostPool RemoveSourcePools, m.Object, m.Name);
+ //AgtMldHostPool RemoveSourcePools
  return nil
 }
 
 func(np *MldHostPool) RemoveAllSourcePools () error {
  //parameters: SessionList GroupPoolHandle
- //AgtMldHostPool RemoveAllSourcePools, m.Object, m.Name);
+ //AgtMldHostPool RemoveAllSourcePools
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *MldHostPool) ListSourcePools ()(string, error) {
 
 func(np *MldHostPool) SetGroupPoolFilter () error {
  //parameters: SessionList GroupPoolHandle MldFilter
- //AgtMldHostPool SetGroupPoolFilter, m.Object, m.Name);
+ //AgtMldHostPool SetGroupPoolFilter
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *MldHostPool) GetGroupPoolFilter ()(string, error) {
 
 func(np *MldHostPool) SetGroupPoolState () error {
  //parameters: SessionList GroupPoolHandle MldFilter SourcePoolHandles
- //AgtMldHostPool SetGroupPoolState, m.Object, m.Name);
+ //AgtMldHostPool SetGroupPoolState
  return nil
 }
 
@@ -120,43 +120,43 @@ func(np *MldHostPool) ListGroupPoolsJoined ()(string, error) {
 
 func(np *MldHostPool) IsJoined () error {
  //parameters: SessionList GroupPoolHandle
- //AgtMldHostPool IsJoined, m.Object, m.Name);
+ //AgtMldHostPool IsJoined
  return nil
 }
 
 func(np *MldHostPool) JoinGroupPools () error {
  //parameters: SessionList GroupPoolHandles
- //AgtMldHostPool JoinGroupPools, m.Object, m.Name);
+ //AgtMldHostPool JoinGroupPools
  return nil
 }
 
 func(np *MldHostPool) JoinAllGroupPools () error {
  //parameters: SessionList
- //AgtMldHostPool JoinAllGroupPools, m.Object, m.Name);
+ //AgtMldHostPool JoinAllGroupPools
  return nil
 }
 
 func(np *MldHostPool) LeaveGroupPools () error {
  //parameters: SessionList GroupPoolHandles
- //AgtMldHostPool LeaveGroupPools, m.Object, m.Name);
+ //AgtMldHostPool LeaveGroupPools
  return nil
 }
 
 func(np *MldHostPool) LeaveAllGroupPools () error {
  //parameters: SessionList
- //AgtMldHostPool LeaveAllGroupPools, m.Object, m.Name);
+ //AgtMldHostPool LeaveAllGroupPools
  return nil
 }
 
 func(np *MldHostPool) StartPduSave () error {
  //parameters: SessionList
- //AgtMldHostPool StartPduSave, m.Object, m.Name);
+ //AgtMldHostPool StartPduSave
  return nil
 }
 
 func(np *MldHostPool) StopPduSave () error {
  //parameters: SessionList
- //AgtMldHostPool StopPduSave, m.Object, m.Name);
+ //AgtMldHostPool StopPduSave
  return nil
 }
 
@@ -180,7 +180,7 @@ func(np *MldHostPool) GetAllPduDetails ()(string, error) {
 
 func(np *MldHostPool) DeletePdus () error {
  //parameters: SessionList
- //AgtMldHostPool DeletePdus, m.Object, m.Name);
+ //AgtMldHostPool DeletePdus
  return nil
 }
 
@@ -192,19 +192,19 @@ func(np *MldHostPool) GetVlanPriority ()(string, error) {
 
 func(np *MldHostPool) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtMldHostPool SetVlanPriority, m.Object, m.Name);
+ //AgtMldHostPool SetVlanPriority
  return nil
 }
 
 func(np *MldHostPool) IsIpv6PriorityNoCodePointFieldSelected () error {
  //parameters: DeviceHandle
- //AgtMldHostPool IsIpv6PriorityNoCodePointFieldSelected, m.Object, m.Name);
+ //AgtMldHostPool IsIpv6PriorityNoCodePointFieldSelected
  return nil
 }
 
 func(np *MldHostPool) SelectIpv6PriorityNoCodePointField () error {
  //parameters: DeviceHandle
- //AgtMldHostPool SelectIpv6PriorityNoCodePointField, m.Object, m.Name);
+ //AgtMldHostPool SelectIpv6PriorityNoCodePointField
  return nil
 }
 
@@ -216,19 +216,19 @@ func(np *MldHostPool) GetIpv6Priority ()(string, error) {
 
 func(np *MldHostPool) SetIpv6Priority () error {
  //parameters: DeviceHandle Ipv6Priority
- //AgtMldHostPool SetIpv6Priority, m.Object, m.Name);
+ //AgtMldHostPool SetIpv6Priority
  return nil
 }
 
 func(np *MldHostPool) IsIpv6PriorityDiffServFieldSelected () error {
  //parameters: DeviceHandle DiffServPerHopBehaviorGroup
- //AgtMldHostPool IsIpv6PriorityDiffServFieldSelected, m.Object, m.Name);
+ //AgtMldHostPool IsIpv6PriorityDiffServFieldSelected
  return nil
 }
 
 func(np *MldHostPool) SelectIpv6PriorityDiffServField () error {
  //parameters: DeviceHandle DiffServPerHopBehaviorGroup
- //AgtMldHostPool SelectIpv6PriorityDiffServField, m.Object, m.Name);
+ //AgtMldHostPool SelectIpv6PriorityDiffServField
  return nil
 }
 
@@ -240,7 +240,7 @@ func(np *MldHostPool) GetIpv6PriorityDiffServValue ()(string, error) {
 
 func(np *MldHostPool) SetIpv6PriorityDiffServValue () error {
  //parameters: DeviceHandle DiffServCodePointConfigurableField Value
- //AgtMldHostPool SetIpv6PriorityDiffServValue, m.Object, m.Name);
+ //AgtMldHostPool SetIpv6PriorityDiffServValue
  return nil
 }
 

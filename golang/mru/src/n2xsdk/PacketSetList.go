@@ -6,31 +6,31 @@ type PacketSetList struct {
 
 func(np *PacketSetLis) Add () error {
  //parameters: Type
- //AgtPacketSetList Add, m.Object, m.Name);
+ //AgtPacketSetList Add
  return nil
 }
 
 func(np *PacketSetLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtPacketSetList AddItems, m.Object, m.Name);
+ //AgtPacketSetList AddItems
  return nil
 }
 
 func(np *PacketSetLis) Remove () error {
  //parameters: Handle
- //AgtPacketSetList Remove, m.Object, m.Name);
+ //AgtPacketSetList Remove
  return nil
 }
 
 func(np *PacketSetLis) Copy () error {
  //parameters: Handle
- //AgtPacketSetList Copy, m.Object, m.Name);
+ //AgtPacketSetList Copy
  return nil
 }
 
 func(np *PacketSetLis) SetName () error {
  //parameters: Handle Name
- //AgtPacketSetList SetName, m.Object, m.Name);
+ //AgtPacketSetList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *PacketSetLis) GetType ()(string, error) {
 
 func(np *PacketSetLis) LockItem () error {
  //parameters: Handle
- //AgtPacketSetList LockItem, m.Object, m.Name);
+ //AgtPacketSetList LockItem
  return nil
 }
 
 func(np *PacketSetLis) UnlockItem () error {
  //parameters: Handle
- //AgtPacketSetList UnlockItem, m.Object, m.Name);
+ //AgtPacketSetList UnlockItem
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *PacketSetLis) GetHandleByRequestID ()(string, error) {
 
 func(np *PacketSetLis) WaitForPacketSets () error {
  //parameters: NumRequests psaPacketRequestIDs
- //AgtPacketSetList WaitForPacketSets, m.Object, m.Name);
+ //AgtPacketSetList WaitForPacketSets
  return nil
 }
 

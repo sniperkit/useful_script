@@ -24,25 +24,25 @@ func(np *PppMesh) GetLockCount ()(string, error) {
 
 func(np *PppMesh) Enable () error {
  //parameters: MeshHandle
- //AgtPppMesh Enable, m.Object, m.Name);
+ //AgtPppMesh Enable
  return nil
 }
 
 func(np *PppMesh) Disable () error {
  //parameters: MeshHandle
- //AgtPppMesh Disable, m.Object, m.Name);
+ //AgtPppMesh Disable
  return nil
 }
 
 func(np *PppMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtPppMesh IsEnabled, m.Object, m.Name);
+ //AgtPppMesh IsEnabled
  return nil
 }
 
 func(np *PppMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtPppMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtPppMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *PppMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *PppMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtPppMesh SetLengthMode, m.Object, m.Name);
+ //AgtPppMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *PppMesh) GetLengthMode ()(string, error) {
 
 func(np *PppMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtPppMesh SetLength, m.Object, m.Name);
+ //AgtPppMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *PppMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *PppMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtPppMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtPppMesh EnableStreamGeneration
  return nil
 }
 
 func(np *PppMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtPppMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtPppMesh DisableStreamGeneration
  return nil
 }
 
 func(np *PppMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtPppMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtPppMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *PppMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtPppMesh SetAverageLoad, m.Object, m.Name);
+ //AgtPppMesh SetAverageLoad
  return nil
 }
 
@@ -138,19 +138,19 @@ func(np *PppMesh) GetAverageLoad ()(string, error) {
 
 func(np *PppMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtPppMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtPppMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *PppMesh) AddSessionPools () error {
  //parameters: MeshHandle SourceCount SessionPools DestinationCount DestinationPorts
- //AgtPppMesh AddSessionPools, m.Object, m.Name);
+ //AgtPppMesh AddSessionPools
  return nil
 }
 
 func(np *PppMesh) RemoveSessionPools () error {
  //parameters: MeshHandle Count SessionPools
- //AgtPppMesh RemoveSessionPools, m.Object, m.Name);
+ //AgtPppMesh RemoveSessionPools
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *PppMesh) GetSessionPoolForStreamGroup ()(string, error) {
 
 func(np *PppMesh) SetEndpointTypes () error {
  //parameters: MeshHandle SourceType DestinationType
- //AgtPppMesh SetEndpointTypes, m.Object, m.Name);
+ //AgtPppMesh SetEndpointTypes
  return nil
 }
 
@@ -186,13 +186,13 @@ func(np *PppMesh) GetEndpointTypes ()(string, error) {
 
 func(np *PppMesh) AddSourcesAndDestinations () error {
  //parameters: MeshHandle SourceCount Sources DestinationCount Destinations
- //AgtPppMesh AddSourcesAndDestinations, m.Object, m.Name);
+ //AgtPppMesh AddSourcesAndDestinations
  return nil
 }
 
 func(np *PppMesh) AddDestinationsBySource () error {
  //parameters: MeshHandle Source DestinationCount Destinations
- //AgtPppMesh AddDestinationsBySource, m.Object, m.Name);
+ //AgtPppMesh AddDestinationsBySource
  return nil
 }
 
@@ -228,19 +228,19 @@ func(np *PppMesh) GetSourceAndDestinationForStreamGroup ()(string, error) {
 
 func(np *PppMesh) RemoveSources () error {
  //parameters: MeshHandle Count Sources
- //AgtPppMesh RemoveSources, m.Object, m.Name);
+ //AgtPppMesh RemoveSources
  return nil
 }
 
 func(np *PppMesh) RemoveDestinationsBySource () error {
  //parameters: MeshHandle Source Count Destinations
- //AgtPppMesh RemoveDestinationsBySource, m.Object, m.Name);
+ //AgtPppMesh RemoveDestinationsBySource
  return nil
 }
 
 func(np *PppMesh) Clear () error {
  //parameters: MeshHandle
- //AgtPppMesh Clear, m.Object, m.Name);
+ //AgtPppMesh Clear
  return nil
 }
 

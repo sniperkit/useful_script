@@ -6,7 +6,7 @@ type EthernetOamTst struct {
 
 func(np *EthernetOamTs) SetDestinationMacAddress () error {
  //parameters: SessionPoolHandle MacAddress
- //AgtEthernetOamTst SetDestinationMacAddress, m.Object, m.Name);
+ //AgtEthernetOamTst SetDestinationMacAddress
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *EthernetOamTs) GetDestinationMacAddress ()(string, error) {
 
 func(np *EthernetOamTs) SetMegLevel () error {
  //parameters: SessionPoolHandle Level
- //AgtEthernetOamTst SetMegLevel, m.Object, m.Name);
+ //AgtEthernetOamTst SetMegLevel
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *EthernetOamTs) GetMegLevel ()(string, error) {
 
 func(np *EthernetOamTs) SetSeqNumber () error {
  //parameters: SessionPoolHandle SeqNumber
- //AgtEthernetOamTst SetSeqNumber, m.Object, m.Name);
+ //AgtEthernetOamTst SetSeqNumber
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *EthernetOamTs) GetSeqNumber ()(string, error) {
 
 func(np *EthernetOamTs) SetTestTlv () error {
  //parameters: SessionPoolHandle TestTlvLength TestTlvPatternType
- //AgtEthernetOamTst SetTestTlv, m.Object, m.Name);
+ //AgtEthernetOamTst SetTestTlv
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *EthernetOamTs) GetTestTlv ()(string, error) {
 
 func(np *EthernetOamTs) SetBurstSize () error {
  //parameters: SessionPoolHandle BurstSize
- //AgtEthernetOamTst SetBurstSize, m.Object, m.Name);
+ //AgtEthernetOamTst SetBurstSize
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *EthernetOamTs) GetBurstSize ()(string, error) {
 
 func(np *EthernetOamTs) SetBurstDelay () error {
  //parameters: SessionPoolHandle BurstDelay
- //AgtEthernetOamTst SetBurstDelay, m.Object, m.Name);
+ //AgtEthernetOamTst SetBurstDelay
  return nil
 }
 
@@ -78,25 +78,25 @@ func(np *EthernetOamTs) GetBurstDelay ()(string, error) {
 
 func(np *EthernetOamTs) EnableRenew () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamTst EnableRenew, m.Object, m.Name);
+ //AgtEthernetOamTst EnableRenew
  return nil
 }
 
 func(np *EthernetOamTs) DisableRenew () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamTst DisableRenew, m.Object, m.Name);
+ //AgtEthernetOamTst DisableRenew
  return nil
 }
 
 func(np *EthernetOamTs) IsRenewEnabled () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamTst IsRenewEnabled, m.Object, m.Name);
+ //AgtEthernetOamTst IsRenewEnabled
  return nil
 }
 
 func(np *EthernetOamTs) SetRenewTimeout () error {
  //parameters: SessionPoolHandle RenewTimeout
- //AgtEthernetOamTst SetRenewTimeout, m.Object, m.Name);
+ //AgtEthernetOamTst SetRenewTimeout
  return nil
 }
 
@@ -108,13 +108,13 @@ func(np *EthernetOamTs) GetRenewTimeout ()(string, error) {
 
 func(np *EthernetOamTs) Start () error {
  //parameters: SessionPoolHandle
- //AgtEthernetOamTst Start, m.Object, m.Name);
+ //AgtEthernetOamTst Start
  return nil
 }
 
 func(np *EthernetOamTs) SetIncrementingParameter () error {
  //parameters: SessionPoolHandle IncrementingParameter Value Repeat Increment
- //AgtEthernetOamTst SetIncrementingParameter, m.Object, m.Name);
+ //AgtEthernetOamTst SetIncrementingParameter
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *EthernetOamTs) GetVlanPriority ()(string, error) {
 
 func(np *EthernetOamTs) SetVlanPriority () error {
  //parameters: DeviceHandle VlanTagIndex VlanPriority
- //AgtEthernetOamTst SetVlanPriority, m.Object, m.Name);
+ //AgtEthernetOamTst SetVlanPriority
  return nil
 }
 

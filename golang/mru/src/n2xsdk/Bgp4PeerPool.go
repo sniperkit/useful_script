@@ -6,7 +6,7 @@ type Bgp4PeerPool struct {
 
 func(np *Bgp4PeerPool) SetSutAsNumberIncrementingRange () error {
  //parameters: PeerPoolHandle FirstAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4PeerPool SetSutAsNumberIncrementingRange, m.Object, m.Name);
+ //AgtBgp4PeerPool SetSutAsNumberIncrementingRange
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *Bgp4PeerPool) GetSutAsNumberList ()(string, error) {
 
 func(np *Bgp4PeerPool) SetTesterAsNumberIncrementingRange () error {
  //parameters: PeerPoolHandle FirstAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4PeerPool SetTesterAsNumberIncrementingRange, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTesterAsNumberIncrementingRange
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *Bgp4PeerPool) GetTesterAsNumberIncrementingRange ()(string, error) {
 
 func(np *Bgp4PeerPool) SetTester4ByteAsNumberIncrementingRange () error {
  //parameters: PeerPoolHandle FirstAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4PeerPool SetTester4ByteAsNumberIncrementingRange, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTester4ByteAsNumberIncrementingRange
  return nil
 }
 
 func(np *Bgp4PeerPool) SetTester4ByteAsNumberIncrementingRangeWithFormat () error {
  //parameters: PeerPoolHandle FourByteFormatType FirstAsNumber AsNumberIncrement AsNumberRepeat
- //AgtBgp4PeerPool SetTester4ByteAsNumberIncrementingRangeWithFormat, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTester4ByteAsNumberIncrementingRangeWithFormat
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *Bgp4PeerPool) GetTester4ByteAsNumberListWithFormat ()(string, error) {
 
 func(np *Bgp4PeerPool) SetSutAsNumber () error {
  //parameters: PeerPoolHandle AsNumber
- //AgtBgp4PeerPool SetSutAsNumber, m.Object, m.Name);
+ //AgtBgp4PeerPool SetSutAsNumber
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *Bgp4PeerPool) GetSutAsNumber ()(string, error) {
 
 func(np *Bgp4PeerPool) SetTesterAsNumber () error {
  //parameters: PeerPoolHandle AsNumber
- //AgtBgp4PeerPool SetTesterAsNumber, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTesterAsNumber
  return nil
 }
 
@@ -126,13 +126,13 @@ func(np *Bgp4PeerPool) GetTesterAsNumber ()(string, error) {
 
 func(np *Bgp4PeerPool) SetTesterAsNumberType () error {
  //parameters: PeerPoolHandle TesterAsNumberType
- //AgtBgp4PeerPool SetTesterAsNumberType, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTesterAsNumberType
  return nil
 }
 
 func(np *Bgp4PeerPool) SetTester4ByteAsNumberFormat () error {
  //parameters: PeerPoolHandle TesterAsNumberType
- //AgtBgp4PeerPool SetTester4ByteAsNumberFormat, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTester4ByteAsNumberFormat
  return nil
 }
 
@@ -150,13 +150,13 @@ func(np *Bgp4PeerPool) GetTester4ByteAsNumberFormat ()(string, error) {
 
 func(np *Bgp4PeerPool) SetTester4ByteAsNumber () error {
  //parameters: PeerPoolHandle AsNumber
- //AgtBgp4PeerPool SetTester4ByteAsNumber, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTester4ByteAsNumber
  return nil
 }
 
 func(np *Bgp4PeerPool) SetTester4ByteAsNumberWithFormat () error {
  //parameters: PeerPoolHandle FourByteFormatType AsNumber
- //AgtBgp4PeerPool SetTester4ByteAsNumberWithFormat, m.Object, m.Name);
+ //AgtBgp4PeerPool SetTester4ByteAsNumberWithFormat
  return nil
 }
 
@@ -180,13 +180,13 @@ func(np *Bgp4PeerPool) GetState ()(string, error) {
 
 func(np *Bgp4PeerPool) IsEnabled () error {
  //parameters: PeerPoolInstance
- //AgtBgp4PeerPool IsEnabled, m.Object, m.Name);
+ //AgtBgp4PeerPool IsEnabled
  return nil
 }
 
 func(np *Bgp4PeerPool) SetNotificationParameters () error {
  //parameters: PeerPoolHandle ErrorCode ErrorSubcode
- //AgtBgp4PeerPool SetNotificationParameters, m.Object, m.Name);
+ //AgtBgp4PeerPool SetNotificationParameters
  return nil
 }
 
@@ -204,7 +204,7 @@ func(np *Bgp4PeerPool) GetLastError ()(string, error) {
 
 func(np *Bgp4PeerPool) SetOpenParameter () error {
  //parameters: PeerPoolHandle OpenParameter Value
- //AgtBgp4PeerPool SetOpenParameter, m.Object, m.Name);
+ //AgtBgp4PeerPool SetOpenParameter
  return nil
 }
 
@@ -216,25 +216,25 @@ func(np *Bgp4PeerPool) GetOpenParameter ()(string, error) {
 
 func(np *Bgp4PeerPool) EnableKeepAliveTimerNegotiation () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool EnableKeepAliveTimerNegotiation, m.Object, m.Name);
+ //AgtBgp4PeerPool EnableKeepAliveTimerNegotiation
  return nil
 }
 
 func(np *Bgp4PeerPool) DisableKeepAliveTimerNegotiation () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool DisableKeepAliveTimerNegotiation, m.Object, m.Name);
+ //AgtBgp4PeerPool DisableKeepAliveTimerNegotiation
  return nil
 }
 
 func(np *Bgp4PeerPool) IsKeepAliveTimerNegotiationEnabled () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool IsKeepAliveTimerNegotiationEnabled, m.Object, m.Name);
+ //AgtBgp4PeerPool IsKeepAliveTimerNegotiationEnabled
  return nil
 }
 
 func(np *Bgp4PeerPool) SetRoutesPerUpdate () error {
  //parameters: PeerPoolHandle NumRoutes
- //AgtBgp4PeerPool SetRoutesPerUpdate, m.Object, m.Name);
+ //AgtBgp4PeerPool SetRoutesPerUpdate
  return nil
 }
 
@@ -246,7 +246,7 @@ func(np *Bgp4PeerPool) GetRoutesPerUpdate ()(string, error) {
 
 func(np *Bgp4PeerPool) SetInterUpdateDelay () error {
  //parameters: PeerPoolHandle Delay
- //AgtBgp4PeerPool SetInterUpdateDelay, m.Object, m.Name);
+ //AgtBgp4PeerPool SetInterUpdateDelay
  return nil
 }
 
@@ -258,61 +258,61 @@ func(np *Bgp4PeerPool) GetInterUpdateDelay ()(string, error) {
 
 func(np *Bgp4PeerPool) EnableDiscardMode () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool EnableDiscardMode, m.Object, m.Name);
+ //AgtBgp4PeerPool EnableDiscardMode
  return nil
 }
 
 func(np *Bgp4PeerPool) DisableDiscardMode () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool DisableDiscardMode, m.Object, m.Name);
+ //AgtBgp4PeerPool DisableDiscardMode
  return nil
 }
 
 func(np *Bgp4PeerPool) IsDiscardModeEnabled () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool IsDiscardModeEnabled, m.Object, m.Name);
+ //AgtBgp4PeerPool IsDiscardModeEnabled
  return nil
 }
 
 func(np *Bgp4PeerPool) EnableAllEndOfRibMarkers () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool EnableAllEndOfRibMarkers, m.Object, m.Name);
+ //AgtBgp4PeerPool EnableAllEndOfRibMarkers
  return nil
 }
 
 func(np *Bgp4PeerPool) DisableAllEndOfRibMarkers () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool DisableAllEndOfRibMarkers, m.Object, m.Name);
+ //AgtBgp4PeerPool DisableAllEndOfRibMarkers
  return nil
 }
 
 func(np *Bgp4PeerPool) IsAllEndOfRibMarkersEnabled () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool IsAllEndOfRibMarkersEnabled, m.Object, m.Name);
+ //AgtBgp4PeerPool IsAllEndOfRibMarkersEnabled
  return nil
 }
 
 func(np *Bgp4PeerPool) EnableMd5Authentication () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool EnableMd5Authentication, m.Object, m.Name);
+ //AgtBgp4PeerPool EnableMd5Authentication
  return nil
 }
 
 func(np *Bgp4PeerPool) DisableMd5Authentication () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool DisableMd5Authentication, m.Object, m.Name);
+ //AgtBgp4PeerPool DisableMd5Authentication
  return nil
 }
 
 func(np *Bgp4PeerPool) IsMd5AuthenticationEnabled () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool IsMd5AuthenticationEnabled, m.Object, m.Name);
+ //AgtBgp4PeerPool IsMd5AuthenticationEnabled
  return nil
 }
 
 func(np *Bgp4PeerPool) SetMd5AuthenticationKey () error {
  //parameters: PeerPoolHandle Md5Key
- //AgtBgp4PeerPool SetMd5AuthenticationKey, m.Object, m.Name);
+ //AgtBgp4PeerPool SetMd5AuthenticationKey
  return nil
 }
 
@@ -324,37 +324,37 @@ func(np *Bgp4PeerPool) GetMd5AuthenticationKey ()(string, error) {
 
 func(np *Bgp4PeerPool) Enable () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool Enable, m.Object, m.Name);
+ //AgtBgp4PeerPool Enable
  return nil
 }
 
 func(np *Bgp4PeerPool) Disable () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool Disable, m.Object, m.Name);
+ //AgtBgp4PeerPool Disable
  return nil
 }
 
 func(np *Bgp4PeerPool) Open () error {
  //parameters: PeerPoolIdentifiers
- //AgtBgp4PeerPool Open, m.Object, m.Name);
+ //AgtBgp4PeerPool Open
  return nil
 }
 
 func(np *Bgp4PeerPool) Close () error {
  //parameters: PeerPoolIdentifiers
- //AgtBgp4PeerPool Close, m.Object, m.Name);
+ //AgtBgp4PeerPool Close
  return nil
 }
 
 func(np *Bgp4PeerPool) CloseAllPeersWithoutNotification () error {
  //parameters: PeerPoolIdentifiers SessionCloseType
- //AgtBgp4PeerPool CloseAllPeersWithoutNotification, m.Object, m.Name);
+ //AgtBgp4PeerPool CloseAllPeersWithoutNotification
  return nil
 }
 
 func(np *Bgp4PeerPool) SetRouteProfileName () error {
  //parameters: PeerPoolHandle RouteProfileHandle RouteProfileName
- //AgtBgp4PeerPool SetRouteProfileName, m.Object, m.Name);
+ //AgtBgp4PeerPool SetRouteProfileName
  return nil
 }
 
@@ -366,19 +366,19 @@ func(np *Bgp4PeerPool) GetRouteProfileName ()(string, error) {
 
 func(np *Bgp4PeerPool) AddRouteProfile () error {
  //parameters: PeerPoolHandle RouteProfileType
- //AgtBgp4PeerPool AddRouteProfile, m.Object, m.Name);
+ //AgtBgp4PeerPool AddRouteProfile
  return nil
 }
 
 func(np *Bgp4PeerPool) RemoveRouteProfiles () error {
  //parameters: PeerPoolHandle RouteProfileHandle
- //AgtBgp4PeerPool RemoveRouteProfiles, m.Object, m.Name);
+ //AgtBgp4PeerPool RemoveRouteProfiles
  return nil
 }
 
 func(np *Bgp4PeerPool) ClearRouteProfiles () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool ClearRouteProfiles, m.Object, m.Name);
+ //AgtBgp4PeerPool ClearRouteProfiles
  return nil
 }
 
@@ -402,19 +402,19 @@ func(np *Bgp4PeerPool) GetRouteProfileType ()(string, error) {
 
 func(np *Bgp4PeerPool) AddVpnVrfPool () error {
  //parameters: PeerPoolHandle VpnVrfPoolType
- //AgtBgp4PeerPool AddVpnVrfPool, m.Object, m.Name);
+ //AgtBgp4PeerPool AddVpnVrfPool
  return nil
 }
 
 func(np *Bgp4PeerPool) RemoveVpnVrfPools () error {
  //parameters: PeerPoolHandle VpnVrfPoolHandle
- //AgtBgp4PeerPool RemoveVpnVrfPools, m.Object, m.Name);
+ //AgtBgp4PeerPool RemoveVpnVrfPools
  return nil
 }
 
 func(np *Bgp4PeerPool) ClearVpnVrfPools () error {
  //parameters: PeerPoolHandle
- //AgtBgp4PeerPool ClearVpnVrfPools, m.Object, m.Name);
+ //AgtBgp4PeerPool ClearVpnVrfPools
  return nil
 }
 
@@ -426,7 +426,7 @@ func(np *Bgp4PeerPool) ListVpnVrfPools ()(string, error) {
 
 func(np *Bgp4PeerPool) SetVpnVrfPoolName () error {
  //parameters: PeerPoolHandle VpnVrfPoolHandle VpnVrfPoolName
- //AgtBgp4PeerPool SetVpnVrfPoolName, m.Object, m.Name);
+ //AgtBgp4PeerPool SetVpnVrfPoolName
  return nil
 }
 
@@ -438,13 +438,13 @@ func(np *Bgp4PeerPool) GetVpnVrfPoolName ()(string, error) {
 
 func(np *Bgp4PeerPool) AddUpdateMessageCaptureFilter () error {
  //parameters: PeerPoolHandle MessageCaptureFilterType
- //AgtBgp4PeerPool AddUpdateMessageCaptureFilter, m.Object, m.Name);
+ //AgtBgp4PeerPool AddUpdateMessageCaptureFilter
  return nil
 }
 
 func(np *Bgp4PeerPool) RemoveUpdateMessageCaptureFilter () error {
  //parameters: PeerPoolHandle AfiSafiHandle
- //AgtBgp4PeerPool RemoveUpdateMessageCaptureFilter, m.Object, m.Name);
+ //AgtBgp4PeerPool RemoveUpdateMessageCaptureFilter
  return nil
 }
 
@@ -456,43 +456,43 @@ func(np *Bgp4PeerPool) ListUpdateMessageCaptureFilters ()(string, error) {
 
 func(np *Bgp4PeerPool) EnableAllSessions () error {
  //parameters: 
- //AgtBgp4PeerPool EnableAllSessions, m.Object, m.Name);
+ //AgtBgp4PeerPool EnableAllSessions
  return nil
 }
 
 func(np *Bgp4PeerPool) DisableAllSessions () error {
  //parameters: 
- //AgtBgp4PeerPool DisableAllSessions, m.Object, m.Name);
+ //AgtBgp4PeerPool DisableAllSessions
  return nil
 }
 
 func(np *Bgp4PeerPool) EnableAllPeerPools () error {
  //parameters: 
- //AgtBgp4PeerPool EnableAllPeerPools, m.Object, m.Name);
+ //AgtBgp4PeerPool EnableAllPeerPools
  return nil
 }
 
 func(np *Bgp4PeerPool) DisableAllPeerPools () error {
  //parameters: 
- //AgtBgp4PeerPool DisableAllPeerPools, m.Object, m.Name);
+ //AgtBgp4PeerPool DisableAllPeerPools
  return nil
 }
 
 func(np *Bgp4PeerPool) OpenAllPeerPools () error {
  //parameters: 
- //AgtBgp4PeerPool OpenAllPeerPools, m.Object, m.Name);
+ //AgtBgp4PeerPool OpenAllPeerPools
  return nil
 }
 
 func(np *Bgp4PeerPool) CloseAllPeerPools () error {
  //parameters: 
- //AgtBgp4PeerPool CloseAllPeerPools, m.Object, m.Name);
+ //AgtBgp4PeerPool CloseAllPeerPools
  return nil
 }
 
 func(np *Bgp4PeerPool) SetDefaultOpenParameter () error {
  //parameters: Parameter Value
- //AgtBgp4PeerPool SetDefaultOpenParameter, m.Object, m.Name);
+ //AgtBgp4PeerPool SetDefaultOpenParameter
  return nil
 }
 

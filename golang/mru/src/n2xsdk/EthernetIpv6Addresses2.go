@@ -6,31 +6,31 @@ type EthernetIpv6Addresses2 struct {
 
 func(np *EthernetIpv6Addresses2) AddSutIpv6Address () error {
  //parameters: PortHandle VlanNum psaVlanIds SutIpv6Address
- //AgtEthernetIpv6Addresses2 AddSutIpv6Address, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 AddSutIpv6Address
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) RemoveSutIpv6Address () error {
  //parameters: PortHandle VlanNum psaVlanIds SutIpv6Address
- //AgtEthernetIpv6Addresses2 RemoveSutIpv6Address, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 RemoveSutIpv6Address
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) RemoveAllIpv6SutAddresses () error {
  //parameters: PortHandle
- //AgtEthernetIpv6Addresses2 RemoveAllIpv6SutAddresses, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 RemoveAllIpv6SutAddresses
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) AddSutIpv6Addresses () error {
  //parameters: PortHandle SutFirstIpv6Address SutNumAddresses SutAddressModifier VlanNum psaFirstVlanIds IncrementsNum psaVlanIdIncrements
- //AgtEthernetIpv6Addresses2 AddSutIpv6Addresses, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 AddSutIpv6Addresses
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) CheckAddSutIpv6Addresses () error {
  //parameters: PortHandle SutFirstIpv6Address SutNumAddresses SutAddressModifier VlanNum psaFirstVlanIds IncrementsNum psaVlanIdIncrements
- //AgtEthernetIpv6Addresses2 CheckAddSutIpv6Addresses, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 CheckAddSutIpv6Addresses
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *EthernetIpv6Addresses2) GetSutIpv6AddressCount ()(string, error) {
 
 func(np *EthernetIpv6Addresses2) SetSutMacAddress () error {
  //parameters: PortHandle VlanNum psaVlanIds SutIpv6Address MacAddress
- //AgtEthernetIpv6Addresses2 SetSutMacAddress, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 SetSutMacAddress
  return nil
 }
 
@@ -54,37 +54,37 @@ func(np *EthernetIpv6Addresses2) GetSutMacAddress ()(string, error) {
 
 func(np *EthernetIpv6Addresses2) AddAddressPool () error {
  //parameters: PortHandle TesterFirstIpv6Address TesterPrefixLength TesterNumAddresses TesterAddressModifier VlanNum psaVlanIds
- //AgtEthernetIpv6Addresses2 AddAddressPool, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 AddAddressPool
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) CheckAddAddressPool () error {
  //parameters: PortHandle TesterFirstIpv6Address TesterPrefixLength TesterNumAddresses TesterAddressModifier VlanNum psaVlanIds
- //AgtEthernetIpv6Addresses2 CheckAddAddressPool, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 CheckAddAddressPool
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) AddAddressPools () error {
  //parameters: PortHandle NumOfAddressPools TesterFirstIpv6Address TesterPrefixLength TesterNumAddressesPerPool InPoolAddressModifier AcrossPoolAddressModifier VlanNum psaFirstVlanIds IncrementsNum psaVlanIdIncrements
- //AgtEthernetIpv6Addresses2 AddAddressPools, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 AddAddressPools
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) CheckAddAddressPools () error {
  //parameters: PortHandle NumOfAddressPools TesterFirstIpv6Address TesterPrefixLength TesterNumAddressesPerPool InPoolAddressModifier AcrossPoolAddressModifier VlanNum psaFirstVlanIds IncrementsNum psaVlanIdIncrements
- //AgtEthernetIpv6Addresses2 CheckAddAddressPools, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 CheckAddAddressPools
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) RemoveAddressPool () error {
  //parameters: PortHandle AddressPoolHandle
- //AgtEthernetIpv6Addresses2 RemoveAddressPool, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 RemoveAddressPool
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) RemoveAllAddressPools () error {
  //parameters: PortHandle
- //AgtEthernetIpv6Addresses2 RemoveAllAddressPools, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 RemoveAllAddressPools
  return nil
 }
 
@@ -150,19 +150,19 @@ func(np *EthernetIpv6Addresses2) ListAddressPoolsByVlan ()(string, error) {
 
 func(np *EthernetIpv6Addresses2) RemoveVlan () error {
  //parameters: PortHandle VlanNum psaVlanIds
- //AgtEthernetIpv6Addresses2 RemoveVlan, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 RemoveVlan
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) RemoveAllVlans () error {
  //parameters: PortHandle
- //AgtEthernetIpv6Addresses2 RemoveAllVlans, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 RemoveAllVlans
  return nil
 }
 
 func(np *EthernetIpv6Addresses2) SetVlanEtherType () error {
  //parameters: PortHandle VlanIndex EtherType
- //AgtEthernetIpv6Addresses2 SetVlanEtherType, m.Object, m.Name);
+ //AgtEthernetIpv6Addresses2 SetVlanEtherType
  return nil
 }
 

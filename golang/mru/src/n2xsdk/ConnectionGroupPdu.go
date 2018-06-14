@@ -18,19 +18,19 @@ func(np *ConnectionGroupPdu) ListOptionalFields ()(string, error) {
 
 func(np *ConnectionGroupPdu) EnableOptionalField () error {
  //parameters: PduHandle OptionalPduField
- //AgtConnectionGroupPdu EnableOptionalField, m.Object, m.Name);
+ //AgtConnectionGroupPdu EnableOptionalField
  return nil
 }
 
 func(np *ConnectionGroupPdu) DisableOptionalField () error {
  //parameters: PduHandle OptionalPduField
- //AgtConnectionGroupPdu DisableOptionalField, m.Object, m.Name);
+ //AgtConnectionGroupPdu DisableOptionalField
  return nil
 }
 
 func(np *ConnectionGroupPdu) IsOptionalFieldEnabled () error {
  //parameters: PduHandle OptionalPduField
- //AgtConnectionGroupPdu IsOptionalFieldEnabled, m.Object, m.Name);
+ //AgtConnectionGroupPdu IsOptionalFieldEnabled
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *ConnectionGroupPdu) GetFieldValueType ()(string, error) {
 
 func(np *ConnectionGroupPdu) SetValue () error {
  //parameters: PduHandle PduField Value
- //AgtConnectionGroupPdu SetValue, m.Object, m.Name);
+ //AgtConnectionGroupPdu SetValue
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *ConnectionGroupPdu) GetValue ()(string, error) {
 
 func(np *ConnectionGroupPdu) SetValueRange () error {
  //parameters: PduHandle PduField StartValue Count Step
- //AgtConnectionGroupPdu SetValueRange, m.Object, m.Name);
+ //AgtConnectionGroupPdu SetValueRange
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *ConnectionGroupPdu) GetValueList ()(string, error) {
 
 func(np *ConnectionGroupPdu) SetAddress () error {
  //parameters: PduHandle PduField Address
- //AgtConnectionGroupPdu SetAddress, m.Object, m.Name);
+ //AgtConnectionGroupPdu SetAddress
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *ConnectionGroupPdu) GetAddress ()(string, error) {
 
 func(np *ConnectionGroupPdu) SetAddressRange () error {
  //parameters: PduHandle PduField StartAddress Count IpPrefixOrMacOffset Step
- //AgtConnectionGroupPdu SetAddressRange, m.Object, m.Name);
+ //AgtConnectionGroupPdu SetAddressRange
  return nil
 }
 

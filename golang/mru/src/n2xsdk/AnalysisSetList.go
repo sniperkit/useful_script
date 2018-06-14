@@ -6,31 +6,31 @@ type AnalysisSetList struct {
 
 func(np *nalysisSetLis) Add () error {
  //parameters: Type
- //AgtAnalysisSetList Add, m.Object, m.Name);
+ //AgtAnalysisSetList Add
  return nil
 }
 
 func(np *nalysisSetLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtAnalysisSetList AddItems, m.Object, m.Name);
+ //AgtAnalysisSetList AddItems
  return nil
 }
 
 func(np *nalysisSetLis) Remove () error {
  //parameters: Handle
- //AgtAnalysisSetList Remove, m.Object, m.Name);
+ //AgtAnalysisSetList Remove
  return nil
 }
 
 func(np *nalysisSetLis) Copy () error {
  //parameters: Handle
- //AgtAnalysisSetList Copy, m.Object, m.Name);
+ //AgtAnalysisSetList Copy
  return nil
 }
 
 func(np *nalysisSetLis) SetName () error {
  //parameters: Handle Name
- //AgtAnalysisSetList SetName, m.Object, m.Name);
+ //AgtAnalysisSetList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *nalysisSetLis) GetType ()(string, error) {
 
 func(np *nalysisSetLis) LockItem () error {
  //parameters: Handle
- //AgtAnalysisSetList LockItem, m.Object, m.Name);
+ //AgtAnalysisSetList LockItem
  return nil
 }
 
 func(np *nalysisSetLis) UnlockItem () error {
  //parameters: Handle
- //AgtAnalysisSetList UnlockItem, m.Object, m.Name);
+ //AgtAnalysisSetList UnlockItem
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *nalysisSetLis) GetHandleByRequestID ()(string, error) {
 
 func(np *nalysisSetLis) WaitForAnalysisSets () error {
  //parameters: NumRequests psaAnalysisRequestIDs
- //AgtAnalysisSetList WaitForAnalysisSets, m.Object, m.Name);
+ //AgtAnalysisSetList WaitForAnalysisSets
  return nil
 }
 

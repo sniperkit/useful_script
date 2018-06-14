@@ -6,25 +6,25 @@ type LmiEmulation struct {
 
 func(np *LmiEmulation) Enable () error {
  //parameters: PortHandle
- //AgtLmiEmulation Enable, m.Object, m.Name);
+ //AgtLmiEmulation Enable
  return nil
 }
 
 func(np *LmiEmulation) Disable () error {
  //parameters: PortHandle
- //AgtLmiEmulation Disable, m.Object, m.Name);
+ //AgtLmiEmulation Disable
  return nil
 }
 
 func(np *LmiEmulation) IsEnabled () error {
  //parameters: PortHandle
- //AgtLmiEmulation IsEnabled, m.Object, m.Name);
+ //AgtLmiEmulation IsEnabled
  return nil
 }
 
 func(np *LmiEmulation) SetVersion () error {
  //parameters: PortHandle Version
- //AgtLmiEmulation SetVersion, m.Object, m.Name);
+ //AgtLmiEmulation SetVersion
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *LmiEmulation) GetVersion ()(string, error) {
 
 func(np *LmiEmulation) SetEmulationMode () error {
  //parameters: PortHandle Mode
- //AgtLmiEmulation SetEmulationMode, m.Object, m.Name);
+ //AgtLmiEmulation SetEmulationMode
  return nil
 }
 

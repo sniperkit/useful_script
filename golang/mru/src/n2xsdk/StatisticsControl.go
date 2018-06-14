@@ -6,7 +6,7 @@ type StatisticsControl struct {
 
 func(np *StatisticsControl) SetOctetCountMode () error {
  //parameters: OctetCountMode
- //AgtStatisticsControl SetOctetCountMode, m.Object, m.Name);
+ //AgtStatisticsControl SetOctetCountMode
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *StatisticsControl) GetOctetCountMode ()(string, error) {
 
 func(np *StatisticsControl) SetExpectedPayloadProtection () error {
  //parameters: PortHandle PayloadProtectionType CustomByteOffset
- //AgtStatisticsControl SetExpectedPayloadProtection, m.Object, m.Name);
+ //AgtStatisticsControl SetExpectedPayloadProtection
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *StatisticsControl) GetExpectedPayloadProtection ()(string, error) {
 
 func(np *StatisticsControl) SetServiceDisruptionGuardTime () error {
  //parameters: PortHandle GuardTime
- //AgtStatisticsControl SetServiceDisruptionGuardTime, m.Object, m.Name);
+ //AgtStatisticsControl SetServiceDisruptionGuardTime
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *StatisticsControl) GetServiceDisruptionGuardTime ()(string, error) {
 
 func(np *StatisticsControl) SetErroredFrameFilter () error {
  //parameters: PortHandle ErroredFrameFilter
- //AgtStatisticsControl SetErroredFrameFilter, m.Object, m.Name);
+ //AgtStatisticsControl SetErroredFrameFilter
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *StatisticsControl) GetNumSlotsForStatistics ()(string, error) {
 
 func(np *StatisticsControl) SetIndexType () error {
  //parameters: NumPorts pPortHandles IndexType
- //AgtStatisticsControl SetIndexType, m.Object, m.Name);
+ //AgtStatisticsControl SetIndexType
  return nil
 }
 

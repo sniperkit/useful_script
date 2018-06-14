@@ -24,25 +24,25 @@ func(np *MulticastMesh) GetLockCount ()(string, error) {
 
 func(np *MulticastMesh) Enable () error {
  //parameters: MeshHandle
- //AgtMulticastMesh Enable, m.Object, m.Name);
+ //AgtMulticastMesh Enable
  return nil
 }
 
 func(np *MulticastMesh) Disable () error {
  //parameters: MeshHandle
- //AgtMulticastMesh Disable, m.Object, m.Name);
+ //AgtMulticastMesh Disable
  return nil
 }
 
 func(np *MulticastMesh) IsEnabled () error {
  //parameters: MeshHandle
- //AgtMulticastMesh IsEnabled, m.Object, m.Name);
+ //AgtMulticastMesh IsEnabled
  return nil
 }
 
 func(np *MulticastMesh) SetTrafficOrientation () error {
  //parameters: MeshHandle Orientation
- //AgtMulticastMesh SetTrafficOrientation, m.Object, m.Name);
+ //AgtMulticastMesh SetTrafficOrientation
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *MulticastMesh) GetTrafficOrientation ()(string, error) {
 
 func(np *MulticastMesh) SetLengthMode () error {
  //parameters: MeshHandle LengthMode
- //AgtMulticastMesh SetLengthMode, m.Object, m.Name);
+ //AgtMulticastMesh SetLengthMode
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *MulticastMesh) GetLengthMode ()(string, error) {
 
 func(np *MulticastMesh) SetLength () error {
  //parameters: MeshHandle LengthType Count psaLengthParameterList
- //AgtMulticastMesh SetLength, m.Object, m.Name);
+ //AgtMulticastMesh SetLength
  return nil
 }
 
@@ -108,25 +108,25 @@ func(np *MulticastMesh) ListStreamGroupProfiles ()(string, error) {
 
 func(np *MulticastMesh) EnableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtMulticastMesh EnableStreamGeneration, m.Object, m.Name);
+ //AgtMulticastMesh EnableStreamGeneration
  return nil
 }
 
 func(np *MulticastMesh) DisableStreamGeneration () error {
  //parameters: MeshHandle
- //AgtMulticastMesh DisableStreamGeneration, m.Object, m.Name);
+ //AgtMulticastMesh DisableStreamGeneration
  return nil
 }
 
 func(np *MulticastMesh) IsStreamGenerationEnabled () error {
  //parameters: MeshHandle
- //AgtMulticastMesh IsStreamGenerationEnabled, m.Object, m.Name);
+ //AgtMulticastMesh IsStreamGenerationEnabled
  return nil
 }
 
 func(np *MulticastMesh) SetAverageLoad () error {
  //parameters: MeshHandle AverageLoad Units
- //AgtMulticastMesh SetAverageLoad, m.Object, m.Name);
+ //AgtMulticastMesh SetAverageLoad
  return nil
 }
 
@@ -138,13 +138,13 @@ func(np *MulticastMesh) GetAverageLoad ()(string, error) {
 
 func(np *MulticastMesh) IsMeshAddedOnNewProfiles () error {
  //parameters: MeshHandle
- //AgtMulticastMesh IsMeshAddedOnNewProfiles, m.Object, m.Name);
+ //AgtMulticastMesh IsMeshAddedOnNewProfiles
  return nil
 }
 
 func(np *MulticastMesh) SetSourceEndpointType () error {
  //parameters: MeshHandle SourceType
- //AgtMulticastMesh SetSourceEndpointType, m.Object, m.Name);
+ //AgtMulticastMesh SetSourceEndpointType
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *MulticastMesh) GetSourceEndpointType ()(string, error) {
 
 func(np *MulticastMesh) SetDestinationEndpointType () error {
  //parameters: MeshHandle DestinationType
- //AgtMulticastMesh SetDestinationEndpointType, m.Object, m.Name);
+ //AgtMulticastMesh SetDestinationEndpointType
  return nil
 }
 
@@ -168,31 +168,31 @@ func(np *MulticastMesh) GetDestinationEndpointType ()(string, error) {
 
 func(np *MulticastMesh) AddSources () error {
  //parameters: MeshHandle Count psaSources
- //AgtMulticastMesh AddSources, m.Object, m.Name);
+ //AgtMulticastMesh AddSources
  return nil
 }
 
 func(np *MulticastMesh) RemoveSources () error {
  //parameters: MeshHandle Count psaSources
- //AgtMulticastMesh RemoveSources, m.Object, m.Name);
+ //AgtMulticastMesh RemoveSources
  return nil
 }
 
 func(np *MulticastMesh) AddDestinations () error {
  //parameters: MeshHandle Count psaDestinations
- //AgtMulticastMesh AddDestinations, m.Object, m.Name);
+ //AgtMulticastMesh AddDestinations
  return nil
 }
 
 func(np *MulticastMesh) RemoveDestinations () error {
  //parameters: MeshHandle Count psaDestinations
- //AgtMulticastMesh RemoveDestinations, m.Object, m.Name);
+ //AgtMulticastMesh RemoveDestinations
  return nil
 }
 
 func(np *MulticastMesh) UpdateStreamGroups () error {
  //parameters: MeshHandle
- //AgtMulticastMesh UpdateStreamGroups, m.Object, m.Name);
+ //AgtMulticastMesh UpdateStreamGroups
  return nil
 }
 

@@ -6,31 +6,31 @@ type PatternList struct {
 
 func(np *PatternLis) Add () error {
  //parameters: Type
- //AgtPatternList Add, m.Object, m.Name);
+ //AgtPatternList Add
  return nil
 }
 
 func(np *PatternLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtPatternList AddItems, m.Object, m.Name);
+ //AgtPatternList AddItems
  return nil
 }
 
 func(np *PatternLis) Remove () error {
  //parameters: Handle
- //AgtPatternList Remove, m.Object, m.Name);
+ //AgtPatternList Remove
  return nil
 }
 
 func(np *PatternLis) Copy () error {
  //parameters: Handle
- //AgtPatternList Copy, m.Object, m.Name);
+ //AgtPatternList Copy
  return nil
 }
 
 func(np *PatternLis) SetName () error {
  //parameters: Handle Name
- //AgtPatternList SetName, m.Object, m.Name);
+ //AgtPatternList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *PatternLis) GetType ()(string, error) {
 
 func(np *PatternLis) LockItem () error {
  //parameters: Handle
- //AgtPatternList LockItem, m.Object, m.Name);
+ //AgtPatternList LockItem
  return nil
 }
 
 func(np *PatternLis) UnlockItem () error {
  //parameters: Handle
- //AgtPatternList UnlockItem, m.Object, m.Name);
+ //AgtPatternList UnlockItem
  return nil
 }
 

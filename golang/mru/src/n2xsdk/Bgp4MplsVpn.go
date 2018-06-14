@@ -6,7 +6,7 @@ type Bgp4MplsVpn struct {
 
 func(np *Bgp4MplsVpn) SetRouteTarget () error {
  //parameters: hVpn Type Administrator AssignedNumber
- //AgtBgp4MplsVpn SetRouteTarget, m.Object, m.Name);
+ //AgtBgp4MplsVpn SetRouteTarget
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *Bgp4MplsVpn) GetRouteTarget ()(string, error) {
 
 func(np *Bgp4MplsVpn) SetName () error {
  //parameters: hVpn Name
- //AgtBgp4MplsVpn SetName, m.Object, m.Name);
+ //AgtBgp4MplsVpn SetName
  return nil
 }
 

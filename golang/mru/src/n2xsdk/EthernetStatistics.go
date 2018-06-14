@@ -30,7 +30,7 @@ func(np *EthernetStatistics) ListSelectedPorts ()(string, error) {
 
 func(np *EthernetStatistics) SelectPorts () error {
  //parameters: StatisticsHandle NumPorts PortHandles
- //AgtEthernetStatistics SelectPorts, m.Object, m.Name);
+ //AgtEthernetStatistics SelectPorts
  return nil
 }
 
@@ -42,13 +42,13 @@ func(np *EthernetStatistics) GetAccumulatedValues ()(string, error) {
 
 func(np *EthernetStatistics) LockItem () error {
  //parameters: StatisticsHandle
- //AgtEthernetStatistics LockItem, m.Object, m.Name);
+ //AgtEthernetStatistics LockItem
  return nil
 }
 
 func(np *EthernetStatistics) UnlockItem () error {
  //parameters: StatisticsHandle
- //AgtEthernetStatistics UnlockItem, m.Object, m.Name);
+ //AgtEthernetStatistics UnlockItem
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *EthernetStatistics) ListSelectedStatistics ()(string, error) {
 
 func(np *EthernetStatistics) SelectStatistics () error {
  //parameters: Handle NumStatistics Statistics
- //AgtEthernetStatistics SelectStatistics, m.Object, m.Name);
+ //AgtEthernetStatistics SelectStatistics
  return nil
 }
 

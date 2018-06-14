@@ -6,25 +6,25 @@ type StatisticsLog struct {
 
 func(np *StatisticsLo) EnableLogging () error {
  //parameters: 
- //AgtStatisticsLog EnableLogging, m.Object, m.Name);
+ //AgtStatisticsLog EnableLogging
  return nil
 }
 
 func(np *StatisticsLo) DisableLogging () error {
  //parameters: 
- //AgtStatisticsLog DisableLogging, m.Object, m.Name);
+ //AgtStatisticsLog DisableLogging
  return nil
 }
 
 func(np *StatisticsLo) IsLoggingEnabled () error {
  //parameters: 
- //AgtStatisticsLog IsLoggingEnabled, m.Object, m.Name);
+ //AgtStatisticsLog IsLoggingEnabled
  return nil
 }
 
 func(np *StatisticsLo) SetLogFile () error {
  //parameters: LogFile
- //AgtStatisticsLog SetLogFile, m.Object, m.Name);
+ //AgtStatisticsLog SetLogFile
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *StatisticsLo) GetLogFile ()(string, error) {
 
 func(np *StatisticsLo) SetLoggingInterval () error {
  //parameters: Multiple
- //AgtStatisticsLog SetLoggingInterval, m.Object, m.Name);
+ //AgtStatisticsLog SetLoggingInterval
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *StatisticsLo) GetLoggingInterval ()(string, error) {
 
 func(np *StatisticsLo) SelectPorts () error {
  //parameters: NumPorts psaPorts
- //AgtStatisticsLog SelectPorts, m.Object, m.Name);
+ //AgtStatisticsLog SelectPorts
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *StatisticsLo) ListSelectedPorts ()(string, error) {
 
 func(np *StatisticsLo) ClearSelectedStreams () error {
  //parameters: 
- //AgtStatisticsLog ClearSelectedStreams, m.Object, m.Name);
+ //AgtStatisticsLog ClearSelectedStreams
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *StatisticsLo) ListPortsWithStreamsSelected ()(string, error) {
 
 func(np *StatisticsLo) SelectStreamGroups () error {
  //parameters: Count psaStreamGroupHandles
- //AgtStatisticsLog SelectStreamGroups, m.Object, m.Name);
+ //AgtStatisticsLog SelectStreamGroups
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *StatisticsLo) ListSelectedStreamGroups ()(string, error) {
 
 func(np *StatisticsLo) SelectStreams () error {
  //parameters: NumStreamGroupHandles psaStreamGroupHandles NumStreamIndexes psaStreamIndexes NumDestinationPortHandles psaDestinationPorts
- //AgtStatisticsLog SelectStreams, m.Object, m.Name);
+ //AgtStatisticsLog SelectStreams
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *StatisticsLo) ListSelectedStreams ()(string, error) {
 
 func(np *StatisticsLo) SelectFieldValues () error {
  //parameters: NumFieldInitialValues psaFieldInitialValues NumFieldValueCounts psaFieldValueCounts NumFieldValueIncrements psaFieldValueIncrements NumDestinationPortHandles psaDestinationPortHandles
- //AgtStatisticsLog SelectFieldValues, m.Object, m.Name);
+ //AgtStatisticsLog SelectFieldValues
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *StatisticsLo) ListAvailableStatistics ()(string, error) {
 
 func(np *StatisticsLo) SelectStatistics () error {
  //parameters: NumStatistics psaStatistics
- //AgtStatisticsLog SelectStatistics, m.Object, m.Name);
+ //AgtStatisticsLog SelectStatistics
  return nil
 }
 

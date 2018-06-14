@@ -6,7 +6,7 @@ type IsisLsp struct {
 
 func(np *IsisLsp) SetAreaId () error {
  //parameters: SessionHandle AreaId
- //AgtIsisLsp SetAreaId, m.Object, m.Name);
+ //AgtIsisLsp SetAreaId
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *IsisLsp) GetAreaId ()(string, error) {
 
 func(np *IsisLsp) SetSystemId () error {
  //parameters: SessionHandle SystemId
- //AgtIsisLsp SetSystemId, m.Object, m.Name);
+ //AgtIsisLsp SetSystemId
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *IsisLsp) GetSystemId ()(string, error) {
 
 func(np *IsisLsp) SetTeRouterId () error {
  //parameters: LspHandle TeRouterId
- //AgtIsisLsp SetTeRouterId, m.Object, m.Name);
+ //AgtIsisLsp SetTeRouterId
  return nil
 }
 

@@ -6,19 +6,19 @@ type AncpServerCustomPacket struct {
 
 func(np *ncpServerCustomPacke) AddPdu () error {
  //parameters: PeerPoolHandle PduHandleList
- //AgtAncpServerCustomPacket AddPdu, m.Object, m.Name);
+ //AgtAncpServerCustomPacket AddPdu
  return nil
 }
 
 func(np *ncpServerCustomPacke) RemovePdu () error {
  //parameters: PeerPoolHandle
- //AgtAncpServerCustomPacket RemovePdu, m.Object, m.Name);
+ //AgtAncpServerCustomPacket RemovePdu
  return nil
 }
 
 func(np *ncpServerCustomPacke) SendCustomPacket () error {
  //parameters: PeerPoolHandle
- //AgtAncpServerCustomPacket SendCustomPacket, m.Object, m.Name);
+ //AgtAncpServerCustomPacket SendCustomPacket
  return nil
 }
 

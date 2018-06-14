@@ -24,13 +24,13 @@ func(np *Pattern) GetLockCount ()(string, error) {
 
 func(np *Pattern) ClearPattern () error {
  //parameters: PatternHandle
- //AgtPattern ClearPattern, m.Object, m.Name);
+ //AgtPattern ClearPattern
  return nil
 }
 
 func(np *Pattern) SetPatternOctets () error {
  //parameters: PatternHandle OctetOffset ValueLength psaValueOctets MaskLength psaMaskOctets
- //AgtPattern SetPatternOctets, m.Object, m.Name);
+ //AgtPattern SetPatternOctets
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *Pattern) GetProtocolOffset ()(string, error) {
 
 func(np *Pattern) SetProtocolOffset () error {
  //parameters: PatternHandle Protocol NewOffset
- //AgtPattern SetProtocolOffset, m.Object, m.Name);
+ //AgtPattern SetProtocolOffset
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *Pattern) ListMatchingFields ()(string, error) {
 
 func(np *Pattern) SetPatternField () error {
  //parameters: PatternHandle Protocol Field FieldBits ValueOctets psaValueOctets MaskOctets psaMaskOctets
- //AgtPattern SetPatternField, m.Object, m.Name);
+ //AgtPattern SetPatternField
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *Pattern) GetPatternField ()(string, error) {
 
 func(np *Pattern) SetPatternField32 () error {
  //parameters: PatternHandle Protocol Field FieldValue FieldMask
- //AgtPattern SetPatternField32, m.Object, m.Name);
+ //AgtPattern SetPatternField32
  return nil
 }
 

@@ -24,7 +24,7 @@ func(np *MulticastGroupPool) GetLockCount ()(string, error) {
 
 func(np *MulticastGroupPool) SetMulticastAddressRange () error {
  //parameters: PoolHandle FirstMulticastAddress NumAddresses Modifier
- //AgtMulticastGroupPool SetMulticastAddressRange, m.Object, m.Name);
+ //AgtMulticastGroupPool SetMulticastAddressRange
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *MulticastGroupPool) GetMulticastAddressRange ()(string, error) {
 
 func(np *MulticastGroupPool) SetMulticastAddressRangeWithPrefix () error {
  //parameters: PoolHandle FirstMulticastAddress PrefixLength NumAddresses Modifier
- //AgtMulticastGroupPool SetMulticastAddressRangeWithPrefix, m.Object, m.Name);
+ //AgtMulticastGroupPool SetMulticastAddressRangeWithPrefix
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *MulticastGroupPool) ListReservedGroups ()(string, error) {
 
 func(np *MulticastGroupPool) AddReservedGroup () error {
  //parameters: MulticastAddress
- //AgtMulticastGroupPool AddReservedGroup, m.Object, m.Name);
+ //AgtMulticastGroupPool AddReservedGroup
  return nil
 }
 
 func(np *MulticastGroupPool) RemoveReservedGroup () error {
  //parameters: MulticastAddress
- //AgtMulticastGroupPool RemoveReservedGroup, m.Object, m.Name);
+ //AgtMulticastGroupPool RemoveReservedGroup
  return nil
 }
 
@@ -72,31 +72,31 @@ func(np *MulticastGroupPool) ListIpv6ReservedGroups ()(string, error) {
 
 func(np *MulticastGroupPool) AddIpv6ReservedGroup () error {
  //parameters: MulticastAddress
- //AgtMulticastGroupPool AddIpv6ReservedGroup, m.Object, m.Name);
+ //AgtMulticastGroupPool AddIpv6ReservedGroup
  return nil
 }
 
 func(np *MulticastGroupPool) RemoveIpv6ReservedGroup () error {
  //parameters: MulticastAddress
- //AgtMulticastGroupPool RemoveIpv6ReservedGroup, m.Object, m.Name);
+ //AgtMulticastGroupPool RemoveIpv6ReservedGroup
  return nil
 }
 
 func(np *MulticastGroupPool) EnableTrafficDestinations () error {
  //parameters: PoolHandle
- //AgtMulticastGroupPool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtMulticastGroupPool EnableTrafficDestinations
  return nil
 }
 
 func(np *MulticastGroupPool) DisableTrafficDestinations () error {
  //parameters: PoolHandle
- //AgtMulticastGroupPool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtMulticastGroupPool DisableTrafficDestinations
  return nil
 }
 
 func(np *MulticastGroupPool) IsTrafficDestinationEnabled () error {
  //parameters: PoolHandle
- //AgtMulticastGroupPool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtMulticastGroupPool IsTrafficDestinationEnabled
  return nil
 }
 

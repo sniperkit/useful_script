@@ -6,7 +6,7 @@ type LdpLspIngressPool struct {
 
 func(np *LdpLspIngressPool) SetNumberOfLsps () error {
  //parameters: PoolHandle NumLsps Modifier
- //AgtLdpLspIngressPool SetNumberOfLsps, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetNumberOfLsps
  return nil
 }
 
@@ -24,7 +24,7 @@ func(np *LdpLspIngressPool) GetFecType ()(string, error) {
 
 func(np *LdpLspIngressPool) SetPrefixFec () error {
  //parameters: PoolHandle FirstAddress Incr PfxLength IncrMask
- //AgtLdpLspIngressPool SetPrefixFec, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetPrefixFec
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *LdpLspIngressPool) GetPrefixFec ()(string, error) {
 
 func(np *LdpLspIngressPool) SetHostFec () error {
  //parameters: PoolHandle IpAddress Incr IncrMask
- //AgtLdpLspIngressPool SetHostFec, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetHostFec
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *LdpLspIngressPool) GetHostFec ()(string, error) {
 
 func(np *LdpLspIngressPool) SetCrLdpFec () error {
  //parameters: PoolHandle ActionFlag LspId IpAddress PfxLength IncrLspId
- //AgtLdpLspIngressPool SetCrLdpFec, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetCrLdpFec
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *LdpLspIngressPool) GetCrLdpFec ()(string, error) {
 
 func(np *LdpLspIngressPool) SetL2MplsFec () error {
  //parameters: PoolHandle CBit VcType GroupId VcId IncrVcId
- //AgtLdpLspIngressPool SetL2MplsFec, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetL2MplsFec
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *LdpLspIngressPool) GetL2MplsFec ()(string, error) {
 
 func(np *LdpLspIngressPool) SetPathVectorTLV () error {
  //parameters: PoolHandle PathCount psaContentList
- //AgtLdpLspIngressPool SetPathVectorTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetPathVectorTLV
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *LdpLspIngressPool) GetPathVectorTLV ()(string, error) {
 
 func(np *LdpLspIngressPool) SetHopCountTLV () error {
  //parameters: PoolHandle HopCount
- //AgtLdpLspIngressPool SetHopCountTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetHopCountTLV
  return nil
 }
 
@@ -96,25 +96,25 @@ func(np *LdpLspIngressPool) GetHopCountTLV ()(string, error) {
 
 func(np *LdpLspIngressPool) EnableDiffServXBit () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool EnableDiffServXBit, m.Object, m.Name);
+ //AgtLdpLspIngressPool EnableDiffServXBit
  return nil
 }
 
 func(np *LdpLspIngressPool) DisableDiffServXBit () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool DisableDiffServXBit, m.Object, m.Name);
+ //AgtLdpLspIngressPool DisableDiffServXBit
  return nil
 }
 
 func(np *LdpLspIngressPool) IsDiffServXBitEnabled () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool IsDiffServXBitEnabled, m.Object, m.Name);
+ //AgtLdpLspIngressPool IsDiffServXBitEnabled
  return nil
 }
 
 func(np *LdpLspIngressPool) SetDiffServPhbEncodingStyle () error {
  //parameters: PoolHandle EncodingStyle
- //AgtLdpLspIngressPool SetDiffServPhbEncodingStyle, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetDiffServPhbEncodingStyle
  return nil
 }
 
@@ -126,43 +126,43 @@ func(np *LdpLspIngressPool) GetDiffServPhbEncodingStyle ()(string, error) {
 
 func(np *LdpLspIngressPool) EnableTLV () error {
  //parameters: PoolHandle TlvType
- //AgtLdpLspIngressPool EnableTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool EnableTLV
  return nil
 }
 
 func(np *LdpLspIngressPool) DisableTLV () error {
  //parameters: PoolHandle TlvType
- //AgtLdpLspIngressPool DisableTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool DisableTLV
  return nil
 }
 
 func(np *LdpLspIngressPool) IsTlvEnabled () error {
  //parameters: PoolHandle TlvType
- //AgtLdpLspIngressPool IsTlvEnabled, m.Object, m.Name);
+ //AgtLdpLspIngressPool IsTlvEnabled
  return nil
 }
 
 func(np *LdpLspIngressPool) Open () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool Open, m.Object, m.Name);
+ //AgtLdpLspIngressPool Open
  return nil
 }
 
 func(np *LdpLspIngressPool) Close () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool Close, m.Object, m.Name);
+ //AgtLdpLspIngressPool Close
  return nil
 }
 
 func(np *LdpLspIngressPool) IsEnabled () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool IsEnabled, m.Object, m.Name);
+ //AgtLdpLspIngressPool IsEnabled
  return nil
 }
 
 func(np *LdpLspIngressPool) Cancel () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool Cancel, m.Object, m.Name);
+ //AgtLdpLspIngressPool Cancel
  return nil
 }
 
@@ -186,7 +186,7 @@ func(np *LdpLspIngressPool) GetLspInfo ()(string, error) {
 
 func(np *LdpLspIngressPool) SetChunkCount () error {
  //parameters: PoolHandle ChunkCount
- //AgtLdpLspIngressPool SetChunkCount, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetChunkCount
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *LdpLspIngressPool) GetChunkCount ()(string, error) {
 
 func(np *LdpLspIngressPool) SetChunkDelay () error {
  //parameters: PoolHandle ChunkDelay
- //AgtLdpLspIngressPool SetChunkDelay, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetChunkDelay
  return nil
 }
 
@@ -210,115 +210,115 @@ func(np *LdpLspIngressPool) GetChunkDelay ()(string, error) {
 
 func(np *LdpLspIngressPool) SetFilterFecType () error {
  //parameters: PoolHandle FecType
- //AgtLdpLspIngressPool SetFilterFecType, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterFecType
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterState () error {
  //parameters: PoolHandle State
- //AgtLdpLspIngressPool SetFilterState, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterState
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterLabel () error {
  //parameters: PoolHandle Label
- //AgtLdpLspIngressPool SetFilterLabel, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterLabel
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterDiffServType () error {
  //parameters: PoolHandle DiffServType
- //AgtLdpLspIngressPool SetFilterDiffServType, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterDiffServType
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterLspId () error {
  //parameters: PoolHandle LspId
- //AgtLdpLspIngressPool SetFilterLspId, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterLspId
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterSrcAddress () error {
  //parameters: PoolHandle SrcAddress
- //AgtLdpLspIngressPool SetFilterSrcAddress, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterSrcAddress
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterLen () error {
  //parameters: PoolHandle Len
- //AgtLdpLspIngressPool SetFilterLen, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterLen
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterRouterId () error {
  //parameters: PoolHandle RouterId
- //AgtLdpLspIngressPool SetFilterRouterId, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterRouterId
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterActFlag () error {
  //parameters: PoolHandle ActFlag
- //AgtLdpLspIngressPool SetFilterActFlag, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterActFlag
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterCbit () error {
  //parameters: PoolHandle CBit
- //AgtLdpLspIngressPool SetFilterCbit, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterCbit
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterVcType () error {
  //parameters: PoolHandle VcType
- //AgtLdpLspIngressPool SetFilterVcType, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterVcType
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterGroupId () error {
  //parameters: PoolHandle GroupId
- //AgtLdpLspIngressPool SetFilterGroupId, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterGroupId
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterVcId () error {
  //parameters: PoolHandle VcId
- //AgtLdpLspIngressPool SetFilterVcId, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterVcId
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterL2MplsMtu () error {
  //parameters: PoolHandle MtuValue
- //AgtLdpLspIngressPool SetFilterL2MplsMtu, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterL2MplsMtu
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterL2MplsConcatAtmCell () error {
  //parameters: PoolHandle ConcatAtmCell
- //AgtLdpLspIngressPool SetFilterL2MplsConcatAtmCell, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterL2MplsConcatAtmCell
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterL2MplsPayload () error {
  //parameters: PoolHandle CemPayload
- //AgtLdpLspIngressPool SetFilterL2MplsPayload, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterL2MplsPayload
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterL2MplsInterfaceString () error {
  //parameters: PoolHandle InterfaceString
- //AgtLdpLspIngressPool SetFilterL2MplsInterfaceString, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterL2MplsInterfaceString
  return nil
 }
 
 func(np *LdpLspIngressPool) SetFilterL2MplsOptions () error {
  //parameters: PoolHandle CemOptions
- //AgtLdpLspIngressPool SetFilterL2MplsOptions, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetFilterL2MplsOptions
  return nil
 }
 
 func(np *LdpLspIngressPool) SetL2MplsGenPwIdFec () error {
  //parameters: PoolHandle CBit VcType
- //AgtLdpLspIngressPool SetL2MplsGenPwIdFec, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetL2MplsGenPwIdFec
  return nil
 }
 
@@ -330,7 +330,7 @@ func(np *LdpLspIngressPool) GetL2MplsGenPwIdFec ()(string, error) {
 
 func(np *LdpLspIngressPool) SetTrafficTLV () error {
  //parameters: PoolHandle Frequency Weight PeakDataRate PeakBurstSize CommittedDataRate CommittedBurstSize ExcessBurstSize NegotiableFlag
- //AgtLdpLspIngressPool SetTrafficTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetTrafficTLV
  return nil
 }
 
@@ -342,43 +342,43 @@ func(np *LdpLspIngressPool) GetTrafficTLV ()(string, error) {
 
 func(np *LdpLspIngressPool) AddErSubobject () error {
  //parameters: PoolHandle Type
- //AgtLdpLspIngressPool AddErSubobject, m.Object, m.Name);
+ //AgtLdpLspIngressPool AddErSubobject
  return nil
 }
 
 func(np *LdpLspIngressPool) RemoveErSubobject () error {
  //parameters: PoolHandle Index
- //AgtLdpLspIngressPool RemoveErSubobject, m.Object, m.Name);
+ //AgtLdpLspIngressPool RemoveErSubobject
  return nil
 }
 
 func(np *LdpLspIngressPool) RemoveAllErSubobjects () error {
  //parameters: PoolHandle
- //AgtLdpLspIngressPool RemoveAllErSubobjects, m.Object, m.Name);
+ //AgtLdpLspIngressPool RemoveAllErSubobjects
  return nil
 }
 
 func(np *LdpLspIngressPool) SetErTLV () error {
  //parameters: PoolHandle Index Type IsLoose Count psaContents
- //AgtLdpLspIngressPool SetErTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetErTLV
  return nil
 }
 
 func(np *LdpLspIngressPool) SetErIpv4Subobject () error {
  //parameters: PoolHandle Index IsLoose Address Prefix
- //AgtLdpLspIngressPool SetErIpv4Subobject, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetErIpv4Subobject
  return nil
 }
 
 func(np *LdpLspIngressPool) SetErAsNumberSubobject () error {
  //parameters: PoolHandle Index IsLoose AsNumber
- //AgtLdpLspIngressPool SetErAsNumberSubobject, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetErAsNumberSubobject
  return nil
 }
 
 func(np *LdpLspIngressPool) SetErLspidSubobject () error {
  //parameters: PoolHandle Index RouterId LspId
- //AgtLdpLspIngressPool SetErLspidSubobject, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetErLspidSubobject
  return nil
 }
 
@@ -426,7 +426,7 @@ func(np *LdpLspIngressPool) GetErSubobjectType ()(string, error) {
 
 func(np *LdpLspIngressPool) SetPreemptTLV () error {
  //parameters: PoolHandle SetPriority HoldPriority
- //AgtLdpLspIngressPool SetPreemptTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetPreemptTLV
  return nil
 }
 
@@ -444,7 +444,7 @@ func(np *LdpLspIngressPool) GetPinningTLV ()(string, error) {
 
 func(np *LdpLspIngressPool) SetPinningTLV () error {
  //parameters: PoolHandle PBit
- //AgtLdpLspIngressPool SetPinningTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetPinningTLV
  return nil
 }
 
@@ -456,7 +456,7 @@ func(np *LdpLspIngressPool) GetResourceBitMaskTLV ()(string, error) {
 
 func(np *LdpLspIngressPool) SetResourceBitMaskTLV () error {
  //parameters: PoolHandle ResourceBitMask
- //AgtLdpLspIngressPool SetResourceBitMaskTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetResourceBitMaskTLV
  return nil
 }
 
@@ -468,13 +468,13 @@ func(np *LdpLspIngressPool) GetIngressDiffServEtypeTLV ()(string, error) {
 
 func(np *LdpLspIngressPool) SetIngressDiffServEtypeTLV () error {
  //parameters: PoolHandle ExpCount psaExp PhbldCount psaPhbId
- //AgtLdpLspIngressPool SetIngressDiffServEtypeTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetIngressDiffServEtypeTLV
  return nil
 }
 
 func(np *LdpLspIngressPool) SetIngressDiffServLtypeTLV () error {
  //parameters: PoolHandle Psc
- //AgtLdpLspIngressPool SetIngressDiffServLtypeTLV, m.Object, m.Name);
+ //AgtLdpLspIngressPool SetIngressDiffServLtypeTLV
  return nil
 }
 

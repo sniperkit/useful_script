@@ -6,7 +6,7 @@ type AddressesEthernet struct {
 
 func(np *ddressesEtherne) SetEthernetFraming () error {
  //parameters: DeviceHandle HeaderInstance FramingType
- //AgtAddressesEthernet SetEthernetFraming, m.Object, m.Name);
+ //AgtAddressesEthernet SetEthernetFraming
  return nil
 }
 
@@ -18,13 +18,13 @@ func(np *ddressesEtherne) GetEthernetFraming ()(string, error) {
 
 func(np *ddressesEtherne) AddVlanTag () error {
  //parameters: DeviceHandle HeaderInstance
- //AgtAddressesEthernet AddVlanTag, m.Object, m.Name);
+ //AgtAddressesEthernet AddVlanTag
  return nil
 }
 
 func(np *ddressesEtherne) RemoveVlanTag () error {
  //parameters: DeviceHandle HeaderInstance VlanTagInstance
- //AgtAddressesEthernet RemoveVlanTag, m.Object, m.Name);
+ //AgtAddressesEthernet RemoveVlanTag
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *ddressesEtherne) GetNumberOfVlanTags ()(string, error) {
 
 func(np *ddressesEtherne) SetLocalMacAddressIncrementingRange () error {
  //parameters: DeviceHandle HeaderInstance FirstMacAddress MacAddressIncrement MacAddressRepeat
- //AgtAddressesEthernet SetLocalMacAddressIncrementingRange, m.Object, m.Name);
+ //AgtAddressesEthernet SetLocalMacAddressIncrementingRange
  return nil
 }
 
@@ -60,7 +60,7 @@ func(np *ddressesEtherne) GetLocalMacAddressList ()(string, error) {
 
 func(np *ddressesEtherne) SetLocalMacAddress () error {
  //parameters: DeviceHandle HeaderInstance MacAddress
- //AgtAddressesEthernet SetLocalMacAddress, m.Object, m.Name);
+ //AgtAddressesEthernet SetLocalMacAddress
  return nil
 }
 
@@ -72,7 +72,7 @@ func(np *ddressesEtherne) GetLocalMacAddress ()(string, error) {
 
 func(np *ddressesEtherne) SetLocalMacAddressSubRangeOffsets () error {
  //parameters: DeviceHandle FirstMacAddress MsbOffsetList
- //AgtAddressesEthernet SetLocalMacAddressSubRangeOffsets, m.Object, m.Name);
+ //AgtAddressesEthernet SetLocalMacAddressSubRangeOffsets
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *ddressesEtherne) GetLocalMacAddressSubRangeOffsets ()(string, error) {
 
 func(np *ddressesEtherne) SetLocalMacAddressSubRange () error {
  //parameters: DeviceHandle SubRangeInstance MacAddressIncrement MacAddressCount MacAddressRepeat
- //AgtAddressesEthernet SetLocalMacAddressSubRange, m.Object, m.Name);
+ //AgtAddressesEthernet SetLocalMacAddressSubRange
  return nil
 }
 
@@ -96,25 +96,25 @@ func(np *ddressesEtherne) GetLocalMacAddressSubRange ()(string, error) {
 
 func(np *ddressesEtherne) EnableRemoteMacAddress () error {
  //parameters: DeviceHandle HeaderInstance
- //AgtAddressesEthernet EnableRemoteMacAddress, m.Object, m.Name);
+ //AgtAddressesEthernet EnableRemoteMacAddress
  return nil
 }
 
 func(np *ddressesEtherne) DisableRemoteMacAddress () error {
  //parameters: DeviceHandle HeaderInstance
- //AgtAddressesEthernet DisableRemoteMacAddress, m.Object, m.Name);
+ //AgtAddressesEthernet DisableRemoteMacAddress
  return nil
 }
 
 func(np *ddressesEtherne) IsRemoteMacAddressEnabled () error {
  //parameters: DeviceHandle HeaderInstance
- //AgtAddressesEthernet IsRemoteMacAddressEnabled, m.Object, m.Name);
+ //AgtAddressesEthernet IsRemoteMacAddressEnabled
  return nil
 }
 
 func(np *ddressesEtherne) SetRemoteMacAddressIncrementingRange () error {
  //parameters: DeviceHandle HeaderInstance FirstMacAddress MacAddressIncrement MacAddressRepeat
- //AgtAddressesEthernet SetRemoteMacAddressIncrementingRange, m.Object, m.Name);
+ //AgtAddressesEthernet SetRemoteMacAddressIncrementingRange
  return nil
 }
 
@@ -138,7 +138,7 @@ func(np *ddressesEtherne) GetRemoteMacAddressList ()(string, error) {
 
 func(np *ddressesEtherne) SetRemoteMacAddress () error {
  //parameters: DeviceHandle HeaderInstance MacAddress
- //AgtAddressesEthernet SetRemoteMacAddress, m.Object, m.Name);
+ //AgtAddressesEthernet SetRemoteMacAddress
  return nil
 }
 
@@ -150,7 +150,7 @@ func(np *ddressesEtherne) GetRemoteMacAddress ()(string, error) {
 
 func(np *ddressesEtherne) SetVlanTagProtocolId () error {
  //parameters: DeviceHandle HeaderInstance VlanTagInstance ProtocolId
- //AgtAddressesEthernet SetVlanTagProtocolId, m.Object, m.Name);
+ //AgtAddressesEthernet SetVlanTagProtocolId
  return nil
 }
 
@@ -162,7 +162,7 @@ func(np *ddressesEtherne) GetVlanTagProtocolId ()(string, error) {
 
 func(np *ddressesEtherne) SetVlanIdIncrementingRange () error {
  //parameters: DeviceHandle HeaderInstance VlanTagInstance FirstVlanId VlanIdIncrement VlanIdRepeat
- //AgtAddressesEthernet SetVlanIdIncrementingRange, m.Object, m.Name);
+ //AgtAddressesEthernet SetVlanIdIncrementingRange
  return nil
 }
 
@@ -174,7 +174,7 @@ func(np *ddressesEtherne) GetVlanIdIncrementingRange ()(string, error) {
 
 func(np *ddressesEtherne) SetVlanIdIncrementingRangeAndCount () error {
  //parameters: DeviceHandle HeaderInstance VlanTagInstance FirstVlanId VlanIdIncrement VlanIdRepeat VlanIdCount
- //AgtAddressesEthernet SetVlanIdIncrementingRangeAndCount, m.Object, m.Name);
+ //AgtAddressesEthernet SetVlanIdIncrementingRangeAndCount
  return nil
 }
 
@@ -198,7 +198,7 @@ func(np *ddressesEtherne) GetVlanIdList ()(string, error) {
 
 func(np *ddressesEtherne) SetVlanId () error {
  //parameters: DeviceHandle HeaderInstance VlanTagInstance VlanId
- //AgtAddressesEthernet SetVlanId, m.Object, m.Name);
+ //AgtAddressesEthernet SetVlanId
  return nil
 }
 

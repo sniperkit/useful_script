@@ -6,25 +6,25 @@ type AncpServerLineConfiguration struct {
 
 func(np *ncpServerLineConfiguration) DisableAutoLineConfigPortManagement () error {
  //parameters: SessionPoolHandle
- //AgtAncpServerLineConfiguration DisableAutoLineConfigPortManagement, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration DisableAutoLineConfigPortManagement
  return nil
 }
 
 func(np *ncpServerLineConfiguration) EnableAutoLineConfigPortManagement () error {
  //parameters: SessionPoolHandle
- //AgtAncpServerLineConfiguration EnableAutoLineConfigPortManagement, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration EnableAutoLineConfigPortManagement
  return nil
 }
 
 func(np *ncpServerLineConfiguration) IsAutoLineConfigPortManagementEnabled () error {
  //parameters: SessionPoolHandle
- //AgtAncpServerLineConfiguration IsAutoLineConfigPortManagementEnabled, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration IsAutoLineConfigPortManagementEnabled
  return nil
 }
 
 func(np *ncpServerLineConfiguration) AddProfileEntry () error {
  //parameters: SessionPoolHandle CircuitId ProfileName
- //AgtAncpServerLineConfiguration AddProfileEntry, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration AddProfileEntry
  return nil
 }
 
@@ -36,13 +36,13 @@ func(np *ncpServerLineConfiguration) ListProfileEntries ()(string, error) {
 
 func(np *ncpServerLineConfiguration) RemoveProfileEntry () error {
  //parameters: SessionPoolHandle CircuitId
- //AgtAncpServerLineConfiguration RemoveProfileEntry, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration RemoveProfileEntry
  return nil
 }
 
 func(np *ncpServerLineConfiguration) RemoveAllProfileEntries () error {
  //parameters: SessionPoolHandle
- //AgtAncpServerLineConfiguration RemoveAllProfileEntries, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration RemoveAllProfileEntries
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *ncpServerLineConfiguration) GetProfileName ()(string, error) {
 
 func(np *ncpServerLineConfiguration) SetDefaultProfileName () error {
  //parameters: SessionPoolHandle ProfileName
- //AgtAncpServerLineConfiguration SetDefaultProfileName, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration SetDefaultProfileName
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *ncpServerLineConfiguration) GetDefaultProfileName ()(string, error) {
 
 func(np *ncpServerLineConfiguration) SetResultField () error {
  //parameters: SessionPoolHandle AncpResult
- //AgtAncpServerLineConfiguration SetResultField, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration SetResultField
  return nil
 }
 
@@ -78,7 +78,7 @@ func(np *ncpServerLineConfiguration) GetResultField ()(string, error) {
 
 func(np *ncpServerLineConfiguration) AddTlv () error {
  //parameters: SessionPoolHandle TlvType TlvLength TlvValue
- //AgtAncpServerLineConfiguration AddTlv, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration AddTlv
  return nil
 }
 
@@ -90,19 +90,19 @@ func(np *ncpServerLineConfiguration) ListTlvs ()(string, error) {
 
 func(np *ncpServerLineConfiguration) RemoveTlv () error {
  //parameters: SessionPoolHandle TlvType
- //AgtAncpServerLineConfiguration RemoveTlv, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration RemoveTlv
  return nil
 }
 
 func(np *ncpServerLineConfiguration) RemoveAllTlvs () error {
  //parameters: SessionPoolHandle
- //AgtAncpServerLineConfiguration RemoveAllTlvs, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration RemoveAllTlvs
  return nil
 }
 
 func(np *ncpServerLineConfiguration) SetTlv () error {
  //parameters: SessionPoolHandle TlvType TlvLength TlvValue
- //AgtAncpServerLineConfiguration SetTlv, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration SetTlv
  return nil
 }
 
@@ -114,7 +114,7 @@ func(np *ncpServerLineConfiguration) GetTlv ()(string, error) {
 
 func(np *ncpServerLineConfiguration) AddSubTlv () error {
  //parameters: SessionPoolHandle TlvType SubTlvType SubTlvLength SubTlvValue
- //AgtAncpServerLineConfiguration AddSubTlv, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration AddSubTlv
  return nil
 }
 
@@ -126,19 +126,19 @@ func(np *ncpServerLineConfiguration) ListSubTlvs ()(string, error) {
 
 func(np *ncpServerLineConfiguration) RemoveSubTlv () error {
  //parameters: SessionPoolHandle TlvType SubTlvType
- //AgtAncpServerLineConfiguration RemoveSubTlv, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration RemoveSubTlv
  return nil
 }
 
 func(np *ncpServerLineConfiguration) RemoveAllSubTlvs () error {
  //parameters: SessionPoolHandle TlvType
- //AgtAncpServerLineConfiguration RemoveAllSubTlvs, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration RemoveAllSubTlvs
  return nil
 }
 
 func(np *ncpServerLineConfiguration) SetSubTlv () error {
  //parameters: SessionPoolHandle TlvType SubTlvType SubTlvLength SubTlvValue
- //AgtAncpServerLineConfiguration SetSubTlv, m.Object, m.Name);
+ //AgtAncpServerLineConfiguration SetSubTlv
  return nil
 }
 

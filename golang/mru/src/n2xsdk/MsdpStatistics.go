@@ -12,13 +12,13 @@ func(np *MsdpStatistics) ListSelectedSessions ()(string, error) {
 
 func(np *MsdpStatistics) SelectSessions () error {
  //parameters: Count psaSessionHandles
- //AgtMsdpStatistics SelectSessions, m.Object, m.Name);
+ //AgtMsdpStatistics SelectSessions
  return nil
 }
 
 func(np *MsdpStatistics) DeselectSession () error {
  //parameters: SessionHandle
- //AgtMsdpStatistics DeselectSession, m.Object, m.Name);
+ //AgtMsdpStatistics DeselectSession
  return nil
 }
 

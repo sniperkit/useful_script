@@ -6,31 +6,31 @@ type MeshList struct {
 
 func(np *MeshLis) Add () error {
  //parameters: Type
- //AgtMeshList Add, m.Object, m.Name);
+ //AgtMeshList Add
  return nil
 }
 
 func(np *MeshLis) AddItems () error {
  //parameters: Type NumberOfItems
- //AgtMeshList AddItems, m.Object, m.Name);
+ //AgtMeshList AddItems
  return nil
 }
 
 func(np *MeshLis) Remove () error {
  //parameters: Handle
- //AgtMeshList Remove, m.Object, m.Name);
+ //AgtMeshList Remove
  return nil
 }
 
 func(np *MeshLis) Copy () error {
  //parameters: Handle
- //AgtMeshList Copy, m.Object, m.Name);
+ //AgtMeshList Copy
  return nil
 }
 
 func(np *MeshLis) SetName () error {
  //parameters: Handle Name
- //AgtMeshList SetName, m.Object, m.Name);
+ //AgtMeshList SetName
  return nil
 }
 
@@ -54,13 +54,13 @@ func(np *MeshLis) GetType ()(string, error) {
 
 func(np *MeshLis) LockItem () error {
  //parameters: Handle
- //AgtMeshList LockItem, m.Object, m.Name);
+ //AgtMeshList LockItem
  return nil
 }
 
 func(np *MeshLis) UnlockItem () error {
  //parameters: Handle
- //AgtMeshList UnlockItem, m.Object, m.Name);
+ //AgtMeshList UnlockItem
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *MeshLis) GetLockCount ()(string, error) {
 
 func(np *MeshLis) AddMeshWithNewProfiles () error {
  //parameters: Type
- //AgtMeshList AddMeshWithNewProfiles, m.Object, m.Name);
+ //AgtMeshList AddMeshWithNewProfiles
  return nil
 }
 

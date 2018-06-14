@@ -18,7 +18,7 @@ func(np *HdlcStatus) GetStatusDescription ()(string, error) {
 
 func(np *HdlcStatus) SaveStatus () error {
  //parameters: PortHandle LogFile
- //AgtHdlcStatus SaveStatus, m.Object, m.Name);
+ //AgtHdlcStatus SaveStatus
  return nil
 }
 
@@ -36,7 +36,7 @@ func(np *HdlcStatus) GetStatusSummaryDescription ()(string, error) {
 
 func(np *HdlcStatus) SaveStatusSummary () error {
  //parameters: LogFile
- //AgtHdlcStatus SaveStatusSummary, m.Object, m.Name);
+ //AgtHdlcStatus SaveStatusSummary
  return nil
 }
 
@@ -54,19 +54,19 @@ func(np *HdlcStatus) GetStatusHistoryDescription ()(string, error) {
 
 func(np *HdlcStatus) SaveStatusHistory () error {
  //parameters: LogFile
- //AgtHdlcStatus SaveStatusHistory, m.Object, m.Name);
+ //AgtHdlcStatus SaveStatusHistory
  return nil
 }
 
 func(np *HdlcStatus) ClearHistory () error {
  //parameters: 
- //AgtHdlcStatus ClearHistory, m.Object, m.Name);
+ //AgtHdlcStatus ClearHistory
  return nil
 }
 
 func(np *HdlcStatus) SetHistorySize () error {
  //parameters: HistorySize
- //AgtHdlcStatus SetHistorySize, m.Object, m.Name);
+ //AgtHdlcStatus SetHistorySize
  return nil
 }
 

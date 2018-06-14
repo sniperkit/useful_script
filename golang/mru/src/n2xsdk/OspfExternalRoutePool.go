@@ -6,7 +6,7 @@ type OspfExternalRoutePool struct {
 
 func(np *OspfExternalRoutePool) SetRoutes () error {
  //parameters: RoutePoolHandle FirstRoute PrefixLength NumRoutes Modifier
- //AgtOspfExternalRoutePool SetRoutes, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetRoutes
  return nil
 }
 
@@ -18,37 +18,37 @@ func(np *OspfExternalRoutePool) GetRoutes ()(string, error) {
 
 func(np *OspfExternalRoutePool) EnableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtOspfExternalRoutePool EnableTrafficDestinations, m.Object, m.Name);
+ //AgtOspfExternalRoutePool EnableTrafficDestinations
  return nil
 }
 
 func(np *OspfExternalRoutePool) DisableTrafficDestinations () error {
  //parameters: RoutePoolHandle
- //AgtOspfExternalRoutePool DisableTrafficDestinations, m.Object, m.Name);
+ //AgtOspfExternalRoutePool DisableTrafficDestinations
  return nil
 }
 
 func(np *OspfExternalRoutePool) IsTrafficDestinationEnabled () error {
  //parameters: RoutePoolHandle
- //AgtOspfExternalRoutePool IsTrafficDestinationEnabled, m.Object, m.Name);
+ //AgtOspfExternalRoutePool IsTrafficDestinationEnabled
  return nil
 }
 
 func(np *OspfExternalRoutePool) SetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfExternalRoutePool SetRoutePoolFlag, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetRoutePoolFlag
  return nil
 }
 
 func(np *OspfExternalRoutePool) UnsetRoutePoolFlag () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfExternalRoutePool UnsetRoutePoolFlag, m.Object, m.Name);
+ //AgtOspfExternalRoutePool UnsetRoutePoolFlag
  return nil
 }
 
 func(np *OspfExternalRoutePool) IsRoutePoolFlagSet () error {
  //parameters: RoutePoolHandle Flag
- //AgtOspfExternalRoutePool IsRoutePoolFlagSet, m.Object, m.Name);
+ //AgtOspfExternalRoutePool IsRoutePoolFlagSet
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *OspfExternalRoutePool) GetNthRoute ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetResourceClasses () error {
  //parameters: RoutePoolHandle Count psaClasses
- //AgtOspfExternalRoutePool SetResourceClasses, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetResourceClasses
  return nil
 }
 
@@ -84,7 +84,7 @@ func(np *OspfExternalRoutePool) GetConnectedRouter ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetNssaFlag () error {
  //parameters: RoutePoolHandle NssaFlag
- //AgtOspfExternalRoutePool SetNssaFlag, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetNssaFlag
  return nil
 }
 
@@ -96,7 +96,7 @@ func(np *OspfExternalRoutePool) GetNssaFlag ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetPropagateLsasFlag () error {
  //parameters: RoutePoolHandle PropagateFlag
- //AgtOspfExternalRoutePool SetPropagateLsasFlag, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetPropagateLsasFlag
  return nil
 }
 
@@ -108,7 +108,7 @@ func(np *OspfExternalRoutePool) GetPropagateLsasFlag ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetAutoGenerateAsbrSummaryLsaFlag () error {
  //parameters: RoutePoolHandle AsbrFlag
- //AgtOspfExternalRoutePool SetAutoGenerateAsbrSummaryLsaFlag, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetAutoGenerateAsbrSummaryLsaFlag
  return nil
 }
 
@@ -120,7 +120,7 @@ func(np *OspfExternalRoutePool) GetAutoGenerateAsbrSummaryLsaFlag ()(string, err
 
 func(np *OspfExternalRoutePool) SetAdvertisingRouter () error {
  //parameters: RoutePoolHandle RouterId
- //AgtOspfExternalRoutePool SetAdvertisingRouter, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetAdvertisingRouter
  return nil
 }
 
@@ -132,7 +132,7 @@ func(np *OspfExternalRoutePool) GetAdvertisingRouter ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetMetricType () error {
  //parameters: RoutePoolHandle Type
- //AgtOspfExternalRoutePool SetMetricType, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetMetricType
  return nil
 }
 
@@ -144,7 +144,7 @@ func(np *OspfExternalRoutePool) GetMetricType ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetMetric () error {
  //parameters: RoutePoolHandle Metric
- //AgtOspfExternalRoutePool SetMetric, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetMetric
  return nil
 }
 
@@ -156,7 +156,7 @@ func(np *OspfExternalRoutePool) GetMetric ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetForwardingAddress () error {
  //parameters: RoutePoolHandle IpAddress
- //AgtOspfExternalRoutePool SetForwardingAddress, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetForwardingAddress
  return nil
 }
 
@@ -168,7 +168,7 @@ func(np *OspfExternalRoutePool) GetForwardingAddress ()(string, error) {
 
 func(np *OspfExternalRoutePool) SetExternalRouteTag () error {
  //parameters: RoutePoolHandle RouteTag
- //AgtOspfExternalRoutePool SetExternalRouteTag, m.Object, m.Name);
+ //AgtOspfExternalRoutePool SetExternalRouteTag
  return nil
 }
 

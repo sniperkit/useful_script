@@ -6,31 +6,31 @@ type NdpHostPool struct {
 
 func(np *NdpHostPool) EnableAutoSendRouterSolicitation () error {
  //parameters: DevicePoolHandle
- //AgtNdpHostPool EnableAutoSendRouterSolicitation, m.Object, m.Name);
+ //AgtNdpHostPool EnableAutoSendRouterSolicitation
  return nil
 }
 
 func(np *NdpHostPool) DisableAutoSendRouterSolicitation () error {
  //parameters: DevicePoolHandle
- //AgtNdpHostPool DisableAutoSendRouterSolicitation, m.Object, m.Name);
+ //AgtNdpHostPool DisableAutoSendRouterSolicitation
  return nil
 }
 
 func(np *NdpHostPool) IsAutoSendRouterSolicitationEnabled () error {
  //parameters: DevicePoolHandle
- //AgtNdpHostPool IsAutoSendRouterSolicitationEnabled, m.Object, m.Name);
+ //AgtNdpHostPool IsAutoSendRouterSolicitationEnabled
  return nil
 }
 
 func(np *NdpHostPool) SendRouterSolicitation () error {
  //parameters: DeviceIdentifiers
- //AgtNdpHostPool SendRouterSolicitation, m.Object, m.Name);
+ //AgtNdpHostPool SendRouterSolicitation
  return nil
 }
 
 func(np *NdpHostPool) ResetAddressAutoconfig () error {
  //parameters: DeviceIdentifiers
- //AgtNdpHostPool ResetAddressAutoconfig, m.Object, m.Name);
+ //AgtNdpHostPool ResetAddressAutoconfig
  return nil
 }
 

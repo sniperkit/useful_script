@@ -6,13 +6,13 @@ type ScriptControl struct {
 
 func(np *ScriptControl) Call () error {
  //parameters: Command
- //AgtScriptControl Call, m.Object, m.Name);
+ //AgtScriptControl Call
  return nil
 }
 
 func(np *ScriptControl) CreateCommandWrappers () error {
  //parameters: WrapperTemplate
- //AgtScriptControl CreateCommandWrappers, m.Object, m.Name);
+ //AgtScriptControl CreateCommandWrappers
  return nil
 }
 

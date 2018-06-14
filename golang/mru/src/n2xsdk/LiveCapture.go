@@ -6,7 +6,7 @@ type LiveCapture struct {
 
 func(np *LiveCapture) SetMode () error {
  //parameters: PortHandle Mode
- //AgtLiveCapture SetMode, m.Object, m.Name);
+ //AgtLiveCapture SetMode
  return nil
 }
 
@@ -18,25 +18,25 @@ func(np *LiveCapture) GetMode ()(string, error) {
 
 func(np *LiveCapture) Enable () error {
  //parameters: PortHandle
- //AgtLiveCapture Enable, m.Object, m.Name);
+ //AgtLiveCapture Enable
  return nil
 }
 
 func(np *LiveCapture) Disable () error {
  //parameters: PortHandle
- //AgtLiveCapture Disable, m.Object, m.Name);
+ //AgtLiveCapture Disable
  return nil
 }
 
 func(np *LiveCapture) Start () error {
  //parameters: PortHandle
- //AgtLiveCapture Start, m.Object, m.Name);
+ //AgtLiveCapture Start
  return nil
 }
 
 func(np *LiveCapture) Stop () error {
  //parameters: PortHandle
- //AgtLiveCapture Stop, m.Object, m.Name);
+ //AgtLiveCapture Stop
  return nil
 }
 
@@ -48,25 +48,25 @@ func(np *LiveCapture) GetState ()(string, error) {
 
 func(np *LiveCapture) EnableAutomaticStopCaptureOnBufferFull () error {
  //parameters: PortHandle
- //AgtLiveCapture EnableAutomaticStopCaptureOnBufferFull, m.Object, m.Name);
+ //AgtLiveCapture EnableAutomaticStopCaptureOnBufferFull
  return nil
 }
 
 func(np *LiveCapture) DisableAutomaticStopCaptureOnBufferFull () error {
  //parameters: PortHandle
- //AgtLiveCapture DisableAutomaticStopCaptureOnBufferFull, m.Object, m.Name);
+ //AgtLiveCapture DisableAutomaticStopCaptureOnBufferFull
  return nil
 }
 
 func(np *LiveCapture) IsAutomaticStopCaptureOnBufferFull () error {
  //parameters: PortHandle
- //AgtLiveCapture IsAutomaticStopCaptureOnBufferFull, m.Object, m.Name);
+ //AgtLiveCapture IsAutomaticStopCaptureOnBufferFull
  return nil
 }
 
 func(np *LiveCapture) SetBufferSizeMultiplier () error {
  //parameters: PortHandle MultiplierValue
- //AgtLiveCapture SetBufferSizeMultiplier, m.Object, m.Name);
+ //AgtLiveCapture SetBufferSizeMultiplier
  return nil
 }
 

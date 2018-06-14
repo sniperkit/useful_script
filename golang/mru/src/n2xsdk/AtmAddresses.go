@@ -6,13 +6,13 @@ type AtmAddresses struct {
 
 func(np *mAddresses) AddPvcPool () error {
  //parameters: PortHandle NumPvcs FirstVpi VpiIncrement FirstVci VciIncrement Encapsulation
- //AgtAtmAddresses AddPvcPool, m.Object, m.Name);
+ //AgtAtmAddresses AddPvcPool
  return nil
 }
 
 func(np *mAddresses) RemovePvcPools () error {
  //parameters: PortHandle Count psaPvcPoolHandles
- //AgtAtmAddresses RemovePvcPools, m.Object, m.Name);
+ //AgtAtmAddresses RemovePvcPools
  return nil
 }
 
@@ -24,19 +24,19 @@ func(np *mAddresses) ListPvcPools ()(string, error) {
 
 func(np *mAddresses) AddPvc () error {
  //parameters: PortHandle Vpi Vci Encapsulation TesterIpAddress SutIpAddress PrefixLength TrafficFlag
- //AgtAtmAddresses AddPvc, m.Object, m.Name);
+ //AgtAtmAddresses AddPvc
  return nil
 }
 
 func(np *mAddresses) AddIpv6Pvc () error {
  //parameters: PortHandle Vpi Vci Encapsulation TesterIpv6Address SutIpv6Address Ipv6PrefixLength
- //AgtAtmAddresses AddIpv6Pvc, m.Object, m.Name);
+ //AgtAtmAddresses AddIpv6Pvc
  return nil
 }
 
 func(np *mAddresses) RemovePvc () error {
  //parameters: PortHandle PvcHandle
- //AgtAtmAddresses RemovePvc, m.Object, m.Name);
+ //AgtAtmAddresses RemovePvc
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *mAddresses) GetPvcCount ()(string, error) {
 
 func(np *mAddresses) SetVpiVciRangeForMplsNull () error {
  //parameters: PortHandle MinVpi MaxVpi MinVci MaxVci
- //AgtAtmAddresses SetVpiVciRangeForMplsNull, m.Object, m.Name);
+ //AgtAtmAddresses SetVpiVciRangeForMplsNull
  return nil
 }
 

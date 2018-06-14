@@ -6,7 +6,7 @@ type OspfRouterGrid struct {
 
 func(np *OspfRouterGrid) SetGridSize () error {
  //parameters: GridHandle nRows nColumns
- //AgtOspfRouterGrid SetGridSize, m.Object, m.Name);
+ //AgtOspfRouterGrid SetGridSize
  return nil
 }
 
@@ -18,7 +18,7 @@ func(np *OspfRouterGrid) GetGridSize ()(string, error) {
 
 func(np *OspfRouterGrid) SetStartingRouterId () error {
  //parameters: GridHandle StartingRouterId
- //AgtOspfRouterGrid SetStartingRouterId, m.Object, m.Name);
+ //AgtOspfRouterGrid SetStartingRouterId
  return nil
 }
 
@@ -30,7 +30,7 @@ func(np *OspfRouterGrid) GetStartingRouterId ()(string, error) {
 
 func(np *OspfRouterGrid) SetStartingTeInterfaceAddress () error {
  //parameters: GridHandle StartingTeInterfaceAddress
- //AgtOspfRouterGrid SetStartingTeInterfaceAddress, m.Object, m.Name);
+ //AgtOspfRouterGrid SetStartingTeInterfaceAddress
  return nil
 }
 
@@ -42,7 +42,7 @@ func(np *OspfRouterGrid) GetStartingTeInterfaceAddress ()(string, error) {
 
 func(np *OspfRouterGrid) SetStartingGmplsLinkId () error {
  //parameters: GridHandle StartingGmplsLinkId
- //AgtOspfRouterGrid SetStartingGmplsLinkId, m.Object, m.Name);
+ //AgtOspfRouterGrid SetStartingGmplsLinkId
  return nil
 }
 
@@ -54,7 +54,7 @@ func(np *OspfRouterGrid) GetStartingGmplsLinkId ()(string, error) {
 
 func(np *OspfRouterGrid) SetGridConnection () error {
  //parameters: GridHandle SessionHandle RowNum ColNum
- //AgtOspfRouterGrid SetGridConnection, m.Object, m.Name);
+ //AgtOspfRouterGrid SetGridConnection
  return nil
 }
 
@@ -66,7 +66,7 @@ func(np *OspfRouterGrid) GetGridConnection ()(string, error) {
 
 func(np *OspfRouterGrid) SetGridDisconnection () error {
  //parameters: GridHandle SessionHandle
- //AgtOspfRouterGrid SetGridDisconnection, m.Object, m.Name);
+ //AgtOspfRouterGrid SetGridDisconnection
  return nil
 }
 
@@ -78,37 +78,37 @@ func(np *OspfRouterGrid) GetRouter ()(string, error) {
 
 func(np *OspfRouterGrid) EnableTe () error {
  //parameters: GridHandle
- //AgtOspfRouterGrid EnableTe, m.Object, m.Name);
+ //AgtOspfRouterGrid EnableTe
  return nil
 }
 
 func(np *OspfRouterGrid) DisableTe () error {
  //parameters: GridHandle
- //AgtOspfRouterGrid DisableTe, m.Object, m.Name);
+ //AgtOspfRouterGrid DisableTe
  return nil
 }
 
 func(np *OspfRouterGrid) IsTeEnabled () error {
  //parameters: GridHandle
- //AgtOspfRouterGrid IsTeEnabled, m.Object, m.Name);
+ //AgtOspfRouterGrid IsTeEnabled
  return nil
 }
 
 func(np *OspfRouterGrid) AdvertiseRouter () error {
  //parameters: GridHandle RowNum ColNum
- //AgtOspfRouterGrid AdvertiseRouter, m.Object, m.Name);
+ //AgtOspfRouterGrid AdvertiseRouter
  return nil
 }
 
 func(np *OspfRouterGrid) WithdrawRouter () error {
  //parameters: GridHandle RowNum ColNum
- //AgtOspfRouterGrid WithdrawRouter, m.Object, m.Name);
+ //AgtOspfRouterGrid WithdrawRouter
  return nil
 }
 
 func(np *OspfRouterGrid) SetGridLinkType () error {
  //parameters: GridHandle GridLinkType
- //AgtOspfRouterGrid SetGridLinkType, m.Object, m.Name);
+ //AgtOspfRouterGrid SetGridLinkType
  return nil
 }
 

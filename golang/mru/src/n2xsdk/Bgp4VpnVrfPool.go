@@ -6,7 +6,7 @@ type Bgp4VpnVrfPool struct {
 
 func(np *Bgp4VpnVrfPool) SetVrfCreationMode () error {
  //parameters: VrfPoolHandle VrfCreationMode
- //AgtBgp4VpnVrfPool SetVrfCreationMode, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool SetVrfCreationMode
  return nil
 }
 
@@ -24,13 +24,13 @@ func(np *Bgp4VpnVrfPool) GetVrfTable ()(string, error) {
 
 func(np *Bgp4VpnVrfPool) QueryVrfEntry () error {
  //parameters: VrfPoolHandle VrfIndex Prefix PrefixLength
- //AgtBgp4VpnVrfPool QueryVrfEntry, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool QueryVrfEntry
  return nil
 }
 
 func(np *Bgp4VpnVrfPool) QueryLspLabel () error {
  //parameters: VrfPoolHandle VrfIndex Destination
- //AgtBgp4VpnVrfPool QueryLspLabel, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool QueryLspLabel
  return nil
 }
 
@@ -48,7 +48,7 @@ func(np *Bgp4VpnVrfPool) GetImportRouteTargetList ()(string, error) {
 
 func(np *Bgp4VpnVrfPool) SetImportRouteTarget () error {
  //parameters: VrfPoolHandle RouteTargetType RouteTarget
- //AgtBgp4VpnVrfPool SetImportRouteTarget, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool SetImportRouteTarget
  return nil
 }
 
@@ -60,25 +60,25 @@ func(np *Bgp4VpnVrfPool) GetImportRouteTarget ()(string, error) {
 
 func(np *Bgp4VpnVrfPool) Enable () error {
  //parameters: VrfPoolHandle
- //AgtBgp4VpnVrfPool Enable, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool Enable
  return nil
 }
 
 func(np *Bgp4VpnVrfPool) Disable () error {
  //parameters: VrfPoolHandle
- //AgtBgp4VpnVrfPool Disable, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool Disable
  return nil
 }
 
 func(np *Bgp4VpnVrfPool) IsEnabled () error {
  //parameters: VrfPoolHandle
- //AgtBgp4VpnVrfPool IsEnabled, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool IsEnabled
  return nil
 }
 
 func(np *Bgp4VpnVrfPool) SetImportRouteTargetIncrementingRange () error {
  //parameters: VrfPoolHandle RouteTargetType FirstRouteTarget RouteTargetIncrement RouteTargetRepeat PercentOverlap
- //AgtBgp4VpnVrfPool SetImportRouteTargetIncrementingRange, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool SetImportRouteTargetIncrementingRange
  return nil
 }
 
@@ -90,7 +90,7 @@ func(np *Bgp4VpnVrfPool) GetImportRouteTargetIncrementingRange ()(string, error)
 
 func(np *Bgp4VpnVrfPool) SetImportRouteTargetType () error {
  //parameters: VrfPoolHandle RouteTargetTypeValue
- //AgtBgp4VpnVrfPool SetImportRouteTargetType, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool SetImportRouteTargetType
  return nil
 }
 
@@ -102,7 +102,7 @@ func(np *Bgp4VpnVrfPool) GetImportRouteTargetType ()(string, error) {
 
 func(np *Bgp4VpnVrfPool) SetVpnsPerPeer () error {
  //parameters: VrfPoolHandle NumVpnsPerPeer
- //AgtBgp4VpnVrfPool SetVpnsPerPeer, m.Object, m.Name);
+ //AgtBgp4VpnVrfPool SetVpnsPerPeer
  return nil
 }
 
