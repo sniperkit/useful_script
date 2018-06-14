@@ -58,15 +58,15 @@ func main() {
 	}
 
 	for obj, ms := range methods {
-		os.Remove(fmt.Sprintf("%s.go", strings.Trim(obj, "Agt")))
-		util.AppendToFile(fmt.Sprintf("%s.go", strings.Trim(obj, "Agt")), []byte("package n2xsdk\n\n"))
-		util.AppendToFile(fmt.Sprintf("%s.go", strings.Trim(obj, "Agt")), []byte(fmt.Sprintf("type %s struct {\n Handler string\n}\n\n", strings.Trim(obj, "Agt"))))
+		os.Remove(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)))
+		util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte("package n2xsdk\n\n"))
+		util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte(fmt.Sprintf("type %s struct {\n Handler string\n}\n\n", strings.Replace(obj, "Agt", "", -1))))
 
 		for _, m := range ms {
 			if strings.Contains(m.Name, "Get") || strings.Contains(m.Name, "List") {
-				util.AppendToFile(fmt.Sprintf("%s.go", strings.Trim(obj, "Agt")), []byte(fmt.Sprintf("func(np *%s) %s ()(string, error) {\n //parameters: %s\n //%s %s\n return \"\", nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
+				util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte(fmt.Sprintf("func(np *%s) %s ()(string, error) {\n //parameters: %s\n //%s %s\n return \"\", nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
 			} else {
-				util.AppendToFile(fmt.Sprintf("%s.go", strings.Trim(obj, "Agt")), []byte(fmt.Sprintf("func(np *%s) %s () error {\n //parameters: %s\n //%s %s, m.Object, m.Name);\n return nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
+				util.AppendToFile(fmt.Sprintf("%s.go", strings.Replace(obj, "Agt", "", -1)), []byte(fmt.Sprintf("func(np *%s) %s () error {\n //parameters: %s\n //%s %s, m.Object, m.Name);\n return nil\n}\n\n", strings.Trim(m.Object, "Agt"), m.Name, m.Parameters, m.Object, m.Name)))
 			}
 		}
 	}
