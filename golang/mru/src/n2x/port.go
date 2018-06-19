@@ -28,6 +28,7 @@ type Port struct {
 	LegacyLinkDefaultSutIP  string
 	OSPFs                   map[string]*OSPF
 	BGPs                    map[string]*BGP
+	Traffics                map[string]*Traffic
 }
 
 const (
@@ -1212,6 +1213,36 @@ func (p *Port) RemoveAllIPv6IBGPs() error {
 	}
 
 	return nil
+}
+
+//By default use CONSTANT_PROFILE, it's easy to use.
+func (p *Port) AddTraffic(scount, name string) (*Traffic, error) {
+	cmd := fmt.Sprintf("AgtProfileList AddProfile %s AGT_CONSTANT_PROFILE")
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot add traffic with: %s", err)
+	}
+
+	res = strings.Replace(res, "\"", "", -1)
+	res = strings.TrimSpace(res)
+	if res == "" {
+		return nil, fmt.Errorf("Invalid return value for add traffic: %s", res)
+	}
+
+	if p.Traffics == nil {
+		p.Traffics = make(map[string]*Traffic, 1)
+	}
+
+	nt := &Traffic{Handler: res, StreamCount: scount, Name: name}
+
+	err = nt.Init()
+	if err != nil {
+		return nt, fmt.Errorf("Cannot add traffic with: %s", err)
+	}
+
+	p.Traffics[name] = nt
+
+	return nt, nil
 }
 
 func init() {

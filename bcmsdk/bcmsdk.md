@@ -4,3 +4,4 @@
 4.使用memp = &SOC_MEM_INFO (unit, mem)获取表的内容, 然后就可以遍历该表的所有field了。
 5.使用soc_mem_field_get(unit, mem, entry, field, fval)来获取某张表的某一域的值。
 6.soc_driver_t 定义了chip的驱动，其中包括寄存器定义，表定义，port, feature, counter以及chip特定初始化历程等。
+7. SOC_PORT_NAME(unit, (port))可以根据端口号获取端口的名字
