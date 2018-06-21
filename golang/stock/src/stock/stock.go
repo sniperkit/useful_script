@@ -20,6 +20,76 @@ type Stock struct {
 	History *history.History
 }
 
+func (s *Stock) String() string {
+	var res string
+	res += fmt.Sprintf("%-10s %8s:\n", s.Name, s.Code)
+
+	res += fmt.Sprintf("   History Summary:\n")
+	d, err := s.History.GetHighest()
+	if err != nil {
+		res += fmt.Sprintf("\t NOHIGHEST NODATE")
+		return res
+	} else {
+		res += fmt.Sprintf("\t %15f %4d/%02d/%02d %10s", d.High, d.Date.Year(), d.Date.Month(), d.Date.Day(), d.Date.Weekday())
+	}
+
+	d, err = s.History.GetLowest()
+	if err != nil {
+		res += fmt.Sprintf(" NOLOWEST NODATE")
+		return res
+	} else {
+		res += fmt.Sprintf(" %15f %4d/%02d/%02d %10s", d.Low, d.Date.Year(), d.Date.Month(), d.Date.Day(), d.Date.Weekday())
+	}
+	res += fmt.Sprintf("\n")
+
+	res += fmt.Sprintf("   Year Summary:\n")
+	for y, ye := range s.History.Year {
+		res += fmt.Sprintf("{%d} ", y)
+		d, err = ye.GetHighest()
+		if err != nil {
+			res += fmt.Sprintf("\t NOHIGHEST NODATE")
+			return res
+		} else {
+			res += fmt.Sprintf("\t %15f %4d/%02d/%02d %10s", d.High, d.Date.Year(), d.Date.Month(), d.Date.Day(), d.Date.Weekday())
+		}
+
+		d, err = ye.GetLowest()
+		if err != nil {
+			res += fmt.Sprintf(" NOLOWEST NODATE")
+			return res
+		} else {
+			res += fmt.Sprintf(" %15f %4d/%02d/%02d %10s", d.Low, d.Date.Year(), d.Date.Month(), d.Date.Day(), d.Date.Weekday())
+		}
+
+		res += fmt.Sprintf("\n")
+	}
+	/*
+		fmt.Println(time.Now().Year())
+		y, err := s.History.GetYear(time.Now().Year())
+		if err != nil {
+			res += fmt.Sprintf("\t NOYEARE INFO")
+			return res
+		}
+		d, err = y.GetHighest()
+		if err != nil {
+			res += fmt.Sprintf("\t NOHIGHEST NODATE")
+			return res
+		} else {
+			res += fmt.Sprintf("\t %15f %4d/%02d/%02d %10s", d.High, d.Date.Year(), d.Date.Month(), d.Date.Day(), d.Date.Weekday())
+		}
+
+		d, err = s.History.GetLowest()
+		if err != nil {
+			res += fmt.Sprintf(" NOLOWEST NODATE")
+			return res
+		} else {
+			res += fmt.Sprintf(" %15f %4d/%02d/%02d %10s", d.Low, d.Date.Year(), d.Date.Month(), d.Date.Day(), d.Date.Weekday())
+		}
+	*/
+
+	return res
+}
+
 var HexunDailyK = "http://flashquote.stock.hexun.com/Quotejs/DA/1_%s_DA.html?"
 var StockCodeR = regexp.MustCompile("Code:[[:space:]]+(?P<code>[[:alnum:]]{6})[[:space:]]+Name")
 var DailyR = regexp.MustCompile(`\[(?P<date>[[:digit:]]{8}),(?P<p1>[[:digit:].]+),(?P<p2>[[:digit:].]+),(?P<p3>[[:digit:].]+),(?P<p4>[[:digit:].]+),(?P<p5>[[:digit:].]+),(?P<v1>[[:digit:]]+),(?P<v2>[[:digit:]]+)\]`)
@@ -39,10 +109,33 @@ func New(code, name string) (*Stock, error) {
 	return ns, nil
 }
 
+func NewFromLocal(code, name string) (*Stock, error) {
+	ns := &Stock{
+		Code: code,
+		Name: name,
+	}
+
+	err := ns.InitFromLocal()
+	if err != nil {
+		return nil, err
+	}
+
+	return ns, nil
+}
+
 func (s *Stock) Init() error {
 	h, err := s.GetHistory()
 	if err != nil {
 		return fmt.Errorf("Cannot init stock %s with: %s", s.Code, err)
+	}
+
+	return h.Init()
+}
+
+func (s *Stock) InitFromLocal() error {
+	h, err := s.GetHistoryFromLocal()
+	if err != nil {
+		return fmt.Errorf("Cannot init From local stock %s with: %s", s.Code, err)
 	}
 
 	return h.Init()
@@ -109,9 +202,13 @@ func (s *Stock) GetHistoryFromLocal() (*history.History, error) {
 		dis = append(dis, di)
 	}
 
-	return &history.History{
+	h := &history.History{
 		Info: dis,
-	}, nil
+	}
+
+	s.History = h
+
+	return s.History, nil
 }
 
 func GetDailyInfoFromString(day []string) (*history.Daily, error) {

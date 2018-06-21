@@ -149,7 +149,7 @@ func (m *Month) GetLowest() (*Daily, error) {
 	return di, nil
 }
 
-func (h *History) GetYearInfo(year int) (*Year, error) {
+func (h *History) GetYear(year int) (*Year, error) {
 	if h.Year == nil {
 		return nil, fmt.Errorf("Year database is not initialized")
 	}
@@ -195,6 +195,8 @@ func (h *History) Parse() error {
 		}
 	}
 
+	h.Year = ys
+
 	return nil
 }
 
@@ -233,7 +235,7 @@ func (y *Year) ParseMonth() error {
 	return nil
 }
 
-func (y Year) GetMonthInfo(month time.Month) (*Month, error) {
+func (y Year) GetMonth(month time.Month) (*Month, error) {
 	if y.Month == nil {
 		return nil, fmt.Errorf("Month database is not initialized")
 	}
