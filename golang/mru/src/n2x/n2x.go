@@ -145,7 +145,7 @@ func (n *N2X) ConnectToSessionByID(id string) (*NSession, error) {
 				return nil, fmt.Errorf("Cannot connect to session %s(%d) : %s", sess.Label, sess.ID, err.Error())
 			}
 
-			_, err := sess.GetReservedPorts()
+			err = sess.Sync()
 			if err != nil {
 				return nil, err
 			}
@@ -172,7 +172,7 @@ func (n *N2X) ConnectToSessionByName(name string) (*NSession, error) {
 			if err != nil {
 				return nil, fmt.Errorf("Cannot connect to session with: %s", err.Error())
 			}
-			_, err := sess.GetReservedPorts()
+			err = sess.Sync()
 			if err != nil {
 				return nil, err
 			}

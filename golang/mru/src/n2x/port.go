@@ -9,6 +9,8 @@ import (
 
 var ErrorNoOSPFSession = errors.New("No OSPF Session exist")
 var ErrorNoBGPSession = errors.New("No BGP Session exist")
+var ErrorNoTrafficSession = errors.New("No Traffic session exist")
+var ErrorNoTrafficByName = errors.New("No Traffic session exist")
 
 type PortMediaType int
 
@@ -1217,7 +1219,7 @@ func (p *Port) RemoveAllIPv6IBGPs() error {
 
 //By default use CONSTANT_PROFILE, it's easy to use.
 func (p *Port) AddTraffic(scount, name string) (*Traffic, error) {
-	cmd := fmt.Sprintf("AgtProfileList AddProfile %s AGT_CONSTANT_PROFILE")
+	cmd := fmt.Sprintf("AgtProfileList AddProfile %s AGT_CONSTANT_PROFILE", p.Handler)
 	res, err := p.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot add traffic with: %s", err)
@@ -1233,7 +1235,13 @@ func (p *Port) AddTraffic(scount, name string) (*Traffic, error) {
 		p.Traffics = make(map[string]*Traffic, 1)
 	}
 
-	nt := &Traffic{Handler: res, StreamCount: scount, Name: name}
+	nt := &Traffic{
+		Handler:     res,
+		StreamCount: scount,
+		Name:        name,
+		Port:        p,
+		Object:      "AgtConstantProfile",
+	}
 
 	err = nt.Init()
 	if err != nil {
@@ -1243,6 +1251,110 @@ func (p *Port) AddTraffic(scount, name string) (*Traffic, error) {
 	p.Traffics[name] = nt
 
 	return nt, nil
+}
+
+func (p *Port) RemoveTraffic(tr *Traffic) error {
+	if tr.Handler == "" {
+		return fmt.Errorf("Invalid traffic %+v", tr)
+	}
+
+	_, ok := p.Traffics[tr.Name]
+	if !ok {
+		return fmt.Errorf("Traffic %s does not exist")
+	}
+
+	cmd := fmt.Sprintf("AgtProfileList Remove %s", tr.Handler)
+	_, err := p.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot remove traffic %s from %s with: %s", tr.Handler, p.Handler, err)
+	}
+
+	delete(p.Traffics, tr.Name)
+
+	return nil
+}
+
+func (p *Port) RemoveTrafficByName(name string) error {
+	t, ok := p.Traffics[name]
+	if !ok {
+		return ErrorNoTrafficByName
+	}
+
+	return p.RemoveTraffic(t)
+}
+
+func (p *Port) Sync() error {
+	_, err := p.GetAllOSPFs()
+	if err != nil && err != ErrorNoOSPFSession {
+		return fmt.Errorf("Cannot sync port info with: %s", err)
+	}
+
+	_, err = p.GetAllBGPs()
+	if err != nil && err != ErrorNoBGPSession {
+		return fmt.Errorf("Cannot sync port info with: %s", err)
+	}
+
+	_, err = p.GetAllTraffics()
+	if err != nil && err != ErrorNoTrafficSession {
+		return fmt.Errorf("Cannot sync port info with: %s", err)
+	}
+
+	return nil
+}
+
+func (p *Port) GetAllTraffics() ([]*Traffic, error) {
+	cmd := fmt.Sprintf("AgtProfileList ListProfilesOnPort %s", p.Handler)
+	res, err := p.Invoke(cmd)
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get traffic profile on port %s with: %s", p.Handler, err)
+	}
+
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+	res = strings.TrimSpace(res)
+
+	fields := strings.Split(res, " ")
+	trs := make([]*Traffic, 0, len(fields))
+
+	if p.Traffics == nil {
+		p.Traffics = make(map[string]*Traffic, len(fields))
+	}
+
+	for _, field := range fields {
+		field = strings.TrimSpace(field)
+		if field == "" {
+			continue
+		}
+
+		tr := &Traffic{
+			Handler: field,
+			Object:  "AgtConstantProfile",
+			Port:    p,
+			Unit:    LoadUnitsNameMap[DEFAULT_TRAFFIC_UNIT],
+		}
+
+		err = tr.Sync()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot sync traffic %s with %s", field, err)
+		}
+
+		p.Traffics[tr.Name] = tr
+
+		trs = append(trs, tr)
+	}
+
+	return trs, nil
+}
+
+func (p *Port) RemoveAllTraffics() error {
+	for _, t := range p.Traffics {
+		err := p.RemoveTraffic(t)
+		if err != nil {
+			return fmt.Errorf("Cannot remove all traffic with %s", err)
+		}
+	}
+
+	return nil
 }
 
 func init() {

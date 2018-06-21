@@ -82,12 +82,10 @@ func (rp *RoutePool) Sync() error {
 		}
 	}
 
-	lsap, err := rp.GetExternalLsaPool()
+	_, err = rp.GetExternalLsaPool()
 	if err != nil {
 		return fmt.Errorf("Cannot sync route pool with: %s", err)
 	}
-
-	fmt.Println(lsap)
 
 	return nil
 }
@@ -320,12 +318,10 @@ type LSA struct {
 //AgtOspfLsaDatabase ListLsas
 func (lsdb *LSDB) GetAllLSAs() ([]*LSA, error) {
 	cmd := fmt.Sprintf("AgtOspfLsaDatabase ListLsas %s", lsdb.Handler)
-	res, err := lsdb.Invoke(cmd)
+	_, err := lsdb.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot get ospf neighbor rid %s : %s", lsdb.Handler, err.Error())
 	}
-
-	fmt.Println("Get All LSAs ", res)
 
 	return nil, nil
 }
@@ -338,12 +334,11 @@ func (lsdb *LSDB) AddLSA(lsaType int) ([]*LSA, error) {
 	}
 
 	cmd := fmt.Sprintf("AgtOspfLsaDatabase AddLsa %s %s", lsdb.Handler, name)
-	res, err := lsdb.Invoke(cmd)
+	_, err := lsdb.Invoke(cmd)
 	if err != nil {
 		return nil, fmt.Errorf("Cannot Add Lsa to rid %s : %s", lsdb.Handler, err.Error())
 	}
 
-	fmt.Println(res)
 	return nil, nil
 }
 
@@ -869,8 +864,6 @@ func (o *OSPF) GetLSDB() (*LSDB, error) {
 		return nil, fmt.Errorf("Cannot get lsdb on port %s : %s", o.Name, err.Error())
 	}
 
-	fmt.Println("Get LSDB : ", res)
-
 	handler := strings.TrimSpace(res)
 	if handler == "" {
 		return nil, fmt.Errorf("Cannot get lsdb on port %s : %s", o.Name, err.Error())
@@ -923,8 +916,6 @@ func (o *OSPF) AddSummaryRoutePool() (*RoutePool, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Cannot add ospf summary route pool to %s with: %s", o.Handler, err)
 	}
-
-	fmt.Println(res)
 
 	return &RoutePool{Type: Summary, Handler: strings.TrimSpace(res)}, nil
 }
@@ -1329,7 +1320,6 @@ func (o *OSPF) RemoveAllPools() error {
 		if err != nil {
 			return fmt.Errorf("Cannot remove pool: %s", field)
 		}
-		fmt.Println(field, " : ", pt)
 
 		if field == o.RouterHandler {
 			continue
@@ -1338,7 +1328,6 @@ func (o *OSPF) RemoveAllPools() error {
 		if pt == "AGT_OSPF_NEIGHBOR" {
 			continue
 		}
-		fmt.Println(pt)
 
 		err = o.RemovePoolByID(field)
 		if err != nil {

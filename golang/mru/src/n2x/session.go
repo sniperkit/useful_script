@@ -151,6 +151,44 @@ func (ns *NSession) GetReservedPorts() ([]*Port, error) {
 	return ports, nil
 }
 
+func (ns *NSession) GetPorts() ([]*Port, error) {
+	ports := make([]*Port, 0, 10)
+	if ns.Ports != nil {
+		for _, port := range ns.Ports {
+			ports = append(ports, port)
+		}
+		return ports, nil
+	}
+
+	ps, err := ns.ListPorts()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, p := range ps {
+		pname, err := ns.GetPortName(p)
+		if err != nil {
+			return nil, fmt.Errorf("Cannot get reserved port with: %s", err)
+		}
+
+		ports = append(ports, &Port{
+			Name:     pname,
+			Handler:  p,
+			NSession: ns,
+		})
+	}
+
+	if ns.Ports == nil {
+		ns.Ports = make(map[string]*Port, 10)
+	}
+
+	for _, port := range ports {
+		ns.Ports[port.Name] = port
+	}
+
+	return ports, nil
+}
+
 func (ns *NSession) ListModules() ([]string, error) {
 	res, err := ns.Invoke("AgtPortSelector ListModules")
 	if err != nil {
@@ -242,6 +280,11 @@ func (ns *NSession) ListPorts() ([]string, error) {
 }
 
 func (ns *NSession) GetPortName(handler string) (string, error) {
+	handler = strings.TrimSpace(handler)
+	if handler == "" {
+		return "", fmt.Errorf("You must give the port handler for get name")
+	}
+
 	cmd := fmt.Sprintf("AgtPortSelector GetPortDetails %s", handler)
 	res, err := ns.Invoke(cmd)
 	if err != nil {
@@ -296,6 +339,22 @@ func (ns *NSession) StopRoutingEngine() error {
 	_, err := ns.Invoke("AgtRoutingEngine Stop")
 	if err != nil {
 		return fmt.Errorf("Cannot stop routing engine with: %s", err)
+	}
+
+	return nil
+}
+
+func (ns *NSession) Sync() error {
+	ports, err := ns.GetReservedPorts()
+	if err != nil {
+		return fmt.Errorf("Cannot sync session %s with %s", ns.ID, err)
+	}
+
+	for _, port := range ports {
+		err = port.Sync()
+		if err != nil {
+			return fmt.Errorf("Cannot sync session %s with %s", ns.ID, err)
+		}
 	}
 
 	return nil

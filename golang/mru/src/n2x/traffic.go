@@ -25,9 +25,24 @@ type Traffic struct {
 }
 
 type StreamGroup struct {
-	Name       string
-	Handler    string
-	PDUHandler string
+	Name               string
+	ID                 string
+	Object             string
+	Handler            string
+	PDUObject          string
+	PDUHandler         string
+	Length             string
+	LengthMode         string
+	L2Protocol         string
+	SourcePort         string
+	DestinationPorts   map[string]string
+	Type               string
+	Enabled            bool
+	NumberOfStream     string
+	AllL2Protocol      string
+	AllPacketType      string
+	SourceEndpointType string
+	SourceEndpoint     string
 	*Traffic
 }
 
@@ -57,6 +72,7 @@ const (
 	MBITS_PER_SEC
 	PERCENTAGE_LINK_BANDWIDTH
 	L3_MBITS_PER_SEC
+	DEFAULT_TRAFFIC_UNIT = PACKETS_PER_SEC
 )
 
 var LoadUnitsNameMap = map[int]string{
@@ -103,8 +119,15 @@ func (t *Traffic) Init() error {
 
 		nsg := &StreamGroup{
 			Handler:    stream,
+			Object:     "AgtStreamGroup",
 			PDUHandler: strings.TrimSpace(pdus[i]),
 			Traffic:    t,
+			PDUObject:  "AgtPduHeader",
+		}
+
+		err = nsg.Sync()
+		if err != nil {
+			return fmt.Errorf("Cannot init traffic with: %s", err)
 		}
 
 		t.StreamGroups[nsg.Handler] = nsg
@@ -322,6 +345,39 @@ func (t *Traffic) ListStreamGroups() (string, error) {
 	res = strings.TrimSpace(res)
 
 	return res, nil
+}
+
+func (t *Traffic) GetAllStreamGroups() ([]*StreamGroup, error) {
+	res, err := t.ListStreamGroups()
+	if err != nil {
+		return nil, fmt.Errorf("Cannot get stream groups of %s with: %s", t.Handler, err)
+	}
+
+	fields := strings.Split(res, " ")
+	sgs := make([]*StreamGroup, 0, len(fields))
+	t.StreamGroups = make(map[string]*StreamGroup, len(fields))
+	for _, field := range fields {
+		field = strings.TrimSpace(field)
+		if field == "" {
+			continue
+		}
+
+		nsg := &StreamGroup{
+			Handler:   field,
+			Object:    "AgtStreamGroup",
+			Traffic:   t,
+			PDUObject: "AgtPduHeader",
+		}
+
+		err = nsg.Sync()
+		if err != nil {
+			return nil, fmt.Errorf("Cannot Get All streamgroup with: %s", err)
+		}
+
+		sgs = append(sgs, nsg)
+	}
+
+	return sgs, nil
 }
 
 //AgtConstantProfile AddStreamGroups
@@ -567,12 +623,42 @@ disabled stream IDs for all field modifiers—a single stream ID is assigned to 
 
 //AgtStreamGroup
 func (sg *StreamGroup) GetType() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetType %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup type with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup type")
+	}
+
+	sg.Type = res
+
+	return res, nil
 }
 
 //Set name should use StreamGroupList object
 func (sg *StreamGroup) GetName() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetName %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup name with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup name")
+	}
+
+	sg.Name = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) GetLockCount() (string, error) {
@@ -580,7 +666,22 @@ func (sg *StreamGroup) GetLockCount() (string, error) {
 }
 
 func (sg *StreamGroup) GetSourcePort() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetSourcePort %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup sport with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup sport")
+	}
+
+	sg.SourcePort = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetSourceEndpointType() error {
@@ -588,7 +689,22 @@ func (sg *StreamGroup) SetSourceEndpointType() error {
 }
 
 func (sg *StreamGroup) GetSourceEndpointType() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetSourceEndpointType %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup source endpoint type with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup source endpoint type")
+	}
+
+	sg.SourceEndpointType = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetSourceEndpoint() error {
@@ -596,7 +712,22 @@ func (sg *StreamGroup) SetSourceEndpoint() error {
 }
 
 func (sg *StreamGroup) GetSourceEndpoint() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetSourceEndpoint %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup source endpoint type with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup source endpoint type")
+	}
+
+	sg.SourceEndpoint = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) Refresh() error {
@@ -608,15 +739,72 @@ func (sg *StreamGroup) SetExpectedDestinationPorts() error {
 }
 
 func (sg *StreamGroup) GetExpectedDestinationPorts() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetExpectedDestinationPorts %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup dst port with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup dst port")
+	}
+
+	fields := strings.Split(res, " ")
+
+	sg.DestinationPorts = make(map[string]string, len(fields))
+	for _, field := range fields {
+		field = strings.TrimSpace(field)
+		if field == "" {
+			continue
+		}
+		sg.DestinationPorts[field] = field
+	}
+
+	return res, nil
 }
 
 func (sg *StreamGroup) ListAllL2Protocols() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s ListAllL2Protocols %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup all packet type %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup all packet type")
+	}
+
+	sg.AllL2Protocol = res
+
+	return res, nil
+
 }
 
 func (sg *StreamGroup) ListAllPacketTypes() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s ListAllPacketTypes", sg.Object)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup all packet type %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "}", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup all packet type")
+	}
+
+	sg.AllPacketType = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetPduHeaders() error {
@@ -632,7 +820,22 @@ func (sg *StreamGroup) AppendHeader() error {
 }
 
 func (sg *StreamGroup) GetDefaultL2Protocol() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetDefaultL2Protocol %s", sg.Object, sg.Traffic.Port.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup default l2 protocol %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup default l2 protocol")
+	}
+
+	sg.L2Protocol = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetLengthMode() error {
@@ -640,7 +843,22 @@ func (sg *StreamGroup) SetLengthMode() error {
 }
 
 func (sg *StreamGroup) GetLengthMode() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetLengthMode %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup length mode %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup length mode")
+	}
+
+	sg.LengthMode = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetLength() error {
@@ -648,15 +866,43 @@ func (sg *StreamGroup) SetLength() error {
 }
 
 func (sg *StreamGroup) GetLength() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetLength %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup length %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup length")
+	}
+
+	sg.Length = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) GetStreamTag() (string, error) {
 	return "", nil
 }
 
-func (sg *StreamGroup) GetStreamId() (string, error) {
-	return "", nil
+func (sg *StreamGroup) GetStreamId(index string) (string, error) {
+	cmd := fmt.Sprintf("%s GetStreamId %s %s", sg.Object, sg.Handler, index)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup id %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup id")
+	}
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetRepeatCount() error {
@@ -688,7 +934,23 @@ func (sg *StreamGroup) GetProfile() (string, error) {
 }
 
 func (sg *StreamGroup) GetPdu() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetPdu %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup pdu %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup pdu")
+	}
+
+	sg.PDUObject = "AgtPduHeader"
+	sg.PDUHandler = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetStreamGenerationParameter() error {
@@ -696,11 +958,41 @@ func (sg *StreamGroup) SetStreamGenerationParameter() error {
 }
 
 func (sg *StreamGroup) GetStreamGenerationParameter() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetStreamGenerationParameter %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup nos %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup nos")
+	}
+
+	sg.NumberOfStream = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) GetNumberOfStreams() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetNumberOfStreams %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup nos %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup nos")
+	}
+
+	sg.NumberOfStream = res
+
+	return res, nil
 }
 
 func (sg *StreamGroup) GetStreamGenerationFieldValue() (string, error) {
@@ -712,7 +1004,20 @@ func (sg *StreamGroup) SetFieldModifiersRelation() error {
 }
 
 func (sg *StreamGroup) GetFieldModifiersRelation() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetFieldModifiersRelation %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup FMR %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup FMR")
+	}
+
+	return res, nil
 }
 
 func (sg *StreamGroup) SetLinkedFieldModifiers() error {
@@ -720,19 +1025,67 @@ func (sg *StreamGroup) SetLinkedFieldModifiers() error {
 }
 
 func (sg *StreamGroup) GetLinkedFieldModifiers() (string, error) {
-	return "", nil
+	cmd := fmt.Sprintf("%s GetLinkedFieldModifiers %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup LFM %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup LFM")
+	}
+
+	return res, nil
 }
 
 func (sg *StreamGroup) Enable() error {
+	cmd := fmt.Sprintf("%s Enable %s", sg.Object, sg.Handler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot Enable streamgroup with: %s", err)
+	}
+
+	sg.Enabled = false
+
 	return nil
 }
 
 func (sg *StreamGroup) Disable() error {
+	cmd := fmt.Sprintf("%s Disable %s", sg.Object, sg.Handler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot disable streamgroup with: %s", err)
+	}
+
+	sg.Enabled = false
+
 	return nil
 }
 
-func (sg *StreamGroup) IsEnabled() error {
-	return nil
+func (sg *StreamGroup) IsEnabled() (bool, error) {
+	cmd := fmt.Sprintf("%s IsEnabled %s", sg.Object, sg.Handler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return false, fmt.Errorf("Cannot get streamgroup state with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "\"", "", -1)
+
+	if res == "" {
+		return false, fmt.Errorf("Invalid streamgroup state")
+	}
+
+	if res == "1" {
+		sg.Enabled = true
+	} else {
+		sg.Enabled = false
+	}
+
+	return sg.Enabled, nil
 }
 
 func (sg *StreamGroup) SetL2Error() error {
@@ -741,4 +1094,189 @@ func (sg *StreamGroup) SetL2Error() error {
 
 func (sg *StreamGroup) GetL2Error() (string, error) {
 	return "", nil
+}
+
+func (sg *StreamGroup) ListProtocolsInHeader() (string, error) {
+	cmd := fmt.Sprintf("%s ListProtocolsInHeader %s", sg.PDUObject, sg.PDUHandler)
+	res, err := sg.Invoke(cmd)
+	if err != nil {
+		return "", fmt.Errorf("Cannot get streamgroup state with: %s", err)
+	}
+
+	res = strings.TrimSpace(res)
+	res = strings.Replace(res, "{", "", -1)
+	res = strings.Replace(res, "{", "", -1)
+
+	if res == "" {
+		return "", fmt.Errorf("Invalid streamgroup state")
+	}
+
+	return res, nil
+}
+
+func (sg *StreamGroup) SetIPv4UDP() error {
+	cmd := fmt.Sprintf("%s SetPduHeaders %s {ethernet ipv4 udp}", sg.Object, sg.PDUHandler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set stream as ipv4 udp: %s", err)
+	}
+
+	return nil
+}
+
+func (sg *StreamGroup) SetIPv4TCP() error {
+	cmd := fmt.Sprintf("%s SetPduHeaders %s {ethernet ipv4 tcp}", sg.Object, sg.PDUHandler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set stream as ipv4 tcp: %s", err)
+	}
+
+	return nil
+}
+
+func (sg *StreamGroup) SetIPv6TCP() error {
+	cmd := fmt.Sprintf("%s SetPduHeaders %s {ethernet ipv6 tcp_v6}", sg.Object, sg.PDUHandler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set stream as ipv6 tcp: %s", err)
+	}
+
+	return nil
+}
+
+func (sg *StreamGroup) SetIPv6UDP() error {
+	cmd := fmt.Sprintf("%s SetPduHeaders %s {ethernet ipv6 udp_v6}", sg.Object, sg.PDUHandler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set stream as ipv6 udp: %s", err)
+	}
+
+	return nil
+}
+
+func (sg *StreamGroup) SetIPv6ND() error {
+	cmd := fmt.Sprintf("%s SetPduHeaders %s {ethernet ipv6 icmp_v6}", sg.Object, sg.PDUHandler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set stream as ipv6 tcp: %s", err)
+	}
+
+	return nil
+}
+
+func (sg *StreamGroup) SetIPv4ARP() error {
+	cmd := fmt.Sprintf("%s SetPduHeaders %s {ethernet arp}", sg.Object, sg.PDUHandler)
+	_, err := sg.Invoke(cmd)
+	if err != nil {
+		return fmt.Errorf("Cannot set stream as ipv6 tcp: %s", err)
+	}
+
+	return nil
+}
+
+func (tr *Traffic) Sync() error {
+	if tr.Handler == "" {
+		return fmt.Errorf("Cannot sync traffic with not initialized")
+	}
+
+	_, err := tr.GetName()
+	if err != nil {
+		return fmt.Errorf("CAnnot sync traffic with: %s", err)
+	}
+
+	_, err = tr.GetType()
+	if err != nil {
+		return fmt.Errorf("CAnnot sync traffic with: %s", err)
+	}
+
+	_, err = tr.GetMode()
+	if err != nil {
+		return fmt.Errorf("CAnnot sync traffic with: %s", err)
+	}
+
+	_, err = tr.GetAverageLoad()
+	if err != nil {
+		return fmt.Errorf("CAnnot sync traffic with: %s", err)
+	}
+
+	return nil
+}
+
+func (sg *StreamGroup) Sync() error {
+	_, err := sg.GetName()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetType()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetPdu()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetLength()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetLengthMode()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetDefaultL2Protocol()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetSourcePort()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetNumberOfStreams()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetSourceEndpointType()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetSourceEndpoint()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.ListAllPacketTypes()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.ListAllL2Protocols()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.GetExpectedDestinationPorts()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.IsEnabled()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	_, err = sg.ListProtocolsInHeader()
+	if err != nil {
+		return fmt.Errorf("Cannot sync sg %s with: %s", sg.Handler, err)
+	}
+
+	return nil
 }
